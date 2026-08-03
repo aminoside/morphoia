@@ -1,0 +1,733 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/morphoia-backend-manifest-0.1.schema.json",
+  "title": "MORPHOIA Backend Manifest 0.1",
+  "description": "Experimental candidate manifest for capability negotiation and bounded backend qualification. The current Python Backend dataclass does not yet load or enforce this schema.",
+  "type": "object",
+  "required": [
+    "format",
+    "format_version",
+    "status",
+    "id",
+    "name",
+    "backend_version",
+    "backend_types",
+    "entrypoint",
+    "capabilities",
+    "profiles",
+    "operations",
+    "formats",
+    "execution",
+    "license",
+    "security",
+    "qualification"
+  ],
+  "properties": {
+    "format": {
+      "const": "morphoia.backend-manifest"
+    },
+    "format_version": {
+      "const": "0.1"
+    },
+    "status": {
+      "const": "experimental"
+    },
+    "id": {
+      "type": "string",
+      "format": "uri"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "backend_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "$ref": "#/$defs/provider"
+    },
+    "backend_types": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "serializer",
+          "geometry_kernel",
+          "constraint_solver",
+          "cad_adapter",
+          "translator",
+          "viewer",
+          "validator",
+          "composite"
+        ]
+      }
+    },
+    "entrypoint": {
+      "$ref": "#/$defs/entrypoint"
+    },
+    "capabilities": {
+      "$ref": "#/$defs/capabilities"
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/profile_support"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/operation_support"
+      }
+    },
+    "formats": {
+      "$ref": "#/$defs/formats"
+    },
+    "execution": {
+      "$ref": "#/$defs/execution"
+    },
+    "license": {
+      "$ref": "#/$defs/license"
+    },
+    "security": {
+      "$ref": "#/$defs/security"
+    },
+    "qualification": {
+      "$ref": "#/$defs/qualification"
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Namespaced experimental metadata. Keys must be absolute URIs.",
+      "propertyNames": {
+        "format": "uri"
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "provider": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "homepage": {
+          "type": "string",
+          "format": "uri"
+        },
+        "contact": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "entrypoint": {
+      "type": "object",
+      "required": [
+        "mode",
+        "api_version"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "in_process",
+            "worker",
+            "service"
+          ]
+        },
+        "api_version": {
+          "const": "0.1"
+        },
+        "language": {
+          "type": "string"
+        },
+        "python_module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_library": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "in_process"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "anyOf": [
+              {
+                "required": [
+                  "python_module"
+                ]
+              },
+              {
+                "required": [
+                  "native_library"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "worker"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "command"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "service"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "endpoint"
+            ]
+          }
+        }
+      ]
+    },
+    "capabilities": {
+      "type": "object",
+      "required": [
+        "exact_brep",
+        "procedural_history",
+        "explicit_result",
+        "pmi",
+        "assemblies",
+        "transactions",
+        "loss_register",
+        "deterministic_modes"
+      ],
+      "properties": {
+        "exact_brep": {
+          "type": "boolean"
+        },
+        "procedural_history": {
+          "type": "boolean"
+        },
+        "explicit_result": {
+          "type": "boolean"
+        },
+        "pmi": {
+          "enum": [
+            "none",
+            "presentation",
+            "semantic_partial",
+            "semantic"
+          ]
+        },
+        "assemblies": {
+          "enum": [
+            "none",
+            "structure",
+            "placements",
+            "constraints",
+            "configurations"
+          ]
+        },
+        "transactions": {
+          "type": "boolean"
+        },
+        "loss_register": {
+          "type": "boolean"
+        },
+        "deterministic_modes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "none",
+              "semantic",
+              "profile_locked"
+            ]
+          }
+        },
+        "topology_resolution": {
+          "enum": [
+            "none",
+            "native_ids",
+            "lineage",
+            "lineage_query_signature"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "profile_support": {
+      "type": "object",
+      "required": [
+        "name",
+        "support",
+        "operations",
+        "limitations"
+      ],
+      "properties": {
+        "name": {
+          "enum": [
+            "P1",
+            "P2",
+            "P3",
+            "P4"
+          ]
+        },
+        "version": {
+          "type": "string"
+        },
+        "support": {
+          "enum": [
+            "none",
+            "serialization_only",
+            "partial",
+            "full"
+          ]
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "operation_support": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "profiles",
+        "support"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "P4"
+            ]
+          }
+        },
+        "support": {
+          "enum": [
+            "exact",
+            "approximate",
+            "fallback",
+            "unsupported"
+          ]
+        },
+        "loss_code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]{2,63}$"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "support": {
+                "enum": [
+                  "approximate",
+                  "fallback"
+                ]
+              }
+            },
+            "required": [
+              "support"
+            ]
+          },
+          "then": {
+            "required": [
+              "loss_code"
+            ]
+          }
+        }
+      ]
+    },
+    "formats": {
+      "type": "object",
+      "required": [
+        "read",
+        "write"
+      ],
+      "properties": {
+        "read": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/format_support"
+          }
+        },
+        "write": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/format_support"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "format_support": {
+      "type": "object",
+      "required": [
+        "name",
+        "support",
+        "semantics"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string"
+        },
+        "media_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "support": {
+          "enum": [
+            "lossless",
+            "lossy_declared",
+            "fallback_geometry",
+            "unsupported"
+          ]
+        },
+        "semantics": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "construction_graph",
+              "geometry_exact",
+              "tessellation",
+              "product_structure",
+              "pmi_presentation",
+              "pmi_semantic",
+              "materials",
+              "configurations",
+              "validation_properties",
+              "provenance"
+            ]
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "execution": {
+      "type": "object",
+      "required": [
+        "platforms",
+        "architectures",
+        "threading",
+        "process_isolation",
+        "network_required",
+        "gpu"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "architectures": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "threading": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "single_thread",
+              "concurrent_calls",
+              "internal_parallelism"
+            ]
+          }
+        },
+        "process_isolation": {
+          "enum": [
+            "not_required",
+            "recommended",
+            "required"
+          ]
+        },
+        "network_required": {
+          "type": "boolean"
+        },
+        "gpu": {
+          "$ref": "#/$defs/gpu"
+        },
+        "resource_limits_supported": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "gpu": {
+      "type": "object",
+      "required": [
+        "required",
+        "apis",
+        "authoritative_results"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "apis": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "cuda",
+              "optix",
+              "vulkan",
+              "rocm",
+              "sycl",
+              "directml",
+              "opencl",
+              "metal"
+            ]
+          }
+        },
+        "authoritative_results": {
+          "type": "boolean"
+        },
+        "determinism_notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "license": {
+      "type": "object",
+      "required": [
+        "expression",
+        "commercial",
+        "redistribution",
+        "cloud_use"
+      ],
+      "properties": {
+        "expression": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commercial": {
+          "type": "boolean"
+        },
+        "redistribution": {
+          "enum": [
+            "allowed",
+            "restricted",
+            "forbidden",
+            "unknown"
+          ]
+        },
+        "cloud_use": {
+          "enum": [
+            "allowed",
+            "restricted",
+            "forbidden",
+            "unknown"
+          ]
+        },
+        "source_uri": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "security": {
+      "type": "object",
+      "required": [
+        "trust_level",
+        "sandbox_required",
+        "permissions"
+      ],
+      "properties": {
+        "trust_level": {
+          "enum": [
+            "untrusted",
+            "conditional",
+            "qualified_candidate"
+          ]
+        },
+        "sandbox_required": {
+          "type": "boolean"
+        },
+        "permissions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "filesystem_read",
+              "filesystem_write",
+              "network",
+              "gpu",
+              "process_spawn",
+              "environment",
+              "clock"
+            ]
+          }
+        },
+        "artifact_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "signature_uri": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "qualification": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "untested",
+            "self-tested",
+            "candidate"
+          ]
+        },
+        "suite_version": {
+          "type": "string"
+        },
+        "report_uri": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "tested_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "corpus_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "candidate"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "suite_version",
+              "report_uri",
+              "tested_at"
+            ]
+          }
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

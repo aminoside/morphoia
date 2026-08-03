@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/morphoia-ir-0.1.schema.json",
+  "title": "MORPHOIA Canonical Construction Graph 0.1",
+  "description": "Experimental JSON encoding. The STEP-centred semantic model, not this encoding, is the intended authority.",
+  "type": "object",
+  "required": [
+    "format",
+    "format_version",
+    "source_language",
+    "namespace",
+    "imports",
+    "models",
+    "execution_contract",
+    "semantic_sha256"
+  ],
+  "properties": {
+    "format": {"const": "morphoia.canonical-construction-graph"},
+    "format_version": {"const": "0.1"},
+    "source_language": {"type": "string"},
+    "namespace": {"type": "string"},
+    "imports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source"],
+        "properties": {
+          "source": {"type": "string"},
+          "alias": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/model"}
+    },
+    "execution_contract": {"type": "object"},
+    "semantic_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "expression": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["literal", "reference", "call", "unary", "binary", "list"]},
+        "value": {},
+        "numeric_encoding": {"const": "decimal"},
+        "unit": {"type": "string"},
+        "path": {"type": "string"},
+        "operation": {"type": "string"},
+        "arguments": {"type": "array", "items": {"$ref": "#/$defs/expression"}},
+        "keywords": {"type": "object", "additionalProperties": {"$ref": "#/$defs/expression"}},
+        "operator": {"type": "string"},
+        "operand": {"$ref": "#/$defs/expression"},
+        "left": {"$ref": "#/$defs/expression"},
+        "right": {"$ref": "#/$defs/expression"},
+        "items": {"type": "array", "items": {"$ref": "#/$defs/expression"}}
+      },
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "kind"],
+      "properties": {
+        "id": {"type": "string"},
+        "kind": {"type": "string"},
+        "name": {"type": "string"},
+        "type": {"type": "string"},
+        "value": {"$ref": "#/$defs/expression"},
+        "context": {"$ref": "#/$defs/expression"},
+        "attributes": {"type": "object", "additionalProperties": {"$ref": "#/$defs/expression"}},
+        "body": {"type": "array", "items": {"$ref": "#/$defs/node"}}
+      },
+      "additionalProperties": false
+    },
+    "model": {
+      "type": "object",
+      "required": ["id", "name", "attributes", "dependency_order", "declarations"],
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "attributes": {"type": "object", "additionalProperties": {"$ref": "#/$defs/expression"}},
+        "dependency_order": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "declarations": {"type": "array", "items": {"$ref": "#/$defs/node"}}
+      },
+      "additionalProperties": false
+    }
+  }
+}

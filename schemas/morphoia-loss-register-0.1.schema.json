@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/morphoia-loss-register-0.1.schema.json",
+  "title": "MORPHOIA Loss Register 0.1",
+  "description": "Experimental candidate schema matching the dictionary currently produced by morphoia.losses.LossRegister.to_dict(). It is deliberately smaller than the target industrial loss and provenance contract.",
+  "type": "object",
+  "required": [
+    "schema",
+    "operation",
+    "source_backend",
+    "target_backend",
+    "blocks_commit",
+    "records"
+  ],
+  "properties": {
+    "schema": {
+      "const": "morphoia.loss-register/0.1"
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_backend": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_backend": {
+      "type": "string",
+      "minLength": 1
+    },
+    "blocks_commit": {
+      "type": "boolean"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/loss_record"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "records": {
+            "contains": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "enum": [
+                    "error",
+                    "fatal"
+                  ]
+                }
+              },
+              "required": [
+                "severity"
+              ]
+            }
+          }
+        },
+        "required": [
+          "records"
+        ]
+      },
+      "then": {
+        "properties": {
+          "blocks_commit": {
+            "const": true
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "blocks_commit": {
+            "const": false
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "loss_record": {
+      "type": "object",
+      "required": [
+        "code",
+        "category",
+        "severity",
+        "subject",
+        "message",
+        "source_capability",
+        "target_capability",
+        "mitigation",
+        "reversible"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]{2,63}$"
+        },
+        "category": {
+          "enum": [
+            "geometry",
+            "topology",
+            "parametric_history",
+            "constraint",
+            "pmi",
+            "material",
+            "assembly",
+            "provenance",
+            "identity",
+            "behavior"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "fatal"
+          ]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_capability": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_capability": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mitigation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reversible": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

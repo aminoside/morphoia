@@ -1,0 +1,95 @@
+morphoia 0.1;
+namespace org.morphoia.examples;
+
+model MountingPlate [
+  profile = "P2",
+  id = "10000000-0000-4000-8000-000000000001"
+] {
+  metadata {
+    title = "Mounting plate";
+    author = "Olivier Ami";
+    project = "MORPHOIA";
+  }
+
+  units {
+    length = mm;
+    angle = deg;
+    mass = kg;
+  }
+
+  tolerance build_precision: kernel_tolerance = 0.001 mm;
+  tolerance scan_precision: measurement_uncertainty = 0.05 mm;
+  tolerance drawing_size: dimensional_tolerance = 0.10 mm;
+  tolerance hole_position_zone: gdt_zone = 0.20 mm;
+
+  parameter width: length = 80 mm [
+    id = "10000000-0000-4000-8000-000000000011",
+    min = 40 mm,
+    max = 200 mm,
+    status = observed,
+    evidence = "drawing:D1"
+  ];
+  parameter depth: length = 50 mm [min = 30 mm, max = 120 mm];
+  parameter thickness: length = 6 mm [min = 2 mm, max = 20 mm];
+  parameter hole_diameter: length = 8 mm [min = 3 mm, max = 20 mm];
+  parameter edge_radius: length = 2 mm [min = 0.5 mm, max = 5 mm];
+
+  datum base_plane: plane = world.xy;
+
+  sketch outline on base_plane {
+    profile outer = rectangle(width, depth, centered = true);
+    constraint coincident(outer.center, origin);
+    constraint horizontal(outer.bottom);
+    constraint vertical(outer.left);
+    dimension overall_width: length = width;
+    dimension overall_depth: length = depth;
+  }
+
+  feature blank: extrude {
+    profile = outline.outer;
+    distance = thickness;
+    direction = +world.z;
+    result = solid;
+  }
+
+  reference top_face: face = select(
+    blank.faces,
+    role = "cap.end",
+    normal = world.z,
+    cardinality = unique
+  );
+
+  feature bore: hole {
+    target = blank;
+    support = top_face;
+    center = origin;
+    diameter = hole_diameter;
+    termination = through_all;
+  }
+
+  reference hole_wall: face = select(
+    bore.faces,
+    role = "hole.wall",
+    surface = "cylinder",
+    cardinality = unique
+  );
+
+  feature finished: fillet {
+    target = bore;
+    edges = select(bore.edges, role = "outside.vertical", signature = "four-edges", cardinality = unique);
+    radius = edge_radius;
+  }
+
+  pmi hole_size: diameter = diameter_dimension(hole_wall, nominal = hole_diameter);
+
+  validate {
+    assert manifold(finished);
+    assert resolves(top_face, unique);
+    scenario WiderPlate {
+      set width = 100 mm;
+      expect valid(finished);
+      expect resolves(top_face, unique);
+      expect resolves(hole_wall, unique);
+    }
+  }
+}

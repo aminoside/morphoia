@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "morphoia"
+version = "0.2.0.dev0"
+description = "Experimental STEP-centred construction graph, validator and SDK for parametric CAD interoperability"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+  { name = "Olivier Ami" }
+]
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12"
+]
+
+[project.optional-dependencies]
+report = [
+  "pypdf>=6,<7",
+  "reportlab>=4.4,<5"
+]
+dev = [
+  "jsonschema>=4.23,<5",
+  "pytest>=8,<9",
+  "ruff>=0.12,<1"
+]
+
+[project.scripts]
+morphoia = "morphoia.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100

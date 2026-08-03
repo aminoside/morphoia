@@ -1,0 +1,125 @@
+(* MORPHOIA experimental textual facade 0.1. *)
+
+CompilationUnit = Header, [ NamespaceDecl ], { ImportDecl }, ModelDecl, { ModelDecl }, EOF ;
+
+Header          = "morphoia", Version, ";" ;
+Version         = Number | String | Identifier ;
+NamespaceDecl   = "namespace", QualifiedName, ";" ;
+ImportDecl      = "import", String, [ "as", Identifier ], ";" ;
+
+ModelDecl       = "model", Identifier, [ Attributes ], Block ;
+Block           = "{", { Node }, "}" ;
+
+Node            = Assignment
+                | SimpleDeclaration
+                | SketchDeclaration
+                | FeatureDeclaration
+                | AnonymousBlock
+                | NamedBlock
+                | NamedValueStatement
+                | ExpressionStatement
+                | SetStatement
+                | ExtensionStatement ;
+
+Assignment      = QualifiedName, "=", Expression, ";" ;
+
+SimpleDeclaration
+                = SimpleKind, Identifier,
+                  [ ":", TypeRef ],
+                  [ "=", Expression ],
+                  [ Attributes ],
+                  ( ";" | Block ) ;
+
+SimpleKind      = "parameter" | "constant" | "datum" | "reference"
+                | "material" | "pmi" | "tolerance" ;
+
+SketchDeclaration
+                = "sketch", Identifier, "on", Expression,
+                  [ Attributes ], Block ;
+
+FeatureDeclaration
+                = "feature", Identifier, ":", QualifiedName,
+                  [ Attributes ], Block ;
+
+AnonymousBlock  = AnonymousBlockKind, [ Attributes ], Block ;
+AnonymousBlockKind
+                = "units" | "metadata" | "validate" ;
+
+NamedBlock      = NamedBlockKind, Identifier, [ Attributes ], Block ;
+NamedBlockKind  = "assembly" | "scenario" | "extension" ;
+
+NamedValueStatement
+                = NamedValueKind, Identifier,
+                  [ ":", TypeRef ], "=", Expression,
+                  [ Attributes ], ";" ;
+NamedValueKind  = "profile" | "dimension" | "let" | "output" ;
+
+ExpressionStatement
+                = ExpressionStatementKind, Expression,
+                  [ Attributes ], ";" ;
+ExpressionStatementKind
+                = "constraint" | "assert" | "expect" ;
+
+SetStatement    = "set", QualifiedName, "=", Expression, ";" ;
+
+ExtensionStatement
+                = Identifier, ( Identifier, Block | Expression, [ Attributes ], ";" ) ;
+
+Attributes      = "[", [ Attribute, { ",", Attribute } ], "]" ;
+Attribute       = Identifier, "=", Expression ;
+
+Expression      = OrExpression ;
+OrExpression    = AndExpression, { ( "or" | "||" ), AndExpression } ;
+AndExpression   = EqualityExpression, { ( "and" | "&&" ), EqualityExpression } ;
+EqualityExpression
+                = RelationalExpression,
+                  { ( "==" | "!=" | "~=" ), RelationalExpression } ;
+RelationalExpression
+                = AddExpression,
+                  { ( "<" | "<=" | ">" | ">=" ), AddExpression } ;
+AddExpression   = MultiplyExpression, { ( "+" | "-" ), MultiplyExpression } ;
+MultiplyExpression
+                = PowerExpression, { ( "*" | "/" ), PowerExpression } ;
+PowerExpression = UnaryExpression, [ "^", PowerExpression ] ;
+UnaryExpression = [ "+" | "-" | "not" ], PrimaryExpression ;
+
+PrimaryExpression
+                = Literal
+                | Call
+                | QualifiedName
+                | List
+                | "(", Expression, ")" ;
+
+Call            = QualifiedName, "(", [ Arguments ], ")" ;
+Arguments       = Argument, { ",", Argument } ;
+Argument        = [ Identifier, "=" ], Expression ;
+
+List            = "[", [ Expression, { ",", Expression } ], "]" ;
+Literal         = Quantity | Number | String | Boolean | "null" ;
+Quantity        = Number, UnitSymbol ;
+Boolean         = "true" | "false" ;
+
+TypeRef         = QualifiedName ;
+QualifiedName   = Identifier, { ".", Identifier } ;
+UnitSymbol      = Identifier ;
+
+Identifier      = ASCII_Letter_Or_Underscore,
+                  { ASCII_Letter_Or_Underscore | Digit } ;
+Number          = Digit, { Digit },
+                  [ ".", Digit, { Digit } ],
+                  [ ( "e" | "E" ), [ "+" | "-" ], Digit, { Digit } ] ;
+String          = JSON_String ;
+
+ASCII_Letter_Or_Underscore
+                = "A".."Z" | "a".."z" | "_" ;
+Digit           = "0".."9" ;
+EOF             = ? end of input ? ;
+
+(* Lexical notes:
+   - Encoding is UTF-8. Identifiers are ASCII; international labels use String.
+   - Comments are // to end of line or non-nested /* ... */.
+   - Strings use JSON escapes.
+   - NaN, Infinity and hexadecimal numbers are forbidden.
+   - A Number followed by an identifier is a Quantity only when the active
+     unit registry recognizes the identifier.
+*)
