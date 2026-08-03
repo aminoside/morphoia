@@ -6,6 +6,15 @@ par l'IA.
 
 **Auteur et initiateur : Olivier Ami**
 
+*Experimental STEP AP242-centred construction graph, Python SDK and validation framework
+for trustworthy AI-assisted parametric CAD reconstruction and interoperability.*
+
+| Composant | Version | Statut |
+|---|---:|---|
+| Façade `.morph` et IR canonique | 0.1 | expérimental, non normatif |
+| SDK Python | 0.2.0.dev0 | pré-alpha |
+| Python | ≥ 3.12 | version minimale prise en charge |
+
 ## Statut
 
 Le dépôt public contient deux phases :
@@ -14,8 +23,9 @@ Le dépôt public contient deux phases :
   Go/No-Go ;
 - **Phase 2** : candidat expérimental 0.1, spécification testable et prototype de référence.
 
-MORPHOIA 0.1 n'est ni une norme ISO, ni un format stable, ni une promesse de round-trip
-universel. Conformément à la Phase 1, aucune syntaxe ne pourra être gelée avant :
+La façade `.morph` et l'IR MORPHOIA 0.1 ne constituent ni une norme ISO, ni un format
+stable, ni une promesse de round-trip universel. Conformément à la Phase 1, aucune syntaxe
+ne pourra être gelée avant :
 
 1. l'exécution des profils P1/P2 sur au moins deux backends indépendants ;
 2. une suite de conformité publique ;
@@ -45,6 +55,16 @@ STEP, d'Open CASCADE ou des noyaux industriels.
 - [IA et GPU](docs/phase2/ai-gpu.md)
 - [Roadmap et gouvernance](docs/phase2/roadmap-governance.md)
 - [Coûts et risques](docs/phase2/costs-risks.md)
+
+### Accès rapide
+
+- [Guide utilisateur](docs/phase2/user-guide.md)
+- [Guide développeur](docs/phase2/developer-guide.md)
+- [Tutoriels et FAQ](docs/phase2/tutorials-faq.md)
+- [Catalogue des opérations](docs/phase2/operation-catalog.md)
+- [Références](docs/phase2/references.md)
+- [Contribuer](CONTRIBUTING.md)
+- [Historique des versions](CHANGELOG.md)
 
 ## Architecture étudiée
 
@@ -90,14 +110,30 @@ Il ne fournit pas encore de backend OCCT, de solveur d'esquisse, de B-rep, d'imp
 STEP ou d'adaptateur CAO. Ces composants sont spécifiés comme réemploi et doivent être
 qualifiés dans les étapes POC/Alpha ; ils ne sont pas simulés dans ce dépôt.
 
-## Installation et vérification
+## Démarrage rapide
 
-Prérequis : Python 3.12+ et les polices DejaVu pour les rapports.
+Prérequis : Python 3.12+.
+
+```bash
+git clone https://github.com/Aminoside/morphoia.git
+cd morphoia
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+morphoia validate examples/mounting_plate.morph
+morphoia compile examples/mounting_plate.morph -o build/mounting_plate.mcir.json
+```
+
+Sous Windows PowerShell, la commande d'activation est
+`.venv\Scripts\Activate.ps1`.
+
+### Vérification complète
+
+La génération reproductible des rapports requiert aussi les polices DejaVu et les dépendances
+de développement :
 
 ```bash
 python -m pip install -e '.[report,dev]'
-morphoia validate examples/mounting_plate.morph
-morphoia compile examples/mounting_plate.morph -o build/mounting_plate.mcir.json
 make test
 make check
 ```
@@ -127,6 +163,12 @@ MORPHOIA/
 - Ne jamais masquer une ambiguïté, une réparation ou une perte sémantique.
 - Valider toute sortie IA par règles, solveur, noyau exact et scénarios d'édition.
 - Séparer tolérance noyau, incertitude capteur, tolérance dimensionnelle et GD&T.
+
+## Citation
+
+Le fichier [CITATION.cff](CITATION.cff) contient les métadonnées de citation de référence :
+**MORPHOIA**, Olivier Ami, version 0.2.0-dev, 3 août 2026. Aucun DOI n'est attribué à ce
+stade.
 
 ## Licence
 
