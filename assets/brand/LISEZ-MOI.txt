@@ -1,0 +1,42 @@
+MORPHOIA — kit logo vectoriel (SVG)
+===================================
+
+Fichiers
+--------
+morphoia-logo.svg               Logo complet (symbole dégradé + typo blanche), fond transparent
+morphoia-logo-fond-clair.svg    Logo complet, typo SPACE #080F19 pour fonds clairs
+morphoia-logo-mono.svg          Logo complet monochrome (utilise currentColor -> noir par défaut ;
+                                mettre fill="#fff" sur le <svg> ou color:#fff en CSS pour la version blanche)
+morphoia-symbole.svg            Symbole seul, dégradé
+morphoia-symbole-mono.svg       Symbole seul, monochrome (currentColor)
+morphoia-typographie.svg        Mot "MORPHOIA" seul (currentColor)
+morphoia-symbole-blueprint.svg  Symbole + calque de construction isométrique (reconstruction stylisée)
+*.png                           Aperçus haute résolution, fond transparent
+
+Construction
+------------
+Le tracé n'est pas un décalquage automatique : chaque arête droite a été mesurée sur
+l'original, les angles ont été alignés sur la grille de conception (0°, 90°, 31,005°,
+148,995°), la forme a été symétrisée autour de l'axe x = 522,10 puis chaque congé
+d'angle a été ajusté par une cubique de Bézier (les angles ne sont pas des arcs de
+cercle mais des raccords « superelliptiques »).
+Fidélité mesurée par rapport à l'image source : IoU = 0,981 (symbole), 0,984 (typo).
+
+Dégradé (modèle à deux couches, reproduit tel quel dans les SVG)
+---------------------------------------------------------------
+1. dégradé horizontal   #6DDFF5 -> #D795EF
+2. voile vertical       #0000BA, opacité 0 -> 0,375
+Fond sombre d'origine : #040B16.
+
+Typographie
+-----------
+La police d'origine n'est pas fournie ; les lettres ont donc été vectorisées
+directement depuis l'image (elles ne dépendent d'aucune police installée).
+Correspondance la plus proche testée sur 23 polices géométriques : Aldrich
+(Google Fonts, ~88 % de recouvrement moyen par glyphe). Réserve : le « A » du logo
+n'a pas de barre transversale et comporte une encoche séparée — cette lettre
+n'existe dans aucune police testée.
+
+Le baseline « DESIGN INTENT. PARAMETRIC REALITY. » n'a pas été vectorisé :
+dans l'image source il ne fait que ~13 px de haut, la restitution serait approximative.
+Il peut être recomposé en texte (Aldrich ou équivalent) avec un fort interlettrage.
