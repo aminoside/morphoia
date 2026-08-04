@@ -129,8 +129,8 @@ Sous Windows PowerShell, la commande d'activation est
 
 ### Vérification complète
 
-La génération reproductible des rapports requiert aussi les polices DejaVu et les dépendances
-de développement :
+Les polices officielles Aldrich et Barlow sont incluses dans le dépôt. La génération
+reproductible des rapports requiert uniquement les dépendances de rapport et de développement :
 
 ```bash
 python -m pip install -e '.[report,dev]'
