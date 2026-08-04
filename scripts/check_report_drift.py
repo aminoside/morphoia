@@ -18,6 +18,20 @@ def report_signature(path: Path) -> dict[str, Any]:
     pages: list[dict[str, Any]] = []
 
     for page in reader.pages:
+        content = page.get_contents()
+        content_data = content.get_data() if content else b""
+        resources = page.get("/Resources") or {}
+        fonts = []
+        for reference in (resources.get("/Font") or {}).values():
+            font = reference.get_object()
+            fonts.append(str(font.get("/BaseFont", "")))
+
+        images: list[str] = []
+        for reference in (resources.get("/XObject") or {}).values():
+            item = reference.get_object()
+            if item.get("/Subtype") == "/Image":
+                images.append(hashlib.sha256(item.get_data()).hexdigest())
+
         external_links: list[str] = []
         link_count = 0
         for annotation in page.get("/Annots") or []:
@@ -36,6 +50,10 @@ def report_signature(path: Path) -> dict[str, Any]:
                 "height": round(float(page.mediabox.height), 3),
                 "link_count": link_count,
                 "external_links": external_links,
+                "content_sha256": hashlib.sha256(content_data).hexdigest(),
+                "fonts": sorted(fonts),
+                "image_sha256": sorted(images),
+                "shading_count": len(resources.get("/Shading") or {}),
             }
         )
 
@@ -43,6 +61,9 @@ def report_signature(path: Path) -> dict[str, Any]:
         "title": metadata.get("/Title", ""),
         "author": metadata.get("/Author", ""),
         "subject": metadata.get("/Subject", ""),
+        "creator": metadata.get("/Creator", ""),
+        "keywords": metadata.get("/Keywords", ""),
+        "language": str(reader.trailer["/Root"].get("/Lang", "")),
         "pages": pages,
     }
 

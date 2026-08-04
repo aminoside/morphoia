@@ -16,6 +16,22 @@ dans `LICENSE`.
 9. Ajouter un CJR avant tout nouveau composant qui duplique ou remplace une solution existante.
 10. Distinguer dans les documents et API ce qui est implémenté, spécifié, expérimental ou planifié.
 
+## Documents PDF et identité MORPHOIA
+
+Tout PDF ajouté au dépôt doit respecter la charte graphique MORPHOIA version 1.0 et conserver
+`Olivier Ami` comme auteur du document. Les contributeurs restent crédités par leurs commits et,
+si nécessaire, dans une section de contributions.
+
+Les nouveaux PDF doivent :
+
+1. utiliser les masters officiels de `assets/brand/` sans les modifier ni les rasteriser ;
+2. employer le thème partagé `reporting/morphoia_brand.py` ;
+3. incorporer Aldrich et Barlow, sans police de substitution ;
+4. être déclarés dans `reports.json` avec leur générateur et leur validateur ;
+5. être reconstruits et vérifiés par `make check` avant toute pull request.
+
+La CI refuse automatiquement un PDF suivi par Git qui n'est pas déclaré ou conforme.
+
 ## Convention d'auteur
 
 Olivier Ami reste l'auteur et l'initiateur du projet MORPHOIA. Les contributeurs conservent l'attribution de leurs commits et contributions spécifiques.
