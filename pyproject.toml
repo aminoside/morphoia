@@ -22,8 +22,8 @@ classifiers = [
 
 [project.optional-dependencies]
 report = [
-  "pypdf>=6,<7",
-  "reportlab>=4.4,<5"
+  "pypdf==6.10.0",
+  "reportlab==4.4.9"
 ]
 dev = [
   "jsonschema>=4.23,<5",

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "brand": {
+    "name": "MORPHOIA",
+    "version": "1.0",
+    "author": "Olivier Ami",
+    "creator": "MORPHOIA document pipeline 1.0",
+    "baseline": "DESIGN INTENT. PARAMETRIC REALITY.",
+    "logo": "assets/brand/morphoia-logo.svg",
+    "logo_sha256": "1ada94d18db5a0003db972a5f54e6ade13ba6843fbfd7efe8c130745800714c3",
+    "wordmark": "assets/brand/morphoia-typographie.svg",
+    "wordmark_sha256": "abc0d796aa4fc7314acce12828282b644f1a896269243a8bb7a5396fef2433c4"
+  },
+  "reports": [
+    {
+      "path": "docs/phase1/MORPHOIA_phase1_etat_art_faisabilite.pdf",
+      "generator": "build_report.py",
+      "validator": "scripts/check_report.py"
+    },
+    {
+      "path": "docs/phase2/MORPHOIA_phase2_standard_candidate_v0.1.pdf",
+      "generator": "build_phase2_report.py",
+      "validator": "scripts/check_phase2_report.py"
+    }
+  ]
+}

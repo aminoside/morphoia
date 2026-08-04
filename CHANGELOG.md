@@ -2,6 +2,22 @@
 
 Toutes les modifications notables de MORPHOIA seront documentées ici.
 
+## [Non publié]
+
+### Modifié
+
+- application de l'identité visuelle officielle MORPHOIA aux rapports PDF des phases 1 et 2 ;
+- utilisation du logo vectoriel officiel, de la palette MORPHOIA et des polices Aldrich/Barlow ;
+- attribution visible et métadonnées PDF normalisées au nom d'Olivier Ami ;
+- ajout d'un thème de rapport réutilisable et d'un manifeste imposant ces règles à tout futur
+  PDF suivi par Git.
+
+### Qualité
+
+- contrôle CI de l'intégrité des SVG officiels, des polices incorporées, de la mise en page A4,
+  des métadonnées et de la présence de chaque PDF dans le manifeste ;
+- détection de dérive étendue aux contenus graphiques, polices, images et dégradés.
+
 ## [0.2.0-dev] - 2026-08-03
 
 ### Ajouté

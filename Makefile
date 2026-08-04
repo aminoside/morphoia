@@ -1,4 +1,4 @@
-.PHONY: install report phase1-report phase2-report test check check-phase1 check-phase2
+.PHONY: install report phase1-report phase2-report test check check-phase1 check-phase2 check-brand
 
 install:
 	python -m pip install -e '.[report,dev]'
@@ -24,4 +24,7 @@ check-phase2: phase2-report test
 	python -m json.tool schemas/morphoia-backend-manifest-0.1.schema.json >/dev/null
 	python -m morphoia validate examples/mounting_plate.morph
 
-check: check-phase1 check-phase2
+check-brand:
+	python scripts/check_pdf_branding.py
+
+check: check-phase1 check-phase2 check-brand

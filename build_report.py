@@ -7,14 +7,10 @@ import html
 import re
 from pathlib import Path
 
-from reportlab.lib import colors
-from reportlab.lib.colors import HexColor
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     BaseDocTemplate,
     Flowable,
@@ -30,33 +26,47 @@ from reportlab.platypus import (
 )
 from reportlab.platypus.tableofcontents import TableOfContents
 
+from reporting.morphoia_brand import (
+    AMBRE,
+    ARDOISE,
+    AUTHOR,
+    AZUR,
+    BRUME,
+    CORAIL,
+    CREATOR,
+    FONT_TEXT,
+    FONT_TEXT_SEMIBOLD,
+    FONT_TITLE,
+    GRAPHITE,
+    INDIGO,
+    LANDSCAPE_MARGIN,
+    PORTRAIT_MARGIN,
+    SPACE,
+    WHITE,
+    BrandedCanvas,
+    draw_cover_base,
+    draw_page_chrome,
+    register_fonts,
+)
+
 ROOT = Path(__file__).resolve().parent
 INPUT = ROOT / "docs" / "phase1" / "MORPHOIA_phase1_etat_art_faisabilite.md"
 OUTPUT = ROOT / "docs" / "phase1" / "MORPHOIA_phase1_etat_art_faisabilite.pdf"
 
-NAVY = HexColor("#102A43")
-NAVY_2 = HexColor("#173F5F")
-TEAL = HexColor("#0B7A75")
-CYAN = HexColor("#3CBCC3")
-ORANGE = HexColor("#F59E0B")
-PALE = HexColor("#EAF4F4")
-PALE_BLUE = HexColor("#EEF4FA")
-INK = HexColor("#1F2933")
-MID = HexColor("#52606D")
-LIGHT = HexColor("#D9E2EC")
-VERY_LIGHT = HexColor("#F6F8FA")
-RED = HexColor("#B42318")
-GREEN = HexColor("#16794A")
-WHITE = colors.white
-
-
-def register_fonts() -> None:
-    pdfmetrics.registerFont(TTFont("DV", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
-    pdfmetrics.registerFont(
-        TTFont("DV-Bold", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")
-    )
-    pdfmetrics.registerFont(TTFont("DV-Oblique", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
-    pdfmetrics.registerFont(TTFont("DVM", "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"))
+# Backwards-compatible aliases used by the Markdown renderer and Phase 2 builder.
+NAVY = SPACE
+NAVY_2 = GRAPHITE
+TEAL = INDIGO
+CYAN = AZUR
+ORANGE = AMBRE
+PALE = BRUME
+PALE_BLUE = BRUME
+INK = ARDOISE
+MID = ARDOISE
+LIGHT = BRUME
+VERY_LIGHT = BRUME
+RED = CORAIL
+GREEN = INDIGO
 
 
 register_fonts()
@@ -68,164 +78,166 @@ def styles():
         "cover_kicker": ParagraphStyle(
             "cover_kicker",
             parent=base["Normal"],
-            fontName="DV-Bold",
-            fontSize=10,
-            leading=13,
-            textColor=CYAN,
-            spaceAfter=12,
-            letterSpacing=0.7,
+            fontName=FONT_TEXT_SEMIBOLD,
+            fontSize=7.8,
+            leading=10.9,
+            textColor=AZUR,
+            spaceAfter=16,
+            letterSpacing=1.8,
         ),
         "cover_title": ParagraphStyle(
             "cover_title",
             parent=base["Title"],
-            fontName="DV-Bold",
-            fontSize=28,
+            fontName=FONT_TITLE,
+            fontSize=30,
             leading=33,
             textColor=WHITE,
             alignment=TA_LEFT,
-            spaceAfter=16,
+            spaceAfter=30,
+            letterSpacing=0.6,
         ),
         "cover_subtitle": ParagraphStyle(
             "cover_subtitle",
             parent=base["Normal"],
-            fontName="DV",
+            fontName=FONT_TEXT,
             fontSize=13,
-            leading=19,
-            textColor=HexColor("#D9EAF0"),
-            spaceAfter=20,
+            leading=18.9,
+            textColor=BRUME,
+            spaceAfter=24,
         ),
         "cover_meta": ParagraphStyle(
             "cover_meta",
             parent=base["Normal"],
-            fontName="DV",
-            fontSize=9.5,
-            leading=15,
+            fontName=FONT_TEXT,
+            fontSize=9.4,
+            leading=13.6,
             textColor=WHITE,
         ),
         "h1": ParagraphStyle(
             "Heading1",
             parent=base["Heading1"],
-            fontName="DV-Bold",
-            fontSize=18,
-            leading=23,
-            textColor=NAVY,
-            spaceBefore=14,
-            spaceAfter=9,
+            fontName=FONT_TITLE,
+            fontSize=21,
+            leading=26.25,
+            textColor=SPACE,
+            spaceBefore=16,
+            spaceAfter=21,
+            letterSpacing=0.6,
             keepWithNext=True,
         ),
         "h2": ParagraphStyle(
             "Heading2",
             parent=base["Heading2"],
-            fontName="DV-Bold",
-            fontSize=13,
-            leading=17,
-            textColor=TEAL,
-            spaceBefore=12,
-            spaceAfter=6,
+            fontName=FONT_TEXT_SEMIBOLD,
+            fontSize=12,
+            leading=16.2,
+            textColor=INDIGO,
+            spaceBefore=24,
+            spaceAfter=12,
             keepWithNext=True,
         ),
         "h3": ParagraphStyle(
             "Heading3",
             parent=base["Heading3"],
-            fontName="DV-Bold",
+            fontName=FONT_TEXT_SEMIBOLD,
             fontSize=10.5,
-            leading=14,
-            textColor=NAVY_2,
-            spaceBefore=9,
-            spaceAfter=4,
+            leading=14.2,
+            textColor=ARDOISE,
+            spaceBefore=16,
+            spaceAfter=8,
             keepWithNext=True,
         ),
         "body": ParagraphStyle(
             "Body",
             parent=base["BodyText"],
-            fontName="DV",
-            fontSize=8.7,
-            leading=12.2,
-            textColor=INK,
+            fontName=FONT_TEXT,
+            fontSize=9.4,
+            leading=13.6,
+            textColor=ARDOISE,
             alignment=TA_LEFT,
-            spaceAfter=5.5,
+            spaceAfter=8,
             splitLongWords=False,
         ),
         "small": ParagraphStyle(
             "Small",
             parent=base["BodyText"],
-            fontName="DV",
-            fontSize=7.2,
-            leading=9.3,
-            textColor=MID,
-            spaceAfter=3,
+            fontName=FONT_TEXT,
+            fontSize=8,
+            leading=10.8,
+            textColor=ARDOISE,
+            spaceAfter=4,
         ),
         "bullet": ParagraphStyle(
             "Bullet",
             parent=base["BodyText"],
-            fontName="DV",
-            fontSize=8.5,
-            leading=11.7,
-            textColor=INK,
+            fontName=FONT_TEXT,
+            fontSize=9.2,
+            leading=13.2,
+            textColor=ARDOISE,
             leftIndent=11,
             firstLineIndent=-7,
             bulletIndent=3,
-            spaceAfter=3.2,
+            spaceAfter=4,
         ),
         "number": ParagraphStyle(
             "Number",
             parent=base["BodyText"],
-            fontName="DV",
-            fontSize=8.5,
-            leading=11.7,
-            textColor=INK,
+            fontName=FONT_TEXT,
+            fontSize=9.2,
+            leading=13.2,
+            textColor=ARDOISE,
             leftIndent=13,
             firstLineIndent=-10,
-            spaceAfter=3.2,
+            spaceAfter=4,
         ),
         "quote": ParagraphStyle(
             "Quote",
             parent=base["BodyText"],
-            fontName="DV",
-            fontSize=9.2,
-            leading=13.2,
-            textColor=NAVY,
+            fontName=FONT_TEXT,
+            fontSize=9.4,
+            leading=13.6,
+            textColor=SPACE,
             leftIndent=11,
             rightIndent=6,
-            borderColor=TEAL,
+            borderColor=INDIGO,
             borderWidth=0,
             borderLeft=3,
             borderPadding=(7, 9, 7, 9),
-            backColor=PALE,
+            backColor=BRUME,
             spaceBefore=6,
             spaceAfter=8,
         ),
         "table_header": ParagraphStyle(
             "TableHeader",
             parent=base["BodyText"],
-            fontName="DV-Bold",
-            fontSize=6.6,
-            leading=8.2,
+            fontName=FONT_TEXT_SEMIBOLD,
+            fontSize=7,
+            leading=9,
             textColor=WHITE,
         ),
         "table_cell": ParagraphStyle(
             "TableCell",
             parent=base["BodyText"],
-            fontName="DV",
-            fontSize=6.5,
-            leading=8.3,
-            textColor=INK,
+            fontName=FONT_TEXT,
+            fontSize=6.8,
+            leading=8.8,
+            textColor=ARDOISE,
         ),
         "table_cell_small": ParagraphStyle(
             "TableCellSmall",
             parent=base["BodyText"],
-            fontName="DV",
+            fontName=FONT_TEXT,
             fontSize=5.6,
             leading=7.1,
-            textColor=INK,
+            textColor=ARDOISE,
         ),
         "caption": ParagraphStyle(
             "Caption",
             parent=base["BodyText"],
-            fontName="DV-Oblique",
-            fontSize=7,
-            leading=9,
-            textColor=MID,
+            fontName=FONT_TEXT,
+            fontSize=8,
+            leading=10.8,
+            textColor=ARDOISE,
             alignment=TA_LEFT,
             spaceBefore=2,
             spaceAfter=7,
@@ -233,26 +245,26 @@ def styles():
         "code": ParagraphStyle(
             "Code",
             parent=base["Code"],
-            fontName="DVM",
-            fontSize=6.3,
-            leading=8.2,
-            textColor=INK,
+            fontName=FONT_TEXT,
+            fontSize=7.2,
+            leading=9.4,
+            textColor=SPACE,
             leftIndent=6,
             rightIndent=6,
             borderColor=LIGHT,
             borderWidth=0.5,
             borderPadding=6,
-            backColor=VERY_LIGHT,
+            backColor=BRUME,
             spaceBefore=4,
             spaceAfter=7,
         ),
         "toc1": ParagraphStyle(
             "TOC1",
             parent=base["Normal"],
-            fontName="DV-Bold",
+            fontName=FONT_TEXT_SEMIBOLD,
             fontSize=9,
             leading=12,
-            textColor=NAVY,
+            textColor=SPACE,
             leftIndent=0,
             firstLineIndent=0,
             spaceBefore=4,
@@ -260,10 +272,10 @@ def styles():
         "toc2": ParagraphStyle(
             "TOC2",
             parent=base["Normal"],
-            fontName="DV",
+            fontName=FONT_TEXT,
             fontSize=8,
             leading=10.5,
-            textColor=INK,
+            textColor=ARDOISE,
             leftIndent=13,
             firstLineIndent=0,
             spaceBefore=2,
@@ -271,10 +283,10 @@ def styles():
         "toc3": ParagraphStyle(
             "TOC3",
             parent=base["Normal"],
-            fontName="DV",
+            fontName=FONT_TEXT,
             fontSize=7,
             leading=9,
-            textColor=MID,
+            textColor=ARDOISE,
             leftIndent=26,
             firstLineIndent=0,
             spaceBefore=1,
@@ -294,14 +306,18 @@ def inline_markup(text: str) -> str:
         token = f"@@LINK{len(placeholders)}@@"
         safe_label = html.escape(label)
         safe_url = html.escape(url, quote=True)
-        placeholders.append(f'<link href="{safe_url}" color="#0B6E75"><u>{safe_label}</u></link>')
+        placeholders.append(f'<link href="{safe_url}" color="#5A62F6"><u>{safe_label}</u></link>')
         return token
 
     text = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", link_sub, text)
     escaped = html.escape(text)
     escaped = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", escaped)
     escaped = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<i>\1</i>", escaped)
-    escaped = re.sub(r"`([^`]+)`", r'<font name="DVM" size="7.2">\1</font>', escaped)
+    escaped = re.sub(
+        r"`([^`]+)`",
+        rf'<font name="{FONT_TEXT}" size="7.2">\1</font>',
+        escaped,
+    )
     escaped = escaped.replace("&lt;br&gt;", "<br/>").replace("&lt;br/&gt;", "<br/>")
     for i, value in enumerate(placeholders):
         escaped = escaped.replace(f"@@LINK{i}@@", value)
@@ -364,50 +380,22 @@ class ReportDoc(BaseDocTemplate):
 
 
 def on_cover(canvas, doc):
-    w, h = A4
-    canvas.saveState()
-    canvas.setFillColor(NAVY)
-    canvas.rect(0, 0, w, h, stroke=0, fill=1)
-    canvas.setFillColor(NAVY_2)
-    canvas.circle(w * 0.88, h * 0.82, 73 * mm, stroke=0, fill=1)
-    canvas.setFillColor(TEAL)
-    canvas.circle(w * 0.93, h * 0.84, 52 * mm, stroke=0, fill=1)
-    canvas.setStrokeColor(CYAN)
-    canvas.setLineWidth(1.2)
-    for i in range(7):
-        y = 30 * mm + i * 5 * mm
-        canvas.line(22 * mm, y, 75 * mm + i * 7 * mm, y)
-    canvas.setFillColor(ORANGE)
-    canvas.rect(0, 0, 7 * mm, h, stroke=0, fill=1)
-    canvas.setTitle("MORPHOIA - Phase 1 - Etat de l'art et etude de faisabilite")
-    canvas.setAuthor("Olivier Ami")
-    canvas.setSubject("CAO parametrique, standards, IA et acceleration GPU")
-    canvas.restoreState()
+    draw_cover_base(
+        canvas,
+        A4,
+        title="MORPHOIA - Phase 1 - Etat de l'art et etude de faisabilite",
+        subject="CAO parametrique, standards, IA et acceleration GPU",
+    )
 
 
 def header_footer(canvas, doc, page_size):
-    w, h = page_size
-    canvas.saveState()
-    canvas.setStrokeColor(LIGHT)
-    canvas.setLineWidth(0.5)
-    canvas.line(17 * mm, h - 13 * mm, w - 17 * mm, h - 13 * mm)
-    canvas.setFont("DV-Bold", 6.7)
-    canvas.setFillColor(NAVY)
-    section = getattr(doc, "current_section", "Phase 1")
-    if len(section) > 86:
-        section = section[:83] + "..."
-    canvas.drawString(17 * mm, h - 10 * mm, "MORPHOIA  /  PHASE 1  /  ETAT DE L'ART")
-    canvas.setFont("DV", 6.7)
-    canvas.setFillColor(MID)
-    canvas.drawRightString(w - 17 * mm, h - 10 * mm, section)
-
-    canvas.line(17 * mm, 12 * mm, w - 17 * mm, 12 * mm)
-    canvas.setFont("DV", 6.5)
-    canvas.setFillColor(MID)
-    canvas.drawString(17 * mm, 8 * mm, "Rapport arrêté au 3 août 2026")
-    canvas.setFont("DV-Bold", 6.5)
-    canvas.drawRightString(w - 17 * mm, 8 * mm, f"{canvas.getPageNumber() - 1:02d}")
-    canvas.restoreState()
+    draw_page_chrome(
+        canvas,
+        doc,
+        page_size,
+        label="PHASE 1  /  ÉTAT DE L'ART",
+        footer="Rapport arrêté au 3 août 2026",
+    )
 
 
 def on_portrait(canvas, doc):
@@ -421,10 +409,10 @@ def on_landscape(canvas, doc):
 def make_doc(path: Path) -> ReportDoc:
     path.parent.mkdir(parents=True, exist_ok=True)
     portrait_frame = Frame(
-        17 * mm,
-        17 * mm,
-        A4[0] - 34 * mm,
-        A4[1] - 34 * mm,
+        PORTRAIT_MARGIN,
+        PORTRAIT_MARGIN,
+        A4[0] - 2 * PORTRAIT_MARGIN,
+        A4[1] - 2 * PORTRAIT_MARGIN,
         leftPadding=0,
         rightPadding=0,
         topPadding=2 * mm,
@@ -432,10 +420,10 @@ def make_doc(path: Path) -> ReportDoc:
     )
     land = landscape(A4)
     landscape_frame = Frame(
-        17 * mm,
-        17 * mm,
-        land[0] - 34 * mm,
-        land[1] - 34 * mm,
+        LANDSCAPE_MARGIN,
+        LANDSCAPE_MARGIN,
+        land[0] - 2 * LANDSCAPE_MARGIN,
+        land[1] - 2 * LANDSCAPE_MARGIN,
         leftPadding=0,
         rightPadding=0,
         topPadding=2 * mm,
@@ -454,12 +442,19 @@ def make_doc(path: Path) -> ReportDoc:
     doc = ReportDoc(
         str(path),
         pagesize=A4,
-        leftMargin=17 * mm,
-        rightMargin=17 * mm,
-        topMargin=17 * mm,
-        bottomMargin=17 * mm,
+        leftMargin=PORTRAIT_MARGIN,
+        rightMargin=PORTRAIT_MARGIN,
+        topMargin=PORTRAIT_MARGIN,
+        bottomMargin=PORTRAIT_MARGIN,
         title="MORPHOIA - Phase 1 - Etat de l'art et étude de faisabilité",
-        author="Olivier Ami",
+        author=AUTHOR,
+        subject="CAO parametrique, standards, IA et acceleration GPU",
+        creator=CREATOR,
+        keywords="MORPHOIA; Olivier Ami; brand-1.0; sRGB",
+        initialFontName=FONT_TEXT,
+        initialFontSize=9.4,
+        initialLeading=13.6,
+        lang="fr-FR",
         invariant=1,
     )
     doc.addPageTemplates(
@@ -476,28 +471,27 @@ def make_doc(path: Path) -> ReportDoc:
 
 def cover_story():
     return [
-        Spacer(1, 52 * mm),
-        Paragraph("MORPHOIA  /  REVUE SCIENTIFIQUE ET INDUSTRIELLE", ST["cover_kicker"]),
+        Spacer(1, 76 * mm),
+        Paragraph("PHASE 1  /  REVUE SCIENTIFIQUE ET INDUSTRIELLE", ST["cover_kicker"]),
         Paragraph(
-            "MORPHOIA<br/>Phase 1 - État de l’art et étude de faisabilité", ST["cover_title"]
+            "État de l’art et<br/>étude de faisabilité",
+            ST["cover_title"],
         ),
         Paragraph(
             "Reconstruction paramétrique de pièces mécaniques, interopérabilité CAO, "
             "standards ouverts, intelligence artificielle et accélération GPU",
             ST["cover_subtitle"],
         ),
-        Spacer(1, 12 * mm),
-        Rule(CYAN, 2, 8),
-        Spacer(1, 5 * mm),
+        Rule(INDIGO, 2, 8),
+        Spacer(1, 8 * mm),
         Paragraph(
-            "<b>Projet</b> : MORPHOIA<br/>"
             "<b>Auteur</b> : Olivier Ami<br/>"
             "<b>Date d’arrêté des recherches</b> : 3 août 2026<br/>"
             "<b>Nature du document</b> : étude de faisabilité, non-spécification<br/>"
             "<b>Statut</b> : décision de cadrage - aucune proposition de nouveau langage",
             ST["cover_meta"],
         ),
-        Spacer(1, 38 * mm),
+        Spacer(1, 24 * mm),
         Paragraph(
             "Analyse de publications, thèses, brevets, normes ISO, formats industriels, "
             "noyaux géométriques, logiciels CAO, projets open source, travaux IA, bibliothèques GPU et SDK.",
@@ -538,6 +532,7 @@ def parse_table(lines: list[str], avail_width: float, small=False):
     commands = [
         ("BACKGROUND", (0, 0), (-1, 0), NAVY),
         ("TEXTCOLOR", (0, 0), (-1, 0), WHITE),
+        ("FONTNAME", (0, 0), (-1, -1), FONT_TEXT),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("GRID", (0, 0), (-1, -1), 0.35, LIGHT),
         ("LEFTPADDING", (0, 0), (-1, -1), 3.5),
@@ -577,7 +572,16 @@ def parse_markdown(text: str, portrait_width: float, landscape_width: float):
             continue
         if stripped == "[[TOC]]":
             flush_para()
-            toc = TableOfContents()
+            toc = TableOfContents(
+                tableStyle=TableStyle(
+                    [
+                        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                        ("FONTNAME", (0, 0), (-1, -1), FONT_TEXT),
+                    ]
+                )
+            )
             toc.levelStyles = [ST["toc1"], ST["toc2"], ST["toc3"]]
             story.append(toc)
             i += 1
@@ -688,11 +692,11 @@ def build():
     if not INPUT.exists():
         raise SystemExit(f"Missing source: {INPUT}")
     doc = make_doc(OUTPUT)
-    portrait_width = A4[0] - 34 * mm
-    landscape_width = landscape(A4)[0] - 34 * mm
+    portrait_width = A4[0] - 2 * PORTRAIT_MARGIN
+    landscape_width = landscape(A4)[0] - 2 * LANDSCAPE_MARGIN
     source = INPUT.read_text(encoding="utf-8")
     story = cover_story() + parse_markdown(source, portrait_width, landscape_width)
-    doc.multiBuild(story, maxPasses=30)
+    doc.multiBuild(story, maxPasses=30, canvasmaker=BrandedCanvas)
     print(OUTPUT)
 
 
