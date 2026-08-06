@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1.0",
+  "algorithm_id": "MVX-G1-TWO-PHASE-COMMIT-1",
+  "freeze_id": "mvx-g1-0123456789abcdef0123456789abcdef",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "precommit_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "publication_receipt_sha256": "abababababababababababababababababababababababababababababababab",
+  "private_bundle_manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "release_bundle_manifest_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "state": "COMMITTED"
+}

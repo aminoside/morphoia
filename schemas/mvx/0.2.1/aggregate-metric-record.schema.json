@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/aggregate-metric-record.schema.json",
+  "title": "MVX aggregate metric record 0.2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "scope", "aggregation_id", "protocol_root_sha256", "metric_id",
+    "population", "split", "profile", "status", "value", "unit", "n_lineages", "n_clusters"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.2.0"},
+    "scope": {"const": "AGGREGATE"},
+    "aggregation_id": {"type": "string", "minLength": 1},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "metric_id": {
+      "enum": [
+        "loader_throughput_ratio", "gpu_idle_median", "overfit32_loss_reduction",
+        "terminal_usable_fraction", "class_A_fraction_verified_closed",
+        "release_critical_blocker_count", "systematic_stratum_disadvantage"
+      ]
+    },
+    "population": {"type": "string", "minLength": 1},
+    "stratum": {"type": ["string", "null"]},
+    "split": {"enum": ["development", "calibration", "blind", "all"]},
+    "profile": {"type": "string", "minLength": 1},
+    "decoder": {"type": ["string", "null"]},
+    "status": {"enum": ["EVALUABLE", "NOT_EVALUABLE", "MISSING", "FAILED"]},
+    "value": {"type": ["number", "integer", "boolean", "null"]},
+    "unit": {"enum": ["ratio", "ratio_to_cost_matched_contiguous_tensor", "count", "boolean"]},
+    "n_lineages": {"type": "integer", "minimum": 0},
+    "n_clusters": {"type": "integer", "minimum": 0},
+    "reason": {"type": ["string", "null"]},
+    "numerator": {"type": ["integer", "null"], "minimum": 0},
+    "denominator": {"type": ["integer", "null"], "minimum": 0},
+    "raw_p_value": {"type": ["number", "null"], "minimum": 0.0, "maximum": 1.0},
+    "holm_adjusted_p_value": {"type": ["number", "null"], "minimum": 0.0, "maximum": 1.0}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"not": {"const": "EVALUABLE"}}}, "required": ["status"]},
+      "then": {
+        "properties": {"value": {"type": "null"}, "reason": {"type": "string", "minLength": 1}},
+        "required": ["reason"]
+      }
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"const": "loader_throughput_ratio"}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "ratio_to_cost_matched_contiguous_tensor"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "metric_id": {
+            "enum": [
+              "gpu_idle_median", "overfit32_loss_reduction", "terminal_usable_fraction",
+              "class_A_fraction_verified_closed"
+            ]
+          }
+        },
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "ratio"}}}
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"const": "release_critical_blocker_count"}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "count"}}}
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"const": "systematic_stratum_disadvantage"}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "boolean"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {"const": "loader_throughput_ratio"}
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "number", "minimum": 0.0}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {
+            "enum": [
+              "gpu_idle_median", "overfit32_loss_reduction", "terminal_usable_fraction",
+              "class_A_fraction_verified_closed"
+            ]
+          }
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "number", "minimum": 0.0, "maximum": 1.0}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {"const": "release_critical_blocker_count"}
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "integer", "minimum": 0}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {"const": "systematic_stratum_disadvantage"}
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "boolean"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {
+            "enum": ["terminal_usable_fraction", "class_A_fraction_verified_closed"]
+          }
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {
+        "properties": {
+          "numerator": {"type": "integer", "minimum": 0},
+          "denominator": {"type": "integer", "minimum": 1}
+        },
+        "required": ["numerator", "denominator"]
+      }
+    }
+  ]
+}

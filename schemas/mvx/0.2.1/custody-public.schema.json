@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/custody-public.schema.json",
+  "title": "MVX redacted custody commitment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schema_version", "protocol_root_sha256", "algorithm_id", "freeze_id", "precommit_sha256", "publication_receipt_sha256", "selection_seed_commitment_sha256", "split_salt_commitment_sha256", "counts", "salt_commitment_sha256", "private_manifest_commitment_sha256"],
+  "properties": {
+    "schema": {"const": "MVX-CUSTODY-PUBLIC"},
+    "schema_version": {"const": "1.0.0"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "algorithm_id": {"const": "MVX-CUSTODY-HMAC-SHA256-1"},
+    "freeze_id": {"type": "string", "pattern": "^mvx-g1-[0-9a-f]{32}$"},
+    "precommit_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "publication_receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "selection_seed_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "split_salt_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["development", "calibration", "blind", "reserve"],
+      "properties": {
+        "development": {"type": "integer", "minimum": 0},
+        "calibration": {"type": "integer", "minimum": 0},
+        "blind": {"type": "integer", "minimum": 0},
+        "reserve": {"type": "integer", "minimum": 0}
+      }
+    },
+    "salt_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "private_manifest_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

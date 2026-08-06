@@ -1,0 +1,40 @@
+roles_version: 1.0.2-p0
+
+assignments:
+  maintainer_and_final_decision_authority:
+    assignee: Dr Olivier Ami
+    responsibilities: Approves claim scope and signs G7 release decision.
+  protocol_custodian:
+    assignee: Morphoia reference implementation CI
+    responsibilities: Verifies the P0 seal and rejects runs with a mismatched protocol root hash.
+  holdout_custodian:
+    assignee: Morphoia process-locked custody tool plus a private storage boundary outside the repository
+    responsibilities: After the eligible-records root is sealed, generates independent selection/split secrets, commits them before use, and keeps their preimages plus blind assignments/source paths inaccessible until a machine-readable G5 PASS is present.
+    operational_state: synthetic_dry_run_required_for_G0; signed receipt v2 binds raw registry bytes, epoch and G0 seal; normative registry BLOCKED with no production key; external WORM publisher key plus READY_FOR_PRODUCTION_G1 protocol change, external private store and fresh secret generation required before any G1 selection
+    limitation: This is process isolation and commitment, not independent human double blinding. The limitation is published and prevents a stronger claim.
+    vacancy_effect: Blocks seed/salt generation, every production cohort selection or split, and therefore G1. Any production preimage in the repository or shared development workspace is invalid.
+  holdout_unlock_authority:
+    assignee: Dr Olivier Ami plus the protocol custodian
+    rule: Both the maintainer authorisation and automated G5 verification are required; technical execution then proceeds without further tuning.
+    operational_state: rule_frozen; private-store unlock integration required before G1 PASS
+  technical_adjudicator:
+    assignee: Independent 3D/CAD reviewer role
+    responsibilities: Adjudicates only pre-specified geometry and lineage questions; may not alter thresholds.
+    vacancy_effect: Does not block development; blocks G6 closure when adjudication is required and always blocks G7.
+  anatomy_adjudicator:
+    assignee: Independent anatomy reviewer role
+    responsibilities: Reviews C8 openings and anatomy-specific failures without access to profile tuning.
+    vacancy_effect: Does not block development; blocks anatomy claims and G7.
+  statistical_reviewer:
+    assignee: Independent statistical reviewer role
+    responsibilities: Audits lineage clustering, missing outcomes, multiplicity and confirmatory tables.
+    vacancy_effect: Blocks G7.
+  second_implementation_owner:
+    assignee: Clean-room implementation team or agent isolated from reference source code
+    responsibilities: Implements reader and writer from the public specification and golden corpus only.
+    vacancy_effect: Blocks G5 and later gates.
+
+conflict_rules:
+  - The maintainer may restrict or withdraw claims but may not relax a frozen blind threshold.
+  - An adjudicator with prior involvement in the disputed implementation records the conflict and is replaced for that case.
+  - Automated reviewers and AI critiques are advisory; release authority remains human.

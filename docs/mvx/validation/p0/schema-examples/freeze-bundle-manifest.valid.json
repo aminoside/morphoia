@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1.0",
+  "algorithm_id": "MVX-G1-BUNDLE-SHA256-1",
+  "bundle_kind": "RELEASE",
+  "freeze_id": "mvx-g1-0123456789abcdef0123456789abcdef",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "precommit_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "files": {
+    "custody-public.json": {
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "size_bytes": 512
+    }
+  },
+  "state": "PREPARED"
+}

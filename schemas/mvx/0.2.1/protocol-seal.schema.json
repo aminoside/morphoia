@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/protocol-seal.schema.json",
+  "title": "MVX immutable protocol seal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["seal_version", "protocol_id", "protocol_version", "hash_algorithm", "canonicalisation", "predecessor_protocol_root_sha256", "predecessor_seal_sha256", "supersession_record_sha256", "sealed_at", "files", "protocol_root_sha256"],
+  "properties": {
+    "seal_version": {"const": "1.0.0"},
+    "protocol_id": {"const": "MORPHOIA-MVX-FEASIBILITY-V1"},
+    "protocol_version": {"type": "string", "minLength": 1},
+    "hash_algorithm": {"const": "SHA-256"},
+    "canonicalisation": {"type": "string", "minLength": 1},
+    "predecessor_protocol_root_sha256": {"const": "a56a7dcfd5b02c60b28035a1830e40a2d30993f50bd390c3207f30f55b4b994d"},
+    "predecessor_seal_sha256": {"const": "599288d882b8970b5942e014da816a606427a0caa9932cb511d2fee412408b58"},
+    "supersession_record_sha256": {"const": "60a2403b21b6ae5b62e02d9bcaa6bd6375f7e091ca218573039b4a536ee5375b"},
+    "sealed_at": {"type": "string", "format": "date-time", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z$"},
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

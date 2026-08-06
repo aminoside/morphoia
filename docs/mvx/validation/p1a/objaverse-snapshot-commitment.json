@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1.0",
+  "snapshot_id": "MORPHOIA-OBJAVERSE-2026-08-06-A",
+  "source": "private Morphoia data_3D/Objaverse folder",
+  "visibility": "PUBLIC_AGGREGATES_AND_COMMITMENT_ONLY",
+  "first_and_second_read_identical": true,
+  "raw_snapshot_bytes": 546461,
+  "raw_snapshot_sha256": "232105003af4081d12e6fd30899003eed8cc2d71dc4ffafad47bdd3b834cb08f",
+  "counts": {
+    "items": 964,
+    "glb_files": 962,
+    "unique_objaverse_uids": 961,
+    "labels": 197,
+    "duplicate_uid_groups": 1,
+    "non_glb_test_files": 2
+  },
+  "total_bytes": 5857446272,
+  "latest_source_created_or_modified": "2026-08-06T09:06:38.211Z",
+  "stale_manifest": {
+    "rows_all_datasets": 26996,
+    "bytes_all_datasets": 420012777690,
+    "objaverse_rows": 674,
+    "objaverse_glb_rows": 672,
+    "raw_manifest_sha256": "abcb3ea253e40689a656f070cc78bf100ff259226496aef90bb9cf958e2db375"
+  },
+  "privacy": {
+    "raw_drive_ids_published": false,
+    "objaverse_uids_published": false,
+    "source_paths_published": false
+  },
+  "eligibility_status": "PENDING_P2A_AND_PER_UID_PROVENANCE",
+  "cohort_selected": false,
+  "split_created": false
+}

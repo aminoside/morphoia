@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.2.0",
+  "scope": "AGGREGATE",
+  "aggregation_id": "BLIND-OBJAVERSE-IID-TERMINAL-USABLE",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "metric_id": "terminal_usable_fraction",
+  "population": "eligible unique Objaverse lineages",
+  "stratum": "objaverse_IID",
+  "split": "blind",
+  "profile": "R32-LP3",
+  "decoder": "occupancy-reference",
+  "status": "EVALUABLE",
+  "value": 0.975,
+  "unit": "ratio",
+  "n_lineages": 120,
+  "n_clusters": 80,
+  "reason": null,
+  "numerator": 78,
+  "denominator": 80,
+  "raw_p_value": 0.04,
+  "holm_adjusted_p_value": 0.08
+}

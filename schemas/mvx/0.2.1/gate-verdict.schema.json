@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/gate-verdict.schema.json",
+  "title": "MVX gate verdict 0.2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "gate", "verdict", "protocol_root_sha256", "criteria", "blockers", "deviations"],
+  "$defs": {
+    "gateCriterionIds": {
+      "G0": {"enum": ["G0_NORMATIVE_FILES_VALID", "G0_PROTOCOL_SEAL_VERIFIES", "G0_PROTOCOL_COMPONENTS_FROZEN", "G0_CUSTODY_DRY_RUN", "G0_SEMANTIC_CLOSURE"]},
+      "G1": {"enum": ["G1_SOURCE_AUDIT_SEALED", "G1_COHORT_RESERVE_COMPLETE", "G1_SPLIT_LEAKAGE_FREE", "G1_OBJAVERSE_INGESTION_COMPLETE", "G1_CUSTODY_REDACTION_VERIFIED"]},
+      "G2": {"enum": ["G2_NESTED_100_REPRODUCIBLE", "G2_C0_C2_PASS", "G2_D_R32_R16_CONFORM", "G2_REQUIRED_COMMANDS_EXECUTABLE", "G2_GOLDEN_FILES_PUBLISHABLE"]},
+      "G3": {"enum": ["G3_C0_C6_C8_PASS", "G3_ANALYTIC_AMBIGUITY_CLOSED", "G3_BINARY_CORE_DOMAIN_DELIMITED"]},
+      "G4": {"enum": ["G4_CONFIGURATION_JUSTIFIED", "G4_OVERFLOW_WITHIN_LIMIT", "G4_NO_CRITICAL_OMISSION", "G4_NO_SYSTEMATIC_DISADVANTAGE"]},
+      "G5": {"enum": ["G5_INTEROPERABILITY_EXACT", "G5_SAFETY_LICENCE_CLEAR", "G5_BLIND_INPUTS_SEALED"]},
+      "G6": {"enum": ["G6_NO_BLIND_CRITICAL_BLOCKER", "G6_FROZEN_THRESHOLDS_PASS", "G6_MINI_NEURAL_PASS", "G6_NO_SILENT_STRATUM_DEGRADATION"]},
+      "G7": {"enum": ["G7_RELEASE_BLOCKERS_CLOSED", "G7_AI_CRITIQUES_CLOSED", "G7_HUMAN_REVIEWS_CLOSED", "G7_CLAIMS_AND_LIMITS_PUBLISHED"]}
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "passed", "evidence"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "passed": {"type": "boolean"},
+        "evidence": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "gate": {"enum": ["G0", "G1", "G2", "G3", "G4", "G5", "G6", "G7"]},
+    "verdict": {"enum": ["PASS", "CONDITIONAL", "FAIL"]},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "criteria": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/criterion"}
+    },
+    "blockers": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "deviations": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "evidence_hashes": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"gate": {"const": "G0"}}, "required": ["gate"]},
+      "then": {"properties": {"criteria": {"minItems": 5, "maxItems": 5, "items": {"allOf": [{"$ref": "#/$defs/criterion"}, {"properties": {"id": {"$ref": "#/$defs/gateCriterionIds/G0"}}}]}, "allOf": [
+        {"contains": {"properties": {"id": {"const": "G0_NORMATIVE_FILES_VALID"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G0_PROTOCOL_SEAL_VERIFIES"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G0_PROTOCOL_COMPONENTS_FROZEN"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G0_CUSTODY_DRY_RUN"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G0_SEMANTIC_CLOSURE"}}, "required": ["id"]}}
+      ]}}}
+    },
+    {
+      "if": {"properties": {"gate": {"const": "G1"}}, "required": ["gate"]},
+      "then": {"properties": {"criteria": {"minItems": 5, "maxItems": 5, "items": {"allOf": [{"$ref": "#/$defs/criterion"}, {"properties": {"id": {"$ref": "#/$defs/gateCriterionIds/G1"}}}]}, "allOf": [
+        {"contains": {"properties": {"id": {"const": "G1_SOURCE_AUDIT_SEALED"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G1_COHORT_RESERVE_COMPLETE"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G1_SPLIT_LEAKAGE_FREE"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G1_OBJAVERSE_INGESTION_COMPLETE"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G1_CUSTODY_REDACTION_VERIFIED"}}, "required": ["id"]}}
+      ]}}}
+    },
+    {
+      "if": {"properties": {"gate": {"const": "G2"}}, "required": ["gate"]},
+      "then": {"properties": {"criteria": {"minItems": 5, "maxItems": 5, "items": {"allOf": [{"$ref": "#/$defs/criterion"}, {"properties": {"id": {"$ref": "#/$defs/gateCriterionIds/G2"}}}]}, "allOf": [
+        {"contains": {"properties": {"id": {"const": "G2_NESTED_100_REPRODUCIBLE"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G2_C0_C2_PASS"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G2_D_R32_R16_CONFORM"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G2_REQUIRED_COMMANDS_EXECUTABLE"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G2_GOLDEN_FILES_PUBLISHABLE"}}, "required": ["id"]}}
+      ]}}}
+    },
+    {
+      "if": {"properties": {"gate": {"const": "G3"}}, "required": ["gate"]},
+      "then": {"properties": {"criteria": {"minItems": 3, "maxItems": 3, "items": {"allOf": [{"$ref": "#/$defs/criterion"}, {"properties": {"id": {"$ref": "#/$defs/gateCriterionIds/G3"}}}]}, "allOf": [
+        {"contains": {"properties": {"id": {"const": "G3_C0_C6_C8_PASS"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G3_ANALYTIC_AMBIGUITY_CLOSED"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G3_BINARY_CORE_DOMAIN_DELIMITED"}}, "required": ["id"]}}
+      ]}}}
+    },
+    {
+      "if": {"properties": {"gate": {"const": "G4"}}, "required": ["gate"]},
+      "then": {"properties": {"criteria": {"minItems": 4, "maxItems": 4, "items": {"allOf": [{"$ref": "#/$defs/criterion"}, {"properties": {"id": {"$ref": "#/$defs/gateCriterionIds/G4"}}}]}, "allOf": [
+        {"contains": {"properties": {"id": {"const": "G4_CONFIGURATION_JUSTIFIED"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G4_OVERFLOW_WITHIN_LIMIT"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G4_NO_CRITICAL_OMISSION"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G4_NO_SYSTEMATIC_DISADVANTAGE"}}, "required": ["id"]}}
+      ]}}}
+    },
+    {
+      "if": {"properties": {"gate": {"const": "G5"}}, "required": ["gate"]},
+      "then": {"properties": {"criteria": {"minItems": 3, "maxItems": 3, "items": {"allOf": [{"$ref": "#/$defs/criterion"}, {"properties": {"id": {"$ref": "#/$defs/gateCriterionIds/G5"}}}]}, "allOf": [
+        {"contains": {"properties": {"id": {"const": "G5_INTEROPERABILITY_EXACT"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G5_SAFETY_LICENCE_CLEAR"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G5_BLIND_INPUTS_SEALED"}}, "required": ["id"]}}
+      ]}}}
+    },
+    {
+      "if": {"properties": {"gate": {"const": "G6"}}, "required": ["gate"]},
+      "then": {"properties": {"criteria": {"minItems": 4, "maxItems": 4, "items": {"allOf": [{"$ref": "#/$defs/criterion"}, {"properties": {"id": {"$ref": "#/$defs/gateCriterionIds/G6"}}}]}, "allOf": [
+        {"contains": {"properties": {"id": {"const": "G6_NO_BLIND_CRITICAL_BLOCKER"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G6_FROZEN_THRESHOLDS_PASS"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G6_MINI_NEURAL_PASS"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G6_NO_SILENT_STRATUM_DEGRADATION"}}, "required": ["id"]}}
+      ]}}}
+    },
+    {
+      "if": {"properties": {"gate": {"const": "G7"}}, "required": ["gate"]},
+      "then": {"properties": {"criteria": {"minItems": 4, "maxItems": 4, "items": {"allOf": [{"$ref": "#/$defs/criterion"}, {"properties": {"id": {"$ref": "#/$defs/gateCriterionIds/G7"}}}]}, "allOf": [
+        {"contains": {"properties": {"id": {"const": "G7_RELEASE_BLOCKERS_CLOSED"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G7_AI_CRITIQUES_CLOSED"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G7_HUMAN_REVIEWS_CLOSED"}}, "required": ["id"]}},
+        {"contains": {"properties": {"id": {"const": "G7_CLAIMS_AND_LIMITS_PUBLISHED"}}, "required": ["id"]}}
+      ]}}}
+    },
+    {
+      "if": {"properties": {"verdict": {"const": "PASS"}}, "required": ["verdict"]},
+      "then": {"properties": {"criteria": {"items": {"properties": {"passed": {"const": true}}, "required": ["passed"]}}, "blockers": {"maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"verdict": {"const": "FAIL"}}, "required": ["verdict"]},
+      "then": {"properties": {"criteria": {"contains": {"properties": {"passed": {"const": false}}, "required": ["passed"]}, "minContains": 1}, "blockers": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"verdict": {"const": "CONDITIONAL"}}, "required": ["verdict"]},
+      "then": {"properties": {"criteria": {"contains": {"properties": {"passed": {"const": false}}, "required": ["passed"]}, "minContains": 1}, "blockers": {"minItems": 1}, "deviations": {"minItems": 1}}}
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "examples": [
+    {"schema": "aggregate-metric-record.schema.json", "instance": "aggregate-metric-record.valid.json"},
+    {"schema": "calibration-freeze.schema.json", "instance": "calibration-freeze.valid.json"},
+    {"schema": "corpus-registry.schema.json", "instance": "corpus-registry.valid.json"},
+    {"schema": "custody-precommit.schema.json", "instance": "custody-precommit.valid.json"},
+    {"schema": "custody-public.schema.json", "instance": "custody-public.valid.json"},
+    {"schema": "custody-visible.schema.json", "instance": "custody-visible.valid.json"},
+    {"schema": "execution-plan.schema.json", "instance": "execution-plan.valid.json"},
+    {"schema": "failure-ledger.schema.json", "instance": "failure-ledger.valid.json"},
+    {"schema": "freeze-bundle-manifest.schema.json", "instance": "freeze-bundle-manifest.valid.json"},
+    {"schema": "freeze-receipt.schema.json", "instance": "freeze-receipt.valid.json"},
+    {"schema": "frozen-record.schema.json", "instance": "frozen-record.valid.json"},
+    {"schema": "gate-verdict.schema.json", "instance": "gate-verdict.valid.json"},
+    {"schema": "lineage.schema.json", "instance": "lineage.valid.json"},
+    {"schema": "milestone-manifest.schema.json", "instance": "milestone-manifest.valid.json"},
+    {"schema": "metric-record.schema.json", "instance": "metric-record.valid.json"},
+    {"schema": "precommit-publication-receipt.schema.json", "instance": "precommit-publication-receipt.valid.json"},
+    {"schema": "protocol-seal.schema.json", "instance": "protocol-seal.valid.json"},
+    {"schema": "run-manifest.schema.json", "instance": "run-manifest.valid.json"},
+    {"schema": "selection-manifest.schema.json", "instance": "selection-manifest.valid.json"},
+    {"schema": "split.schema.json", "instance": "split.valid.json"},
+    {"schema": "stage-checkpoint.schema.json", "instance": "stage-checkpoint.valid.json"},
+    {"schema": "trusted-publishers.schema.json", "instance": "trusted-publishers.valid.json"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "superseded_protocol_version": "1.0.0-p0",
+  "superseded_protocol_root_sha256": "87f74f8196c3f9b3c7f512a8a4a1b04d17743428ef91982e4b6f2da29087cf9f",
+  "seal_file_sha256": "7d68ceddd47322b27b76b1fe8a7ef83cbdc5903f8e801cdd61e38cdc4953f6e0",
+  "g0_verdict_file_sha256": "0dda5690f297a67507e08f5284a5ac2734ee16ab15713eb1aa09501b7d32fc8a",
+  "effective_verdict": "FAIL",
+  "reason": "The byte-level seal was valid, but an independent semantic red-team audit found incomplete endpoint closure, non-executable cohort selection, an exposed split salt, schema gaps, ambiguous release decisions and a circular P1/P2 gate order.",
+  "experimental_outcomes_observed": false,
+  "production_cohort_selected": false,
+  "production_split_created": false,
+  "superseded_by": "1.0.1-p0",
+  "rule": "This record and both original files are immutable audit evidence. They are not normative inputs to the replacement seal."
+}

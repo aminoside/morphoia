@@ -1,0 +1,12 @@
+{
+  "schema_version": "0.1.0",
+  "algorithm_id": "MVX-G1-PRECOMMIT-SHA256-1",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "snapshot_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "eligible_records_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "configuration_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "selection_seed_sha256": "53f101046cfd9f113c7fdb5047489f14291a9cc0b199a8657117d5f36aeaa22a",
+  "split_salt_sha256": "0c27bbaa345e7915ea7873bc293bc2938d5390af1bb4b2ded388477702c58ed2",
+  "freeze_id": "mvx-g1-1de69eefeebe2f8c244e623f428943ba",
+  "state": "PRECOMMITTED"
+}

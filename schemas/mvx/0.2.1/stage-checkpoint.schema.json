@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/stage-checkpoint.schema.json",
+  "title": "MVX immutable stage execution checkpoint",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "schema_version", "execution_plan_sha256", "work_id", "identity",
+    "attempt", "state", "terminal_status", "error_code", "interruption_reason",
+    "artifact_hashes", "dependency_checkpoint_hashes", "previous_checkpoint_sha256",
+    "volatile"
+  ],
+  "properties": {
+    "schema": {"const": "MVX-STAGE-CHECKPOINT"},
+    "schema_version": {"const": "0.1.0"},
+    "execution_plan_sha256": {"$ref": "#/$defs/sha256"},
+    "work_id": {"$ref": "#/$defs/sha256"},
+    "identity": {"$ref": "#/$defs/identity"},
+    "attempt": {"type": "integer", "minimum": 1},
+    "state": {"enum": ["PENDING", "RUNNING", "PARTIAL", "INTERRUPTED", "TERMINAL"]},
+    "terminal_status": {
+      "type": ["string", "null"],
+      "enum": ["PASS", "DECLARED_LIMIT", "REJECT", "FAIL", null]
+    },
+    "error_code": {"type": ["string", "null"], "minLength": 1},
+    "interruption_reason": {"type": ["string", "null"], "minLength": 1},
+    "artifact_hashes": {"$ref": "#/$defs/hashMap"},
+    "dependency_checkpoint_hashes": {"$ref": "#/$defs/hashMap"},
+    "previous_checkpoint_sha256": {
+      "anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]
+    },
+    "volatile": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"state": {"const": "TERMINAL"}},
+        "required": ["state"]
+      },
+      "then": {
+        "properties": {
+          "terminal_status": {"enum": ["PASS", "DECLARED_LIMIT", "REJECT", "FAIL"]},
+          "error_code": {"type": "string", "minLength": 1},
+          "artifact_hashes": {"$ref": "#/$defs/nonEmptyHashMap"}
+        }
+      },
+      "else": {"properties": {"terminal_status": {"type": "null"}}}
+    },
+    {
+      "if": {
+        "properties": {"state": {"enum": ["PENDING", "RUNNING"]}},
+        "required": ["state"]
+      },
+      "then": {"properties": {"error_code": {"type": "null"}}}
+    },
+    {
+      "if": {
+        "properties": {"state": {"const": "INTERRUPTED"}},
+        "required": ["state"]
+      },
+      "then": {"properties": {"interruption_reason": {"type": "string", "minLength": 1}}},
+      "else": {"properties": {"interruption_reason": {"type": "null"}}}
+    },
+    {
+      "if": {
+        "properties": {"identity": {"properties": {"open_once": {"const": true}}}},
+        "required": ["identity"]
+      },
+      "then": {"properties": {"attempt": {"const": 1}}}
+    }
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "hashMap": {
+      "type": "object",
+      "propertyNames": {"pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$|^[0-9a-f]{64}$"},
+      "additionalProperties": {"$ref": "#/$defs/sha256"}
+    },
+    "nonEmptyHashMap": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$|^[0-9a-f]{64}$"},
+      "additionalProperties": {"$ref": "#/$defs/sha256"}
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_root_sha256", "split_sha256", "source_sha256", "lineage_id",
+        "profile_sha256", "config_sha256", "code_sha256", "environment_sha256",
+        "phase_id", "stage_id", "split", "open_once"
+      ],
+      "properties": {
+        "protocol_root_sha256": {"$ref": "#/$defs/sha256"},
+        "split_sha256": {"$ref": "#/$defs/sha256"},
+        "source_sha256": {"$ref": "#/$defs/sha256"},
+        "lineage_id": {"type": "string", "minLength": 1},
+        "profile_sha256": {"$ref": "#/$defs/sha256"},
+        "config_sha256": {"$ref": "#/$defs/sha256"},
+        "code_sha256": {"$ref": "#/$defs/sha256"},
+        "environment_sha256": {"$ref": "#/$defs/sha256"},
+        "phase_id": {"type": "string", "minLength": 1},
+        "stage_id": {"type": "string", "minLength": 1},
+        "split": {
+          "enum": ["none", "development", "calibration", "blind", "reserve"]
+        },
+        "open_once": {"type": "boolean"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"split": {"const": "blind"}},
+            "required": ["split"]
+          },
+          "then": {"properties": {"open_once": {"const": true}}}
+        }
+      ]
+    }
+  }
+}

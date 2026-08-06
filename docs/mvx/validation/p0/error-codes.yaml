@@ -1,0 +1,166 @@
+taxonomy_version: 0.1.2
+terminal_status_required: true
+job_terminal_statuses: [PASS, DECLARED_LIMIT, REJECT, FAIL]
+payload_state_codes: [MVX-E001, MVX-E002]
+payload_state_rule: Payload states are counted per ray and may never be used as the terminal error_code of a run manifest.
+
+codes:
+  - {code: MVX-OK, class: SUCCESS, terminal: true, retryable: false}
+  - {code: MVX-I001, class: REJECT_UNSUPPORTED_FORMAT, terminal: true, retryable: false}
+  - {code: MVX-I002, class: REJECT_CORRUPT_CONTAINER, terminal: true, retryable: false}
+  - {code: MVX-I003, class: REJECT_INVALID_GEOMETRY, terminal: true, retryable: false}
+  - {code: MVX-I004, class: REJECT_UNSUPPORTED_EXTENSION, terminal: true, retryable: false}
+  - {code: MVX-I005, class: REJECT_MISSING_RESOURCE, terminal: true, retryable: false}
+  - {code: MVX-I006, class: REJECT_NONFINITE_NUMERIC, terminal: true, retryable: false}
+  - {code: MVX-I007, class: REJECT_INVALID_INDEX_OR_OFFSET, terminal: true, retryable: false}
+  - {code: MVX-I008, class: REJECT_PATH_OR_URI_POLICY, terminal: true, retryable: false}
+  - {code: MVX-R001, class: RESOURCE_LIMIT_MEMORY, terminal: true, retryable: true}
+  - {code: MVX-R002, class: RESOURCE_LIMIT_TIME, terminal: true, retryable: true}
+  - {code: MVX-R003, class: RESOURCE_LIMIT_DIMENSION, terminal: true, retryable: false}
+  - {code: MVX-R004, class: RESOURCE_LIMIT_SAMPLE_COUNT, terminal: true, retryable: false}
+  - {code: MVX-G001, class: GEOMETRY_OPEN, terminal: true, retryable: false}
+  - {code: MVX-G002, class: GEOMETRY_NON_MANIFOLD, terminal: true, retryable: false}
+  - {code: MVX-G003, class: GEOMETRY_UNDETERMINED, terminal: true, retryable: true}
+  - {code: MVX-E001, class: RAY_STATE_OVERFLOW, scope: ray, terminal: false, retryable: true}
+  - {code: MVX-E002, class: RAY_STATE_AMBIGUOUS, scope: ray, terminal: false, retryable: true}
+  - {code: MVX-V001, class: INVALID_MVX_MANIFEST, terminal: true, retryable: false}
+  - {code: MVX-V002, class: INVALID_MVX_PAYLOAD, terminal: true, retryable: false}
+  - {code: MVX-V003, class: WIRE_CONTRACT_MISMATCH, terminal: true, retryable: false}
+  - {code: MVX-P001, class: PROVENANCE_INCOMPLETE, terminal: true, retryable: false}
+  - {code: MVX-P002, class: HASH_MISMATCH, terminal: true, retryable: false}
+  - {code: MVX-P003, class: SPLIT_LEAKAGE, terminal: true, retryable: false}
+  - {code: MVX-S001, class: SECURITY_PATH_TRAVERSAL, terminal: true, retryable: false}
+  - {code: MVX-S002, class: SECURITY_UNBOUNDED_ALLOCATION, terminal: true, retryable: false}
+  - {code: MVX-X001, class: INTERNAL_ERROR, terminal: true, retryable: true}
+  - {code: MVX-X002, class: CRASH_OR_NO_STATUS, terminal: false, retryable: true}
+
+terminal_precedence:
+  rule_version: 1.0.0
+  evidence_scope: Select only among faults positively observed by a safe validator or the external supervisor. A stage that could not run is never presumed to have passed or failed.
+  selection_algorithm:
+    - Ray payload states MVX-E001 and MVX-E002 are excluded from terminal candidates.
+    - If the candidate set is empty, select MVX-OK.
+    - Otherwise select the candidate with the lowest zero-based index in ordered_fault_codes, independently of discovery order.
+    - Derive the job terminal status solely from terminal_mapping. MVX-X002 is emitted by the external supervisor when no run manifest is possible and therefore has no job terminal status.
+    - A resource abort selects its observed resource code when no higher-precedence fault was already positively observed; unexecuted later stages are not candidates.
+  pipeline:
+    - stage: safety_envelope
+      codes: [MVX-S001, MVX-S002]
+    - stage: identity_provenance_and_split
+      codes: [MVX-P002, MVX-P003, MVX-P001]
+    - stage: external_supervision_and_internal_execution
+      codes: [MVX-X002, MVX-X001]
+    - stage: source_ingestion
+      codes: [MVX-I008, MVX-I002, MVX-I006, MVX-I007, MVX-I003, MVX-I005, MVX-I004, MVX-I001]
+    - stage: mvx_wire_validation
+      codes: [MVX-V001, MVX-V002, MVX-V003]
+    - stage: bounded_resources
+      codes: [MVX-R003, MVX-R004, MVX-R001, MVX-R002]
+    - stage: geometry_classification
+      codes: [MVX-G002, MVX-G001, MVX-G003]
+  ordered_fault_codes:
+    - MVX-S001
+    - MVX-S002
+    - MVX-P002
+    - MVX-P003
+    - MVX-P001
+    - MVX-X002
+    - MVX-X001
+    - MVX-I008
+    - MVX-I002
+    - MVX-I006
+    - MVX-I007
+    - MVX-I003
+    - MVX-I005
+    - MVX-I004
+    - MVX-I001
+    - MVX-V001
+    - MVX-V002
+    - MVX-V003
+    - MVX-R003
+    - MVX-R004
+    - MVX-R001
+    - MVX-R002
+    - MVX-G002
+    - MVX-G001
+    - MVX-G003
+  success_code: MVX-OK
+  no_manifest_code: MVX-X002
+  coverage_vectors:
+    - {id: no_fault, candidates: [], expected_primary: MVX-OK, expected_terminal_status: PASS}
+    - {id: singleton_S001, candidates: [MVX-S001], expected_primary: MVX-S001, expected_terminal_status: FAIL}
+    - {id: singleton_S002, candidates: [MVX-S002], expected_primary: MVX-S002, expected_terminal_status: FAIL}
+    - {id: singleton_P002, candidates: [MVX-P002], expected_primary: MVX-P002, expected_terminal_status: FAIL}
+    - {id: singleton_P003, candidates: [MVX-P003], expected_primary: MVX-P003, expected_terminal_status: FAIL}
+    - {id: singleton_P001, candidates: [MVX-P001], expected_primary: MVX-P001, expected_terminal_status: FAIL}
+    - {id: singleton_X002, candidates: [MVX-X002], expected_primary: MVX-X002, expected_terminal_status: null}
+    - {id: singleton_X001, candidates: [MVX-X001], expected_primary: MVX-X001, expected_terminal_status: FAIL}
+    - {id: singleton_I008, candidates: [MVX-I008], expected_primary: MVX-I008, expected_terminal_status: REJECT}
+    - {id: singleton_I002, candidates: [MVX-I002], expected_primary: MVX-I002, expected_terminal_status: REJECT}
+    - {id: singleton_I006, candidates: [MVX-I006], expected_primary: MVX-I006, expected_terminal_status: REJECT}
+    - {id: singleton_I007, candidates: [MVX-I007], expected_primary: MVX-I007, expected_terminal_status: REJECT}
+    - {id: singleton_I003, candidates: [MVX-I003], expected_primary: MVX-I003, expected_terminal_status: REJECT}
+    - {id: singleton_I005, candidates: [MVX-I005], expected_primary: MVX-I005, expected_terminal_status: REJECT}
+    - {id: singleton_I004, candidates: [MVX-I004], expected_primary: MVX-I004, expected_terminal_status: REJECT}
+    - {id: singleton_I001, candidates: [MVX-I001], expected_primary: MVX-I001, expected_terminal_status: REJECT}
+    - {id: singleton_V001, candidates: [MVX-V001], expected_primary: MVX-V001, expected_terminal_status: REJECT}
+    - {id: singleton_V002, candidates: [MVX-V002], expected_primary: MVX-V002, expected_terminal_status: REJECT}
+    - {id: singleton_V003, candidates: [MVX-V003], expected_primary: MVX-V003, expected_terminal_status: REJECT}
+    - {id: singleton_R003, candidates: [MVX-R003], expected_primary: MVX-R003, expected_terminal_status: DECLARED_LIMIT}
+    - {id: singleton_R004, candidates: [MVX-R004], expected_primary: MVX-R004, expected_terminal_status: DECLARED_LIMIT}
+    - {id: singleton_R001, candidates: [MVX-R001], expected_primary: MVX-R001, expected_terminal_status: DECLARED_LIMIT}
+    - {id: singleton_R002, candidates: [MVX-R002], expected_primary: MVX-R002, expected_terminal_status: DECLARED_LIMIT}
+    - {id: singleton_G002, candidates: [MVX-G002], expected_primary: MVX-G002, expected_terminal_status: DECLARED_LIMIT}
+    - {id: singleton_G001, candidates: [MVX-G001], expected_primary: MVX-G001, expected_terminal_status: DECLARED_LIMIT}
+    - {id: singleton_G003, candidates: [MVX-G003], expected_primary: MVX-G003, expected_terminal_status: DECLARED_LIMIT}
+  multi_fault_vectors:
+    - {id: adjacent_01, candidates: [MVX-S002, MVX-S001], expected_primary: MVX-S001, expected_terminal_status: FAIL}
+    - {id: adjacent_02, candidates: [MVX-P002, MVX-S002], expected_primary: MVX-S002, expected_terminal_status: FAIL}
+    - {id: adjacent_03, candidates: [MVX-P003, MVX-P002], expected_primary: MVX-P002, expected_terminal_status: FAIL}
+    - {id: adjacent_04, candidates: [MVX-P001, MVX-P003], expected_primary: MVX-P003, expected_terminal_status: FAIL}
+    - {id: adjacent_05, candidates: [MVX-X002, MVX-P001], expected_primary: MVX-P001, expected_terminal_status: FAIL}
+    - {id: adjacent_06, candidates: [MVX-X001, MVX-X002], expected_primary: MVX-X002, expected_terminal_status: null}
+    - {id: adjacent_07, candidates: [MVX-I008, MVX-X001], expected_primary: MVX-X001, expected_terminal_status: FAIL}
+    - {id: adjacent_08, candidates: [MVX-I002, MVX-I008], expected_primary: MVX-I008, expected_terminal_status: REJECT}
+    - {id: adjacent_09, candidates: [MVX-I006, MVX-I002], expected_primary: MVX-I002, expected_terminal_status: REJECT}
+    - {id: adjacent_10, candidates: [MVX-I007, MVX-I006], expected_primary: MVX-I006, expected_terminal_status: REJECT}
+    - {id: adjacent_11, candidates: [MVX-I003, MVX-I007], expected_primary: MVX-I007, expected_terminal_status: REJECT}
+    - {id: adjacent_12, candidates: [MVX-I005, MVX-I003], expected_primary: MVX-I003, expected_terminal_status: REJECT}
+    - {id: adjacent_13, candidates: [MVX-I004, MVX-I005], expected_primary: MVX-I005, expected_terminal_status: REJECT}
+    - {id: adjacent_14, candidates: [MVX-I001, MVX-I004], expected_primary: MVX-I004, expected_terminal_status: REJECT}
+    - {id: adjacent_15, candidates: [MVX-V001, MVX-I001], expected_primary: MVX-I001, expected_terminal_status: REJECT}
+    - {id: adjacent_16, candidates: [MVX-V002, MVX-V001], expected_primary: MVX-V001, expected_terminal_status: REJECT}
+    - {id: adjacent_17, candidates: [MVX-V003, MVX-V002], expected_primary: MVX-V002, expected_terminal_status: REJECT}
+    - {id: adjacent_18, candidates: [MVX-R003, MVX-V003], expected_primary: MVX-V003, expected_terminal_status: REJECT}
+    - {id: adjacent_19, candidates: [MVX-R004, MVX-R003], expected_primary: MVX-R003, expected_terminal_status: DECLARED_LIMIT}
+    - {id: adjacent_20, candidates: [MVX-R001, MVX-R004], expected_primary: MVX-R004, expected_terminal_status: DECLARED_LIMIT}
+    - {id: adjacent_21, candidates: [MVX-R002, MVX-R001], expected_primary: MVX-R001, expected_terminal_status: DECLARED_LIMIT}
+    - {id: adjacent_22, candidates: [MVX-G002, MVX-R002], expected_primary: MVX-R002, expected_terminal_status: DECLARED_LIMIT}
+    - {id: adjacent_23, candidates: [MVX-G001, MVX-G002], expected_primary: MVX-G002, expected_terminal_status: DECLARED_LIMIT}
+    - {id: adjacent_24, candidates: [MVX-G003, MVX-G001], expected_primary: MVX-G001, expected_terminal_status: DECLARED_LIMIT}
+
+severity_rules:
+  critical:
+    - CRASH_OR_NO_STATUS
+    - silent_corruption
+    - invalid_input_accepted_as_valid
+    - false_VERIFIED_SOLID
+    - HASH_MISMATCH
+    - SPLIT_LEAKAGE
+    - SECURITY_PATH_TRAVERSAL
+    - SECURITY_UNBOUNDED_ALLOCATION
+  acceptable_when_expected_and_bounded:
+    - REJECT_UNSUPPORTED_FORMAT
+    - REJECT_CORRUPT_CONTAINER
+    - RESOURCE_LIMIT_MEMORY
+    - RESOURCE_LIMIT_TIME
+    - GEOMETRY_OPEN
+    - GEOMETRY_NON_MANIFOLD
+    - GEOMETRY_UNDETERMINED
+
+terminal_mapping:
+  PASS: [MVX-OK]
+  DECLARED_LIMIT: [MVX-R001, MVX-R002, MVX-R003, MVX-R004, MVX-G001, MVX-G002, MVX-G003]
+  REJECT: [MVX-I001, MVX-I002, MVX-I003, MVX-I004, MVX-I005, MVX-I006, MVX-I007, MVX-I008, MVX-V001, MVX-V002, MVX-V003]
+  FAIL: [MVX-P001, MVX-P002, MVX-P003, MVX-S001, MVX-S002, MVX-X001]
+  no_manifest_possible: [MVX-X002]

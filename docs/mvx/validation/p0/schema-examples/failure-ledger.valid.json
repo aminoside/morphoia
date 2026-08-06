@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "failure_id": "FAIL-001",
+  "run_id": "RUN-001",
+  "lineage_id": "LIN-001",
+  "error_code": "MVX-X001",
+  "severity": "CRITICAL",
+  "classification": "internal_error",
+  "root_cause": "synthetic example",
+  "corrective_action": null,
+  "decision": "OPEN",
+  "evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

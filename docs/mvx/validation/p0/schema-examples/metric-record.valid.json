@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.2.0",
+  "scope": "LINEAGE",
+  "run_id": "RUN-001",
+  "lineage_id": "LIN-001",
+  "metric_id": "hd95_symmetric_p",
+  "profile": "R32-LP3",
+  "decoder": "occupancy-reference",
+  "status": "EVALUABLE",
+  "value": 0.75,
+  "unit": "pixel_pitch",
+  "reason": null
+}

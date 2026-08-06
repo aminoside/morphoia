@@ -1,0 +1,10 @@
+{
+  "schema_version": "0.1.0",
+  "lineage_id": "LIN-001",
+  "leakage_group_id": "GRP-001",
+  "member_object_ids": ["OBJ-001"],
+  "decision_basis": ["SOURCE_ASSERTION"],
+  "candidate_pair_ids": [],
+  "adjudication": null,
+  "reviewer_roles": []
+}

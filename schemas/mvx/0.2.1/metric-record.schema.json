@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/metric-record.schema.json",
+  "title": "MVX lineage metric record 0.2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scope", "run_id", "lineage_id", "metric_id", "profile", "status", "value", "unit"],
+  "properties": {
+    "schema_version": {"const": "0.2.0"},
+    "scope": {"const": "LINEAGE"},
+    "run_id": {"type": "string", "minLength": 1},
+    "lineage_id": {"type": "string", "minLength": 1},
+    "metric_id": {
+      "enum": [
+        "critical_failure", "core_conformance", "terminal_processing", "interoperability_exact",
+        "fidelity_primary_failure", "usability_class", "terminal_status_correct", "provenance_complete",
+        "wire_roundtrip_exact", "hd95_symmetric_p", "topology_exact_ge_8p", "chamfer_symmetric_rms_p",
+        "occupancy_iou", "normal_median_deg", "normal_p95_deg", "relative_volume_error",
+        "relative_area_error", "openings_recall_ge_8p", "cross_view_agreement_real",
+        "cross_view_agreement_oracle", "cross_view_eligible_coverage", "ray_overflow_fraction",
+        "topologically_critical_omission_count", "package_size_bytes", "encode_seconds", "decode_seconds",
+        "curvature_error", "spectral_error", "perceptual_embedding_distance", "learned_decoder_quality"
+      ]
+    },
+    "profile": {"type": "string", "minLength": 1},
+    "decoder": {"type": ["string", "null"]},
+    "status": {"enum": ["EVALUABLE", "NOT_EVALUABLE", "MISSING", "FAILED"]},
+    "value": {"type": ["number", "integer", "boolean", "string", "null"]},
+    "unit": {
+      "enum": [
+        "boolean", "class", "pixel_pitch", "ratio", "degree", "relative_error", "count",
+        "byte", "second", "inverse_pixel_pitch", "normalized_l2_error", "embedding_distance"
+      ]
+    },
+    "reason": {"type": ["string", "null"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"not": {"const": "EVALUABLE"}}}, "required": ["status"]},
+      "then": {
+        "properties": {"value": {"type": "null"}, "reason": {"type": "string", "minLength": 1}},
+        "required": ["reason"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "metric_id": {
+            "enum": [
+              "critical_failure", "core_conformance", "terminal_processing", "interoperability_exact",
+              "fidelity_primary_failure", "terminal_status_correct", "provenance_complete",
+              "wire_roundtrip_exact", "topology_exact_ge_8p"
+            ]
+          }
+        },
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "boolean"}}}
+    },
+    {
+      "if": {"properties": {"metric_id": {"const": "usability_class"}}, "required": ["metric_id"]},
+      "then": {"properties": {"unit": {"const": "class"}}}
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"enum": ["hd95_symmetric_p", "chamfer_symmetric_rms_p"]}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "pixel_pitch"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "metric_id": {
+            "enum": [
+              "occupancy_iou", "openings_recall_ge_8p", "cross_view_agreement_real",
+              "cross_view_agreement_oracle", "cross_view_eligible_coverage", "ray_overflow_fraction",
+              "learned_decoder_quality"
+            ]
+          }
+        },
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "ratio"}}}
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"enum": ["normal_median_deg", "normal_p95_deg"]}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "degree"}}}
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"enum": ["relative_volume_error", "relative_area_error"]}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "relative_error"}}}
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"const": "topologically_critical_omission_count"}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "count"}}}
+    },
+    {
+      "if": {"properties": {"metric_id": {"const": "package_size_bytes"}}, "required": ["metric_id"]},
+      "then": {"properties": {"unit": {"const": "byte"}}}
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"enum": ["encode_seconds", "decode_seconds"]}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "second"}}}
+    },
+    {
+      "if": {"properties": {"metric_id": {"const": "curvature_error"}}, "required": ["metric_id"]},
+      "then": {"properties": {"unit": {"const": "inverse_pixel_pitch"}}}
+    },
+    {
+      "if": {"properties": {"metric_id": {"const": "spectral_error"}}, "required": ["metric_id"]},
+      "then": {"properties": {"unit": {"const": "normalized_l2_error"}}}
+    },
+    {
+      "if": {
+        "properties": {"metric_id": {"const": "perceptual_embedding_distance"}},
+        "required": ["metric_id"]
+      },
+      "then": {"properties": {"unit": {"const": "embedding_distance"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {
+            "enum": [
+              "critical_failure", "core_conformance", "terminal_processing", "interoperability_exact",
+              "fidelity_primary_failure", "terminal_status_correct", "provenance_complete",
+              "wire_roundtrip_exact", "topology_exact_ge_8p"
+            ]
+          }
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "boolean"}}}
+    },
+    {
+      "if": {
+        "properties": {"status": {"const": "EVALUABLE"}, "metric_id": {"const": "usability_class"}},
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"enum": ["A", "B", "C", "D"]}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {
+            "enum": ["topologically_critical_omission_count", "package_size_bytes"]
+          }
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "integer", "minimum": 0}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {
+            "enum": [
+              "occupancy_iou", "openings_recall_ge_8p", "cross_view_agreement_real",
+              "cross_view_agreement_oracle", "cross_view_eligible_coverage", "ray_overflow_fraction",
+              "learned_decoder_quality"
+            ]
+          }
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "number", "minimum": 0.0, "maximum": 1.0}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {"enum": ["normal_median_deg", "normal_p95_deg"]}
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "number", "minimum": 0.0, "maximum": 180.0}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "EVALUABLE"},
+          "metric_id": {
+            "enum": [
+              "hd95_symmetric_p", "chamfer_symmetric_rms_p", "relative_volume_error",
+              "relative_area_error", "encode_seconds", "decode_seconds", "curvature_error",
+              "spectral_error", "perceptual_embedding_distance"
+            ]
+          }
+        },
+        "required": ["status", "metric_id"]
+      },
+      "then": {"properties": {"value": {"type": "number", "minimum": 0.0}}}
+    }
+  ]
+}

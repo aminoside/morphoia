@@ -1,0 +1,176 @@
+algorithm_id: MVX-GROUP-STRATIFIED-HMAC-2
+algorithm_version: 2.0.0
+selection_seed_commitment_policy:
+  generation_stage: G1 immediately before selection, after the P1a plus P2a eligible-records root is sealed
+  generator: external process-locked custodian using a cryptographically secure 256-bit source distinct from the split salt
+  publication: Publish SHA-256(selection seed) before selection; keep the preimage inaccessible until G6 raw outputs are sealed.
+  p0_state: No production selection seed or preimage exists in the repository or shared development workspace at G0.
+split_salt_commitment_policy:
+  generation_stage: G1 immediately before assignment, after the P1a plus P2a eligible-records root is sealed
+  generator: external process-locked custodian using a cryptographically secure 256-bit source
+  publication: Publish SHA-256(salt) before assignment; never publish or expose the plaintext before G6 raw outputs are sealed.
+  p0_state: No production salt or preimage exists in the repository or shared development workspace at G0.
+custody_precommit:
+  algorithm_id: MVX-G1-PRECOMMIT-SHA256-1
+  required_before_secret_use: true
+  immutable_fields: [protocol_root_sha256, snapshot_sha256, eligible_records_sha256, configuration_sha256, selection_seed_sha256, split_salt_sha256, freeze_id]
+  publication_rule: Publish and durably back up exactly one precommit before either production secret is passed to selection or split code; retry may only reuse byte-identical content.
+  verification_rule: Cohort freeze recomputes both commitments from the supplied preimages and verifies every bound root and configuration before selection.
+  anti_grinding: A conflicting precommit or any attempt to substitute either secret fails G1; secrets are never regenerated to seek a favourable cohort, split or milestone.
+  publication_receipt:
+    algorithm_id: MVX-G1-PRECOMMIT-ED25519-RECEIPT-2
+    required_before_selection: true
+    bindings: [precommit_sha256, freeze_id, protocol_root_sha256, snapshot_sha256, eligible_records_sha256, trusted_publishers_sha256, registry_epoch, g0_seal_sha256, publisher_id, store_kind, object_version_id, sequence, published_at]
+    verifier: Production loads only docs/mvx/validation/p0/trusted-publishers.json, verifies its raw-byte SHA-256 against the exact seal.files entry, requires a matching PASS G0 verdict, then performs offline Ed25519 verification. Caller-supplied registries, synthetic keys/stores and non-production keys are rejected.
+    time_and_version_bounds: published_at must be strictly after sealed_at in the bound G0 seal, no more than five minutes in the future, inside the publisher validity window; sequence and object_version_id must satisfy that publisher's frozen bounds.
+    offline_limit: The verifier proves signature, frozen authority, bindings and declared bounds, but cannot independently prove remote WORM persistence or global sequence monotonicity without the external publisher ledger. G1 therefore remains BLOCKED while the normative registry has no production publisher and is not READY_FOR_PRODUCTION_G1.
+    current_G0_state: Synthetic verification is implemented, but no production publisher key is authorised; G1 remains blocked until an external WORM publisher key is added under protocol change control.
+bootstrap_seed_hex: 713b129c8347d84b37685cca9ef0734e6599ca90691b852eacb561f4bef148f0
+bootstrap_seed_scope: Fixed public seed used for P2a complexity-quantile tie-breaking, pre-registered statistical bootstraps and public deterministic checks; never used as a production selection seed or split salt.
+hmac_message_encoding: MVX-HMAC-RANK-LP-UTF8-1; strict UTF-8 fields, each preceded by its unsigned 64-bit big-endian byte length, after explicit algorithm ID, version and fixed domain fields.
+
+unit: lineage_id
+atomic_group: leakage_group_id
+leakage_group_definition: Connected component induced by exact or near duplicate, source UID, assembly, creator group where required, physical object, anatomical subject, and derived variants.
+
+required_input_fields:
+  - lineage_id
+  - leakage_group_id
+  - dataset
+  - topology_status
+  - creator_group
+  - category
+  - source_uid
+  - complexity_quantile
+  - selection_stratum
+  - eligibility
+
+ratios:
+  development: 0.50
+  calibration: 0.20
+  blind: 0.30
+
+procedure:
+  - Reject every duplicate lineage_id record, including an identical duplicate.
+  - Coalesce every leakage_group_id before assignment.
+  - Reserve complete pre-declared datasets or categories for OOD where specified.
+  - Apply any pre-registered forced_split reservations before scoring unassigned groups; conflicting reservations inside one leakage group are an error.
+  - In production, require the exact confirmation_targets total/development/calibration/blind counts independently inside every selection stratum.
+  - Order complete leakage groups by the length-prefixed domain-separated HMAC-SHA256 tuple [exact-order, stratum, leakage_group_id].
+  - Solve development and calibration counts by exact two-dimensional integer dynamic programming; blind is the remaining count. Forced OOD groups have blind as their only allowed transition.
+  - Build an exact suffix-feasibility oracle, then traverse groups in HMAC order. Among transitions that preserve the exact quotas, minimise the frozen forced-aware prefix imbalance objective; break exact score ties by the length-prefixed domain-separated HMAC tuple [exact-choice, leakage_group_id, split].
+  - If any exact stratum quota is infeasible because of an atomic group, fail G1. Never split a group, relax a quota or inspect outcomes.
+  - Record every non-zero secondary-cell deviation. If a frozen discrepancy bound is exceeded, fail G1 and version the protocol; never resample a salt or move a group after inspecting outcomes.
+
+production_secondary_balance:
+  dimensions: [dataset, topology_status, complexity_quantile, category]
+  target_rule: Largest-remainder 50/20/30 inside each selection stratum and cell. Only pre-declared forced Objaverse OOD categories add their forced blind count before allocating the unforced remainder.
+  prefix_objective: After each feasible transition, compare the processed cell counts with the largest-remainder projection of its frozen final cell shares. Sum weight times squared delta divided by max(1, desired count).
+  weights: {dataset: 20, topology_status: 10, complexity_quantile: 5, category: 1}
+  absolute_discrepancy_bound:
+    dataset_topology_complexity: max(largest atomic-group contribution to the cell, 2, ceil(0.10 times target cell count))
+    category: max(largest atomic-group contribution to the cell, 2, ceil(0.20 times target cell count))
+    selection_stratum_and_total: 0
+  enforcement: Any cell/split above its bound fails G1. The salt is never regenerated to obtain a more favourable allocation.
+
+development_diagnostic_fallback_objective:
+  normative_scope: Synthetic conformance vectors and non-production diagnostic calls that do not provide confirmation_targets. The production CLI always supplies exact targets and may never use this fallback.
+  formula: Sum over dimensions d and cells c of weight[d] times ((observed_after[s,d,c] - target[s,d,c]) / max(1,target[s,d,c])) squared, plus overshoot penalty.
+  weights:
+    total_count: 100
+    selection_stratum: 40
+    dataset: 20
+    topology_status: 10
+    complexity_quantile: 5
+    category: 1
+  overshoot_penalty: 1000 times (max(0, observed_total_after - target_total) / max(1,target_total)) squared
+  comparison: IEEE-754 binary64; exact equality is broken only by the HMAC rule.
+  infeasible_exact_ratio: Not applicable to production; exact-target infeasibility fails G1. In diagnostic fallback only, preserve leakage groups and record deviations.
+
+stratification_priority:
+  - total_count
+  - selection_stratum
+  - dataset
+  - topology_status
+  - complexity_quantile
+  - category
+
+objaverse:
+  total: 600
+  development: 300
+  calibration: 120
+  blind: 180
+  blind_iid: 120
+  blind_ood: 60
+  reserve: all remaining eligible unique Objaverse lineages in the sealed P1 snapshot
+  protections:
+    - no source UID or geometric near-duplicate across splits
+    - no protected creator group across splits
+    - OOD categories absent from development and calibration
+
+confirmation_targets:
+  fixtures_C0_C9: {total: 100, development: 50, calibration: 20, blind: 30}
+  objaverse: {total: 600, development: 300, calibration: 120, blind: 180}
+  modelnet40: {total: 100, development: 50, calibration: 20, blind: 30}
+  thingi10k: {total: 80, development: 40, calibration: 16, blind: 24}
+  google_scanned_objects: {total: 60, development: 30, calibration: 12, blind: 18}
+  human_anatomy: {total: 50, development: 25, calibration: 10, blind: 15}
+  plants: {total: 10, development: 5, calibration: 2, blind: 3}
+
+nested_milestones:
+  rule: Every earlier milestone is an exact subset of the development/calibration records in the next milestone; blind records are never used before G5.
+  n12: {fixtures_C0_C9: 8, objaverse: 2, google_scanned_objects: 1, human_anatomy: 1}
+  n30: {fixtures_C0_C9: 15, objaverse: 8, modelnet40: 2, google_scanned_objects: 3, human_anatomy: 2}
+  n100: {fixtures_C0_C9: 60, objaverse: 16, modelnet40: 6, thingi10k: 6, google_scanned_objects: 6, human_anatomy: 6}
+  n300: {fixtures_C0_C9: 70, objaverse: 125, modelnet40: 30, thingi10k: 25, google_scanned_objects: 20, human_anatomy: 25, plants: 5}
+  n1000: {fixtures: 100, real_lineages: 900}
+
+output:
+  canonicalisation: RFC_8785_JCS restricted to valid Unicode, I-JSON integers, strings, booleans, null, arrays and objects; floating-point manifest values are forbidden
+  hash: SHA-256
+  required_manifest_fields: [algorithm_id, algorithm_version, implementation_sha256, protocol_root_sha256, freeze_id, precommit_sha256, publication_receipt_sha256, selection_seed_sha256, salt_sha256, input_records_sha256, assignments, counts, deviations]
+  eligible_record_commitment: MVX-P2A-ELIGIBLE-RECORDS-JCS-BINARY64-1 uses the restricted no-float JCS domain; an optional six-value bbox is replaced only inside the commitment payload by six exact finite IEEE-754 binary64 hexadecimal strings.
+  blind_access_control: Blind assignment metadata, selected blind identities and paths are stored separately and are unavailable to development jobs until G5 PASS.
+  public_manifest: Contains only algorithm/version, protocol root, freeze/precommit references, both secret commitments, cohort/split counts and private_manifest_sha256; it contains no lineage, source UID or path.
+  visible_manifest: Contains development and calibration records only; absence from this view must not reveal membership because the complete eligible pool and selected blind cohort are not published before unlock.
+  private_manifest: Contains every selected assignment and source reference; stored by the custodian and committed by SHA-256.
+  blindness_model: process_locked_access_controlled; it prevents accidental/tuning-job access but is not claimed as independent human double blinding
+  production_quota_deviation: must be zero for total and every confirmation-target stratum; any non-zero value blocks G1
+  publication_transaction: Private and release bundles are schema-checked and hash-manifested in sibling staging directories, fsynced, atomically renamed and completed by a freeze receipt written last. A byte-identical rerun returns ALREADY_COMMITTED; a partial or conflicting target fails closed or resumes without recomputing selection.
+
+selection:
+  specification: selection-spec.yaml
+  algorithm_id: MVX-COHORT-HMAC-2
+  algorithm_version: 2.0.0
+  exact_final_targets_required: true
+  selection_seed_use: HMAC ranking only; no outcome-dependent selection is permitted
+  reserve: Every eligible, non-selected leakage group in the frozen snapshot remains reserve in its selection stratum.
+
+pre_split_requirements:
+  - P1a census is sealed.
+  - P2a has produced format_status, topology_status and complexity_quantile without MVX outcome access.
+  - Every selected leakage group has exactly one selection_stratum.
+  - The custody boundary has passed its synthetic leakage dry run.
+  - One immutable custody precommit binds the sealed snapshot, eligible-record root, exact-target configuration and both distinct secret commitments before either secret is used.
+  - A production-authorised Ed25519 receipt binds the exact precommit and frozen publisher-registry bytes before cohort freeze; remote WORM persistence remains an external custody assertion checked at G1.
+
+near_duplicate_screen_D4:
+  purpose: candidate generation only, never automatic non-duplicate adjudication
+  rigid_alignment_required: true
+  candidate_if_any:
+    - normalised_symmetric_chamfer_at_most: 0.002
+    - occupancy_iou_at_least: 0.995
+  action: Manual or independently reviewed adjudication before split; uncertain pairs remain grouped.
+
+test_vectors:
+  - id: singletons_balanced
+    groups: 10
+    expected_no_leakage: true
+    expected_deterministic_repeat: true
+  - id: oversized_leakage_group
+    groups: 4
+    one_group_lineages: 3
+    expected_exact_ratio: false
+    expected_group_preserved: true
+  - id: duplicate_input_order
+    expected_same_assignment_after_permutation: true

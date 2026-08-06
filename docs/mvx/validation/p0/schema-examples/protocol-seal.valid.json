@@ -1,0 +1,13 @@
+{
+  "seal_version": "1.0.0",
+  "protocol_id": "MORPHOIA-MVX-FEASIBILITY-V1",
+  "protocol_version": "1.0.2-p0",
+  "hash_algorithm": "SHA-256",
+  "canonicalisation": "deterministic JSON",
+  "predecessor_protocol_root_sha256": "a56a7dcfd5b02c60b28035a1830e40a2d30993f50bd390c3207f30f55b4b994d",
+  "predecessor_seal_sha256": "599288d882b8970b5942e014da816a606427a0caa9932cb511d2fee412408b58",
+  "supersession_record_sha256": "60a2403b21b6ae5b62e02d9bcaa6bd6375f7e091ca218573039b4a536ee5375b",
+  "sealed_at": "2026-08-06T12:00:00Z",
+  "files": [{"path": "example", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}],
+  "protocol_root_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+}

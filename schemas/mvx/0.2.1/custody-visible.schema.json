@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/custody-visible.schema.json",
+  "title": "MVX development and calibration custody view",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schema_version", "protocol_root_sha256", "algorithm_id", "algorithm_version", "freeze_id", "precommit_sha256", "publication_receipt_sha256", "private_manifest_commitment_sha256", "assignments", "counts"],
+  "properties": {
+    "schema": {"const": "MVX-CUSTODY-VISIBLE"},
+    "schema_version": {"const": "1.0.0"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "algorithm_id": {"const": "MVX-GROUP-STRATIFIED-HMAC-2"},
+    "algorithm_version": {"const": "2.0.0"},
+    "freeze_id": {"type": "string", "pattern": "^mvx-g1-[0-9a-f]{32}$"},
+    "precommit_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "publication_receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "private_manifest_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "assignments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["lineage_id", "leakage_group_id", "split", "selection_stratum", "blind_scope", "creator_group", "source_uid"],
+        "properties": {
+          "lineage_id": {"type": "string", "minLength": 1},
+          "leakage_group_id": {"type": "string", "minLength": 1},
+          "split": {"enum": ["development", "calibration"]},
+          "selection_stratum": {"type": "string", "minLength": 1},
+          "blind_scope": {"const": "NONE"},
+          "creator_group": {"type": "string", "minLength": 1},
+          "source_uid": {"type": "string", "minLength": 1},
+          "source_path": {"type": "string", "minLength": 1},
+          "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "dataset": {"type": "string", "minLength": 1},
+          "category": {"type": "string", "minLength": 1},
+          "topology_status": {"enum": ["V", "O", "N", "U"]},
+          "complexity_quantile": {"type": "integer", "minimum": 0, "maximum": 9}
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["development", "calibration"],
+      "properties": {
+        "development": {"type": "integer", "minimum": 0},
+        "calibration": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/failure-ledger.schema.json",
+  "title": "MVX failure ledger record 0.2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "failure_id", "run_id", "lineage_id", "error_code", "severity", "classification", "decision"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "failure_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "lineage_id": {"type": "string", "minLength": 1},
+    "error_code": {
+      "enum": [
+        "MVX-I001", "MVX-I002", "MVX-I003", "MVX-I004", "MVX-I005", "MVX-I006", "MVX-I007", "MVX-I008",
+        "MVX-R001", "MVX-R002", "MVX-R003", "MVX-R004", "MVX-G001", "MVX-G002", "MVX-G003",
+        "MVX-E001", "MVX-E002", "MVX-V001", "MVX-V002", "MVX-V003", "MVX-P001", "MVX-P002", "MVX-P003",
+        "MVX-S001", "MVX-S002", "MVX-X001", "MVX-X002"
+      ]
+    },
+    "severity": {"enum": ["INFO", "LIMIT", "PRIMARY_FAILURE", "CRITICAL"]},
+    "classification": {"type": "string", "minLength": 1},
+    "root_cause": {"type": ["string", "null"]},
+    "corrective_action": {"type": ["string", "null"]},
+    "decision": {"enum": ["OPEN", "FIXED", "DECLARED_LIMIT", "CLAIM_RESTRICTED", "PROFILE_REJECTED", "FORMAT_REVISION"]},
+    "evidence_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"severity": {"const": "CRITICAL"}}, "required": ["severity"]},
+      "then": {"properties": {"evidence_sha256": {"type": "string"}}}
+    }
+  ]
+}

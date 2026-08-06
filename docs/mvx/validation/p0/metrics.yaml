@@ -1,0 +1,375 @@
+dictionary_version: 0.1.1
+distance_normalisation: p is the isotropic MVX pixel pitch in source physical units
+aggregation_unit: lineage_id
+failed_reconstructions: retained in denominators
+scope_contract:
+  LINEAGE: Exactly one source lineage and run/profile observation; lineage_id is mandatory.
+  AGGREGATE: A deterministic population or stratum aggregation over lineage records; aggregation metadata and lineage/cluster denominators are mandatory.
+
+metrics:
+  - id: critical_failure
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: false
+    definition: "Per-lineage critical failure only: silent corruption, crash, hang, unsafe behaviour, unverifiable provenance, unexplained analytic error or silent critical topology loss affecting this lineage. It never encodes a population-level rule; population blockers are counted separately by release_critical_blocker_count. An isolated declared fidelity miss is instead fidelity_primary_failure."
+  - id: core_conformance
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: true
+    definition: All applicable C0-C6 and C8 analytic and wire contracts pass.
+  - id: terminal_processing
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: true
+    definition: Every input produces a bounded deterministic terminal status.
+  - id: interoperability_exact
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: true
+    definition: Independent readers and writers preserve every represented wire value and reject targeted invalid files consistently.
+  - id: fidelity_primary_failure
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: false
+    definition: One or more frozen geometric or topological thresholds are missed for an eligible lineage; the outcome remains in the denominator and changes usability class.
+  - id: usability_class
+    level: primary
+    scope: LINEAGE
+    type: enum
+    unit: class
+    values: [A, B, C, D]
+    definition: A training-ready; B learning-coarse; C exchange-only; D reject.
+  - id: terminal_status_correct
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: true
+    definition: Processing ends with the deterministic expected PASS, DECLARED_LIMIT, REJECT or FAIL status and never silently disappears.
+  - id: provenance_complete
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: true
+    definition: Source, lineage, licence, code, environment, protocol and parameters are recoverable and hash-verified.
+  - id: wire_roundtrip_exact
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: true
+    definition: Applicable D/R16/R32 serialization contracts pass bit-exactly or within the explicitly normative quantisation bound.
+  - id: hd95_symmetric_p
+    level: primary
+    scope: LINEAGE
+    type: float
+    unit: pixel_pitch
+    range: {minimum: 0.0}
+    direction: max
+    threshold: 2.0
+    population: eligible_real_lineages
+    definition: Symmetric 95th percentile Hausdorff surface distance divided by p.
+  - id: topology_exact_ge_8p
+    level: primary
+    scope: LINEAGE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: true
+    population: structures_at_least_8p
+    definition: Component count, genus, boundary loops and annotated openings are preserved for structures at least 8p wide.
+  - id: chamfer_symmetric_rms_p
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: pixel_pitch
+    range: {minimum: 0.0}
+    direction: max
+    threshold: 0.75
+  - id: occupancy_iou
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: min
+    threshold: 0.99
+  - id: normal_median_deg
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: degree
+    range: {minimum: 0.0, maximum: 180.0}
+    direction: max
+    threshold: 1.0
+  - id: normal_p95_deg
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: degree
+    range: {minimum: 0.0, maximum: 180.0}
+    direction: max
+    threshold: 5.0
+  - id: relative_volume_error
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: relative_error
+    range: {minimum: 0.0}
+    direction: max
+    threshold: 0.02
+    population: verified_closed_solids
+  - id: relative_area_error
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: relative_error
+    range: {minimum: 0.0}
+    direction: max
+    threshold: 0.05
+  - id: openings_recall_ge_8p
+    level: primary
+    scope: LINEAGE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: min
+    threshold: 0.95
+  - id: cross_view_agreement_real
+    level: primary
+    scope: LINEAGE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: min
+    threshold: 0.9999
+    exclusions: [UNKNOWN, overflow_gap, epsilon_cv_boundary]
+  - id: cross_view_agreement_oracle
+    level: primary
+    scope: LINEAGE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: equal
+    threshold: 1.0
+    population: fixtures_C0_C5
+  - id: cross_view_eligible_coverage
+    level: primary
+    scope: LINEAGE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: min
+    threshold: 0.95
+    population: verified_closed_solids
+  - id: ray_overflow_fraction
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: max
+    threshold: 0.001
+    population: calibration
+  - id: topologically_critical_omission_count
+    level: primary
+    scope: LINEAGE
+    type: integer
+    unit: count
+    range: {minimum: 0}
+    direction: equal
+    threshold: 0
+  - id: loader_throughput_ratio
+    level: primary_for_AI_authorisation
+    scope: AGGREGATE
+    type: float
+    unit: ratio_to_cost_matched_contiguous_tensor
+    range: {minimum: 0.0}
+    direction: min
+    threshold: 0.80
+  - id: gpu_idle_median
+    level: secondary
+    scope: AGGREGATE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: max
+    threshold: 0.20
+  - id: package_size_bytes
+    level: secondary
+    scope: LINEAGE
+    type: integer
+    unit: byte
+    range: {minimum: 0}
+    direction: minimise_on_Pareto_front
+  - id: encode_seconds
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: second
+    range: {minimum: 0.0}
+    direction: minimise_on_Pareto_front
+  - id: decode_seconds
+    level: secondary
+    scope: LINEAGE
+    type: float
+    unit: second
+    range: {minimum: 0.0}
+    direction: minimise_on_Pareto_front
+  - id: overfit32_loss_reduction
+    level: primary_for_AI_authorisation
+    scope: AGGREGATE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: min
+    threshold: 0.90
+  - id: terminal_usable_fraction
+    level: release
+    scope: AGGREGATE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: min
+    threshold: 0.95
+    definition: Number of attempted in-domain real lineages with a correct terminal status and usability A, B or C, divided by all attempted in-domain real lineages. FAIL, missing and class D remain in the denominator. Analytic fixtures and pre-split exclusions are not in this ratio.
+  - id: class_A_fraction_verified_closed
+    level: release
+    scope: AGGREGATE
+    type: float
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: min
+    threshold: 0.90
+    definition: Number of attempted topology-status V real lineages assigned class A, divided by every attempted topology-status V real lineage. FAIL, missing and classes B/C/D remain in the denominator.
+  - id: release_critical_blocker_count
+    level: release
+    scope: AGGREGATE
+    type: integer
+    unit: count
+    range: {minimum: 0}
+    direction: equal
+    threshold: 0
+    definition: Aggregate count of unique release blocker IDs after deterministic deduplication by root-cause evidence hash. It is the only metric that incorporates population-level release rule failures, alongside aggregated silent corruption, security or lineage leakage, unexplained oracle error, provenance loss, forbidden blind access and critical topology omission evidence.
+  - id: systematic_stratum_disadvantage
+    level: release
+    scope: AGGREGATE
+    type: boolean
+    unit: boolean
+    direction: equal
+    threshold: false
+    definition: True when any claim-bearing stratum meets the pre-registered disadvantage rule in statistical-plan.yaml. Small transfer-only strata cannot pass a claim and are reported as insufficient evidence rather than silently pooled.
+  - id: curvature_error
+    level: exploratory
+    type: float
+    scope: LINEAGE
+    unit: inverse_pixel_pitch
+    range: {minimum: 0.0}
+    direction: minimise
+  - id: spectral_error
+    level: exploratory
+    type: float
+    scope: LINEAGE
+    unit: normalized_l2_error
+    range: {minimum: 0.0}
+    direction: minimise
+  - id: perceptual_embedding_distance
+    level: exploratory
+    type: float
+    scope: LINEAGE
+    unit: embedding_distance
+    range: {minimum: 0.0}
+    direction: minimise
+  - id: learned_decoder_quality
+    level: exploratory
+    type: float
+    scope: LINEAGE
+    unit: ratio
+    range: {minimum: 0.0, maximum: 1.0}
+    direction: maximise
+
+analytic_contracts:
+  C0: arrays and counts exact; JCS manifest identical outside declared volatile fields
+  C1: TOUCH exact; AMBIGUOUS inside epsilon; ENTER and EXIT exact outside epsilon
+  C2: one component, genus one, tunnel at least 8p preserved, HD95 at most 1.5p
+  C3: shell or gap recall at least 95 percent at 4p; sub-pixel loss always declared
+  C4: UUID, transforms, instances and source mapping preserved exactly
+  C5: counts, ranks, gaps and OVERFLOW exact
+  C6: no defective open or non-manifold object labelled VERIFIED_SOLID
+  C7: UNKNOWN distinct from EMPTY; blocks only X-SCAN claim
+  C8: HD95 at most 2p and opening recall at least 95 percent for openings at least 8p
+  C9: A-to-B transitions exact outside epsilon; blocks only multiclasse claim
+
+usability_classification:
+  evaluation_order: [D, A, B, C]
+  D:
+    if_any:
+      - terminal status is FAIL or missing
+      - silent corruption, unsafe behaviour, provenance failure or false VERIFIED_SOLID
+      - no valid MVX package or no bounded deterministic reconstruction where one is mandatory
+    label: unusable_or_reject
+  A:
+    if_all:
+      - terminal status is PASS
+      - provenance_complete, wire_roundtrip_exact and terminal_status_correct are true
+      - hd95_symmetric_p is at most 2.0
+      - chamfer_symmetric_rms_p is at most 0.75
+      - occupancy_iou is at least 0.99
+      - topology_exact_ge_8p is true
+      - openings_recall_ge_8p is at least 0.95 when applicable
+      - topologically_critical_omission_count equals 0
+      - relative_volume_error is at most 0.02 for V inputs
+      - relative_area_error is at most 0.05
+    label: training_ready
+  B:
+    if_all:
+      - terminal status is PASS or DECLARED_LIMIT
+      - provenance_complete and terminal_status_correct are true
+      - hd95_symmetric_p is at most 4.0
+      - occupancy_iou is at least 0.97
+      - all connected components and openings at least 16p are preserved
+      - topologically_critical_omission_count equals 0
+      - every missed 8p-to-16p detail is explicitly declared in the loss report
+    label: learning_coarse
+  C:
+    if_all:
+      - terminal status is PASS or DECLARED_LIMIT
+      - provenance_complete and terminal_status_correct are true
+      - the package and reconstruction are bounded and inspectable
+      - class A and class B conditions are not met
+    label: exchange_only
+  fidelity_primary_failure: true exactly when an eligible in-domain lineage is not class A because one or more frozen fidelity or topology thresholds fail; D failures may additionally be critical.
+
+release_aggregation:
+  deduplication_key_for_blockers: SHA-256 of canonical root-cause class, affected invariant and evidence hashes
+  denominator_unit: lineage_id after leakage grouping
+  no_file_or_pose_weighting: true
+  zero_denominator: NOT_EVALUABLE and release FAIL
+
+reporting:
+  required_summaries: [median, P90, P95, P99, maximum]
+  uncertainty: 95_percent_lineage_clustered_bootstrap
+  required_strata: [dataset, topology_status, source, complexity_quantile]
+  show_individual_values: true
+  show_failures_in_denominator: true
+  pre_specified_visuals: distance_maps_for_fixed_success_failure_and_random_cases
+  cross_view_sample_budget_per_lineage: 200000

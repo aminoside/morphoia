@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1.0",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "calibration_split_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "code_commit": "abcdef1",
+  "profile": "LP3",
+  "N": 512,
+  "K_by_view": {"X": 4, "Y": 4, "Z": 4},
+  "precision": "D+R32+R16",
+  "channels": [
+    "Z", "Nx", "Ny", "Nz", "valid", "normal_valid", "event_kind",
+    "observation_state", "count_status", "ray_flags", "total_count_value",
+    "retained_count", "omitted_count", "crossing_count", "source_rank"
+  ],
+  "decoder": {"id": "occupancy-reference", "version": "0.1.0", "parameters": {}},
+  "threshold_policy": "EQUAL_OR_STRICTER_THAN_P0",
+  "thresholds": {
+    "hd95_symmetric_p": {"direction": "max", "p0_value": 2.0, "frozen_value": 2.0},
+    "chamfer_symmetric_rms_p": {"direction": "max", "p0_value": 0.75, "frozen_value": 0.75},
+    "occupancy_iou": {"direction": "min", "p0_value": 0.99, "frozen_value": 0.99},
+    "normal_median_deg": {"direction": "max", "p0_value": 1.0, "frozen_value": 1.0},
+    "normal_p95_deg": {"direction": "max", "p0_value": 5.0, "frozen_value": 5.0},
+    "relative_volume_error": {"direction": "max", "p0_value": 0.02, "frozen_value": 0.02},
+    "relative_area_error": {"direction": "max", "p0_value": 0.05, "frozen_value": 0.05},
+    "topology_exact_ge_8p": {"direction": "equal", "p0_value": true, "frozen_value": true},
+    "openings_recall_ge_8p": {"direction": "min", "p0_value": 0.95, "frozen_value": 0.95},
+    "cross_view_agreement_real": {"direction": "min", "p0_value": 0.9999, "frozen_value": 0.9999},
+    "cross_view_agreement_oracle": {"direction": "equal", "p0_value": 1.0, "frozen_value": 1.0},
+    "cross_view_eligible_coverage": {"direction": "min", "p0_value": 0.95, "frozen_value": 0.95},
+    "ray_overflow_fraction": {"direction": "max", "p0_value": 0.001, "frozen_value": 0.001},
+    "topologically_critical_omission_count": {"direction": "equal", "p0_value": 0, "frozen_value": 0}
+  },
+  "fallback_rules": ["R32 when R16 non-inferiority fails"],
+  "evidence_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+}

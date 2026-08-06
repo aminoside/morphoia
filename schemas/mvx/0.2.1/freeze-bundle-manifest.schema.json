@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/freeze-bundle-manifest.schema.json",
+  "title": "MVX G1 freeze bundle manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "algorithm_id", "bundle_kind", "freeze_id", "protocol_root_sha256", "precommit_sha256", "files", "state"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "algorithm_id": {"const": "MVX-G1-BUNDLE-SHA256-1"},
+    "bundle_kind": {"enum": ["PRIVATE", "RELEASE"]},
+    "freeze_id": {"type": "string", "pattern": "^mvx-g1-[0-9a-f]{32}$"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "precommit_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "files": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sha256", "size_bytes"],
+        "properties": {
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "size_bytes": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "state": {"const": "PREPARED"}
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/freeze-receipt.schema.json",
+  "title": "MVX G1 two-phase freeze receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "algorithm_id", "freeze_id", "protocol_root_sha256", "precommit_sha256", "publication_receipt_sha256", "private_bundle_manifest_sha256", "release_bundle_manifest_sha256", "state"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "algorithm_id": {"const": "MVX-G1-TWO-PHASE-COMMIT-1"},
+    "freeze_id": {"type": "string", "pattern": "^mvx-g1-[0-9a-f]{32}$"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "precommit_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "publication_receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "private_bundle_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "release_bundle_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "state": {"const": "COMMITTED"}
+  }
+}

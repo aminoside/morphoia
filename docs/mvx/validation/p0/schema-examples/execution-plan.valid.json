@@ -1,0 +1,48 @@
+{
+  "schema": "MVX-EXECUTION-PLAN",
+  "schema_version": "0.1.0",
+  "work_id_algorithm": "MVX-WORK-ID-SHA256-JCS-1",
+  "plan_id": "MVX-P3-LIN-001",
+  "stages": [
+    {
+      "work_id": "83adae2991a9909d619162c96ec64b06592cb052d8b53066a941196e61e7ccdb",
+      "identity": {
+        "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "split_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "lineage_id": "LIN-001",
+        "profile_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "config_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "code_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "environment_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "phase_id": "P3",
+        "stage_id": "encode",
+        "split": "development",
+        "open_once": false
+      },
+      "required_artifacts": ["run_manifest", "mvx_package"],
+      "depends_on_work_ids": []
+    },
+    {
+      "work_id": "b8aba9983be2d2c995b3d389ca0f60f4af0cc90847ecf14e030845e3efdade2a",
+      "identity": {
+        "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "split_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "lineage_id": "LIN-001",
+        "profile_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "config_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "code_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "environment_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "phase_id": "P3",
+        "stage_id": "reconstruct",
+        "split": "development",
+        "open_once": false
+      },
+      "required_artifacts": ["run_manifest", "reconstruction"],
+      "depends_on_work_ids": [
+        "83adae2991a9909d619162c96ec64b06592cb052d8b53066a941196e61e7ccdb"
+      ]
+    }
+  ]
+}

@@ -13,6 +13,7 @@ for trustworthy AI-assisted parametric CAD reconstruction and interoperability.*
 |---|---:|---|
 | Façade `.morph` et IR canonique | 0.1 | expérimental, non normatif |
 | SDK Python | 0.2.0.dev0 | pré-alpha |
+| MVX validation | P0 / G0 | pré-enregistrement exécutable |
 | Python | ≥ 3.12 | version minimale prise en charge |
 
 ## Statut
@@ -65,6 +66,7 @@ STEP, d'Open CASCADE ou des noyaux industriels.
 - [Références](docs/phase2/references.md)
 - [Contribuer](CONTRIBUTING.md)
 - [Historique des versions](CHANGELOG.md)
+- [Morphoia Visual Exchange (MVX)](docs/mvx/README.md)
 
 ## Architecture étudiée
 

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/selection-manifest.schema.json",
+  "title": "MVX private deterministic cohort selection manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "visibility", "algorithm_id", "algorithm_version", "freeze_algorithm_id", "protocol_root_sha256", "snapshot_sha256", "freeze_id", "precommit_sha256", "publication_receipt_sha256", "selection_seed_sha256", "selected_counts", "reserve_counts", "selected_lineages", "reserve_lineages", "ood_categories", "ood_lineage_count", "private_manifest_commitment_sha256", "hashes", "code_hashes"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "visibility": {"const": "PRIVATE_CUSTODY_ONLY"},
+    "algorithm_id": {"const": "MVX-COHORT-HMAC-2"},
+    "algorithm_version": {"const": "2.0.0"},
+    "freeze_algorithm_id": {"const": "MVX-G1-FREEZE-1"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "snapshot_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "freeze_id": {"type": "string", "pattern": "^mvx-g1-[0-9a-f]{32}$"},
+    "precommit_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "publication_receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "selection_seed_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "selected_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixtures_C0_C9", "objaverse", "modelnet40", "thingi10k", "google_scanned_objects", "human_anatomy", "plants"],
+      "properties": {
+        "fixtures_C0_C9": {"const": 100},
+        "objaverse": {"const": 600},
+        "modelnet40": {"const": 100},
+        "thingi10k": {"const": 80},
+        "google_scanned_objects": {"const": 60},
+        "human_anatomy": {"const": 50},
+        "plants": {"const": 10}
+      }
+    },
+    "reserve_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixtures_C0_C9", "objaverse", "modelnet40", "thingi10k", "google_scanned_objects", "human_anatomy", "plants"],
+      "properties": {
+        "fixtures_C0_C9": {"type": "integer", "minimum": 0},
+        "objaverse": {"type": "integer", "minimum": 1},
+        "modelnet40": {"type": "integer", "minimum": 0},
+        "thingi10k": {"type": "integer", "minimum": 0},
+        "google_scanned_objects": {"type": "integer", "minimum": 0},
+        "human_anatomy": {"type": "integer", "minimum": 0},
+        "plants": {"type": "integer", "minimum": 0}
+      }
+    },
+    "selected_lineages": {"type": "array", "minItems": 1000, "maxItems": 1000, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "reserve_lineages": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "ood_categories": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "ood_lineage_count": {"const": 60},
+    "private_manifest_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_records_sha256", "selected_lineages_sha256", "reserve_lineages_sha256", "private_split_sha256", "visible_milestones_sha256"],
+      "properties": {
+        "input_records_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "selected_lineages_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "reserve_lineages_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "private_split_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "visible_milestones_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "code_hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["freeze_cohort_sha256", "select_cohort_sha256", "select_visible_milestones_sha256", "build_split_manifest_sha256", "create_custody_release_sha256"],
+      "properties": {
+        "freeze_cohort_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "select_cohort_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "select_visible_milestones_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "build_split_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "create_custody_release_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

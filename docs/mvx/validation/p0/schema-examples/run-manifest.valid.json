@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "RUN-001",
+  "work_id": "4444444444444444444444444444444444444444444444444444444444444444",
+  "execution_plan_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+  "lineage_id": "LIN-001",
+  "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "protocol_root_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "split_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "code_commit": "abcdef1",
+  "container_digest": null,
+  "environment_digest": "sha256:example",
+  "backend": "reference",
+  "seed_hex": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "parameters": {"N": 512, "K": 4},
+  "terminal_status": "PASS",
+  "error_code": "MVX-OK",
+  "artifact_hashes": {
+    "canonical_source": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "mvx_package": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "reconstruction": "1111111111111111111111111111111111111111111111111111111111111111",
+    "loss_report": "2222222222222222222222222222222222222222222222222222222222222222",
+    "metric_table": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "volatile": {}
+}

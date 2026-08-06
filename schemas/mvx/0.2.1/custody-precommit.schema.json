@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/custody-precommit.schema.json",
+  "title": "MVX G1 public custody precommit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "algorithm_id", "protocol_root_sha256", "snapshot_sha256",
+    "eligible_records_sha256", "configuration_sha256", "selection_seed_sha256",
+    "split_salt_sha256", "freeze_id", "state"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "algorithm_id": {"const": "MVX-G1-PRECOMMIT-SHA256-1"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "snapshot_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "eligible_records_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "configuration_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "selection_seed_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "split_salt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "freeze_id": {"type": "string", "pattern": "^mvx-g1-[0-9a-f]{32}$"},
+    "state": {"const": "PRECOMMITTED"}
+  }
+}

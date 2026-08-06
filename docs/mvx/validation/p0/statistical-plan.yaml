@@ -1,0 +1,214 @@
+plan_version: 1.0.2-p0
+inference_unit: lineage_id
+dependence_cluster: leakage_group_id, expanded to creator_group for Objaverse when it joins more than one leakage group
+ray_as_inference_unit: prohibited
+confidence_level: 0.95
+
+failure_rate:
+  method: exact_Clopper_Pearson_on_binary_cluster_outcome_with_any_lineage_failure_marking_the_cluster_failed
+  safety_bound: one_sided_upper
+  reference_zero_failure_bounds:
+    n60: 0.0487
+    n180: 0.0165
+  prohibition: Do not use n270 or n300 as if all quota-sampled lineages came from one IID population. Report the realised number of independent clusters in every stratum.
+
+continuous_metrics:
+  summaries: [median, P90, P95, P99, maximum]
+  interval: lineage_clustered_bootstrap_95_percent
+  bootstrap_seed_source: split-spec.yaml
+  minimum_resamples: 10000
+
+paired_profile_comparisons:
+  pairing: same_lineage_same_pose_same_grid
+  interval: paired_lineage_clustered_bootstrap_95_percent
+  non_inferiority_R16_vs_R32:
+    hd95_margin_p: 0.25
+    occupancy_iou_margin: -0.005
+    additional_critical_topology_losses: 0
+    decision: Entire 95 percent confidence interval must remain inside every margin.
+
+exact_blockers:
+  rationale: Exact wire, analytic, safety and release invariants do not become probabilistic merely because a corpus is sampled. They are evaluated outside Holm and any single violation blocks the applicable gate.
+  missing: A missing or non-evaluable exact-blocker record is a blocker.
+  rules:
+    - id: no_lineage_critical_failure
+      metric_id: critical_failure
+      scope: LINEAGE
+      pass_if: every attempted lineage value equals false
+    - id: core_conformance_exact
+      metric_id: core_conformance
+      scope: LINEAGE
+      pass_if: every applicable analytic fixture value equals true
+    - id: interoperability_exact
+      metric_id: interoperability_exact
+      scope: LINEAGE
+      pass_if: every applicable golden-file lineage value equals true
+    - id: wire_roundtrip_exact
+      metric_id: wire_roundtrip_exact
+      scope: LINEAGE
+      pass_if: every applicable lineage value equals true
+    - id: cross_view_oracle_exact
+      metric_id: cross_view_agreement_oracle
+      scope: LINEAGE
+      pass_if: every applicable oracle lineage value equals 1.0
+    - id: no_topologically_critical_omission
+      metric_id: topologically_critical_omission_count
+      scope: LINEAGE
+      pass_if: every attempted lineage value equals 0
+    - id: no_population_release_blocker
+      metric_id: release_critical_blocker_count
+      scope: AGGREGATE
+      pass_if: aggregate value equals 0
+
+multiplicity:
+  method: Holm_step_down
+  alpha: 0.05
+  family_expansion: Each hypothesis is evaluated separately in every listed claim-bearing stratum. The hypothesis key is family, hypothesis id and stratum; all expanded keys participate in that family's Holm correction.
+  families:
+    real_geometry_and_topology:
+      hypotheses:
+        - id: hd95_failure_rate
+          metric_id: hd95_symmetric_p
+          scope: LINEAGE
+          strata: [objaverse_IID, objaverse_OOD]
+          estimand: independent-cluster failure probability; a cluster fails when any retained lineage has hd95_symmetric_p greater than 2.0
+          H0: cluster_failure_probability >= 0.10
+          H1: cluster_failure_probability < 0.10
+          test: exact_one_sided_binomial_lower_tail
+          null_boundary: 0.10
+          direction: smaller_is_better
+          raw_p_value: BinomialCDF(observed_failed_clusters, observed_independent_clusters, 0.10)
+          missing: MISSING, FAILED or NOT_EVALUABLE makes its independent cluster fail
+        - id: topology_failure_rate
+          metric_id: topology_exact_ge_8p
+          scope: LINEAGE
+          strata: [objaverse_IID, objaverse_OOD]
+          estimand: independent-cluster failure probability; a cluster fails when any retained applicable lineage value is not true
+          H0: cluster_failure_probability >= 0.10
+          H1: cluster_failure_probability < 0.10
+          test: exact_one_sided_binomial_lower_tail
+          null_boundary: 0.10
+          direction: smaller_is_better
+          raw_p_value: BinomialCDF(observed_failed_clusters, observed_independent_clusters, 0.10)
+          missing: MISSING, FAILED or NOT_EVALUABLE makes its independent cluster fail
+        - id: openings_failure_rate
+          metric_id: openings_recall_ge_8p
+          scope: LINEAGE
+          strata: [objaverse_IID, objaverse_OOD]
+          estimand: independent-cluster failure probability among applicable lineages; a cluster fails when any retained applicable lineage has recall below 0.95
+          H0: cluster_failure_probability >= 0.10
+          H1: cluster_failure_probability < 0.10
+          test: exact_one_sided_binomial_lower_tail
+          null_boundary: 0.10
+          direction: smaller_is_better
+          raw_p_value: BinomialCDF(observed_failed_clusters, observed_independent_clusters, 0.10)
+          missing: MISSING, FAILED or NOT_EVALUABLE for an applicable lineage makes its independent cluster fail; a structurally inapplicable lineage is excluded before seeing outcomes and reported
+        - id: cross_view_agreement_failure_rate
+          metric_id: cross_view_agreement_real
+          scope: LINEAGE
+          strata: [objaverse_IID, objaverse_OOD]
+          estimand: independent-cluster failure probability; a cluster fails when any retained lineage has agreement below 0.9999
+          H0: cluster_failure_probability >= 0.10
+          H1: cluster_failure_probability < 0.10
+          test: exact_one_sided_binomial_lower_tail
+          null_boundary: 0.10
+          direction: smaller_is_better
+          raw_p_value: BinomialCDF(observed_failed_clusters, observed_independent_clusters, 0.10)
+          missing: MISSING, FAILED or NOT_EVALUABLE makes its independent cluster fail
+        - id: cross_view_coverage_failure_rate
+          metric_id: cross_view_eligible_coverage
+          scope: LINEAGE
+          strata: [objaverse_IID, objaverse_OOD]
+          estimand: independent-cluster failure probability; a cluster fails when any retained lineage has eligible coverage below 0.95
+          H0: cluster_failure_probability >= 0.10
+          H1: cluster_failure_probability < 0.10
+          test: exact_one_sided_binomial_lower_tail
+          null_boundary: 0.10
+          direction: smaller_is_better
+          raw_p_value: BinomialCDF(observed_failed_clusters, observed_independent_clusters, 0.10)
+          missing: MISSING, FAILED or NOT_EVALUABLE makes its independent cluster fail
+    release_population:
+      hypotheses:
+        - id: terminal_usable_rate
+          metric_id: terminal_usable_fraction
+          scope: AGGREGATE
+          strata: [objaverse_IID, objaverse_OOD]
+          estimand: independent-cluster success probability; a cluster succeeds only when every retained in-domain lineage has a correct terminal status and class A, B or C
+          H0: cluster_success_probability <= 0.95
+          H1: cluster_success_probability > 0.95
+          test: exact_one_sided_binomial_upper_tail
+          null_boundary: 0.95
+          direction: larger_is_better
+          raw_p_value: 1-BinomialCDF(observed_successful_clusters-1, observed_independent_clusters, 0.95)
+          missing: MISSING, FAILED, class D or an incorrect terminal status makes its independent cluster fail
+        - id: verified_closed_class_A_rate
+          metric_id: class_A_fraction_verified_closed
+          scope: AGGREGATE
+          strata: [objaverse_IID, objaverse_OOD]
+          estimand: independent-cluster success probability among topology-status V lineages; a cluster succeeds only when every retained V lineage is class A
+          H0: cluster_success_probability <= 0.90
+          H1: cluster_success_probability > 0.90
+          test: exact_one_sided_binomial_upper_tail
+          null_boundary: 0.90
+          direction: larger_is_better
+          raw_p_value: 1-BinomialCDF(observed_successful_clusters-1, observed_independent_clusters, 0.90)
+          missing: MISSING, FAILED or class B, C or D for a V lineage makes its independent cluster fail; clusters without a V lineage are inapplicable and reported
+  algorithm: Within each expanded family, sort raw p-values ascending with hypothesis key as exact-tie key; compare p_(i) to 0.05/(m-i+1). Reject H0 while the comparison passes, stop at the first non-rejection and retain that and every later H0. Every required H0 must be rejected to demonstrate its family.
+  exploratory_adjustment: none_but_labelled_exploratory
+  no_threshold_selection_on_blind: true
+
+AI_and_loader_authorisation:
+  multiplicity: outside_Holm_deterministic_gate
+  repetitions: 5 pre-declared benchmark or training seeds fixed before calibration freeze
+  loader_throughput_ratio:
+    scope: AGGREGATE
+    pass_if: minimum of five EVALUABLE repetition aggregates is at least 0.80
+  overfit32_loss_reduction:
+    scope: AGGREGATE
+    pass_if: minimum of five EVALUABLE seed aggregates is at least 0.90
+  gpu_idle_median:
+    scope: AGGREGATE
+    reporting_only: true
+  missing: Any missing, failed or non-evaluable required repetition fails authorisation.
+
+objaverse:
+  summaries: [micro, macro_by_category]
+  clustering: [creator_group, category]
+  category_level_claims: prohibited_when_cell_size_below_predeclared_minimum
+  primary_population_claim: eligible unique Objaverse lineages represented by the frozen P1 snapshot and supported-domain rules
+  blind_estimand: creator-cluster-weighted class-A and terminal-usable fractions on the 180 blind Objaverse lineages; IID and OOD are always separate
+
+missing_outcomes:
+  denominator: always_included
+  primary: failure_unless_expected_terminal_reject_for_status_O_N_U
+  secondary: worst_case_sensitivity_analysis
+
+calibration_and_blind:
+  development: algorithm, decoder and diagnostic development
+  calibration: one final freeze of N, K, precision, channels, decoder and thresholds
+  blind: one confirmatory run with no relaxation or object-specific tuning
+
+negative_results:
+  publish_included_excluded_rejected_and_non_evaluable_counts: true
+  failed_profile_may_be_removed_while_another_passes: true
+  post_hoc_analyses_must_be_labelled: true
+
+population_inference:
+  real_blind_lineages: 270
+  analytic_blind_fixtures: 30
+  fixed_descriptive_mixture_weights:
+    objaverse: 0.6666666666666666
+    modelnet40: 0.1111111111111111
+    thingi10k: 0.0888888888888889
+    google_scanned_objects: 0.0666666666666667
+    human_anatomy: 0.0555555555555556
+    plants: 0.0111111111111111
+  rule: Analytic fixtures are exact conformance cases and never increase effective n. The 270-real-lineage weighted mixture is descriptive, not an IID population claim. Dataset estimates and cluster counts are reported separately. Only Objaverse has a pre-registered population claim; the other datasets are transfer stress strata unless a future version adds adequate independent samples.
+
+systematic_disadvantage:
+  claim_bearing_strata: [objaverse_IID, objaverse_OOD]
+  minimum_independent_clusters: 15
+  absolute_class_A_margin: 0.10
+  rule: A claim-bearing stratum is systematically disadvantaged if its class-A fraction is more than 10 percentage points below the complementary claim-bearing population and the one-sided 95 percent cluster-bootstrap upper bound for that difference is below -0.10, or if it has any silent critical topology omission.
+  small_strata: Any stratum below 15 independent clusters is INSUFFICIENT_EVIDENCE and may appear only in transfer-stress reporting, never inside a passing population claim.
+  calibration_action: A systematic disadvantage blocks G4 for the affected claim; the profile may advance only after a pre-blind claim restriction, never by pooling the stratum away.

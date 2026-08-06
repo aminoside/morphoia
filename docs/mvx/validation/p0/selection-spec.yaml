@@ -1,0 +1,80 @@
+algorithm_id: MVX-COHORT-HMAC-2
+algorithm_version: 2.0.0
+purpose: Select exactly 1000 independent lineages plus a same-stratum reserve without consulting any MVX outcome.
+unit: lineage_id
+atomic_unit: leakage_group_id
+seed_source: G1 external custodian under split-spec.yaml selection_seed_commitment_policy, generated only after the eligible-records root is sealed
+
+required_input_fields:
+  - lineage_id
+  - leakage_group_id
+  - selection_stratum
+  - category
+  - creator_group
+  - source_uid
+  - eligibility
+
+allowed_selection_strata:
+  fixtures_C0_C9: 100
+  objaverse: 600
+  modelnet40: 100
+  thingi10k: 80
+  google_scanned_objects: 60
+  human_anatomy: 50
+  plants: 10
+
+complexity_quantile:
+  input: source-only materialised triangle count from P2a, before any MVX operation or repair
+  population: all ELIGIBLE lineages within one selection_stratum in the frozen snapshot
+  tie_break_algorithm_id: MVX-COMPLEXITY-TIEBREAK-HMAC-1
+  tie_break_algorithm_version: 1.0.0
+  tie_break_seed: The fixed public split-spec.yaml bootstrap_seed_hex, never the production selection seed or split salt.
+  ordering: ascending triangle count, then the length-prefixed domain-separated HMAC-SHA256 public-bootstrap rank of lineage_id for an exact tie
+  circularity_guard: P2a can therefore materialise and seal complexity_quantile before either production secret exists.
+  formula: For zero-based rank r among n lineages, q=min(9,floor(10*r/n)).
+  missing_or_resource_limited_count: topology_status U and complexity_quantile 9, with the resource limitation retained; never exclude merely because it is large
+
+procedure:
+  - Reject every repeated lineage_id, cross-stratum leakage group, missing required value or non-ELIGIBLE record offered as selectable.
+  - Sort candidates only by HMAC-SHA256 rankings keyed by the frozen selection seed; source ordering is irrelevant.
+  - For every exact quota use deterministic subset-sum dynamic programming over complete leakage groups; keep the first reachable combination in HMAC order.
+  - If an exact quota cannot be reached, fail G1. Never split a leakage group, silently change a quota or inspect an MVX outcome.
+  - Put every eligible non-selected leakage group into the reserve of its original stratum.
+
+objaverse_ood:
+  target: 60
+  unit: complete category
+  rule: Choose an exact HMAC-ranked subset of complete categories totalling 60 lineages, reserve every selected category exclusively for blind, and exclude it from IID allocation.
+  failure: If 60 cannot be represented by complete eligible categories and leakage groups, fail G1 and version the protocol rather than adapting after outcome access.
+
+nested_milestones:
+  source: split-spec.yaml nested_milestones
+  algorithm_id: MVX-VISIBLE-MILESTONES-HMAC-2
+  algorithm_version: 2.0.0
+  ranking: Within development/calibration and each required stratum, rank leakage groups with the length-prefixed domain-separated HMAC tuple [visible-milestone-stratum, stratum, leakage_group_id].
+  rule: Use exact subset-sum over complete leakage groups to build n12, then add records for n30, n100 and n300. Never remove an earlier record. Blind and reserve records are ineligible before G5.
+  infeasible: Fail the affected gate; no blind record may fill an early milestone.
+
+outcome_firewall:
+  forbidden_inputs:
+    - any MVX package or reconstruction
+    - fidelity, topology-preservation or timing outcome
+    - terminal status from an MVX encode/decode run
+    - human preference based on a reconstruction
+  allowed_pre_split_inputs:
+    - source identity, licence and provenance
+    - source format and size
+    - P2a format/topology/complexity audit produced without MVX
+    - lineage, duplicate, creator and category metadata
+
+implementation:
+  module: morphoia.mvx.selection
+  functions: [complexity_tie_rank, select_cohort, select_visible_milestones]
+  arithmetic: integer subset sums and bytewise HMAC ranks; no floating-point comparison
+  hmac_message_encoding: MVX-HMAC-RANK-LP-UTF8-1; strict UTF-8 fields, each preceded by its unsigned 64-bit big-endian byte length, with explicit algorithm ID, version and fixed domain fields
+  test_vector: tests/test_mvx_selection.py
+
+outputs:
+  private_selection_manifest: Contains selected and reserve lineage IDs, OOD categories, freeze_id, precommit_sha256, publication_receipt_sha256 and the selection-seed commitment; visibility PRIVATE_CUSTODY_ONLY; committed but never published before G5.
+  public_output: Only aggregate target counts, freeze/precommit/publication-receipt references, both secret commitments and the custody commitment from custody-public.schema.json.
+  prohibition: No selected_lineages, reserve_lineages, blind category identity, source UID or path may appear in a public or development artefact before G5.

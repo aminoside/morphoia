@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/calibration-freeze.schema.json",
+  "title": "MVX G4 calibration freeze 0.2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "protocol_root_sha256", "calibration_split_sha256", "code_commit",
+    "profile", "N", "K_by_view", "precision", "channels", "decoder",
+    "threshold_policy", "thresholds", "fallback_rules", "evidence_sha256"
+  ],
+  "$defs": {
+    "thresholdMax2": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "max"}, "p0_value": {"const": 2.0}, "frozen_value": {"type": "number", "minimum": 0.0, "maximum": 2.0}}},
+    "thresholdMax075": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "max"}, "p0_value": {"const": 0.75}, "frozen_value": {"type": "number", "minimum": 0.0, "maximum": 0.75}}},
+    "thresholdMin099": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "min"}, "p0_value": {"const": 0.99}, "frozen_value": {"type": "number", "minimum": 0.99, "maximum": 1.0}}},
+    "thresholdMax1": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "max"}, "p0_value": {"const": 1.0}, "frozen_value": {"type": "number", "minimum": 0.0, "maximum": 1.0}}},
+    "thresholdMax5": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "max"}, "p0_value": {"const": 5.0}, "frozen_value": {"type": "number", "minimum": 0.0, "maximum": 5.0}}},
+    "thresholdMax002": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "max"}, "p0_value": {"const": 0.02}, "frozen_value": {"type": "number", "minimum": 0.0, "maximum": 0.02}}},
+    "thresholdMax005": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "max"}, "p0_value": {"const": 0.05}, "frozen_value": {"type": "number", "minimum": 0.0, "maximum": 0.05}}},
+    "thresholdEqualTrue": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "equal"}, "p0_value": {"const": true}, "frozen_value": {"const": true}}},
+    "thresholdMin095": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "min"}, "p0_value": {"const": 0.95}, "frozen_value": {"type": "number", "minimum": 0.95, "maximum": 1.0}}},
+    "thresholdMin09999": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "min"}, "p0_value": {"const": 0.9999}, "frozen_value": {"type": "number", "minimum": 0.9999, "maximum": 1.0}}},
+    "thresholdEqual1": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "equal"}, "p0_value": {"const": 1.0}, "frozen_value": {"const": 1.0}}},
+    "thresholdMax0001": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "max"}, "p0_value": {"const": 0.001}, "frozen_value": {"type": "number", "minimum": 0.0, "maximum": 0.001}}},
+    "thresholdEqual0": {"type": "object", "additionalProperties": false, "required": ["direction", "p0_value", "frozen_value"], "properties": {"direction": {"const": "equal"}, "p0_value": {"const": 0}, "frozen_value": {"const": 0}}}
+  },
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "calibration_split_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "code_commit": {"type": "string", "minLength": 7},
+    "profile": {"type": "string", "minLength": 1},
+    "N": {"type": "integer", "enum": [256, 512, 1024, 2048, 4096]},
+    "K_by_view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["X", "Y", "Z"],
+      "properties": {
+        "X": {"type": "integer", "enum": [2, 4, 8, 16]},
+        "Y": {"type": "integer", "enum": [2, 4, 8, 16]},
+        "Z": {"type": "integer", "enum": [2, 4, 8, 16]}
+      }
+    },
+    "precision": {"enum": ["D", "R32", "R16", "D+R32", "D+R16", "D+R32+R16"]},
+    "channels": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 17,
+      "uniqueItems": true,
+      "items": {"enum": ["Z", "Nx", "Ny", "Nz", "valid", "normal_valid", "event_kind", "source_rank", "label_before", "label_after", "observation_state", "count_status", "ray_flags", "total_count_value", "retained_count", "omitted_count", "crossing_count"]},
+      "allOf": [
+        {"contains": {"const": "Z"}},
+        {"contains": {"const": "Nx"}},
+        {"contains": {"const": "Ny"}},
+        {"contains": {"const": "Nz"}},
+        {"contains": {"const": "valid"}},
+        {"contains": {"const": "normal_valid"}},
+        {"contains": {"const": "event_kind"}},
+        {"contains": {"const": "observation_state"}},
+        {"contains": {"const": "count_status"}},
+        {"contains": {"const": "ray_flags"}},
+        {"contains": {"const": "total_count_value"}},
+        {"contains": {"const": "retained_count"}},
+        {"contains": {"const": "omitted_count"}},
+        {"contains": {"const": "crossing_count"}}
+      ]
+    },
+    "decoder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "parameters"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "parameters": {"type": "object"}
+      }
+    },
+    "threshold_policy": {"const": "EQUAL_OR_STRICTER_THAN_P0"},
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hd95_symmetric_p", "chamfer_symmetric_rms_p", "occupancy_iou",
+        "normal_median_deg", "normal_p95_deg", "relative_volume_error",
+        "relative_area_error", "topology_exact_ge_8p", "openings_recall_ge_8p",
+        "cross_view_agreement_real", "cross_view_agreement_oracle",
+        "cross_view_eligible_coverage", "ray_overflow_fraction",
+        "topologically_critical_omission_count"
+      ],
+      "properties": {
+        "hd95_symmetric_p": {"$ref": "#/$defs/thresholdMax2"},
+        "chamfer_symmetric_rms_p": {"$ref": "#/$defs/thresholdMax075"},
+        "occupancy_iou": {"$ref": "#/$defs/thresholdMin099"},
+        "normal_median_deg": {"$ref": "#/$defs/thresholdMax1"},
+        "normal_p95_deg": {"$ref": "#/$defs/thresholdMax5"},
+        "relative_volume_error": {"$ref": "#/$defs/thresholdMax002"},
+        "relative_area_error": {"$ref": "#/$defs/thresholdMax005"},
+        "topology_exact_ge_8p": {"$ref": "#/$defs/thresholdEqualTrue"},
+        "openings_recall_ge_8p": {"$ref": "#/$defs/thresholdMin095"},
+        "cross_view_agreement_real": {"$ref": "#/$defs/thresholdMin09999"},
+        "cross_view_agreement_oracle": {"$ref": "#/$defs/thresholdEqual1"},
+        "cross_view_eligible_coverage": {"$ref": "#/$defs/thresholdMin095"},
+        "ray_overflow_fraction": {"$ref": "#/$defs/thresholdMax0001"},
+        "topologically_critical_omission_count": {"$ref": "#/$defs/thresholdEqual0"}
+      }
+    },
+    "fallback_rules": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "evidence_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/lineage.schema.json",
+  "title": "MVX lineage decision 0.2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "lineage_id", "leakage_group_id", "member_object_ids", "decision_basis"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "lineage_id": {"type": "string", "minLength": 1},
+    "leakage_group_id": {"type": "string", "minLength": 1},
+    "member_object_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+    "decision_basis": {
+      "type": "array",
+      "items": {"enum": ["D1_EXACT", "D2_PACKAGE", "D3_GEOMETRIC", "D4_DERIVED", "SOURCE_ASSERTION", "ADJUDICATION"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "candidate_pair_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "adjudication": {"type": ["string", "null"]},
+    "reviewer_roles": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+  }
+}

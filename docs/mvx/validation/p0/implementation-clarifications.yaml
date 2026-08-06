@@ -1,0 +1,50 @@
+clarifications_version: 1.0.2-p0
+authority: Pre-registered implementation clarification; it may narrow claims but may not contradict MVX 0.2.1.
+
+corpus_claim:
+  decision: Use the experimental plan's 1000-unit composition for a feasibility v1 only.
+  not_claimed: The stronger multi-domain population claim described in addendum 0.2.1.
+  consequence: Domain-specific confidence claims are limited by the number of real blind lineages in each stratum.
+
+milestone_100:
+  decision: Use 60 fixtures, 16 Objaverse lineages, 6 ModelNet40 mesh proxies, 6 Thingi10K mesh proxies, 6 scans and 6 anatomies.
+  limitation: ModelNet40 and Thingi10K meshes are CAD-like stress proxies, not native parametric CAD. No native CAD-intent claim is made in feasibility v1.
+
+milestone_300_blinding:
+  decision: Use 70 observable fixtures plus 230 observable real lineages.
+  reason: The remaining 30 of the final 100 fixtures stay blind until G5; the same fixture cannot be both calibrated and blind.
+
+fixture_C0_count:
+  normative_confirmatory: 10
+  development_only_additional: 10
+  reason: Reconciles the addendum's 10-per-case corpus with the plan's request for 20 C0 geometries without inflating confirmatory n.
+
+threshold_freeze:
+  P0: Freezes endpoint definitions, candidate maximum error thresholds, directions, multiplicity, and the selection rule.
+  G4: Freezes the selected N, K, precision, channel set, decoder and any stricter threshold before blind opening.
+  prohibited: Relaxing any P0 threshold or changing its direction after calibration or blind inspection.
+
+critical_failure_term:
+  decision: Separate per-lineage primary fidelity failure from release-critical blocker.
+  reason: A 90 percent class-A release rule is incompatible with treating every declared non-A object as a release-critical blocker.
+
+population_bound:
+  decision: Never use n=270 as a single IID population. Report failure bounds on independent leakage/creator clusters by dataset and IID/OOD stratum; report the fixed 270-lineage mixture only descriptively. Objaverse is the only pre-registered population claim.
+
+phase_order:
+  decision: Run P1a census, then P2a source-only format/topology/complexity audit, then G1 selection/split, then P2b/P3 development work.
+  reason: topology_status and complexity_quantile are mandatory split fields and cannot be invented before ingestion audit.
+
+blind_custody:
+  decision: At G1, after the eligible-records root is sealed, an external custodian generates distinct fresh selection-seed and split-salt preimages outside the repository/shared workspace, publishes both SHA-256 commitments before use, and keeps the preimages plus complete selected/blind mapping inaccessible until G5.
+  limitation: This is a process-locked holdout, not independent human double blinding. A synthetic leakage dry run and absence of every production preimage are mandatory at G0; the external private store is mandatory before selection at G1.
+
+octahedral_normal_decode:
+  input: ux and uy are UNORM16 values mapped exactly to fx=2*ux/65535-1 and fy=2*uy/65535-1 in binary64.
+  initial: nx=fx; ny=fy; nz=1-abs(fx)-abs(fy).
+  unfold: If nz is negative, set t=-nz, then nx=nx-t when nx is nonnegative else nx=nx+t; ny=ny-t when ny is nonnegative else ny=ny+t. Keep nz unchanged.
+  zero_sign: zero is nonnegative.
+  normalise: Divide nx, ny, nz by their Euclidean norm in binary64; the all-zero intermediate is INDETERMINATE.
+  output_conversion: Convert once to the declared output dtype using round-to-nearest ties-to-even.
+  encoder_quantisation: After the normative octahedral projection and fold, quantise each component independently as q=clamp(floor((0.5*p+0.5)*65535+0.5),0,65535). No global angular-error search or alternative code selection is permitted.
+  test_requirement: Poles, seams, signed zero and adversarial near-seam vectors are golden test vectors before R16 is claimed.

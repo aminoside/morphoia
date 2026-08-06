@@ -1,0 +1,69 @@
+rules_version: 0.1.1
+primary_branch: as_is
+
+topology_status:
+  V:
+    label: VERIFIED_SOLID
+    definition: Closed, manifold and consistently oriented geometry that passes the selected solid verifier.
+    primary_outcome: geometric_and_topological_fidelity
+  O:
+    label: OPEN_OR_PARTIAL
+    definition: Open surface or partial acquisition.
+    primary_outcome: correct_SURFACE_or_UNKNOWN_and_no_false_solid
+  N:
+    label: NON_MANIFOLD_OR_INVALID
+    definition: Non-manifold, self-inconsistent or otherwise invalid topology.
+    primary_outcome: correct_rejection_or_bounded_diagnostic_and_no_false_solid
+  U:
+    label: UNDETERMINED
+    definition: Status cannot be safely established within declared resource or evidence bounds.
+    primary_outcome: explicit_UNKNOWN_and_no_false_solid
+
+include_if:
+  - source bytes are available and SHA-256 can be computed
+  - dataset and source provenance are recoverable
+  - licence is recorded, including unknown when internal analysis is legally permitted but redistribution is not
+  - package can be assigned exactly one lineage_id or is held pending adjudication before split
+  - format is within the declared P2 reader matrix or receives an explicit unsupported terminal status
+
+eligible_for_selection_only_if:
+  - P2a source-only audit assigns exactly one V, O, N or U topology_status
+  - complexity_quantile is computed from source-only triangle count by the exact rank rule in selection-spec.yaml
+  - selection_stratum is one of the seven exact quotas in selection-spec.yaml
+  - creator_group and source_uid are non-empty; an unknown creator receives a unique source-scoped surrogate and is never pooled as a common unknown creator
+
+exclude_before_split_if:
+  - source is unavailable
+  - source hash cannot be stabilised
+  - package is an archive fragment rather than an object package
+  - no lawful internal research use can be established
+  - lineage cannot be resolved before split
+  - protected health information is present
+
+never_exclude_because:
+  - geometry is open, non-manifold, degenerate or difficult
+  - reconstruction fidelity is poor
+  - MVX overflows
+  - the decoder fails
+  - a profile produces an unfavourable metric
+
+lineage_grouping:
+  exact_blob: automatic_merge
+  common_source_uid_or_package: automatic_merge_or_review
+  geometric_near_duplicate: candidate_review
+  lod_remesh_transform_reexport: same_lineage
+  assembly_components_and_instances: same_lineage
+  repeated_scan_of_same_physical_object: same_lineage
+  anatomy_from_same_subject_or_specimen: same_lineage
+
+repair_policy:
+  as_is_result_mandatory: true
+  secondary_repaired_branch_allowed: true
+  overwrite_primary_outcome: false
+  preserve_lineage: true
+  required_fields: [tool, version, operation, parameters, input_sha256, output_sha256]
+
+redistribution:
+  internal_eligibility_is_not_publication_permission: true
+  per_object_licence_required: true
+  public_golden_corpus_requires_separate_redistribution_review: true

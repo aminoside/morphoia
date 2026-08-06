@@ -9,6 +9,7 @@ from pathlib import Path
 
 from . import __version__
 from .compiler import compile_document
+from .mvx.cli import configure_mvx_parser
 from .validator import validate_file
 
 
@@ -101,6 +102,7 @@ def build_parser() -> argparse.ArgumentParser:
     compile_parser.add_argument("source")
     compile_parser.add_argument("-o", "--output", required=True)
     compile_parser.set_defaults(function=command_compile)
+    configure_mvx_parser(subparsers)
     return parser
 
 

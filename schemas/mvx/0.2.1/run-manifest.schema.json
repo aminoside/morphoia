@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/run-manifest.schema.json",
+  "title": "MVX run manifest record 0.2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "run_id", "work_id", "execution_plan_sha256", "lineage_id",
+    "source_sha256", "protocol_root_sha256",
+    "split_sha256", "code_commit", "environment_digest", "backend", "seed_hex",
+    "parameters", "terminal_status", "error_code", "artifact_hashes"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "work_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "execution_plan_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "lineage_id": {"type": "string", "minLength": 1},
+    "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "split_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "code_commit": {"type": "string", "minLength": 7},
+    "container_digest": {"type": ["string", "null"]},
+    "environment_digest": {"type": "string", "minLength": 1},
+    "backend": {"type": "string", "minLength": 1},
+    "seed_hex": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "parameters": {"type": "object"},
+    "terminal_status": {"enum": ["PASS", "DECLARED_LIMIT", "REJECT", "FAIL"]},
+    "error_code": {
+      "enum": [
+        "MVX-OK", "MVX-I001", "MVX-I002", "MVX-I003", "MVX-I004",
+        "MVX-I005", "MVX-I006", "MVX-I007", "MVX-I008", "MVX-R001",
+        "MVX-R002", "MVX-R003", "MVX-R004", "MVX-G001", "MVX-G002",
+        "MVX-G003", "MVX-V001", "MVX-V002", "MVX-V003", "MVX-P001",
+        "MVX-P002", "MVX-P003", "MVX-S001", "MVX-S002", "MVX-X001"
+      ]
+    },
+    "artifact_hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_source", "mvx_package", "reconstruction", "loss_report", "metric_table"],
+      "properties": {
+        "canonical_source": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "mvx_package": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "reconstruction": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "loss_report": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "metric_table": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "volatile": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"terminal_status": {"const": "PASS"}}, "required": ["terminal_status"]},
+      "then": {
+        "properties": {
+          "error_code": {"const": "MVX-OK"},
+          "artifact_hashes": {
+            "properties": {
+              "canonical_source": {"type": "string"},
+              "mvx_package": {"type": "string"},
+              "reconstruction": {"type": "string"},
+              "loss_report": {"type": "string"},
+              "metric_table": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"terminal_status": {"const": "DECLARED_LIMIT"}}, "required": ["terminal_status"]},
+      "then": {"properties": {"error_code": {"pattern": "^MVX-(R00[1-4]|G00[1-3])$"}}}
+    },
+    {
+      "if": {"properties": {"terminal_status": {"const": "REJECT"}}, "required": ["terminal_status"]},
+      "then": {"properties": {"error_code": {"pattern": "^MVX-(I00[1-8]|V00[1-3])$"}}}
+    },
+    {
+      "if": {"properties": {"terminal_status": {"const": "FAIL"}}, "required": ["terminal_status"]},
+      "then": {"properties": {"error_code": {"pattern": "^MVX-(P00[1-3]|S00[1-2]|X001)$"}}}
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "MVX-STAGE-CHECKPOINT",
+  "schema_version": "0.1.0",
+  "execution_plan_sha256": "40c91a3912f1ade3ac66eff9c93327a80bfa0fd5a626d8827a7de1990a2fcf91",
+  "work_id": "b8aba9983be2d2c995b3d389ca0f60f4af0cc90847ecf14e030845e3efdade2a",
+  "identity": {
+    "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "split_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "lineage_id": "LIN-001",
+    "profile_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "config_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "code_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "environment_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "phase_id": "P3",
+    "stage_id": "reconstruct",
+    "split": "development",
+    "open_once": false
+  },
+  "attempt": 1,
+  "state": "TERMINAL",
+  "terminal_status": "PASS",
+  "error_code": "MVX-OK",
+  "interruption_reason": null,
+  "artifact_hashes": {
+    "run_manifest": "4444444444444444444444444444444444444444444444444444444444444444",
+    "reconstruction": "5555555555555555555555555555555555555555555555555555555555555555"
+  },
+  "dependency_checkpoint_hashes": {
+    "83adae2991a9909d619162c96ec64b06592cb052d8b53066a941196e61e7ccdb": "da4af14d21cdac1241bc511b58244e426d0b161a4a684d5e800a4b4f59ccb163"
+  },
+  "previous_checkpoint_sha256": null,
+  "volatile": {}
+}

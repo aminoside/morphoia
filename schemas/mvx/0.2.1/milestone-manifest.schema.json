@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/milestone-manifest.schema.json",
+  "title": "MVX visible nested milestone manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "visibility", "algorithm_id", "algorithm_version", "protocol_root_sha256", "freeze_id", "precommit_sha256", "publication_receipt_sha256", "selection_seed_sha256", "private_manifest_commitment_sha256", "milestones"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "visibility": {"const": "DEVELOPMENT_CALIBRATION_ONLY"},
+    "algorithm_id": {"const": "MVX-VISIBLE-MILESTONES-HMAC-2"},
+    "algorithm_version": {"const": "2.0.0"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "freeze_id": {"type": "string", "pattern": "^mvx-g1-[0-9a-f]{32}$"},
+    "precommit_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "publication_receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "selection_seed_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "private_manifest_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "milestones": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["n12", "n30", "n100", "n300"],
+      "properties": {
+        "n12": {"type": "array", "minItems": 12, "maxItems": 12, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "n30": {"type": "array", "minItems": 30, "maxItems": 30, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "n100": {"type": "array", "minItems": 100, "maxItems": 100, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "n300": {"type": "array", "minItems": 300, "maxItems": 300, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}

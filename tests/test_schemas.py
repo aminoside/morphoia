@@ -24,13 +24,10 @@ def load_schema(name: str) -> dict:
 
 class SchemaTests(unittest.TestCase):
     def test_all_schemas_are_valid_draft_2020_12(self) -> None:
-        for name in (
-            "morphoia-ir-0.1.schema.json",
-            "morphoia-loss-register-0.1.schema.json",
-            "morphoia-backend-manifest-0.1.schema.json",
-        ):
-            with self.subTest(name=name):
-                Draft202012Validator.check_schema(load_schema(name))
+        paths = sorted((ROOT / "schemas").rglob("*.schema.json"))
+        for path in paths:
+            with self.subTest(name=str(path.relative_to(ROOT))):
+                Draft202012Validator.check_schema(json.loads(path.read_text(encoding="utf-8")))
 
     def test_compiled_example_matches_ir_schema(self) -> None:
         result = validate_file(ROOT / "examples" / "mounting_plate.morph")

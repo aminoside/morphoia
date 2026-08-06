@@ -1,0 +1,116 @@
+criteria_version: 1.0.2-p0
+verdicts: [PASS, CONDITIONAL, FAIL]
+conditional_rule: CONDITIONAL may advance only when the condition does not affect any downstream gate and has an owner and due gate.
+
+gates:
+  G0:
+    name: PROTOCOL
+    pass_if:
+      - all normative P0 files are present and schema-valid
+      - protocol seal verifies
+      - endpoints, eligibility, missing data, repairs, stopping, replacement, multiplicity, split and roles are frozen
+      - the custody firewall passes a synthetic dry run and no production split secret is committed
+      - semantic closure checks prove endpoint/dictionary equality, validate all schema examples and close the checkpoint/restart contracts
+    authorises: P1a descriptive census and P2a source-only ingestion audit; no cohort selection, split or MVX outcome run
+  G1:
+    name: CORPUS
+    pass_if:
+      - P1a snapshot and P2a source-only format/topology/complexity audit are sealed
+      - exactly 1000 lineages plus reserve have source hash, lineage, licence and custody-protected split
+      - no known duplicate crosses a split
+      - every Objaverse GLB in the sealed P1 snapshot receives ingestion audit
+      - one precommit has a valid signed immutable-store publication receipt before secret use; the terminal transaction receipt verifies; public/visible manifests expose no blind identity or path
+    authorises: P2b reader qualification and P3 development/calibration runs; blind remains locked
+  G2:
+    name: MVX_0_3
+    pass_if:
+      - 100 nested units complete reproducibly
+      - C0-C2 pass
+      - D, R32 and R16 contracts pass
+      - executable encode, decode, validate, compare and estimate exist
+      - publishable golden files exist
+    authorises: publish executable MVX 0.3 evidence
+  G3:
+    name: CORE
+    pass_if:
+      - C0-C6 and C8 pass
+      - no unresolved analytic ambiguity remains
+      - binary closed-solid Core is correctly delimited
+    authorises: qualify binary Core
+  G4:
+    name: PROFILES
+    pass_if:
+      - N, K, precision, channels, decoder and fallback are justified on calibration
+      - overflow is at most 0.001 of calibration rays
+      - zero topologically critical event is omitted
+      - systematic_stratum_disadvantage is false for every claim-bearing stratum; insufficient small strata are explicitly transfer-only
+    authorises: freeze release candidate profile
+  G5:
+    name: RELEASE
+    pass_if:
+      - two independent implementations exchange 100 percent of golden files
+      - fuzzing, resource limits, SBOM, licences and distribution have no blocker
+      - blind inputs remain sealed
+    authorises: create RC1 and unlock blind confirmation
+  G6:
+    name: RC1
+    pass_if:
+      - zero release-critical blocker in 300 blind units
+      - frozen round-trip thresholds pass
+      - mini-neural test passes without collapse
+      - no stratum is silently degraded outside restricted claims
+    authorises: open stabilisation period
+  G7:
+    name: MVX_1_0
+    pass_if:
+      - all cumulative release blockers are closed
+      - two AI critique cycles are closed
+      - independent human 3D/CAD and anatomy reviews are closed
+      - stable claims, supported input domain, losses and rejection conditions are published
+    authorises: publish stable feasibility v1
+
+final_decisions:
+  evaluation_order: [NO_GO_FORMAT, NO_GO_DECODER, NO_GO_INSUFFICIENT_EVIDENCE, GO_R32, GO_LIMITED, GO]
+  common_release_preconditions:
+    - release_critical_blocker_count equals 0
+    - terminal_usable_fraction is at least 0.95 in the claimed domain
+    - interoperability, provenance, security, neural and loader gates pass
+    - every claimed stratum has sufficient evidence and no systematic_stratum_disadvantage
+    - G0 through G6 are PASS under the same protocol and calibration-freeze roots
+  GO:
+    conditions:
+      - all common_release_preconditions pass
+      - D, R32 and R16 all meet the claimed conformance, topology and fidelity rules
+      - class_A_fraction_verified_closed is at least 0.90 in the full claimed domain
+    action: Publish MVX 1.0 feasibility and authorise preparation of the full-corpus JEPA.
+  GO_R32:
+    conditions:
+      - all common_release_preconditions pass
+      - D and R32 meet every claimed conformance, topology and fidelity rule
+      - R16 alone misses a fidelity or topology rule
+      - removing or marking R16 experimental resolves every remaining release failure
+    action: Publish v1 with R16 experimental or removed.
+  GO_LIMITED:
+    conditions:
+      - all common_release_preconditions pass inside an explicit pre-blind subset of the input domain
+      - terminal status and supported-domain detection identify the subset without viewing reconstruction outcomes
+      - excluded families are predictably B/C/D and every limitation is declared without silent failure
+      - class_A_fraction_verified_closed is at least 0.90 inside the restricted claim
+    action: Publish v1 with a restricted input domain and claim set.
+  NO_GO_DECODER:
+    conditions:
+      - the Core D evidence and cross-view contracts pass
+      - no deterministic decoder meets the minimum class-A and topology thresholds
+    action: Continue decoder research without prematurely changing the format.
+  NO_GO_FORMAT:
+    conditions:
+      - systematic D loss, cross-view incoherence or critical topology loss is attributable to Core
+    action: Revise Core before any full-corpus JEPA.
+  NO_GO_INSUFFICIENT_EVIDENCE:
+    conditions:
+      - neither a format nor decoder failure is established, but a common release precondition or minimum independent-cluster rule is not met
+    action: Do not publish v1 or start the full-corpus JEPA; acquire the missing evidence under a new pre-registered version.
+
+decision_exclusivity:
+  rule: Evaluate in evaluation_order and emit the first matching verdict only. A higher-priority NO_GO always dominates a lower-priority GO. GO_R32 dominates GO because it records an R16 restriction; GO_LIMITED is used only when GO_R32 does not fully describe the restriction.
+  no_match: NO_GO_INSUFFICIENT_EVIDENCE

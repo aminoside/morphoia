@@ -4,6 +4,15 @@ Toutes les modifications notables de MORPHOIA seront documentées ici.
 
 ## [Non publié]
 
+### Ajouté
+
+- pré-enregistrement exécutable P0 de Morphoia Visual Exchange (MVX), avec métriques,
+  éligibilité, plan statistique, split groupé déterministe, codes d'erreur et gates G0-G7 ;
+- schémas JSON versionnés pour le registre, les lignées, les splits, les runs, les métriques,
+  les échecs et les verdicts de gate ;
+- commandes `morphoia mvx protocol verify`, `protocol seal` et `split` ;
+- empreinte SHA-256 racine du protocole et verdict G0 machine-readable.
+
 ### Modifié
 
 - application de l'identité visuelle officielle MORPHOIA aux rapports PDF des phases 1 et 2 ;

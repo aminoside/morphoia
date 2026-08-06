@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1.0",
+  "gate": "G0",
+  "verdict": "PASS",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "criteria": [
+    {"id": "G0_NORMATIVE_FILES_VALID", "passed": true, "evidence": "all normative files and schemas validate"},
+    {"id": "G0_PROTOCOL_SEAL_VERIFIES", "passed": true, "evidence": "synthetic seal root verifies"},
+    {"id": "G0_PROTOCOL_COMPONENTS_FROZEN", "passed": true, "evidence": "all P0 components are frozen"},
+    {"id": "G0_CUSTODY_DRY_RUN", "passed": true, "evidence": "synthetic custody dry run passes"},
+    {"id": "G0_SEMANTIC_CLOSURE", "passed": true, "evidence": "all executable semantic checks pass"}
+  ],
+  "blockers": [],
+  "deviations": ["Process-lock is not independent human double blinding."],
+  "evidence_hashes": {"seal.json": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+}

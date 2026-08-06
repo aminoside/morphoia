@@ -1,0 +1,14 @@
+{
+  "schema": "MVX-CUSTODY-PUBLIC",
+  "schema_version": "1.0.0",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "algorithm_id": "MVX-CUSTODY-HMAC-SHA256-1",
+  "freeze_id": "mvx-g1-0123456789abcdef0123456789abcdef",
+  "precommit_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "publication_receipt_sha256": "abababababababababababababababababababababababababababababababab",
+  "selection_seed_commitment_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "split_salt_commitment_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "counts": {"development": 500, "calibration": 200, "blind": 300, "reserve": 1},
+  "salt_commitment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "private_manifest_commitment_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+}

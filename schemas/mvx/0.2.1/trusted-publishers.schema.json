@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/trusted-publishers.schema.json",
+  "title": "MVX frozen precommit publication authorities",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_epoch", "publishers", "g1_state"],
+  "properties": {
+    "schema_version": {"const": "0.2.0"},
+    "registry_epoch": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "publishers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "publisher_id", "public_key_ed25519_hex", "store_kinds", "production",
+          "valid_from", "valid_until", "sequence_minimum", "sequence_maximum",
+          "object_locator_pattern", "object_version_id_pattern"
+        ],
+        "properties": {
+          "publisher_id": {"type": "string", "minLength": 1},
+          "public_key_ed25519_hex": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "store_kinds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "GITHUB_SIGNED_COMMIT", "OBJECT_LOCK_VERSION",
+                "INDEPENDENT_WITNESS_LEDGER", "SYNTHETIC_TEST_ONLY"
+              ]
+            }
+          },
+          "production": {"type": "boolean"},
+          "valid_from": {"type": "string", "format": "date-time", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z$"},
+          "valid_until": {"type": "string", "format": "date-time", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z$"},
+          "sequence_minimum": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+          "sequence_maximum": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+          "object_locator_pattern": {"type": "string", "minLength": 1, "maxLength": 512},
+          "object_version_id_pattern": {"type": "string", "minLength": 1, "maxLength": 256}
+        }
+      }
+    },
+    "g1_state": {
+      "enum": [
+        "BLOCKED_UNTIL_EXTERNAL_WORM_PUBLISHER_KEY_IS_VERSIONED",
+        "READY_FOR_PRODUCTION_G1"
+      ]
+    }
+  }
+}

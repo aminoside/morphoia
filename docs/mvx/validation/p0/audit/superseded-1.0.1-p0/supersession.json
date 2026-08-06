@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "superseded_protocol_version": "1.0.1-p0",
+  "superseded_protocol_root_sha256": "a56a7dcfd5b02c60b28035a1830e40a2d30993f50bd390c3207f30f55b4b994d",
+  "seal_file_sha256": "599288d882b8970b5942e014da816a606427a0caa9932cb511d2fee412408b58",
+  "g0_verdict_file_sha256": "9c74b793ee870af01539b9f01808019b3bd31d509b3a5c23043fa227d7a17609",
+  "effective_verdict": "FAIL",
+  "reason": "The local byte-level seal initially verified, but a later independent audit found that the public terminal bundle transaction validated only the receipt schema and could therefore label a synthetic test receipt COMMITTED despite the normative G1 registry being BLOCKED. The timestamp schemas also lacked an explicit UTC-Z pattern. Both defects were corrected only after this seal was created.",
+  "creation_context": "Created by an unattributed concurrent local process before the final audit completed; never committed, pushed, uploaded or used to select a cohort.",
+  "experimental_outcomes_observed": false,
+  "production_cohort_selected": false,
+  "production_split_created": false,
+  "superseded_by": "1.0.2-p0",
+  "rule": "This record and both original files are immutable audit evidence. They are normative predecessor evidence for the replacement seal but are not a current PASS verdict."
+}

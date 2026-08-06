@@ -13,6 +13,11 @@ authors = [
 ]
 license = "MIT"
 license-files = ["LICENSE"]
+dependencies = [
+  "cryptography==46.0.7",
+  "jsonschema>=4.23,<5",
+  "PyYAML>=6.0,<7"
+]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Intended Audience :: Science/Research",
@@ -26,7 +31,6 @@ report = [
   "reportlab==4.4.9"
 ]
 dev = [
-  "jsonschema>=4.23,<5",
   "pytest>=8,<9",
   "ruff>=0.12,<1"
 ]

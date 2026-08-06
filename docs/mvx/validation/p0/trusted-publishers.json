@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.2.0",
+  "registry_epoch": 1,
+  "publishers": [
+    {
+      "publisher_id": "MVX-SYNTHETIC-PUBLISHER-ONLY",
+      "public_key_ed25519_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+      "store_kinds": ["SYNTHETIC_TEST_ONLY"],
+      "production": false,
+      "valid_from": "2026-08-06T00:00:00Z",
+      "valid_until": "2099-12-31T23:59:59Z",
+      "sequence_minimum": 1,
+      "sequence_maximum": 9007199254740991,
+      "object_locator_pattern": "^synthetic://immutable/precommit$",
+      "object_version_id_pattern": "^synthetic-sequence-[1-9][0-9]*$"
+    }
+  ],
+  "g1_state": "BLOCKED_UNTIL_EXTERNAL_WORM_PUBLISHER_KEY_IS_VERSIONED"
+}

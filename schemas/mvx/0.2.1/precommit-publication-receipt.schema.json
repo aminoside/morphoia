@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/mvx/0.2.1/precommit-publication-receipt.schema.json",
+  "title": "MVX signed immutable precommit publication receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "algorithm_id", "publisher_id", "store_kind",
+    "object_locator", "object_version_id", "sequence", "published_at",
+    "trusted_publishers_sha256", "registry_epoch", "g0_seal_sha256",
+    "protocol_root_sha256", "snapshot_sha256", "eligible_records_sha256",
+    "freeze_id", "precommit_sha256", "published_object_sha256", "state",
+    "signature_ed25519_hex"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.2.0"},
+    "algorithm_id": {"const": "MVX-G1-PRECOMMIT-ED25519-RECEIPT-2"},
+    "publisher_id": {"type": "string", "minLength": 1},
+    "store_kind": {
+      "enum": [
+        "GITHUB_SIGNED_COMMIT", "OBJECT_LOCK_VERSION",
+        "INDEPENDENT_WITNESS_LEDGER", "SYNTHETIC_TEST_ONLY"
+      ]
+    },
+    "object_locator": {"type": "string", "minLength": 1},
+    "object_version_id": {"type": "string", "minLength": 1},
+    "sequence": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "published_at": {"type": "string", "format": "date-time", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z$"},
+    "trusted_publishers_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "registry_epoch": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "g0_seal_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "protocol_root_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "snapshot_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "eligible_records_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "freeze_id": {"type": "string", "pattern": "^mvx-g1-[0-9a-f]{32}$"},
+    "precommit_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "published_object_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "state": {"const": "PUBLISHED_IMMUTABLE"},
+    "signature_ed25519_hex": {"type": "string", "pattern": "^[0-9a-f]{128}$"}
+  }
+}

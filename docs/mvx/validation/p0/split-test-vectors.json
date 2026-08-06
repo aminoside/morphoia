@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1.0",
+  "algorithm_id": "MVX-GROUP-STRATIFIED-HMAC-2",
+  "algorithm_version": "2.0.0",
+  "hmac_message_encoding": "MVX-HMAC-RANK-LP-UTF8-1",
+  "salt_hex": "5b627e7f79d5ba855bd52402bc7d8a487a970f52d659f5c7ff6f23997c98c10b",
+  "hmac_rank_vectors": [
+    {
+      "name": "separator-in-first-field",
+      "domain": "adversarial-separator",
+      "parts": ["alpha\u001fbeta", "gamma"],
+      "expected_hex": "c2b2b1f46d5e5b8062f7075f4b07eb55cf1b482599e8783bc4165be955574935"
+    },
+    {
+      "name": "separator-in-second-field",
+      "domain": "adversarial-separator",
+      "parts": ["alpha", "beta\u001fgamma"],
+      "expected_hex": "746945dacd4be226d61e07df76b4d16decab2997821e47b35ec850096f2f754b"
+    }
+  ],
+  "records": [
+    {"lineage_id": "L0", "leakage_group_id": "G0", "selection_stratum": "fixture", "dataset": "oracle", "topology_status": "V", "complexity_quantile": 0, "category": "C0", "creator_group": "CG0", "source_uid": "SU0", "eligibility": "ELIGIBLE"},
+    {"lineage_id": "L1", "leakage_group_id": "G0", "selection_stratum": "fixture", "dataset": "oracle", "topology_status": "V", "complexity_quantile": 0, "category": "C0", "creator_group": "CG0", "source_uid": "SU0", "eligibility": "ELIGIBLE"},
+    {"lineage_id": "L2", "leakage_group_id": "G1", "selection_stratum": "objaverse", "dataset": "objaverse", "topology_status": "O", "complexity_quantile": 4, "category": "chair", "creator_group": "CG1", "source_uid": "SU1", "eligibility": "ELIGIBLE"},
+    {"lineage_id": "L3", "leakage_group_id": "G2", "selection_stratum": "objaverse", "dataset": "objaverse", "topology_status": "V", "complexity_quantile": 7, "category": "table", "creator_group": "CG2", "source_uid": "SU2", "eligibility": "ELIGIBLE"},
+    {"lineage_id": "L4", "leakage_group_id": "G3", "selection_stratum": "scan", "dataset": "gso", "topology_status": "O", "complexity_quantile": 3, "category": "bottle", "creator_group": "CG3", "source_uid": "SU3", "eligibility": "ELIGIBLE"},
+    {"lineage_id": "L5", "leakage_group_id": "G4", "selection_stratum": "anatomy", "dataset": "bodyparts", "topology_status": "V", "complexity_quantile": 8, "category": "pelvis", "creator_group": "CG4", "source_uid": "SU4", "eligibility": "ELIGIBLE"}
+  ],
+  "expected_assignments": {
+    "L0": "blind",
+    "L1": "blind",
+    "L2": "development",
+    "L3": "calibration",
+    "L4": "development",
+    "L5": "development"
+  }
+}

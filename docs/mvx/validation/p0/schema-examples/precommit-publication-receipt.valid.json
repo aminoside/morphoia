@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.2.0",
+  "algorithm_id": "MVX-G1-PRECOMMIT-ED25519-RECEIPT-2",
+  "publisher_id": "MVX-SYNTHETIC-PUBLISHER-ONLY",
+  "store_kind": "SYNTHETIC_TEST_ONLY",
+  "object_locator": "synthetic://immutable/precommit",
+  "object_version_id": "synthetic-sequence-1",
+  "sequence": 1,
+  "published_at": "2026-08-06T00:00:00Z",
+  "trusted_publishers_sha256": "85458409d368ff44188a399da82aec8a2cd451fc5ae23841fe01ce8fc9d9e64a",
+  "registry_epoch": 1,
+  "g0_seal_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "snapshot_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "eligible_records_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "freeze_id": "mvx-g1-1de69eefeebe2f8c244e623f428943ba",
+  "precommit_sha256": "0e589f38382050339d52dfc8fc49937e6512ce3b428823180181a55fe258eaec",
+  "published_object_sha256": "0e589f38382050339d52dfc8fc49937e6512ce3b428823180181a55fe258eaec",
+  "state": "PUBLISHED_IMMUTABLE",
+  "signature_ed25519_hex": "03971cf3d10101c7f6b464bcbf309fdd2e44ccdc60a83cc6ecdd1341fe82c92571856b159747a6fb3e5edf5faf727be6ccb4fd6da85c1128604b5a4d90addc0f"
+}

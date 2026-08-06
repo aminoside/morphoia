@@ -1,0 +1,288 @@
+protocol_id: MORPHOIA-MVX-FEASIBILITY-V1
+protocol_version: 1.0.2-p0
+schema_version: 0.1.0
+status: FROZEN
+freeze_date: 2026-08-06
+author: Dr Olivier Ami
+maintainer: Dr Olivier Ami
+license: MIT for code; document and dataset licences remain attached to each artefact
+language: en
+
+authority:
+  specification: MVX 0.2 plus cumulative Implementation Readiness Addendum 0.2.1
+  experimental_plan: MORPHOIA MVX - Plan experimental complet vers la v1, version 1.0
+  technical_contract_precedence:
+    - p0_implementation_clarifications_1.0.2
+    - implementation_addendum_0.2.1
+    - technical_report_0.2
+  experimental_decision_precedence:
+    - this_pre_registration_and_its_explicit_implementation_clarifications
+    - experimental_plan_1.0
+  boundary: P0 may resolve experimental contradictions, restrict claims, or strengthen thresholds. It may not loosen or contradict the MVX 0.2.1 technical wire contract.
+  normative_inputs:
+    - path: docs/mvx/specification/MORPHOIA_MVX_Rapport_de_proposition_technique_v0.2.pdf
+      sha256: 2b2d6dd6d565aad7d962ccd260008fd700fec400f5fb284eb1b59fa30add6f2e
+    - path: docs/mvx/specification/MORPHOIA_MVX_Addendum_Implementation_v0.2.1.pdf
+      sha256: 02ca052fad3655292583b3ea411e712e2ea343bbf690517e4e581b4e56569d06
+    - path: docs/mvx/validation/MORPHOIA_MVX_Plan_experimental_complet_vers_v1.pdf
+      sha256: 3cddc9d1ba515afaa0558b26d703cc9bdb2600f9ebf59d22d9ab94d45dc8322b
+
+purpose:
+  primary: Determine whether a deterministic 3D source to MVX to reconstructed 3D round-trip is sufficiently faithful, explicit about loss, bounded in cost, and tensor-ready for a stable feasibility v1.
+  excluded: Training or claiming performance of the final JEPA on the full 24000-plus-object corpus.
+  claim_boundary: This is a feasibility v1 for the pre-registered supported domains. It is not the 1000-lineage multi-domain claim described as a later target in addendum 0.2.1.
+
+scope:
+  core_claims:
+    - LP3 views X, Y and Z
+    - MVX-D
+    - MVX-R32
+    - MVX-R16
+    - binary closed-solid Core
+    - deterministic reference decoder
+  capability_claims:
+    C7_SCAN: false
+    C9_MULTICLASS: false
+  experimental_non_blocking:
+    - LP3-A
+    - LP7
+    - STREAM
+    - VOLUME_MEDICAL
+    - CREASE_ADVANCED
+    - STEREO
+    - PARAMETRIC_CAD_RETURN
+
+statistical_unit:
+  name: lineage
+  definition: An independent source design, physical scanned object, anatomical subject or biological specimen.
+  never_independent:
+    - file format conversion
+    - pose or mirror
+    - remeshing or decimation
+    - resolution
+    - texture or material variant
+    - repair of the same source
+    - component or instance from the same assembly
+  clustering_key: lineage_id
+
+cohorts:
+  nesting_required: true
+  gates:
+    - {name: bring_up, n: 12}
+    - {name: debugging, n: 30}
+    - {name: mvx_0_3, n: 100}
+    - {name: calibration_freeze, n: 300}
+    - {name: confirmation, n: 1000}
+  milestone_composition:
+    n12: {fixtures_C0_C9: 8, objaverse: 2, google_scanned_objects: 1, human_anatomy: 1}
+    n30: {fixtures_C0_C9: 15, objaverse: 8, modelnet40: 2, google_scanned_objects: 3, human_anatomy: 2}
+    n100: {fixtures_C0_C9: 60, objaverse: 16, modelnet40: 6, thingi10k: 6, google_scanned_objects: 6, human_anatomy: 6}
+    n300_observable: {fixtures_development_or_calibration: 70, real_development_or_calibration: 230}
+    n1000: {fixtures: 100, real_lineages: 900}
+  n300_real_composition:
+    objaverse: 125
+    modelnet40: 30
+    thingi10k: 25
+    google_scanned_objects: 20
+    human_anatomy: 25
+    plants: 5
+  native_parametric_CAD_claim: false
+  cad_proxy_rule: ModelNet40 and Thingi10K are mesh stress proxies only; they do not demonstrate preservation of native parametric CAD intent.
+  confirmation_composition:
+    fixtures_C0_C9: 100
+    objaverse: 600
+    modelnet40: 100
+    thingi10k: 80
+    google_scanned_objects: 60
+    human_anatomy: 50
+    plants: 10
+  split_ratio: {development: 0.50, calibration: 0.20, blind: 0.30}
+
+endpoint_hierarchy:
+  primary:
+    - critical_failure
+    - core_conformance
+    - terminal_processing
+    - interoperability_exact
+    - fidelity_primary_failure
+    - usability_class
+    - terminal_status_correct
+    - provenance_complete
+    - wire_roundtrip_exact
+    - hd95_symmetric_p
+    - topology_exact_ge_8p
+    - openings_recall_ge_8p
+    - cross_view_agreement_real
+    - cross_view_agreement_oracle
+    - cross_view_eligible_coverage
+    - topologically_critical_omission_count
+  primary_for_AI_authorisation:
+    - loader_throughput_ratio
+    - overfit32_loss_reduction
+  secondary:
+    - chamfer_symmetric_rms_p
+    - occupancy_iou
+    - normal_median_deg
+    - normal_p95_deg
+    - relative_volume_error
+    - relative_area_error
+    - ray_overflow_fraction
+    - gpu_idle_median
+    - package_size_bytes
+    - encode_seconds
+    - decode_seconds
+  exploratory:
+    - curvature_error
+    - spectral_error
+    - perceptual_embedding_distance
+    - learned_decoder_quality
+  release:
+    - release_critical_blocker_count
+    - terminal_usable_fraction
+    - class_A_fraction_verified_closed
+    - systematic_stratum_disadvantage
+
+primary_failure_contracts:
+  core_conformance: Any mandatory configuration violates C0-C6, C8, or the D/R wire contracts.
+  terminal_processing: Crash, hang, missing terminal status, silent corruption, or an invalid input accepted as valid.
+  interoperability: Divergent read or write of a golden file, or acceptance of a targeted invalid file.
+  fidelity: An eligible lineage missing a frozen fidelity threshold is a primary fidelity failure and changes its usability class. It becomes a release-critical blocker only when silent, analytically unexplained, or above the pre-registered allowed failure fraction.
+  provenance: Source hash, lineage, licence, code, environment, or exact parameters cannot be recovered.
+
+terminology:
+  per_lineage_primary_failure: A failed primary endpoint retained in the denominator.
+  release_critical_blocker: A silent or unsafe failure, analytic contract violation, security issue, split leakage, unverifiable provenance, or a population-level release rule failure.
+  rationale: This distinction reconciles per-lineage fidelity reporting with the release requirement that at least 90 percent of verified closed inputs are class A.
+
+missing_data:
+  primary_policy: Missing or non-evaluable outcomes remain in the denominator and fail the affected primary endpoint unless a pre-defined terminal reject is the expected result for O, N, or U input.
+  complete_case_analysis: prohibited
+  imputation: prohibited for primary endpoints
+  secondary_analysis: worst-case assignment plus an explicit missingness table
+  resource_limit: Counted as a terminal result only when explicit, bounded, deterministic, and within the declared input domain; otherwise critical failure.
+
+repairs:
+  primary_branch: as_is
+  hidden_repair: prohibited
+  allowed_secondary_branch: repaired
+  requirements:
+    - preserve lineage_id
+    - record operation, tool, version, parameters and before/after hashes
+    - retain the as_is outcome in every denominator
+    - never replace an as_is failure with a repaired success
+  calibration_only: Repair rules may be selected on development and frozen on calibration; no object-specific tuning is allowed in blind confirmation.
+
+stopping_rules:
+  immediate_stop:
+    - reproducible crash or hang on an in-domain valid input
+    - silent corruption
+    - path traversal or arbitrary external resource access
+    - unbounded allocation
+    - lineage leakage across splits
+    - altered or unverifiable protocol, split, code or source hash
+    - any unexplained analytic oracle error
+  cohort_expansion:
+    n12_to_n30: Complete round-trip and terminal report for all 12, with no unresolved critical failure.
+    n30_to_n100: Both deterministic decoders terminate and loss attribution is operational.
+    n100_to_n300: G2 passes and the executable MVX 0.3 evidence is reproducible.
+    n300_to_n1000: G4 and G5 pass; profile, decoder, thresholds, code and environment are frozen.
+  cost_guard: From n=30 onward, projected compute, storage and elapsed cost must be updated. More than 25 percent unexplained divergence between consecutive projections blocks expansion.
+
+resource_envelope_for_early_feasibility:
+  maximum_input_package_bytes: 2147483648
+  maximum_source_triangles: 20000000
+  maximum_N: 4096
+  maximum_K: 16
+  maximum_worker_rss_bytes: 17179869184
+  memory_p99_target_bytes: 12884901888
+  maximum_wall_seconds_per_object: 1800
+  rule: Exceeding a declared bound must end with a deterministic RESOURCE_LIMIT code, never an unbounded allocation or silent omission.
+
+cross_view_sampling:
+  deterministic_points_per_lineage: 200000
+  minimum_eligible_coverage_verified_closed: 0.95
+  below_minimum: NOT_EVALUABLE and a primary failure, never PASS
+  epsilon_cv: max over views of 0.5 times pixel_pitch plus depth_error plus cluster_tol
+
+blind_confirmation:
+  model: process_locked_access_controlled_not_human_double_blind
+  access: Blind records, source paths, the G1-generated production selection seed and split salt, and the private assignment manifest are unavailable to development and calibration jobs until G5 PASS.
+  public_evidence_before_unlock: The immutable custody precommit, both secret commitments, aggregate counts, freeze receipt and private-manifest commitment are public; identities, paths, preimages and the blind mapping are not.
+  custodian_requirement: The synthetic dry run passes at G0. Before any G1 selection, an external custody boundary must generate distinct fresh selection and split secrets after the eligible-records root is sealed, publish one immutable precommit containing both commitments before either secret is used, obtain an Ed25519-signed immutable-store receipt from the sole sealed normative registry, and prove development jobs cannot read either preimage or private mapping. The current registry is BLOCKED and contains no production key.
+  open_once: true
+  order:
+    - verify protocol, split, source, code and environment hashes
+    - run all 300 blind lineages without intermediate inspection
+    - seal raw outputs
+    - compute primary endpoints
+    - compute secondary endpoints
+    - compute exploratory endpoints
+    - adjudicate only pre-specified cases
+  threshold_relaxation_after_open: prohibited
+  object_specific_rerun_or_tuning: prohibited
+
+terminal_outcomes:
+  PASS: Valid input accepted and all mandatory operations completed.
+  DECLARED_LIMIT: A bounded expected limitation was reached and reported without silent loss.
+  REJECT: Input was deterministically rejected by a pre-registered reader, safety or eligibility rule.
+  FAIL: An unexpected or primary-contract failure occurred.
+
+replacement_rules:
+  allowed_reasons:
+    - source blob unavailable before first blind execution
+    - source hash mismatch before first blind execution
+    - licence missing before first blind execution
+    - package is proven to share a lineage across splits before first blind execution
+    - input is outside the pre-registered supported domain and this is established without viewing MVX outcome
+  source: pre_sealed_reserve_same_stratum
+  forbidden:
+    - replacement because of poor fidelity or topology
+    - replacement after inspecting an outcome
+    - replaying the same failed blind source as independent confirmation
+  discovered_bug: Move the affected claim and subgroup back to calibration, correct it, and use a newly pre-registered independent blind subgroup of the same size.
+
+execution_control:
+  execution_plan_schema: schemas/mvx/0.2.1/execution-plan.schema.json
+  checkpoint_schema: schemas/mvx/0.2.1/stage-checkpoint.schema.json
+  work_id_algorithm: MVX-WORK-ID-SHA256-JCS-1
+  work_id_binds: [protocol_root_sha256, split_sha256, source_sha256, lineage_id, profile_sha256, config_sha256, code_sha256, environment_sha256, phase_id, stage_id]
+  before_first_run: Persist a PENDING checkpoint and the immutable execution-plan hash before starting any open-once work.
+  skip_rule: SKIP is permitted only for a TERMINAL checkpoint whose required artifacts are present, regular files and SHA-256 exact.
+  ordinary_interruption: PARTIAL, INTERRUPTED or stale RUNNING work is retried as a new linked attempt; it is never reported as completed.
+  blind_open_once_interruption: FAIL_CLOSED_NO_AUTOMATIC_RERUN
+  dependency_rule: Every downstream checkpoint records the hashes of all terminal parent checkpoints and the previous attempt checkpoint.
+  artifact_publication: Write into a sibling staging target, fsync files and directories, atomically publish, verify the byte manifest, then create the terminal receipt last.
+  precommit_publication: Cohort freeze requires an offline-verifiable Ed25519 v2 receipt binding the exact precommit, raw-byte trusted-publisher registry hash, registry epoch, G0 seal hash, immutable object version, bounded sequence and UTC publication time after G0 sealing. Production loads no caller registry; the normative registry must be READY_FOR_PRODUCTION_G1 and its raw hash must equal the seal.files entry.
+  offline_publication_limit: Signature and frozen bindings are locally proven. Remote WORM persistence and global sequence monotonicity are external publisher assertions unless a complete independently witnessed ledger is supplied; P0 makes no stronger anti-precalculation claim and keeps G1 BLOCKED.
+  duplicate_publication: Byte-identical committed artifacts return ALREADY_COMMITTED; any mismatch or corruption fails closed.
+  backup_rule: A backup is complete only when its immutable manifest and COMPLETED marker are uploaded last and verified; incomplete checkpoints must be resumed or quarantined, never trusted for SKIP.
+
+change_control:
+  normative_change: Requires a new protocol version, new seal, explicit reason, and classification as pre-confirmatory or post hoc.
+  old_results: Remain bound to their original protocol_root_sha256.
+  volatile_fields_excluded_from_hashes:
+    - wall_clock_timestamp
+    - host_name
+    - temporary_path
+    - non_deterministic_log_order
+  predecessor:
+    protocol_version: 1.0.1-p0
+    protocol_root_sha256: a56a7dcfd5b02c60b28035a1830e40a2d30993f50bd390c3207f30f55b4b994d
+    seal_sha256: 599288d882b8970b5942e014da816a606427a0caa9932cb511d2fee412408b58
+    effective_verdict: FAIL_SUPERSEDED_BEFORE_EXPERIMENT
+    supersession_record: docs/mvx/validation/p0/audit/superseded-1.0.1-p0/supersession.json
+
+corpus_snapshot_policy:
+  archive_of_reference: Google Drive Morphoia data_3D
+  p0_observation: The prior manifest is stale and must not define the live population.
+  p1_rule: Seal an explicit metadata snapshot only after two consecutive live inventories produce the same object count, or mark the snapshot as intentionally incomplete.
+  objaverse_target: Select 600 eligible unique lineages from the P1 snapshot; all other eligible unique lineages form the pre-sealed reserve.
+  no_hard_coded_legacy_reserve: true
+
+phase_order_resolution:
+  rationale: Selection needs format, topology and complexity fields, so G1 cannot precede every part of P2.
+  P1a: Metadata-only census, live/manifest reconciliation, source hashes, licences and lineage candidate grouping; no selection or split.
+  P2a: Non-experimental ingestion audit on every candidate needed for the cohort; compute format status, V/O/N/U and the frozen complexity quantile without MVX outcome access.
+  G1: Under the custody process, publish the immutable dual-secret precommit first, verify its signed external publication receipt, then select the cohort and reserve, assign the grouped split, and atomically publish the private/release bundles plus terminal receipt.
+  P2b: Reader qualification and development diagnostics on development/calibration records only.
+  P3_and_later: MVX encode/decode experiments; blind records remain inaccessible until G5.

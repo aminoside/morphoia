@@ -23,6 +23,7 @@ check-phase2: phase2-report test
 	python -m json.tool schemas/morphoia-loss-register-0.1.schema.json >/dev/null
 	python -m json.tool schemas/morphoia-backend-manifest-0.1.schema.json >/dev/null
 	python -m morphoia validate examples/mounting_plate.morph
+	morphoia mvx protocol verify
 
 check-brand:
 	python scripts/check_pdf_branding.py

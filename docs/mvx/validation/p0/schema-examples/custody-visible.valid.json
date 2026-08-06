@@ -1,0 +1,16 @@
+{
+  "schema": "MVX-CUSTODY-VISIBLE",
+  "schema_version": "1.0.0",
+  "protocol_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "algorithm_id": "MVX-GROUP-STRATIFIED-HMAC-2",
+  "algorithm_version": "2.0.0",
+  "freeze_id": "mvx-g1-0123456789abcdef0123456789abcdef",
+  "precommit_sha256": "1212121212121212121212121212121212121212121212121212121212121212",
+  "publication_receipt_sha256": "abababababababababababababababababababababababababababababababab",
+  "private_manifest_commitment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "assignments": [
+    {"lineage_id": "LIN-DEV", "leakage_group_id": "GRP-DEV", "split": "development", "selection_stratum": "objaverse", "blind_scope": "NONE", "creator_group": "CREATOR-DEV", "source_uid": "SOURCE-DEV"},
+    {"lineage_id": "LIN-CAL", "leakage_group_id": "GRP-CAL", "split": "calibration", "selection_stratum": "objaverse", "blind_scope": "NONE", "creator_group": "CREATOR-CAL", "source_uid": "SOURCE-CAL"}
+  ],
+  "counts": {"development": 1, "calibration": 1}
+}
