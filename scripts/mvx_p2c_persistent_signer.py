@@ -286,7 +286,8 @@ def _json_document(path: Path, *, private: bool = False) -> tuple[bytes, dict[st
         raise SignerError("INVALID_JSON") from error
     if not isinstance(value, dict):
         raise SignerError("JSON_ROOT_NOT_OBJECT")
-    if payload != _canonical_bytes(value):
+    canonical = _canonical_bytes(value)
+    if payload not in {canonical, canonical + b"\n"}:
         raise SignerError("JSON_NOT_CANONICAL")
     return payload, value
 

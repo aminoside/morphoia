@@ -182,6 +182,12 @@ class PersistentSignerTests(unittest.TestCase):
         self.assertFalse(verified["assurances"]["encryption"])
         self.assertFalse(verified["assurances"]["drive_origin_proof"])
 
+        newline_manifest = self.root / "public-manifest-with-newline.json"
+        newline_manifest.write_bytes(self.manifest.read_bytes() + b"\n")
+        newline_manifest.chmod(0o644)
+        _, parsed = signer._load_manifest(newline_manifest)
+        self.assertEqual(parsed, self.manifest_document)
+
     def test_cli_never_prints_key_secret_hash_or_signature(self) -> None:
         second_root = self.root / "second"
         second_root.mkdir(mode=0o700)
