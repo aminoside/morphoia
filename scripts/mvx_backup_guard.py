@@ -162,6 +162,49 @@ def _artifact_contract(checkpoint: Mapping[str, Any]) -> dict[str, tuple[int, st
     return expected
 
 
+def _artifact_origin_contract(checkpoint: Mapping[str, Any]) -> tuple[str, dict[str, str]]:
+    """Return the declared payload origin and embedded-payload name→ID mapping."""
+
+    checkpoint_id = _string(checkpoint.get("checkpoint_id"), "CHECKPOINT_ID_INVALID")
+    origin = _string(checkpoint.get("artifact_origin_checkpoint_id"), "ARTIFACT_ORIGIN_ID_INVALID")
+    policy = _mapping(checkpoint.get("artifact_origin_policy"), "ARTIFACT_ORIGIN_POLICY_INVALID")
+    if (
+        policy.get("envelope_checkpoint_id") != checkpoint_id
+        or policy.get("storage_checkpoint_id") != checkpoint_id
+    ):
+        raise GuardError("ARTIFACT_ORIGIN_ENVELOPE_MISMATCH")
+    raw_names = _sequence(
+        policy.get("embedded_origin_is_expected_in"), "ARTIFACT_ORIGIN_NAMES_INVALID"
+    )
+    if not raw_names:
+        raise GuardError("ARTIFACT_ORIGIN_NAMES_INVALID")
+    names: list[str] = []
+    for value in raw_names:
+        name = _string(value, "ARTIFACT_ORIGIN_NAME_INVALID")
+        if name in names:
+            raise GuardError("ARTIFACT_ORIGIN_NAME_NOT_UNIQUE")
+        names.append(name)
+    rule = _string(policy.get("validation_rule"), "ARTIFACT_ORIGIN_RULE_INVALID")
+    if "MUST equal artifact_origin_checkpoint_id" not in rule:
+        raise GuardError("ARTIFACT_ORIGIN_RULE_INVALID")
+
+    files = _sequence(
+        _mapping(checkpoint.get("drive"), "CHECKPOINT_DRIVE_INVALID").get("files"),
+        "CHECKPOINT_FILES_INVALID",
+    )
+    by_name: dict[str, str] = {}
+    for row in files:
+        item = _mapping(row, "CHECKPOINT_FILE_ROW_INVALID")
+        name = _string(item.get("name"), "CHECKPOINT_FILE_NAME_INVALID")
+        file_id = _string(item.get("drive_file_id"), "CHECKPOINT_FILE_ID_INVALID")
+        if name in by_name:
+            raise GuardError("CHECKPOINT_ARTIFACT_NOT_UNIQUE")
+        by_name[name] = file_id
+    if any(name not in by_name for name in names):
+        raise GuardError("ARTIFACT_ORIGIN_PAYLOAD_NOT_COMMITTED")
+    return origin, {name: by_name[name] for name in names}
+
+
 def verify_chain(
     *,
     checkpoint_bytes: bytes,
@@ -202,6 +245,19 @@ def verify_chain(
         raise GuardError("COMPLETED_PREDECESSOR_MISMATCH")
     if latest.get("predecessor_checkpoint_id") != predecessor:
         raise GuardError("LATEST_PREDECESSOR_MISMATCH")
+
+    artifact_origin, _ = _artifact_origin_contract(checkpoint)
+    if completed.get("artifact_origin_checkpoint_id") != artifact_origin:
+        raise GuardError("COMPLETED_ARTIFACT_ORIGIN_MISMATCH")
+    if latest.get("artifact_origin_checkpoint_id") != artifact_origin:
+        raise GuardError("LATEST_ARTIFACT_ORIGIN_MISMATCH")
+    for document, code in (
+        (completed, "COMPLETED_ARTIFACT_ORIGIN_POLICY_INVALID"),
+        (latest, "LATEST_ARTIFACT_ORIGIN_POLICY_INVALID"),
+    ):
+        policy_text = _string(document.get("artifact_origin_policy"), code)
+        if "artifact_origin_checkpoint_id" not in policy_text:
+            raise GuardError(code)
 
     checkpoint_hash = _digest(checkpoint_bytes)
     completed_hash = _digest(completed_bytes)
@@ -296,6 +352,7 @@ def verify_chain(
     return {
         "action": "SKIP",
         "artifact_count": len(expected_artifacts),
+        "artifact_origin_checkpoint_id": artifact_origin,
         "checkpoint_id": checkpoint_id,
         "checkpoint_sha256": checkpoint_hash,
         "completed_sha256": completed_hash,
@@ -328,6 +385,12 @@ def verify_materialised_artifacts(
         expected_size, expected_hash = expected[file_id]
         if len(payload) != expected_size or _digest(payload) != expected_hash:
             raise GuardError("MATERIALISED_ARTIFACT_MISMATCH")
+
+    origin, embedded = _artifact_origin_contract(checkpoint)
+    for file_id in embedded.values():
+        _, payload = _json_bytes(materialised[file_id])
+        if payload.get("checkpoint_id") != origin:
+            raise GuardError("MATERIALISED_ARTIFACT_ORIGIN_MISMATCH")
 
 
 def build_parser() -> argparse.ArgumentParser:

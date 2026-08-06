@@ -1,0 +1,11 @@
+{
+  "name": "morphoia-mvx-p2b-manifold-witness-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Locked auxiliary Manifold witness for MVX P2b",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "manifold-3d": "3.5.1"
+  }
+}

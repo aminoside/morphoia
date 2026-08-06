@@ -27,8 +27,9 @@ def _sha(payload: bytes) -> str:
 
 
 def _fixture() -> tuple[bytes, dict[str, object], bytes, dict[str, object], dict[str, object]]:
+    origin_payload = _document({"checkpoint_id": "cp-origin"})
     artifacts = {
-        "artifact-id": (b"artifact\n", "artifact.json"),
+        "artifact-id": (origin_payload, "artifact.json"),
         "latest-evidence-id": (b"latest evidence\n", None),
         "revision-evidence-id": (b"revision evidence\n", None),
     }
@@ -39,6 +40,13 @@ def _fixture() -> tuple[bytes, dict[str, object], bytes, dict[str, object], dict
         "state": "ARTIFACTS_VERIFIED",
         "publication_model": guard.APPEND_ONLY_MODEL,
         "predecessor_checkpoint_id": "cp-test-v2",
+        "artifact_origin_checkpoint_id": "cp-origin",
+        "artifact_origin_policy": {
+            "embedded_origin_is_expected_in": ["artifact.json"],
+            "envelope_checkpoint_id": "cp-test-v3",
+            "storage_checkpoint_id": "cp-test-v3",
+            "validation_rule": "Embedded checkpoint_id MUST equal artifact_origin_checkpoint_id.",
+        },
         "predecessor_evidence": {
             "exact_latest_snapshot": {
                 "drive_file_id": "latest-evidence-id",
@@ -87,6 +95,8 @@ def _fixture() -> tuple[bytes, dict[str, object], bytes, dict[str, object], dict
         "publication_model": guard.APPEND_ONLY_MODEL,
         "registry_folder_id": "registry-folder",
         "predecessor_checkpoint_id": "cp-test-v2",
+        "artifact_origin_checkpoint_id": "cp-origin",
+        "artifact_origin_policy": "Payload checkpoint_id MUST equal artifact_origin_checkpoint_id.",
         "checkpoint_registry": {
             "drive_file_id": "checkpoint-drive-id",
             "bytes": len(checkpoint_bytes),
@@ -108,6 +118,8 @@ def _fixture() -> tuple[bytes, dict[str, object], bytes, dict[str, object], dict
         "state": "COMPLETED",
         "publication_model": guard.LATEST_MODEL,
         "predecessor_checkpoint_id": "cp-test-v2",
+        "artifact_origin_checkpoint_id": "cp-origin",
+        "artifact_origin_policy": "Payload checkpoint_id MUST equal artifact_origin_checkpoint_id.",
         "registry_folder_id": "registry-folder",
         "checkpoint_registry": copy.deepcopy(completed["checkpoint_registry"]),
         "terminal_marker": {
@@ -198,7 +210,7 @@ class BackupGuardTests(unittest.TestCase):
                 "revision-evidence-id": root / "revision.json",
             }
             payloads = {
-                "artifact-id": b"artifact\n",
+                "artifact-id": _document({"checkpoint_id": "cp-origin"}),
                 "latest-evidence-id": b"latest evidence\n",
                 "revision-evidence-id": b"revision evidence\n",
             }
@@ -207,6 +219,40 @@ class BackupGuardTests(unittest.TestCase):
             guard.verify_materialised_artifacts(checkpoint, paths)
             paths["artifact-id"].write_bytes(b"tampered\n")
             with self.assertRaisesRegex(guard.GuardError, "MATERIALISED_ARTIFACT_MISMATCH"):
+                guard.verify_materialised_artifacts(checkpoint, paths)
+
+    def test_artifact_origin_must_match_all_documents_and_payloads(self) -> None:
+        checkpoint_bytes, checkpoint, completed_bytes, completed, latest = _fixture()
+        latest["artifact_origin_checkpoint_id"] = "wrong-origin"
+        with self.assertRaisesRegex(guard.GuardError, "LATEST_ARTIFACT_ORIGIN_MISMATCH"):
+            guard.verify_chain(
+                checkpoint_bytes=checkpoint_bytes,
+                checkpoint=checkpoint,
+                completed_bytes=completed_bytes,
+                completed=completed,
+                latest=latest,
+            )
+
+        _, checkpoint, _, _, _ = _fixture()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {
+                "artifact-id": root / "artifact.json",
+                "latest-evidence-id": root / "latest.json",
+                "revision-evidence-id": root / "revision.json",
+            }
+            payloads = {
+                "artifact-id": _document({"checkpoint_id": "cp-origin"}),
+                "latest-evidence-id": b"latest evidence\n",
+                "revision-evidence-id": b"revision evidence\n",
+            }
+            for file_id, path in paths.items():
+                path.write_bytes(payloads[file_id])
+            guard.verify_materialised_artifacts(checkpoint, paths)
+            paths["artifact-id"].write_bytes(_document({"checkpoint_id": "wrong-origin"}))
+            checkpoint["drive"]["files"][0]["bytes"] = paths["artifact-id"].stat().st_size
+            checkpoint["drive"]["files"][0]["sha256"] = _sha(paths["artifact-id"].read_bytes())
+            with self.assertRaisesRegex(guard.GuardError, "MATERIALISED_ARTIFACT_ORIGIN_MISMATCH"):
                 guard.verify_materialised_artifacts(checkpoint, paths)
 
     def test_symlinked_input_is_rejected(self) -> None:
