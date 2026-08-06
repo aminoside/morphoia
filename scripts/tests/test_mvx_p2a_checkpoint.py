@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import stat
 import subprocess
 import sys
 import tempfile
@@ -449,6 +450,19 @@ class FilesystemAndCampaignTests(unittest.TestCase):
 
         with self.assertRaisesRegex(p2a.P2aError, "regular non-symlink"):
             p2a._read_regular_bytes(link, label="test")
+
+    def test_immutable_publish_creates_nested_private_parents(self) -> None:
+        artifact = self.root / "cache" / "sha256" / "ab" / "artifact.glb"
+
+        first = p2a._publish_bytes_once(artifact, b"glTF", mode=0o400)
+        second = p2a._publish_bytes_once(artifact, b"glTF", mode=0o400)
+
+        self.assertEqual(first, "WRITTEN")
+        self.assertEqual(second, "ALREADY_PRESENT")
+        self.assertEqual(artifact.read_bytes(), b"glTF")
+        self.assertEqual(stat.S_IMODE(artifact.stat().st_mode), 0o400)
+        for directory in (artifact.parent, artifact.parent.parent, artifact.parent.parent.parent):
+            self.assertEqual(stat.S_IMODE(directory.stat().st_mode), 0o700)
 
     def test_object_bundle_is_atomic_and_hash_bound(self) -> None:
         run = self.root / "run"

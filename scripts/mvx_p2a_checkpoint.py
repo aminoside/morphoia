@@ -231,7 +231,11 @@ def _read_regular_bytes(path: Path, *, label: str, maximum: int | None = None) -
 
 
 def _publish_bytes_once(path: Path, payload: bytes, *, mode: int = 0o600) -> str:
-    _ensure_private_directory(path.parent)
+    # Immutable artifacts may use content-addressed layouts such as
+    # ``cache/sha256/ab/<digest>.glb``.  Build and validate every private
+    # parent so a pristine or restored workspace behaves exactly like one
+    # where an earlier artifact happened to create the intermediate levels.
+    _private_path(str(path.parent), create_directory=True)
     try:
         existing = _read_regular_bytes(path, label="existing immutable artifact")
     except P2aError:
