@@ -7,9 +7,11 @@ then exhaustively checks conservative broad-phase pairs with exact rational
 predicates.  Its strongest negative result is therefore
 ``EXACT_INTERSECTION_FREE_CANDIDATE``.
 
-The checkpoint runner binds source, audit, upstream terminal, materializer,
-mesh, limits, runtime and code identities.  Exact predicates run in an
-externally bounded child.  Terminal results are immutable and a repeated
+The P2a-bound materializer preserves every source vertex instance and its
+indices; coordinate-equal instances are not silently welded into topological
+adjacency.  The checkpoint runner binds source, audit, upstream terminal,
+materializer, mesh, limits, runtime and code identities.  Exact predicates run
+in an externally bounded child.  Terminal results are immutable and a repeated
 invocation returns ``SKIP_ANCHORED`` only after revalidating the complete
 contracts, hash chains and caller-supplied external anchor.
 
@@ -20,11 +22,12 @@ single-writer model.  A local completion is never called ``SKIP``: reuse needs
 a canonical anchor signed by a key precommitted in the plan, an exactly guarded
 Drive checkpoint→COMPLETED→LATEST triplet, and a separately signed receipt for
 the exact anchor bytes read back from their preallocated Drive locator.  The
-offline validator checks these complete bindings but relies on the external
-signer to attest Drive provenance and readback.  Without that external trust,
-no local scheme can detect an actor who can coherently replace all artifacts as
-the same operating-system owner; P2c remains an auxiliary candidate verdict,
-never a release-grade proof of solid validity.
+offline validator verifies signatures and declared byte bindings, but cannot
+prove that the signer is independent of the worker, that bytes originated from
+Drive, or that storage is immutable.  Those are separate operational custody
+claims requiring independent evidence; neither a key-location label nor a
+valid signature proves them.  P2c therefore remains an auxiliary candidate
+verdict, never a release-grade proof of solid validity.
 """
 
 from __future__ import annotations
@@ -59,13 +62,13 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import (
 )
 
 SCHEMA = "MVX-P2C-EXACT-TRIANGLE-CONTACT"
-SCHEMA_VERSION = "0.2.0"
+SCHEMA_VERSION = "0.3.0"
 ALGORITHM_ID = "mvx-p2c-exact-binary64-triangle-contact"
-ALGORITHM_VERSION = "0.2.0"
+ALGORITHM_VERSION = "0.3.0"
 MESH_SCHEMA = "MVX-P2C-CANONICAL-MESH"
 MESH_SCHEMA_VERSION = "0.1.0"
 MATERIALIZER_ID = "mvx-p2c-p2a-canonical-scene-materializer"
-MATERIALIZER_VERSION = "0.1.0"
+MATERIALIZER_VERSION = "0.2.0"
 NUMERIC_MODEL = "IEEE754_BINARY64_EXACT_RATIONAL_LIFT"
 
 FREE = "EXACT_INTERSECTION_FREE_CANDIDATE"
@@ -2444,16 +2447,10 @@ def _load_backup_guard_module() -> Any:
 def _canonicalise_materialised_mesh(
     vertices: Sequence[Sequence[float]], faces: Sequence[Sequence[int]]
 ) -> bytes:
-    canonical_vertices: list[list[float]] = []
-    vertex_map: dict[tuple[float, float, float], int] = {}
-    remap: list[int] = []
-    for raw in vertices:
-        vertex = tuple(0.0 if float(value) == 0.0 else float(value) for value in raw)
-        if vertex not in vertex_map:
-            vertex_map[vertex] = len(canonical_vertices)
-            canonical_vertices.append(list(vertex))
-        remap.append(vertex_map[vertex])
-    canonical_faces = [[remap[int(index)] for index in face] for face in faces]
+    canonical_vertices = [
+        [0.0 if float(value) == 0.0 else float(value) for value in raw] for raw in vertices
+    ]
+    canonical_faces = [[int(index) for index in face] for face in faces]
     return _canonical_bytes(
         {
             "schema": MESH_SCHEMA,

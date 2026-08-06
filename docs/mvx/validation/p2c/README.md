@@ -20,6 +20,12 @@ interchangeably.
   P2a vertex instances, use a persistent owner-controlled signer, and prove a
   clean restore before it can authorize idempotent reuse.
 
+The public preregistration for that campaign is in
+`preregistration/pilot3-2026-08-06-v2/`. It fixes the four execution slots,
+resource profiles, index-preservation rule, authority claim boundary, clean
+restore criterion, and scientific-projection comparison before any v2 result
+exists.
+
 The persistent signer is a continuity control, not an independent scientific
 witness, not encryption, and not the G1 WORM publisher defined by the frozen P0
 protocol.

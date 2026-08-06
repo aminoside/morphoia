@@ -1,0 +1,51 @@
+{
+  "schema": "morphoia.mvx.p2c.scientific-projection-context-set",
+  "schema_version": "1.0.0",
+  "campaign_id": "P2C-PILOT3-2026-08-06",
+  "campaign_version": "2.0.0",
+  "algorithm_id": "mvx-p2c-exact-binary64-triangle-contact",
+  "algorithm_version": "0.3.0",
+  "result_schema": "MVX-P2C-EXACT-TRIANGLE-CONTACT",
+  "result_schema_version": "0.3.0",
+  "materializer_id": "mvx-p2c-p2a-canonical-scene-materializer",
+  "materializer_version": "0.2.0",
+  "vertex_index_policy": "PRESERVE_P2A_VERTEX_INSTANCE_INDICES_EXACTLY",
+  "historical_v1": {
+    "campaign_version": "v1",
+    "algorithm_id": "mvx-p2c-exact-binary64-triangle-contact",
+    "algorithm_version": "0.2.0",
+    "result_schema": "MVX-P2C-EXACT-TRIANGLE-CONTACT",
+    "result_schema_version": "0.2.0",
+    "materializer_id": "mvx-p2c-p2a-canonical-scene-materializer",
+    "materializer_version": "0.1.0",
+    "vertex_index_policy": "COORDINATE_EQUAL_VERTEX_INSTANCES_WELDED"
+  },
+  "contexts": [
+    {
+      "slot_id": "P2C-V2-01",
+      "comparison_slot": "PARENT_A_DEFAULT",
+      "profile_id": "DEFAULT_2M"
+    },
+    {
+      "slot_id": "P2C-V2-02",
+      "comparison_slot": "PARENT_B_DEFAULT",
+      "profile_id": "DEFAULT_2M"
+    },
+    {
+      "slot_id": "P2C-V2-03",
+      "comparison_slot": "PARENT_C_DEFAULT",
+      "profile_id": "DEFAULT_2M"
+    },
+    {
+      "slot_id": "P2C-V2-04",
+      "comparison_slot": "PARENT_B_EXPANDED",
+      "profile_id": "EXPANDED_10M"
+    }
+  ],
+  "privacy": {
+    "aliases_are_source_identifiers": false,
+    "contains_source_hashes": false,
+    "contains_p2a_work_ids": false,
+    "generated_projection_visibility": "PRIVATE"
+  }
+}

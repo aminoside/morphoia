@@ -1022,10 +1022,8 @@ class P2aBoundTests(unittest.TestCase):
         p2c._ensure_private_root()
         self.temporary = tempfile.TemporaryDirectory(dir=p2c.PRIVATE_ROOT)
         self.root = Path(self.temporary.name)
-        self.output = self.root / "p2c-output"
         self.p2a = p2c._load_p2a_module()
-        self.source_glb = self.root / "source.glb"
-        payload = self.p2a._build_test_glb(
+        self._install_fixture(
             [
                 (0.0, 0.0, 0.0),
                 (1.0, 0.0, 0.0),
@@ -1033,14 +1031,26 @@ class P2aBoundTests(unittest.TestCase):
                 (0.0, 0.0, 1.0),
             ],
             [0, 2, 1, 0, 1, 3, 1, 2, 3, 2, 0, 3],
+            label="tetrahedron",
         )
+
+    def _install_fixture(
+        self,
+        vertices: list[tuple[float, float, float]],
+        indices: list[int],
+        *,
+        label: str,
+    ) -> None:
+        self.output = self.root / f"{label}-p2c-output"
+        self.source_glb = self.root / f"{label}.glb"
+        payload = self.p2a._build_test_glb(vertices, indices)
         self.source_glb.write_bytes(payload)
         source_base = {
-            "drive_file_id": "synthetic-p2c",
+            "drive_file_id": f"synthetic-p2c-{label}",
             "source_sha256": p2c._sha256_bytes(payload),
             "source_size_bytes": len(payload),
-            "source_title": "synthetic-p2c.glb",
-            "source_uid": "0123456789abcdef0123456789abcdef",
+            "source_title": f"synthetic-p2c-{label}.glb",
+            "source_uid": p2c._sha256_bytes(label.encode())[:32],
         }
         source = {
             **source_base,
@@ -1048,7 +1058,7 @@ class P2aBoundTests(unittest.TestCase):
         }
         self.plan, self.p2a_work_id = self.p2a._make_object_plan(
             source,
-            {"profile": "synthetic-p2c"},
+            {"profile": f"synthetic-p2c-{label}"},
             "a" * 64,
             "b" * 64,
         )
@@ -1063,12 +1073,12 @@ class P2aBoundTests(unittest.TestCase):
             "schema_version": "0.1.0",
             "work_id": self.p2a_work_id,
         }
-        self.audit_record_path = self.root / "audit-record.json"
+        self.audit_record_path = self.root / f"{label}-audit-record.json"
         audit_bytes = self.p2a._json_document(audit_record)
         self.audit_record_path.write_bytes(audit_bytes)
-        self.execution_plan_path = self.root / "execution-plan.json"
+        self.execution_plan_path = self.root / f"{label}-execution-plan.json"
         self.execution_plan_path.write_bytes(self.p2a._json_document(self.plan))
-        self.p2a_checkpoint_directory = self.root / "p2a-checkpoints"
+        self.p2a_checkpoint_directory = self.root / f"{label}-p2a-checkpoints"
         self.p2a_checkpoint_directory.mkdir()
         pending = self.p2a.make_stage_checkpoint(
             self.plan,
@@ -1165,6 +1175,42 @@ class P2aBoundTests(unittest.TestCase):
         self.assertEqual(
             p2c_plan["input_binding"]["mesh_sha256"],
             first["result"]["input_binding"]["mesh_sha256"],
+        )
+
+    def test_p2a_materializer_preserves_equal_coordinate_vertex_instances(self) -> None:
+        self._install_fixture(
+            [
+                (0.0, 0.0, 0.0),
+                (1.0, 0.0, 0.0),
+                (0.0, 1.0, 0.0),
+                (0.0, 0.0, 0.0),
+                (0.0, 0.0, 1.0),
+                (-1.0, 0.0, 0.0),
+            ],
+            [0, 1, 2, 3, 4, 5],
+            label="unwelded-point-contact",
+        )
+        p2a_geometry = json.loads(self.audit_record_path.read_bytes())["audit"]["geometry"]
+        self.assertEqual(p2a_geometry["input_vertex_instances"], 6)
+        self.assertEqual(p2a_geometry["exact_unique_vertices"], 5)
+
+        completed = p2c.run_checkpointed_p2a(
+            self.source_glb,
+            self.audit_record_path,
+            self.execution_plan_path,
+            self.p2a_checkpoint_directory,
+            self.output,
+        )
+
+        result = completed["result"]
+        self.assertEqual(completed["action"], "COMPLETED_UNANCHORED")
+        self.assertEqual(result["status"], p2c.CONTACT)
+        self.assertEqual(result["mesh"], {"triangle_count": 2, "vertex_count": 6})
+        self.assertEqual(result["contact"]["kind"], "POINT")
+        self.assertEqual(result["contact"]["shared_topological_vertices"], [])
+        self.assertEqual(
+            result["input_binding"]["materializer_version"],
+            p2c.MATERIALIZER_VERSION,
         )
 
     def test_tampered_p2a_audit_record_is_rejected_before_p2c_run(self) -> None:
