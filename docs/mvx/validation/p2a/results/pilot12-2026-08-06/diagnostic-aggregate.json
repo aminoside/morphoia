@@ -1,0 +1,46 @@
+{
+  "campaign_kind": "ENGINEERING_P2A_SOURCE_ONLY_NONSTATISTICAL",
+  "classification_reason_counts": {
+    "CLOSED_EDGE_MANIFOLD_BUT_NO_INDEPENDENT_SOLID_VERIFIER": 3,
+    "NOT_MATERIALISED": 2,
+    "POSITIVE_BOUNDARY_EDGE_EVIDENCE": 2,
+    "POSITIVE_NON_MANIFOLD_OR_INVALID_EVIDENCE": 5
+  },
+  "error_code_counts": {
+    "MVX-G001": 2,
+    "MVX-G002": 5,
+    "MVX-G003": 3,
+    "MVX-I002": 1,
+    "MVX-I004": 1
+  },
+  "external_uri_access_count": 0,
+  "fully_materialised_source_count": 10,
+  "khronos": {
+    "objects_with_errors": 1,
+    "objects_with_warnings": 0,
+    "total_errors": 29,
+    "total_warnings": 0
+  },
+  "mvx_operation_access_count": 0,
+  "restart_verification": {
+    "first_campaign_action": "COMPLETED",
+    "first_object_actions": {
+      "COMPLETED": 12
+    },
+    "second_campaign_action": "SKIP",
+    "second_object_actions": {
+      "SKIP": 12
+    }
+  },
+  "schema": "MVX-P2A-DIAGNOSTIC-AGGREGATE",
+  "schema_version": "0.1.0",
+  "solid_certification_count": 0,
+  "source_count": 12,
+  "source_total_bytes": 57296652,
+  "topology_status_counts": {
+    "N": 5,
+    "O": 2,
+    "U": 5
+  },
+  "triangles_materialised": 693555
+}

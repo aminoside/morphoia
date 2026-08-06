@@ -1,0 +1,47 @@
+{
+  "aggregate_materialised_triangles": 693555,
+  "algorithm_id": "MVX-P2A-GLB-STDLIB-AUDIT-1",
+  "algorithm_version": "1.0.0",
+  "campaign_kind": "ENGINEERING_P2A_SOURCE_ONLY_NONSTATISTICAL",
+  "code_git_commit_sha1": "00274c820cd6e734dc47ac89ead0d0e45148d82a",
+  "code_git_tree_sha1": "ed16967fa62f323f3480d6e28568185b40bbc353",
+  "code_sha256": "a43c64b33f2d5d26a45e8ec43928ed273fd581bab51a3438dd30dfc0e08939cf",
+  "constraints": {
+    "cohort_selected": false,
+    "complexity_quantile_frozen": false,
+    "eligibility": "PENDING",
+    "mvx_outcome_accessed": false,
+    "split_created": false
+  },
+  "format_status_counts": {
+    "P2A_DIAGNOSTIC_PROFILE_SCAN_COMPLETE": 10,
+    "P2A_DIAGNOSTIC_REJECTED": 2
+  },
+  "fully_materialised_source_count": 10,
+  "gate_effect": "P2A_DIAGNOSTIC_ONLY_G1_REMAINS_BLOCKED",
+  "privacy": {
+    "drive_ids_published": false,
+    "objaverse_uids_published": false,
+    "per_object_source_hashes_published": false,
+    "source_paths_published": false,
+    "work_ids_published": false
+  },
+  "private_manifest_commitment_sha256": "64ef813ad84a819a49e17ffae2a6b88d3826b60ba912783de5b11d2ee33b3cba",
+  "protocol_root_sha256": "a600436d8a51ee3c26a6070ead19829cc3568a257493a5c639c35e5a35b8a9e7",
+  "schema": "MVX-P2A-DIAGNOSTIC-PILOT-SUMMARY",
+  "schema_version": "0.2.0",
+  "scope_commitment_sha256": "31ef6fd9253a40789914ce94c1a051d8f9fe489d8e40092dc659a847715509e3",
+  "script_version": "0.2.0",
+  "solid_certification_count": 0,
+  "solid_verifier": "NOT_AVAILABLE_NEVER_EMIT_V",
+  "source_count": 12,
+  "terminal_status_counts": {
+    "DECLARED_LIMIT": 10,
+    "REJECT": 2
+  },
+  "topology_status_counts": {
+    "N": 5,
+    "O": 2,
+    "U": 5
+  }
+}
