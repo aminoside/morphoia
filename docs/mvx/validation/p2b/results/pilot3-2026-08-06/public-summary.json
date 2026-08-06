@@ -1,0 +1,54 @@
+{
+  "schema": "morphoia.mvx.p2b.public-summary",
+  "schema_version": "0.1.0",
+  "campaign_kind": "P2B_AUXILIARY_MANIFOLD_WITNESS",
+  "campaign_date": "2026-08-06",
+  "p2a_scope_sha256": "31ef6fd9253a40789914ce94c1a051d8f9fe489d8e40092dc659a847715509e3",
+  "code_git_branch": "agent/mvx-v1-validation",
+  "code_git_commit_sha1": "79bfc77ea01c88805d46bdff21945e596493c85f",
+  "code_git_tree_sha1": "977380c55a957925ff6c5b955ee2ae85ecdf951e",
+  "runtime": {
+    "manifold_package": "manifold-3d",
+    "manifold_version": "3.5.1",
+    "runner_sha256": "7cff3e913013b7aed9f9e9f419f06edc22f0909882f4a04dd831a7828e31beb1",
+    "wrapper_sha256": "2ae52911dc305d3f0fd99658208d8edc6f901ce8099b57fac60a9677c015ae66",
+    "package_lock_sha256": "7049693d259141b6e355da996816b96c608da91ac099b8f7d7c06336aaf33484"
+  },
+  "inputs": {
+    "candidate_count": 3,
+    "p2a_primary_topology_status": {
+      "U": 3
+    },
+    "input_triangle_count_total": 21382,
+    "input_vertex_count_total": 10683
+  },
+  "results": {
+    "MANIFOLD_CORROBORATED": 3,
+    "MANIFOLD_DISCREPANCY": 0,
+    "RESOURCE_LIMIT": 0,
+    "ERROR": 0,
+    "manifold_status_NoError": 3,
+    "unchanged_topology_hash_count": 3,
+    "output_triangle_count_total": 21382,
+    "output_vertex_count_total": 10683,
+    "primary_status_changed_count": 0,
+    "solid_status_V_emitted_count": 0
+  },
+  "restart_guard": {
+    "identical_second_invocation": "SKIP",
+    "skip_count": 3,
+    "rerun_count": 0
+  },
+  "private_evidence": {
+    "json_document_count": 21,
+    "content_hash_multiset_root_sha256": "99932a455a92f5c6af9c0924d5a2483b55198a674c145c8343e751b33853ea55",
+    "identities_published": false,
+    "source_hashes_published": false,
+    "storage": "OWNER_ONLY_APPEND_ONLY_CHECKPOINT"
+  },
+  "interpretation": {
+    "allowed": "Auxiliary evidence that the locked Manifold runtime accepted each canonical P2a mesh without an observable topology change.",
+    "forbidden": "This campaign does not prove solidity, does not exclude geometric self-intersection or contact, and must not change P2a U to V.",
+    "known_adversarial_limit": "Closed interpenetrating shells can also be returned as MANIFOLD_CORROBORATED by this witness."
+  }
+}
