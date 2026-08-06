@@ -1,0 +1,79 @@
+{
+  "schema": "morphoia.mvx.p2c.campaign-disposition",
+  "schema_version": "1.0.0",
+  "campaign_id": "P2C-PILOT3-2026-08-06",
+  "campaign_version": "v1",
+  "protocol": {
+    "id": "MORPHOIA-MVX-FEASIBILITY-V1",
+    "version": "1.0.2-p0",
+    "root_sha256": "a600436d8a51ee3c26a6070ead19829cc3568a257493a5c639c35e5a35b8a9e7",
+    "relationship": "POST_P0_NON_NORMATIVE_DIAGNOSTIC"
+  },
+  "implementation": {
+    "git_commit_sha1": "63dadbf930be77a7281a564387e9b9cbf6082022",
+    "runner_sha256": "adb7fe9aef50f4473a5220788004ecebaec9bfd5d81be478b14132f774534f02",
+    "algorithm_id": "mvx-p2c-exact-binary64-triangle-contact",
+    "algorithm_version": "0.2.0",
+    "result_schema": "MVX-P2C-EXACT-TRIANGLE-CONTACT",
+    "result_schema_version": "0.2.0"
+  },
+  "scope": {
+    "source_count": 3,
+    "execution_count": 4,
+    "default_max_candidate_pairs": 2000000,
+    "expanded_max_candidate_pairs": 10000000,
+    "expanded_profile_execution_count": 1
+  },
+  "results": {
+    "EXACT_INTERSECTION_FREE_CANDIDATE": 2,
+    "EXACT_CONTACT_FOUND": 1,
+    "RESOURCE_LIMIT": 1,
+    "ERROR": 0,
+    "solid_status_V_emitted_count": 0,
+    "interpretation_by_source": {
+      "no_forbidden_contact_detected": 2,
+      "exact_contact_detected": 1
+    }
+  },
+  "authority": {
+    "execution_plan_policy": "REQUIRE_EXTERNAL_ANCHOR",
+    "external_anchor_satisfied": false,
+    "signed_anchor_count": 0,
+    "signed_readback_receipt_count": 0,
+    "campaign_disposition": "UNANCHORED_DIAGNOSTIC",
+    "local_attempt_signatures_verified": true
+  },
+  "private_evidence": {
+    "terminal_evidence_root_algorithm": "SHA256_CANONICAL_SORTED_PLAN_RESULT_TERMINAL_ROWS_V1",
+    "terminal_evidence_root_sha256": "f45509de33b10e7a877d264c6b99079f7fffe56b9ce30795f5916e1971222722",
+    "source_identities_published": false,
+    "work_ids_published": false
+  },
+  "backup": {
+    "state": "COMPLETED",
+    "drive_checkpoint_schema_version": "2.3.0",
+    "checkpoint_sha256": "9386000270f6f2988465b5c4b434d131faa06f1d82e12d5348653f5578b179ab",
+    "completed_sha256": "b10912b9f4082b533cdc4757447c9f0e1ed469aed3d570f08d1444697b43f024",
+    "latest_snapshot_sha256": "cd3cffb3d98e5dbed547d31eebaaaafbd6313cdb19f13dbf4a41043145cd3900",
+    "payload_bytes_verified": true,
+    "clean_restore_verified": false,
+    "restore_limitations": [
+      "authority claim modes were archived as 0600 instead of required 0400",
+      "empty authority-secrets directories were not archived"
+    ]
+  },
+  "known_limitations": [
+    "P2a-bound materialization welded coordinate-equal vertex instances before P2c analysis",
+    "the complete result envelope is nondeterministic because attempt signing keys are generated per run",
+    "Drive persistence is not an independent or WORM attestation",
+    "P2c cannot certify a valid solid"
+  ],
+  "disposition": {
+    "status": "UNANCHORED_DIAGNOSTIC",
+    "gate_credit": "NONE",
+    "solid_certification_count": 0,
+    "preservation": "IMMUTABLE_DO_NOT_REWRITE",
+    "reuse_for_v2": "FORBIDDEN",
+    "scientific_projection_may_be_used_for_comparison": true
+  }
+}
