@@ -10,6 +10,7 @@ dist/
 build/
 tmp/
 output/
+scripts/p2a-runtime/node_modules/
 *.log
 .DS_Store
 .idea/
