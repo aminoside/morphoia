@@ -1,0 +1,90 @@
+{
+  "algorithm": "MVX-P1A-OBJAVERSE-CENSUS-2",
+  "category_reproducibility": {
+    "gate_effect": "CATEGORY_ASSIGNMENT_REMAINS_PENDING_UNTIL_ENRICHED_LOCAL_METADATA",
+    "historic_uid_matched_labels_reproducible": 138,
+    "reproducible_from_committed_raw_snapshot": false
+  },
+  "code_git_commit_sha1": "3c5176831fd218770b8f7d4ceb6614e992830140",
+  "code_git_tree_sha1": "3ad7cf5b35ad28207825c2cea804d863b4059e58",
+  "cohort_selected": false,
+  "duplicate_groups": {
+    "normalised_name": 1,
+    "objaverse_uid": 1
+  },
+  "gate_effect": "P1A_METADATA_CHECKPOINT_ONLY_G1_REMAINS_BLOCKED",
+  "historic_manifest_objaverse_rows": 674,
+  "inputs": {
+    "historic_manifest": {
+      "bytes": 4417806,
+      "sha256": "abcb3ea253e40689a656f070cc78bf100ff259226496aef90bb9cf958e2db375"
+    },
+    "live_snapshot": {
+      "bytes": 546461,
+      "sha256": "232105003af4081d12e6fd30899003eed8cc2d71dc4ffafad47bdd3b834cb08f"
+    }
+  },
+  "live": {
+    "direct_candidates": 962,
+    "excluded_test_rows": 2,
+    "file_rows": 964,
+    "glb_rows": 962,
+    "ignored_rows": 0,
+    "ready_for_lineage": 962,
+    "uid_rows": 962,
+    "unique_uids": 961
+  },
+  "mvx_outcome_accessed": false,
+  "privacy": {
+    "drive_ids_published": false,
+    "objaverse_uids_published": false,
+    "row_level_metadata_published": false,
+    "source_paths_published": false
+  },
+  "private_artifact_commitments": {
+    "private-candidates.jsonl": {
+      "bytes": 454607,
+      "sha256": "3c42fd87cc5642138d990179ef9cc36b433b3e96487260fda8eab774e62764b2"
+    },
+    "private-duplicate-groups.jsonl": {
+      "bytes": 747,
+      "sha256": "e25671b8aced59decef5a924baeff5ad7d20deede2be7195f3a91306563ada3d"
+    },
+    "private-live-records.jsonl": {
+      "bytes": 822308,
+      "sha256": "4a62b71efaa770878ac16f1e33e5d421fb6ee435a1575a1c469977de4cc8864f"
+    },
+    "private-reconciliation.jsonl": {
+      "bytes": 1372296,
+      "sha256": "9168fb405fa2c1f01757ad4ee8497a499e902c73dbcd027b51d84c0d95061419"
+    }
+  },
+  "protocol_root_sha256": "a600436d8a51ee3c26a6070ead19829cc3568a257493a5c639c35e5a35b8a9e7",
+  "provenance": {
+    "per_uid_author_provenance_available": false,
+    "uid_matched_historic_label_count": 138,
+    "uid_matched_rows_with_generic_source_licence_and_citation": 671
+  },
+  "reconciliation": {
+    "changed_fields": {
+      "path": 671
+    },
+    "issue_count": 2,
+    "match_methods": {
+      "none": 296,
+      "objaverse_uid": 671
+    },
+    "statuses": {
+      "CHANGED": 671,
+      "MISSING_FROM_LIVE": 3,
+      "NEW_IN_LIVE": 293
+    }
+  },
+  "schema": "MVX-P1A-CENSUS-SUMMARY",
+  "schema_version": "0.1.0",
+  "script_version": "0.2.0",
+  "snapshot_id": "MORPHOIA-OBJAVERSE-2026-08-06-A",
+  "source_commitment_sha256": "a8abd4b298f443f4a1ceb7d1e009f78b288eacfa628b7fb6841918b0b458cf10",
+  "split_created": false,
+  "work_id": "22aebb65e96503db15a6b6bea75c44b859acd571016be8799b5418e0b36a8dd9"
+}

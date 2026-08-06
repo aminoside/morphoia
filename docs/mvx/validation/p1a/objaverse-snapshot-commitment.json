@@ -1,18 +1,22 @@
 {
   "schema_version": "0.1.0",
   "snapshot_id": "MORPHOIA-OBJAVERSE-2026-08-06-A",
-  "source": "private Morphoia data_3D/Objaverse folder",
+  "source": "private Morphoia corpus snapshot",
   "visibility": "PUBLIC_AGGREGATES_AND_COMMITMENT_ONLY",
-  "first_and_second_read_identical": true,
+  "snapshot_completeness": "INTENTIONALLY_INCOMPLETE_METADATA_ONLY",
+  "dual_read_receipts_retained": false,
   "raw_snapshot_bytes": 546461,
   "raw_snapshot_sha256": "232105003af4081d12e6fd30899003eed8cc2d71dc4ffafad47bdd3b834cb08f",
   "counts": {
     "items": 964,
     "glb_files": 962,
     "unique_objaverse_uids": 961,
-    "labels": 197,
     "duplicate_uid_groups": 1,
     "non_glb_test_files": 2
+  },
+  "category_metadata": {
+    "reproducible_from_raw_snapshot": false,
+    "status": "PENDING_ENRICHED_LOCAL_METADATA"
   },
   "total_bytes": 5857446272,
   "latest_source_created_or_modified": "2026-08-06T09:06:38.211Z",

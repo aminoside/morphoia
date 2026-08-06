@@ -4,16 +4,18 @@ Status: **descriptive snapshot frozen; G1 not yet passed**.
 
 ## Objaverse live snapshot
 
-Two read-only inventories of the private Morphoia Objaverse folder returned the
-same canonical bytes and SHA-256. This supports freezing the current folder
-state as candidate snapshot `MORPHOIA-OBJAVERSE-2026-08-06-A`.
+One retained canonical private snapshot is frozen under candidate identifier
+`MORPHOIA-OBJAVERSE-2026-08-06-A`. Earlier duplicate reads did not retain two
+independent receipts, so their equality is not used as evidence. This snapshot
+is explicitly **intentionally incomplete metadata-only** until a new enriched
+inventory preserves reproducible category and provenance relations.
 
 | Measure | Value |
 |---|---:|
 | Drive items | 964 |
 | GLB files | 962 |
 | Unique Objaverse UIDs | 961 |
-| Labels represented | 197 |
+| Category labels | Not reproducible from this snapshot; enrichment pending |
 | Total bytes | 5,857,446,272 |
 | Duplicate UID groups | 1 |
 | Explicit non-GLB test files | 2 |
@@ -21,6 +23,12 @@ state as candidate snapshot `MORPHOIA-OBJAVERSE-2026-08-06-A`.
 
 The raw snapshot, Drive IDs, file paths and UID list are private inputs. Only
 aggregate counts and the commitment are committed to the repository.
+
+The frozen raw export does not retain the category/parent relation. No prior
+aggregate label count enters selection or OOD assignment. The historic
+manifest independently recovers 138 non-empty labels among the 671
+unambiguous UID matches; all other category assignments remain pending
+enriched metadata materialised locally.
 
 ## Stale manifest reconciliation
 
@@ -45,6 +53,22 @@ before lineage assignment.
 
 The stale manifest lists 672 Objaverse GLBs and two test text files. The stable
 live snapshot has 962 GLBs, so the live folder is authoritative for P1a.
+
+The executable reconciliation first joins UIDs that are unique on both sides,
+then applies the generic file-ID/path/checksum rules. It produces 671 certain
+UID matches, 293 live-only rows and three stale-only rows. The remaining old
+UID occurs twice in the live snapshot and is deliberately held for lineage
+adjudication rather than guessed.
+
+## Restart-safe execution
+
+The content-derived work ID is
+`22aebb65e96503db15a6b6bea75c44b859acd571016be8799b5418e0b36a8dd9`.
+The first run published five hash-bound artifacts and a terminal checkpoint. A
+separate second invocation returned `SKIP` only after re-hashing all five; its
+output commitment is retained in `p1a-resume-verification.json`. The public
+aggregate and private artifact commitments are recorded in
+`p1a-census-result.json`. No MVX outcome, cohort selection or split was opened.
 
 ## Known exclusions and pending evidence
 

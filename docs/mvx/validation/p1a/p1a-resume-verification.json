@@ -1,0 +1,21 @@
+{
+  "schema": "MVX-P1A-RESUME-VERIFICATION",
+  "schema_version": "0.1.0",
+  "verified_at_utc": "2026-08-06T13:52:30Z",
+  "action": "SKIP",
+  "status": "PASS",
+  "work_id": "22aebb65e96503db15a6b6bea75c44b859acd571016be8799b5418e0b36a8dd9",
+  "checkpoint_sha256": "3d5940a47dc36d209387d0aa9a50b5adfb6a13542e2ecebd1846e1f7ff2b7ab4",
+  "terminal_checkpoint_file_sha256": "77cd3763be85c13185a921ac60a3c5c1372cb9decc7f13d2bdbc6e04a9f56a6d",
+  "public_summary_sha256": "5fe0f2f2e4417909c0ee951c8e2038455699f27d1bae768320ce694ed7094e67",
+  "code_git_commit_sha1": "3c5176831fd218770b8f7d4ceb6614e992830140",
+  "code_git_tree_sha1": "3ad7cf5b35ad28207825c2cea804d863b4059e58",
+  "independent_invocation_output": {
+    "bytes": 1061,
+    "sha256": "d3fcdad4f2e44c586ae070f3380e58838385a7b1a22df9f7af8c94febf583488"
+  },
+  "artifact_verification": "ALL_FIVE_REQUIRED_ARTIFACTS_REHASHED_AND_MATCHED",
+  "cohort_selected": false,
+  "split_created": false,
+  "mvx_outcome_accessed": false
+}
