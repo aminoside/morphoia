@@ -45,6 +45,7 @@ completion.
 | E1/E2 exact-merge hosted checks | Publication | Engine run `31593999716` | native `94105119978`, Python 3.12 `94105119984`, REUSE `94105120004`, hygiene `94105120031`, and Python 3.13 `94105120081` passed | PASS |
 | Public-IR lot branch and entry bootstrap | E1 public IR | branch/base inspection plus direct CPU bootstrap | `engine-p0-public-ir-replay` starts from exact merge `12656708`; entry smoke passed | PASS |
 | Public-IR entry checkpoint validation | E1 public IR | frozen-profile validators, full Python/report/native/license/hygiene suites | 102/102 Python tests, native five-test bootstrap, REUSE 194/194, reports, requirements, secret and diff checks passed | PASS |
+| Public-IR entry checkpoint hosted validation | E1 public IR | PR #8 exact-head workflows | Engine `31596165398` passed five jobs; report `31596165378`, job `94112106640`, passed on `a69d35b5` | PASS |
 | Public Engine IR 0.1 implementation | E1 public IR | schema, native/Python/CLI, and semantic validation | ADR-020 is proposed; implementation has not executed | NOT_RUN |
 | Public Engine IR 20-graph replay | E1 public IR | canonical input/golden corpus replay | corpus has not executed | NOT_RUN |
 | Legacy prototype bytes at public-IR entry | E1 public IR | SHA-256 inspection of five declared files | exact hashes recorded in ADR-020 and `STATUS.md`; files are non-authoritative for Engine identity | PASS |

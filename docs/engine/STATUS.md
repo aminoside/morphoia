@@ -45,6 +45,7 @@ E1/E2 integration and public-IR base:
 | E1/E2 post-merge hosted checks | PASS | Exact-merge Engine run `31593999716` passed native `94105119978`, Python 3.12 `94105119984`, REUSE `94105120004`, hygiene `94105120031`, and Python 3.13 `94105120081`. |
 | Public-IR lot isolation and entry smoke | PASS | `engine-p0-public-ir-replay` was created from exact integration merge `12656708`; branch inspection was clean and the direct CPU bootstrap passed. This is entry evidence, not public-IR implementation evidence. |
 | Public-IR entry checkpoint local validation | PASS | Frozen E0/E1 evidence, E2 SBOM, checkpoint, 320 requirements, 102/102 Python tests, report replay, native five-test bootstrap, Ruff on new Python, REUSE 194/194, secret scan, and whitespace checks passed. |
+| Public-IR entry checkpoint publication | PASS | Checkpoint `a69d35b5` is published on `engine-p0-public-ir-replay`; PR #8 targets only `engine`. Engine run `31596165398` passed native `94112106988`, REUSE `94112107004`, Python 3.12 `94112107035`, hygiene `94112107044`, and Python 3.13 `94112107066`; report run `31596165378`, job `94112106640`, passed. |
 | Public Engine IR 0.1 design | NOT_RUN | ADR-020 is `Proposed`; schemas, native/Python/CLI contract, and semantic validation have not yet executed. |
 | Public Engine IR 20-graph replay | NOT_RUN | No 20-graph input/golden corpus has yet been executed on this branch. |
 | Legacy prototype byte preservation | PASS | The five entry hashes in ADR-020 were recomputed and match; those files remain non-authoritative for Engine identity. |
@@ -162,8 +163,7 @@ E2 or G1/P0.
 
 ## Next action
 
-Complete and publish the bounded public-IR entry checkpoint on
-`engine-p0-public-ir-replay`, verify its exact-head checks, then start Tracks A,
-B, and C in parallel under their declared file ownership. Real SALOME 9.16,
-GPU backends, public IR replay, and the real greater-than-2-GiB transfer remain
-`NOT_RUN` until their named tests execute.
+Implement Tracks A, B, and C in parallel under their declared file ownership,
+then integrate and execute the complete public-IR gate locally and on PR #8.
+Real SALOME 9.16, GPU backends, public IR replay, and the real
+greater-than-2-GiB transfer remain `NOT_RUN` until their named tests execute.

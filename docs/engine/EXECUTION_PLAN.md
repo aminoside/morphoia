@@ -140,7 +140,11 @@ validated specification is received.
   the separate E2 SBOM check, checkpoint and 320-requirement validation,
   102/102 Python tests, report replay, the five-test direct native bootstrap,
   Ruff on new Python, REUSE 194/194, the bounded secret scan, and whitespace
-  checks. Hosted execution of this checkpoint remains `NOT_RUN` until publish.
+  checks. Checkpoint `a69d35b5` was then published on the isolated lot branch;
+  PR #8 targets only `engine`. Exact-head Engine run `31596165398` passed
+  native `94112106988`, REUSE `94112107004`, Python 3.12 `94112107035`,
+  hygiene `94112107044`, and Python 3.13 `94112107066`; report run
+  `31596165378`, job `94112106640`, passed.
 
 ## Milestones
 
@@ -447,10 +451,9 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Complete and publish the bounded public-IR entry checkpoint on
-`engine-p0-public-ir-replay`, verify its exact-head required checks, then start
-Tracks A, B, and C in parallel with the non-overlapping ownership defined above.
-Integrate their reviewed, locally and hosted-green result only into `engine`.
+Implement Tracks A, B, and C in parallel with the non-overlapping ownership
+defined above, then integrate their reviewed result and execute the complete
+local and hosted public-IR gate on PR #8 before merging only into `engine`.
 Keep public-IR execution criteria, real SALOME 9.16, GPU backends, and the real
 greater-than-2-GiB transfer `NOT_RUN` until each named test actually executes;
 never merge `engine` into the default branch without separate owner

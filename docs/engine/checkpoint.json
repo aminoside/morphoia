@@ -12,8 +12,8 @@
     "visibility": "public",
     "default_branch": "main",
     "integration_branch": "engine",
-    "publication_status": "NOT_RUN",
-    "publication_note": "E1 and E2 foundations are integrated in engine at 12656708ccc3031670c4b3efd43996e46fa27998; engine-p0-public-ir-replay exists at that base, while this bounded ADR-020 and E1-evidence-freeze checkpoint is not yet published"
+    "publication_status": "PASS",
+    "publication_note": "Public-IR entry checkpoint a69d35b5e2c971ff44153eb902f62dd8e3c89fea is published on engine-p0-public-ir-replay; PR 8 targets engine only, Engine run 31596165398 and report run 31596165378 passed on the exact SHA"
   },
   "git": {
     "branch": "engine-p0-public-ir-replay",
@@ -21,8 +21,8 @@
     "base_parent": "12656708ccc3031670c4b3efd43996e46fa27998",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "12656708ccc3031670c4b3efd43996e46fa27998",
-    "note": "The work branch was created from exact engine merge 12656708, tree 9c21bc65, after PR 7 and its post-merge Engine run passed; no public-IR checkpoint commit is published yet"
+    "published_commit_sha": "a69d35b5e2c971ff44153eb902f62dd8e3c89fea",
+    "note": "The work branch starts from exact engine merge 12656708; entry checkpoint a69d35b5 has tree ce7f7a6e and passed its exact-head Engine and report workflows"
   },
   "tasks": {
     "completed": [
@@ -67,15 +67,17 @@
       "e1_engine_push_post_merge_verification",
       "public_ir_lot_branch_creation_and_entry_smoke",
       "legacy_prototype_entry_hash_freeze",
-      "e1_native_evidence_byte_freeze"
+      "e1_native_evidence_byte_freeze",
+      "e1_public_ir_entry_checkpoint",
+      "e1_public_ir_entry_checkpoint_publication",
+      "e1_public_ir_entry_hosted_verification"
     ],
     "in_progress": [
-      "e1_public_ir_entry_checkpoint"
+      "e1_public_ir_track_a_schema_contract_corpus",
+      "e1_public_ir_track_b_native_abi_python_cli_replay",
+      "e1_public_ir_track_c_traceability_sbom_evidence"
     ],
     "remaining": [
-      "e1_public_ir_schema_contract_and_corpus",
-      "e1_public_ir_native_abi_python_cli_and_replay",
-      "e1_public_ir_traceability_sbom_and_gate_evidence",
       "e1_remaining_core_foundations",
       "e2_real_salome_execution_when_runtime_available"
     ]
@@ -128,7 +130,7 @@
       },
       {
         "path": "docs/engine",
-        "sha256": "38b7d6d5d0ed2603dd297279b2fd7478cd8edbe6d67e503736d12f3e97ed60fc",
+        "sha256": "b58e11627c02310a373cd8e8af4b01309ad9a7320d8a5f8d1e823d41a22ba3f2",
         "status": "PASS"
       }
     ],
@@ -414,6 +416,11 @@
       "command": "<hash-locked-python> -m reuse lint on the public-IR entry checkpoint",
       "result": "PASS",
       "summary": "REUSE 6.2.0 resolved copyright and license metadata for 194 of 194 files"
+    },
+    {
+      "command": "GitHub Actions Engine run 31596165398 and report run 31596165378 on public-IR entry checkpoint a69d35b5e2c971ff44153eb902f62dd8e3c89fea",
+      "result": "PASS",
+      "summary": "Native job 94112106988, REUSE job 94112107004, Python 3.12 job 94112107035, hygiene job 94112107044, Python 3.13 job 94112107066, and report job 94112106640 completed successfully"
     }
   ],
   "tests": [
@@ -840,6 +847,12 @@
       "count": 194
     },
     {
+      "id": "E1-PUBLIC-IR-ENTRY-HOSTED",
+      "profile": "publication-required-checks",
+      "status": "PASS",
+      "count": 6
+    },
+    {
       "id": "E1-PUBLIC-IR-IMPLEMENTATION",
       "profile": "core-cpu-public-ir",
       "status": "NOT_RUN",
@@ -1083,7 +1096,15 @@
     "github-actions:job:94105119984",
     "github-actions:job:94105120004",
     "github-actions:job:94105120031",
-    "github-actions:job:94105120081"
+    "github-actions:job:94105120081",
+    "github-actions:31596165398",
+    "github-actions:job:94112106988",
+    "github-actions:job:94112107004",
+    "github-actions:job:94112107035",
+    "github-actions:job:94112107044",
+    "github-actions:job:94112107066",
+    "github-actions:31596165378",
+    "github-actions:job:94112106640"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -1185,9 +1206,8 @@
     },
     {
       "name": "public IR entry checkpoint publication and hosted checks",
-      "status": "NOT_RUN",
-      "blocking_scope": "Start of public IR implementation tracks A, B, and C",
-      "reason": "The lot branch exists at the integrated engine base, but the ADR-020 and frozen-E1-evidence checkpoint is not yet published or executed by hosted workflows"
+      "status": "PASS",
+      "reason": "Checkpoint a69d35b5 is published on engine-p0-public-ir-replay; PR 8 targets engine only, Engine run 31596165398 and report run 31596165378 passed on the exact SHA"
     },
     {
       "name": "SALOME 9.16 runtime",
@@ -1201,5 +1221,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Publish the bounded ADR-020 and frozen-E1-evidence entry checkpoint on engine-p0-public-ir-replay, require fresh exact-head Engine and report checks, then start the declared non-overlapping public-IR Tracks A, B, and C while real SALOME, GPU, greater-than-2-GiB, and MVX criteria remain NOT_RUN or BLOCKED"
+  "next_action": "Implement the declared non-overlapping public-IR Tracks A, B, and C, integrate and review their outputs, then execute the complete local and hosted public-IR gate on PR 8 while real SALOME, GPU, greater-than-2-GiB, and MVX criteria remain NOT_RUN or BLOCKED"
 }
