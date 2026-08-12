@@ -1,0 +1,71 @@
+{
+  "format": "morphoia.engine.ir-invalid-corpus",
+  "format_version": "0.1.0",
+  "entries": [
+    {
+      "id": "duplicate-key",
+      "path": "invalid/duplicate-key.json",
+      "stage": "lexical"
+    },
+    {
+      "id": "fraction",
+      "path": "invalid/fraction.json",
+      "stage": "lexical"
+    },
+    {
+      "id": "lone-surrogate",
+      "path": "invalid/lone-surrogate.json",
+      "stage": "lexical"
+    },
+    {
+      "id": "unknown-core",
+      "path": "invalid/unknown-core.json",
+      "stage": "schema"
+    },
+    {
+      "id": "inline-payload",
+      "path": "invalid/inline-payload.json",
+      "stage": "schema"
+    },
+    {
+      "id": "uppercase-uuid",
+      "path": "invalid/uppercase-uuid.json",
+      "stage": "schema"
+    },
+    {
+      "id": "invalid-extension",
+      "path": "invalid/invalid-extension.json",
+      "stage": "schema"
+    },
+    {
+      "id": "uri-digest-mismatch",
+      "path": "invalid/uri-digest-mismatch.json",
+      "stage": "semantic"
+    },
+    {
+      "id": "unknown-frame-unit",
+      "path": "invalid/unknown-frame-unit.json",
+      "stage": "semantic"
+    },
+    {
+      "id": "duplicate-id",
+      "path": "invalid/duplicate-id.json",
+      "stage": "semantic"
+    },
+    {
+      "id": "source-offset-time",
+      "path": "invalid/source-offset-time.json",
+      "stage": "semantic"
+    },
+    {
+      "id": "zero-axis",
+      "path": "invalid/zero-axis.json",
+      "stage": "semantic"
+    },
+    {
+      "id": "verified-self-claim",
+      "path": "invalid/verified-self-claim.json",
+      "stage": "semantic"
+    }
+  ]
+}

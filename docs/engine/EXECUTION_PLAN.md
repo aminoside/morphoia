@@ -4,9 +4,9 @@
 
 Last updated: 2026-08-12
 Owner: Dr Olivier Ami
-Current operational phase: E1; E2 protocol-only lot integrated
-Current lot: `canonical-json-cas-replay`
-Work branch: `engine-p0-ir-cas`
+Current operational phase: E1; E1 native and E2 protocol foundations integrated
+Current lot: `public-ir-0.1-and-20-graph-replay`
+Work branch: `engine-p0-public-ir-replay`
 Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
 E1 base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
@@ -17,6 +17,8 @@ Corrective E2 source checkpoint: `e3ec245569bff40533b86789e61b1a78c15915f6`
 Final E2 evidence checkpoint: `b3dfc084c81d9d64ff4079304a4e97b0cf75b294`
 E2 integration commit: `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`
 E1 evidence checkpoint: `4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
+E1/E2 integration commit and current lot base:
+`12656708ccc3031670c4b3efd43996e46fa27998`
 
 ## Objective
 
@@ -121,6 +123,28 @@ validated specification is received.
   merged only into `engine` at `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`;
   exact-merge-SHA Engine run `31590418194` passed all five jobs. This closes
   only the protocol-contract integration, not the real SALOME sub-gate.
+- PR #7 subsequently integrated the verified E1 native core with the E2
+  protocol history only into `engine` at
+  `12656708ccc3031670c4b3efd43996e46fa27998`. The merge has tree
+  `9c21bc6544ee41c084208412805e93dbd5a85e70` and parents `c84dd152` and
+  `4eacd006`; the default branch was not modified. Exact-merge Engine run
+  `31593999716` passed native job `94105119978`, Python 3.12 job
+  `94105119984`, REUSE job `94105120004`, hygiene job `94105120031`, and
+  Python 3.13 job `94105120081`.
+- The new bounded public-IR lot branch
+  `origin/engine-p0-public-ir-replay` was created from that exact merge. Entry
+  inspection found a clean branch and the direct CPU bootstrap passed. The
+  five legacy prototype files listed in ADR-020 matched their frozen hashes;
+  they remain byte-exact and non-authoritative for Engine identities.
+- The local public-IR entry checkpoint passed the frozen E0 and E1 validators,
+  the separate E2 SBOM check, checkpoint and 320-requirement validation,
+  102/102 Python tests, report replay, the five-test direct native bootstrap,
+  Ruff on new Python, REUSE 194/194, the bounded secret scan, and whitespace
+  checks. Checkpoint `a69d35b5` was then published on the isolated lot branch;
+  PR #8 targets only `engine`. Exact-head Engine run `31596165398` passed
+  native `94112106988`, REUSE `94112107004`, Python 3.12 `94112107035`,
+  hygiene `94112107044`, and Python 3.13 `94112107066`; report run
+  `31596165378`, job `94112106640`, passed.
 
 ## Milestones
 
@@ -184,19 +208,24 @@ Entry: E0 CPU bootstrap is green and integrated into `engine`.
 Exit: all mandatory E1/core-cpu checks `PASS`; optional profiles remain
 explicitly `NOT_RUN` or `BLOCKED`.
 
-Current bounded lot: implement canonical JSON, SHA-256 CAS storage, immutable
-URI/size/hash references, and deterministic replay manifests, with invalid
-input, collision/integrity, idempotence, and golden-vector tests. Do not add
-format adapters, GPU work, or MVX semantics to this lot.
+Current bounded lot: publish Engine IR manifest/replay contracts 0.1, expose the
+integrated Profile 1 canonicalizer through the versioned C ABI and reference
+Python/CLI surfaces, and execute exactly 20 deterministic graph replays with
+invalid, migration, idempotence, and golden-vector tests. Do not add format
+adapters, GPU work, or MVX semantics to this lot.
 
-The internal native sub-lot now has a constrained canonical JSON Profile 1,
+The integrated internal native sub-lot has a constrained canonical JSON Profile 1,
 incremental SHA-256, and an atomic Linux/POSIX CAS implementation under
-ADR-018. This does not yet satisfy MOR-IR-002 on the public IR path: the legacy
-Python `canonical_json` and `semantic_hash` functions preserve a pre-Engine,
-non-JCS identity domain and are explicitly non-authoritative. The complete IR
-schema, deterministic replay manifests, 20 graph corpus, green hosted results,
-and integration evidence remain required before this bounded lot or E1 can
-close.
+ADR-018. The new public path now exposes that profile through a distinct
+versioned contract; the legacy Python `canonical_json` and `semantic_hash`
+functions preserve a pre-Engine, non-JCS identity domain and remain explicitly
+non-authoritative. The local public-IR contract and 20-graph replay pass, and
+the implementation checkpoint is published. Its first hosted Python 3.13 job
+passed the tests and lot but failed the wheel smoke. Corrective `c7e21acd`
+push and PR matrices subsequently passed the complete Python 3.12 and 3.13
+profiles. Evidence-follow-up checks, review, integration, and post-merge
+evidence remain required before the current lot can close. E1 also retains
+later foundations outside this bounded lot.
 
 The first hosted execution of source commit
 `bbf84cb806d95701daa2887e71d90a819c4a4c83` is retained as a failed source
@@ -214,8 +243,9 @@ mapping, and the bounded evidence report. The current validation commands are:
 
 ```bash
 python3 scripts/validate_engine_e0_evidence.py
-python3 scripts/generate_engine_e1_sbom.py --check
+python3 scripts/validate_engine_e1_native_evidence.py
 python3 scripts/generate_engine_e2_sbom.py --check
+python3 scripts/generate_engine_e1_public_ir_sbom.py --check
 python3 scripts/validate_engine_checkpoint.py
 PYTHONPATH=src <locked-python> -m unittest discover -s tests -v
 ```
@@ -226,9 +256,11 @@ report; it is not a valid current-tree check. On corrective evidence commit
 passed native job `94092209890`, REUSE job `94092209947`, Python 3.13 job
 `94092210022`, hygiene job `94092210038`, and Python 3.12 job `94092210136`.
 Report run `31589901212`, job `94092209098`, also passed. This proves the
-corrective hosted profile only; public IR, 20-graph replay, greater-than-2-GiB
-execution, future CAS capabilities, vulnerability analysis, and integration
-remain `NOT_RUN`.
+corrective hosted profile only. PR #7 later integrated the verified E1 native
+and E2 protocol histories at `12656708`; exact-merge Engine run `31593999716`
+passed all five required jobs. The later local public-IR and 20-graph results
+do not alter the continuing `NOT_RUN` status of greater-than-2-GiB execution,
+future CAS capabilities, or vulnerability analysis.
 
 After semantically merging integrated E2 history, the combined local worktree
 passed 94/94 Python tests, 5/5 native CTests, direct bootstrap, ASan/UBSan,
@@ -236,9 +268,99 @@ installation and the external C consumer, report replay, and REUSE 191/191.
 The published two-parent reconciliation `5a96abfc` retained the exact local
 tree `bc7714b1`. PR Engine run `31593255255` passed all five jobs and report run
 `31593255344`, job `94102764289`, passed; branch-push Engine run `31593250364`
-also passed all five jobs. This closes combined hosted reconciliation, not E1
-integration or any unfinished public IR, real SALOME, large-transfer, GPU/HPC,
-or vulnerability criterion.
+also passed all five jobs. PR #7 integrated the reconciled work only into
+`engine` at `12656708`; its post-merge Engine run passed. This closes
+integration of the implemented native and protocol foundations, not E1 itself
+or any unfinished public IR, real SALOME, large-transfer, GPU/HPC, or
+vulnerability criterion.
+
+#### Bounded public Engine IR 0.1 and replay lot
+
+The current lot starts from exact `engine` merge `12656708` on
+`engine-p0-public-ir-replay`. ADR-020 is `Proposed` and defines a new public
+identity domain without altering the legacy prototype: schema ID
+`https://morphoia.org/schemas/engine/ir-manifest/0.1.0`, format
+`morphoia.engine.ir-manifest`, version `0.1.0`, media type
+`application/vnd.morphoia.ir-manifest.v0+json`, canonical profile
+`morphoia.canonical-json.profile1`, and identity
+`SHA-256(canonical_profile_1(content))`. Logical IDs are lowercase UUIDv7 and
+local immutable payloads use `morphoia-cas://sha256/<digest>`.
+
+The lot is finite and split into three parallel, non-overlapping tracks after
+the entry checkpoint:
+
+1. **Track A — schema, contract, and corpus.** Add
+   `schemas/morphoia-engine-ir-manifest-0.1.0.schema.json`,
+   `schemas/morphoia-engine-ir-replay-0.1.0.schema.json`,
+   `src/morphoia/engine_ir_contract.py`,
+   `src/morphoia/engine_ir_migration.py`, the public contract guide, strict
+   schema/semantic/migration tests, and exactly 20 small input/golden replay
+   graphs plus bounded invalid fixtures under
+   `tests/fixtures/engine-ir/0.1.0/`.
+2. **Track B — native ABI, Python, CLI, and replay.** Add only the
+   sized/versioned capability-query and Profile 1 canonicalization ABI, keeping
+   opaque handles and explicit buffers/diagnostics; extend the exact export
+   allow-list from five to seven symbols. Add a native-library-required Python
+   binding, the `engine_ir` API/CLI and corpus/replay validators, native and
+   Python agreement tests, build/install/consumer coverage, and sanitizer
+   coverage. Do not expose a C IR object model or use a CWD-searching/fallback
+   binding.
+3. **Track C — durable evidence and integration.** Freeze the completed E1
+   native evidence, add public-IR traceability, a profile-specific manifest and
+   SBOM, exact corpus/lot validators, CI and REUSE coverage, and update gate
+   evidence, durable state, and changelog without regenerating the closed E0
+   profile. The E0 requirements-tracking overlay remains byte-exact; this lot
+   records its executed statuses only in its separate traceability profile.
+
+Local acceptance evidence now passes strict native lexical validation before
+JSON Schema and semantic validation; deterministic native/Python/CLI bytes and
+digests for all 20 graphs; explicit provenance/loss on migration; invalid and
+resource-bound rejection; exact seven-symbol ABI; two clean CPU
+build/install/consumer executions; ASan/UBSan; locked Python 3.12; REUSE
+299/299; bounded secret scan; and deterministic evidence. The owned lot ran
+60/60 tests, the evidence profile ran 22/22 mutation tests, and the complete
+suite runs 184 tests after checkpoint reconciliation. The first hosted Python
+3.13 execution remains `FAIL` at its wheel step. Corrective SHA `c7e21acd`
+passed the push Engine matrix and the PR Engine/report workflows associated
+with that head on Python 3.12 and 3.13. Only the evidence-follow-up hosted
+checks, review, integration into `engine`, and post-merge verification remain
+`NOT_RUN`. The lot excludes domain importers, remote CAS/GC/chunk resume, a
+greater-than-2-GiB execution, real SALOME, GPU/HPC backends, and all MVX
+semantics.
+
+The first implementation publication at `5ee8cebc` produced a successful
+report run `31609319695`, job `94156289420`. Push Engine run `31609314553`
+and PR Engine run `31609319697` passed native, hygiene, REUSE, the full Python
+3.12/3.13 suites, and the bounded IR lot; both Python matrix jobs failed only
+when the installed-wheel smoke found that setuptools was not installed. The
+correction installs exact setuptools 83.0.0, wheel 0.47.0, and packaging 26.3
+from a separate hash-locked E1 wheel-build profile; the closed Engine test lock
+and frozen E1/E2 evidence stay unchanged. Byte-for-byte wheel reproducibility
+remains `NOT_RUN`.
+
+The separated-lock correction is published at
+`c7e21acd30bf3ad2d1e0218ab2a224693c2f626c`. Exact push Engine run
+`31613015834` passed REUSE `94168834520`, native `94168834710`, Python 3.13
+`94168834734`, Python 3.12 `94168834760`, and hygiene `94168834784`. PR Engine
+run `31613019683`, associated with head `c7e21acd` and executed through the PR
+merge ref `6279cdeb074b579aaa03961d679d0420fff5ada3` into base
+`12656708ccc3031670c4b3efd43996e46fa27998`, passed REUSE `94168845428`, native `94168845526`, hygiene
+`94168845531`, Python 3.12 `94168845582`, and Python 3.13 `94168845586`.
+Associated PR report run `31613019691`, job `94168845239`, passed. Each Python
+matrix job executed the full tests, 60-test public-IR lot, 20-graph replay,
+hash-locked wheel path, pip check, and installed-wheel smoke. This promotes
+only `MOR-DEV-003`; it does not satisfy reproducible distribution construction,
+dependency security/license audits, integration, or any optional backend.
+
+The evidence-follow-up public-IR profile contains 123 hash-verified artifacts
+and a 140-component CycloneDX inventory. Its 49 requirement mappings classify
+33 bounded claims `PASS` and retain 16 broader claims as `NOT_RUN`, including
+complete object identity, resolvable payloads, full UCUM, MVX typing,
+reproducible distribution construction, external CAS, and the full G1 corpus.
+The corrective hosted matrix promotes only `MOR-DEV-003`. The 79-file synthetic
+corpus contains 20 inputs, 20 LF-free goldens, 20 replay recipes, 13 invalid
+cases plus indexes and migration fixtures; no referenced payload bytes are
+distributed.
 
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
@@ -349,7 +471,10 @@ large-artifact evidence, and the specified MVX micro-corpus.
   ADR-016 remain proposed. ADR-017 accepts explicit component-version domains.
   ADR-018 accepts the bounded internal canonical JSON Profile 1 and Linux/POSIX
   CAS protocol without claiming completion of the public IR or all CAS MUSTs.
-  ADR-019 accepts the bounded SALOME control contract and fake-evidence boundary.
+  ADR-019 accepts the bounded SALOME control contract and fake-evidence
+  boundary. ADR-020 proposes the distinct public Engine IR 0.1 identity domain;
+  its local 20-graph and cross-language evidence passes, but the ADR remains
+  proposed until the reviewed lot is published and integrated into `engine`.
 - E2 evidence uses its own closed manifest and SBOM profile. The immutable E0
   manifest/SBOM are not regenerated to absorb later-phase files.
 - E1 and E2 each use a separate manifest and SBOM profile and are regenerated
@@ -374,9 +499,12 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Publish this bounded hosted-evidence follow-up on `engine-p0-ir-cas`, require
-fresh exact-head Engine and report checks, verify that PR #7 has no unresolved
-review thread, then integrate PR #7 into `engine` only. Verify the exact merge
-SHA and post-merge Engine checks before opening the next public-IR lot. Keep real
-SALOME 9.16 and the unfinished public IR criteria `NOT_RUN`; never merge
-`engine` into the default branch without separate owner instruction.
+Publish the evidence follow-up on `engine-p0-public-ir-replay`, update draft
+PR #8, and require exact-head native, Python 3.12/3.13, hygiene, REUSE, and
+report workflows for those evidence bytes. Inspect review threads and
+integrate PR #8 only into `engine` after every required result passes, then
+verify the exact merge-SHA checks. Keep real SALOME 9.16, GPU backends, the
+real greater-than-2-GiB transfer, future CAS capabilities, vulnerability
+analysis, and MVX criteria `NOT_RUN` or `BLOCKED` until each named test or
+prerequisite exists; never merge `engine` into the default branch without
+separate owner instruction.

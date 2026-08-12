@@ -87,7 +87,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-          cache-dependency-path: requirements/engine-ci.lock
+          cache-dependency-path: |
+            requirements/engine-ci.lock
+            requirements/wheel-build-e1.lock
 
       - name: Verify immutable baselines
         run: |
@@ -99,23 +101,44 @@ jobs:
       - name: Validate the 320-requirement catalogue
         run: python scripts/extract_engine_requirements.py --check
 
-      - name: Install Python test dependencies
-        run: >-
-          python -m pip install --disable-pip-version-check
-          --require-hashes --only-binary=:all:
-          -r requirements/engine-ci.lock
+      - name: Install Python test and wheel-build dependencies
+        run: |
+          python -m pip install --disable-pip-version-check \
+            --require-hashes --only-binary=:all: \
+            -r requirements/engine-ci.lock
+          python -m pip install --disable-pip-version-check \
+            --require-hashes --only-binary=:all: \
+            -r requirements/wheel-build-e1.lock
+          python -m pip check
+
+      - name: Build the public IR native library in this isolated job
+        run: |
+          cmake --preset ci-gcc
+          cmake --build --preset ci-gcc --parallel 2
 
       - name: Run Python tests
         env:
           PYTHONPATH: src
         run: python -m unittest discover -s tests -v
 
+      - name: Validate the complete public IR 0.1 lot with the native library
+        env:
+          PYTHONPATH: src
+          MORPHOIA_ENGINE_LIBRARY: ${{ github.workspace }}/build/ci-gcc/libmorphoia_engine.so.0.0.1
+        run: bash scripts/validate-engine-ir-lot.sh
+
+      - name: Smoke-test an isolated installed wheel
+        env:
+          MORPHOIA_ENGINE_LIBRARY: ${{ github.workspace }}/build/ci-gcc/libmorphoia_engine.so.0.0.1
+        run: bash scripts/validate-engine-wheel.sh
+
       - name: Validate durable checkpoint and phase-scoped SBOMs
         run: |
           python scripts/validate_engine_checkpoint.py
           python scripts/validate_engine_e0_evidence.py
-          python scripts/generate_engine_e1_sbom.py --check
+          python scripts/validate_engine_e1_native_evidence.py
           python scripts/generate_engine_e2_sbom.py --check
+          python scripts/generate_engine_e1_public_ir_sbom.py --check
 
   hygiene:
     name: Source hygiene

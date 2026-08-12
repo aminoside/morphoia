@@ -9,9 +9,12 @@ Linux x86-64 CI profiles. CI installs them with both `--require-hashes` and
 fails closed.
 
 `engine-ci.lock` covers Python 3.12 and 3.13. Its two `rpds-py` hashes are the
-CPython 3.12 and 3.13 manylinux2014 x86-64 wheels. `report-ci.lock` covers the
-existing Python 3.12 report workflow. These locks are profile-specific and do
-not claim portability to other operating systems or architectures.
+CPython 3.12 and 3.13 manylinux2014 x86-64 wheels. The separate
+`wheel-build-e1.lock` freezes setuptools 83.0.0, wheel 0.47.0, and wheel's
+packaging 26.3 dependency for the isolated installed-wheel smoke without
+mutating the closed E1/E2 evidence inputs. `report-ci.lock` covers the existing
+Python 3.12 report workflow. These locks are profile-specific and do not claim
+portability to other operating systems or architectures.
 
 `cmake-e0.lock` freezes the exact CMake 3.20.5 manylinux x86-64 wheel used to
 exercise the declared minimum CMake version during the E0 audit. It is a

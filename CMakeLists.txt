@@ -115,6 +115,28 @@ if(BUILD_TESTING)
   add_test(NAME native.abi_c_smoke COMMAND morphoia_abi_c_smoke)
   set_tests_properties(native.abi_c_smoke PROPERTIES LABELS "native;abi;smoke")
 
+  add_executable(
+    morphoia_canonical_json_c_api_test
+    tests/native/canonical_json_c_api_test.c
+  )
+  target_link_libraries(morphoia_canonical_json_c_api_test PRIVATE Morphoia::Engine)
+  target_compile_features(morphoia_canonical_json_c_api_test PRIVATE c_std_11)
+  set_target_properties(
+    morphoia_canonical_json_c_api_test
+    PROPERTIES
+      C_EXTENSIONS OFF
+      LINKER_LANGUAGE CXX
+  )
+  morphoia_enable_strict_warnings(morphoia_canonical_json_c_api_test)
+  add_test(
+    NAME native.canonical_json_c_api
+    COMMAND morphoia_canonical_json_c_api_test
+  )
+  set_tests_properties(
+    native.canonical_json_c_api
+    PROPERTIES LABELS "native;abi;json;ir"
+  )
+
   add_executable(morphoia_core_smoke tests/native/core_smoke.cpp)
   target_link_libraries(morphoia_core_smoke PRIVATE Morphoia::Engine)
   target_compile_features(morphoia_core_smoke PRIVATE cxx_std_20)
@@ -155,6 +177,18 @@ if(BUILD_TESTING)
     morphoia_enable_strict_warnings(morphoia_posix_cas_test)
     add_test(NAME native.posix_cas COMMAND morphoia_posix_cas_test)
     set_tests_properties(native.posix_cas PROPERTIES LABELS "native;core;cas;posix")
+
+    add_executable(morphoia_ir_replay_test tests/native/ir_replay_test.cpp)
+    target_link_libraries(morphoia_ir_replay_test PRIVATE morphoia_core_internal)
+    target_compile_features(morphoia_ir_replay_test PRIVATE cxx_std_20)
+    target_compile_definitions(
+      morphoia_ir_replay_test
+      PRIVATE MORPHOIA_TEST_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+    )
+    set_target_properties(morphoia_ir_replay_test PROPERTIES CXX_EXTENSIONS OFF)
+    morphoia_enable_strict_warnings(morphoia_ir_replay_test)
+    add_test(NAME native.ir_replay COMMAND morphoia_ir_replay_test)
+    set_tests_properties(native.ir_replay PROPERTIES LABELS "native;core;cas;ir;replay")
   endif()
 endif()
 

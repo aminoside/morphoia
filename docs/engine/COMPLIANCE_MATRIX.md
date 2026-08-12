@@ -1,15 +1,17 @@
-# E0, E1 native-core, and E2 protocol compliance matrix
+# E0, E1 native/public-IR, and E2 protocol compliance matrix
 
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 Snapshot: 2026-08-12
-Declared profiles: E0 audit/bootstrap, bounded E1 native core, and E2 SALOME
-protocol contract on Linux x86-64 CPU
+Declared profiles: E0 audit/bootstrap, integrated bounded E1 native core,
+locally executed E1 public IR 0.1 replay, and E2 SALOME protocol contract on Linux
+x86-64 CPU
 
 The complete 320-item catalogue is machine-readable in
 `spec/requirements/requirements.yaml`. This view records E0 gate evidence plus
-the bounded E1 native and E2 contract profiles. It does not replace the complete
-per-requirement links and does not assert G1-G5 completion.
+the bounded E1 native, public-IR entry, and E2 contract profiles. It does not
+replace the complete per-requirement links and does not assert G1-G5
+completion.
 
 | Control | Component/lot | Test or inspection | Evidence | Status |
 |---|---|---|---|---|
@@ -38,14 +40,26 @@ per-requirement links and does not assert G1-G5 completion.
 | Existing CLI smoke | Existing prototype | CLI help/smoke | successful invocation | PASS |
 | Native C++20 direct-compiler bootstrap | Engine core | `./scripts/bootstrap-engine.sh` fallback | ABI and core smoke executed with GCC/G++ 13 | PASS |
 | Native CMake/CTest bootstrap | Engine core | CMake 3.20.5 configure/build/test | two CTests, install and external C consumer | PASS |
-| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 94 tests on the combined E1/E2 reconciliation | PASS |
+| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 184 tests on the local public-IR checkpoint | PASS |
+| E1/E2 foundations integrated into `engine` | Publication | PR #7 merge inspection | merge `12656708ccc3031670c4b3efd43996e46fa27998`, tree `9c21bc6544ee41c084208412805e93dbd5a85e70`, parents `c84dd152…` + `4eacd006…`; default branch unchanged | PASS |
+| E1/E2 exact-merge hosted checks | Publication | Engine run `31593999716` | native `94105119978`, Python 3.12 `94105119984`, REUSE `94105120004`, hygiene `94105120031`, and Python 3.13 `94105120081` passed | PASS |
+| Public-IR lot branch and entry bootstrap | E1 public IR | branch/base inspection plus direct CPU bootstrap | `engine-p0-public-ir-replay` starts from exact merge `12656708`; entry smoke passed | PASS |
+| Public-IR entry checkpoint validation | E1 public IR | frozen-profile validators, full Python/report/native/license/hygiene suites | 102/102 Python tests, native five-test bootstrap, REUSE 194/194, reports, requirements, secret and diff checks passed | PASS |
+| Public-IR entry checkpoint hosted validation | E1 public IR | PR #8 exact-head workflows | Engine `31596165398` passed five jobs; report `31596165378`, job `94112106640`, passed on `a69d35b5` | PASS |
+| Public Engine IR 0.1 local implementation | E1 public IR | schema, native/Python/CLI, semantic validation, and migration | bounded Linux x86-64/CPython 3.12 profile passed; ADR-020 remains proposed pending publication/integration | PASS |
+| Public Engine IR 20-graph replay | E1 public IR | canonical input/golden corpus replay | 20/20 graphs passed native/Python byte and digest agreement, two workspaces, and checkpoint resume | PASS |
+| Public-IR evidence profile | E1 public IR | exact manifest/SBOM/traceability and mutation tests | 33 bounded PASS, 16 broader NOT_RUN, 123 artifacts, 140 CycloneDX components, 22/22 evidence tests | PASS |
+| Public-IR first implementation hosted attempt | Publication | exact `5ee8cebc` workflows | report passed; Engine native/hygiene/REUSE and Python 3.12/3.13 tests passed, but both Python jobs failed at the wheel smoke because setuptools was absent | FAIL |
+| Public-IR corrective hosted checks | Publication | push exact-head `c7e21acd` plus PR merge-ref associated with that head | push Engine `31613015834`, PR Engine `31613019683`, and PR report `31613019691` passed; both Python 3.12/3.13 paths included full tests, IR lot, hash-locked wheel and pip check | PASS |
+| Public-IR evidence follow-up and integration | Publication | follow-up exact-head workflows, PR #8 review, merge and post-merge checks | evidence follow-up is not published or integrated | NOT_RUN |
+| Legacy prototype bytes at public-IR entry | E1 public IR | SHA-256 inspection of five declared files | exact hashes recorded in ADR-020 and `STATUS.md`; files are non-authoritative for Engine identity | PASS |
 | Immutable normative PDFs excluded from report branding | Baselines/reporting | tracked-report manifest test plus full `make check` | two Engine baseline PDFs remain hash-identical and outside generated-report policy | PASS |
 | Second clean bootstrap | Reproducibility | two isolated direct GCC/G++ builds/tests | both executions passed | PASS |
 | ASan/UBSan smoke | Security | fail-fast sanitizer script | two native executables | PASS |
 | LeakSanitizer | Security | leak detection | deliberately disabled; environment limitation retained | NOT_RUN |
 | Secret/sensitive-data scan of E0 diff | Security | bounded fail-closed text signature scan plus binary/hash inspection | no supported signature; not a full PII audit | PASS |
 | E0 SBOM | Supply chain | deterministic CycloneDX generator/check | source, artifacts and hashed locks inventoried; vulnerability analysis NOT_RUN | PASS |
-| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 191/191 combined files resolved; component vulnerability analysis NOT_RUN | PASS |
+| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 299/299 public-IR worktree files resolved; component vulnerability analysis NOT_RUN | PASS |
 | Public English language policy | Documentation | repository-language inspection | root README and contribution guide are English; legacy Phase 1/2 guides/documents remain French under R-021 | FAIL |
 | SALOME 9.16 headless | Optional SALOME | real runtime probe | runtime absent | NOT_RUN |
 | CUDA, HIP, and SYCL execution | Optional compute | real hardware execution | hardware/runtime absent | NOT_RUN |
@@ -58,6 +72,28 @@ per-requirement links and does not assert G1-G5 completion.
 condition was absent; compensating PR discipline is documented separately.
 A mock, static generator, compiled object, or alternative backend cannot upgrade
 an unavailable optional profile to `PASS`.
+
+## E1 public Engine IR 0.1 local profile
+
+| Control | Requirement(s) | Test or inspection | Evidence | Status |
+|---|---|---|---|---|
+| Distinct versioned public identity domain | MOR-IR-001, MOR-IR-002 | schema/constant agreement across native, Python, CLI, and docs | Draft 2020-12 and Profile 1 contract tests passed; ADR-020 remains proposed until integration | PASS |
+| Profile 1 content identity | MOR-IR-002, MOR-CAS-001 | `SHA-256(canonical_profile_1(content))` cross-language golden tests | 20/20 exact native/Python canonical bytes and digests | PASS |
+| Native lexical rejection precedes schema validation | MOR-IR-002, MOR-API-003 | duplicate-key, UTF-8, surrogate, numeric, and resource-limit mutations | native and Python mutation suites passed | PASS |
+| JSON Schema then bounded semantic validation | MOR-IR-001 | structural and graph-invariant positive/negative corpus | schema and bounded graph invariants passed | PASS |
+| Complete UCUM code/dimension/factor validation | MOR-IR-006 | semantic unit registry evaluation | positive exact SI factors were checked, but no complete UCUM evaluator ran | NOT_RUN |
+| Lowercase UUIDv7 logical identifiers | MOR-IR-004 | syntax, normalization, collision, and reference-integrity mutations | executed positive and negative tests | PASS |
+| Immutable payload reference field sub-claim | MOR-IR-005, MOR-CAS-001, MOR-CAS-003 | exact URI inversion, size/digest, and inline-payload rejection | field and mismatch tests passed | PASS |
+| Every payload reference is resolvable | MOR-IR-005 | resolve all declared payload bytes | corpus contains invented metadata references and no payload bytes | NOT_RUN |
+| Reverse-DNS-only extensions | MOR-API-018 | unknown core field, round-trip, and invalid extension-key mutations | executed positive and negative tests | PASS |
+| C ABI limited to capability and canonicalization additions | MOR-DEV-002, MOR-API-001, MOR-API-002 | exact seven-symbol export list, sized/versioned structs, installed C consumer | two clean build/install/consumer executions plus hostile ABI tests | PASS |
+| Reference Python requires the native library on 3.12 | MOR-DEV-003, MOR-API-004, MOR-API-005 | loader-path, absent-library, allocator/lifetime, and no-fallback tests | CPython 3.12.13 passed | PASS |
+| Reference Python 3.13 target and 3.12 compatibility | MOR-DEV-003 | corrective hosted matrices on Ubuntu 24.04 x86-64 | push exact-head jobs Python 3.13 `94168834734` and 3.12 `94168834760` passed; PR merge-ref jobs Python 3.13 `94168845586` and 3.12 `94168845582` passed the same complete public-IR profile | PASS |
+| Explicit legacy migration with provenance and losses | MOR-API-015, MOR-IR-012, MOR-SCP-004 | migration golden and mutation tests | input bytes preserved, four declared losses, native sealing and semantic validation passed | PASS |
+| Legacy prototype remains byte-exact and non-authoritative | Component-version boundary | SHA-256 inspection at lot entry | all five hashes in ADR-020 and `STATUS.md` match | PASS |
+| MVX codec, reconstruction, thresholds, or semantics | MVX change-control boundary | scope inspection | explicitly outside this bounded lot; no MVX capability claimed | NOT_APPLICABLE |
+| Greater-than-2-GiB public-IR payload execution | Resource-gated CAS profile | real payload create/store/read/replay | no payload executed | NOT_RUN |
+| Complete G1/P0 corpus | MOR-QA-013 | 20 IR plus STEP, SMESH, MED and three >2-GiB segments | only 20 synthetic IR graphs executed | NOT_RUN |
 
 ## E2 SALOME protocol-only profile
 

@@ -29,6 +29,7 @@ technical specification.
 | [ADR-017](../../spec/adr/ADR-017-component-versioning.md) | Separate prototype, Engine, ABI and release versions | N/A | Accepted |
 | [ADR-018](../../spec/adr/ADR-018-canonical-json-profile-posix-cas.md) | Constrained canonical JSON and atomic Linux/POSIX CAS | Bounded E1 lot | Accepted |
 | [ADR-019](../../spec/adr/ADR-019-salome-control-protocol-v0.1.md) | Versioned bounded SALOME control protocol; explicitly fake agent is contract evidence only | N/A | Accepted for E2 contract profile |
+| [ADR-020](../../spec/adr/ADR-020-public-engine-ir-v0.1.md) | Distinct public Engine IR manifest 0.1 identity domain; preserve the legacy prototype | Bounded E1 public-IR lot | Proposed |
 
 ## E0 operational decisions
 
@@ -61,3 +62,26 @@ technical specification.
 - Retain hosted Engine run `31585426276` and report run `31585425822` as
   `FAIL`. Their sole stale-digest failure motivates the durable correction but
   is not erased by later local success.
+
+## Public Engine IR 0.1 operational decisions
+
+- Start the bounded lot from the verified `engine` integration merge
+  `12656708ccc3031670c4b3efd43996e46fa27998` on
+  `engine-p0-public-ir-replay`; do not modify the default branch.
+- Use schema ID
+  `https://morphoia.org/schemas/engine/ir-manifest/0.1.0`, format
+  `morphoia.engine.ir-manifest`, version `0.1.0`, media type
+  `application/vnd.morphoia.ir-manifest.v0+json`, and canonical profile
+  `morphoia.canonical-json.profile1`.
+- Define semantic identity as
+  `SHA-256(canonical_profile_1(content))`. Use lowercase UUIDv7 for logical
+  identifiers and `morphoia-cas://sha256/<digest>` for local immutable payload
+  references; neither substitutes for semantic validation.
+- Validate native lexical constraints first, JSON Schema second, and semantic
+  invariants third. Fail closed without an implicit repair or conversion.
+- Permit extensions only under reverse-DNS keys. Do not define MVX semantics
+  before an owner-validated MVX specification is received.
+- Add only capability-query and canonicalization surfaces to the sized,
+  versioned C ABI. Do not add a public C IR object model.
+- Preserve the legacy prototype byte-exact and label it non-authoritative for
+  Engine identity. Any migration is explicit and records provenance and loss.

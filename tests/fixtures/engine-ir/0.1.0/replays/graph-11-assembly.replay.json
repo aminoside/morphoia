@@ -1,0 +1,38 @@
+{
+  "format": "morphoia.engine.ir-replay",
+  "format_version": "0.1.0",
+  "canonical_profile": "morphoia.canonical-json.profile1",
+  "manifest": {
+    "uri": "morphoia-cas://sha256/23286f1c49079a0f047122659d29103e36215a9d6362c774fb67b207a9ee5577",
+    "sha256": "23286f1c49079a0f047122659d29103e36215a9d6362c774fb67b207a9ee5577",
+    "size_bytes": 4959,
+    "media_type": "application/vnd.morphoia.ir-manifest.v0+json"
+  },
+  "expected_content_identity": "e29a67b20bf5257abd26393fe205bfbb1ad1411ffb48c2dc3e1bea73111f1b4a",
+  "operations": [
+    {
+      "sequence": 1,
+      "operation": "validate-lexical"
+    },
+    {
+      "sequence": 2,
+      "operation": "validate-schema"
+    },
+    {
+      "sequence": 3,
+      "operation": "validate-semantic"
+    },
+    {
+      "sequence": 4,
+      "operation": "canonicalize-content"
+    },
+    {
+      "sequence": 5,
+      "operation": "verify-identity"
+    }
+  ],
+  "determinism": {
+    "seed": 11,
+    "expected_runs": 2
+  }
+}
