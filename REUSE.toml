@@ -1,0 +1,191 @@
+version = 1
+
+[[annotations]]
+path = [
+  "CMakeLists.txt",
+  "cmake/**",
+  "cpp/**",
+  ".github/workflows/engine-ci.yml",
+  "CMakePresets.json",
+  "requirements/*.lock",
+  "scripts/bootstrap-engine.sh",
+  "scripts/extract_engine_requirements.py",
+  "scripts/generate_engine_sbom.py",
+  "scripts/generate_engine_e1_sbom.py",
+  "scripts/generate_engine_e1_public_ir_sbom.py",
+  "scripts/generate_engine_e2_sbom.py",
+  "scripts/*engine_ir*.py",
+  "scripts/validate-engine-ir-lot.sh",
+  "scripts/validate-engine-wheel.sh",
+  "scripts/run-engine-sanitizers.sh",
+  "scripts/scan-secrets.sh",
+  "scripts/validate_engine_checkpoint.py",
+  "scripts/validate_engine_e0_evidence.py",
+  "scripts/validate_engine_e1_native_evidence.py",
+  "spec/requirements/requirements-catalog.schema.json",
+  "spec/requirements/requirements-tracking.schema.json",
+  "spec/evidence/artifact-manifest.schema.json",
+  "spec/evidence/checkpoint.schema.json",
+  "spec/evidence/e2-salome-protocol-artifact-manifest.schema.json",
+  "spec/evidence/e2-salome-protocol-traceability.schema.json",
+  "spec/evidence/e1-public-ir-artifact-manifest.schema.json",
+  "spec/evidence/e1-public-ir-traceability.schema.json",
+  "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+  "schemas/morphoia-engine-ir-replay-0.1.0.schema.json",
+  "src/morphoia/_engine_native.py",
+  "src/morphoia/engine_ir.py",
+  "src/morphoia/engine_ir_contract.py",
+  "src/morphoia/engine_ir_migration.py",
+  "tests/native/**",
+  "tests/test_e1_public_ir_evidence.py",
+  "tests/test_engine_ir_contract.py",
+  "tests/test_engine_ir_cli.py",
+  "tests/test_engine_ir_migration.py",
+  "tests/test_engine_ir_native.py",
+  "tests/test_engine_ir_replay.py",
+  "tests/test_engine_evidence.py",
+  "tests/test_e1_native_freeze.py",
+  "tests/test_engine_requirements.py",
+  "tests/test_e2_evidence.py",
+  "tests/test_salome_protocol.py",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Olivier Ami"
+SPDX-License-Identifier = "Apache-2.0 OR MIT"
+
+[[annotations]]
+path = [
+  ".agent/PLANS.md",
+  "AGENTS.md",
+  "DCO.md",
+  "DEPENDENCIES.md",
+  "GOVERNANCE.md",
+  "NOTICE",
+  "SECURITY.md",
+  "SUPPORT.md",
+  "artifacts/manifest.json",
+  "artifacts/e1/manifest.json",
+  "artifacts/sbom/engine-e0-source-native.cdx.json",
+  "artifacts/sbom/engine-e1-native-core.cdx.json",
+  "artifacts/manifests/engine-e2-salome-protocol.json",
+  "artifacts/sbom/engine-e2-salome-protocol.cdx.json",
+  "artifacts/manifests/engine-e1-public-ir.json",
+  "artifacts/sbom/engine-e1-public-ir.cdx.json",
+  "docs/engine/*.md",
+  "docs/engine/RESOURCE_BUDGET.yaml",
+  "docs/engine/checkpoint.json",
+  "docs/engine/evidence/**",
+  "requirements/README.md",
+  "REUSE.toml",
+  "spec/adr/**",
+  "spec/requirements/README.md",
+  "spec/requirements/requirements-tracking.yaml",
+  "spec/evidence/e2-salome-protocol-traceability.json",
+  "spec/evidence/e1-public-ir-traceability.json",
+  "tests/fixtures/engine-ir/**",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Olivier Ami"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = "CODE_OF_CONDUCT.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = [
+  "Contributor Covenant contributors",
+  "2026 Olivier Ami",
+]
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = [
+  ".gitattributes",
+  ".github/CODEOWNERS",
+  ".github/workflows/build-report.yml",
+  ".gitignore",
+  "CHANGELOG.md",
+  "CITATION.cff",
+  "CONTRIBUTING.md",
+  "Makefile",
+  "README.md",
+  "assets/brand/README.md",
+  "build_phase2_report.py",
+  "build_report.py",
+  "docs/phase1/**",
+  "docs/phase2/**",
+  "examples/**",
+  "pyproject.toml",
+  "reporting/**",
+  "reports.json",
+  "schemas/morphoia-backend-manifest-0.1.schema.json",
+  "schemas/morphoia-ir-0.1.schema.json",
+  "schemas/morphoia-loss-register-0.1.schema.json",
+  "schemas/morphoia-salome-protocol-0.1.schema.json",
+  "scripts/check_*.py",
+  "src/morphoia/__init__.py",
+  "src/morphoia/__main__.py",
+  "src/morphoia/backends/**",
+  "src/morphoia/cli.py",
+  "src/morphoia/compiler.py",
+  "src/morphoia/lexer.py",
+  "src/morphoia/losses.py",
+  "src/morphoia/model.py",
+  "src/morphoia/parser.py",
+  "src/morphoia/provenance.py",
+  "src/morphoia/runtime.py",
+  "src/morphoia/salome_protocol/**",
+  "src/morphoia/semantic.py",
+  "src/morphoia/topology.py",
+  "src/morphoia/typesystem.py",
+  "src/morphoia/validator.py",
+  "tests/test_parser.py",
+  "tests/test_runtime.py",
+  "tests/test_schemas.py",
+  "tests/test_topology.py",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Olivier Ami"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = [
+  "assets/brand/*.svg",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "NOASSERTION"
+SPDX-License-Identifier = "LicenseRef-Morphoia-Brand-Assets"
+
+[[annotations]]
+path = [
+  "assets/brand/fonts/Barlow-*.ttf",
+  "assets/brand/fonts/OFL-Barlow.txt",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2017 The Barlow Project Authors"
+SPDX-License-Identifier = "OFL-1.1"
+
+[[annotations]]
+path = [
+  "assets/brand/fonts/Aldrich-Regular.ttf",
+  "assets/brand/fonts/OFL-Aldrich.txt",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2011 Matthew Desmond"
+SPDX-License-Identifier = "OFL-1.1"
+
+[[annotations]]
+path = [
+  "docs/engine/baselines/Morphoia_Engine_Architecture_Reference_v0.2.pdf",
+  "docs/engine/baselines/Morphoia_Engine_Cahier_des_charges_technique_v0.1.pdf",
+  "spec/requirements/Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt",
+  "spec/requirements/requirements.yaml",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "NOASSERTION"
+SPDX-License-Identifier = "LicenseRef-Morphoia-Baseline"
+
+[[annotations]]
+path = "docs/engine/baselines/morphoia-logo-vectoriel.zip"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "NOASSERTION"
+SPDX-License-Identifier = "LicenseRef-Morphoia-Brand-Assets"

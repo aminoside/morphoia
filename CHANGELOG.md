@@ -1,8 +1,38 @@
 # Changelog
 
-Toutes les modifications notables de MORPHOIA seront documentées ici.
+All notable changes to MORPHOIA are documented in this file.
 
-## [Non publié]
+## [Unreleased]
+
+### Morphoia Engine public IR 0.1
+
+- added a distinct, versioned Engine IR manifest and replay identity domain
+  without reinterpreting the legacy prototype schema or serializers;
+- verified a bounded core-CPU lot for strict manifest validation, native
+  canonicalization, Python and CLI replay, explicit migration, and exactly 20
+  small synthetic IR graphs with frozen canonical vectors;
+- added an exact requirement-to-test mapping, a closed artifact manifest, and
+  a deterministic CycloneDX inventory with mutation-tested confinement and
+  atomic publication;
+- integrated the bounded profile into `engine` through PR #8 and accepted
+  ADR-020 after exact-merge Python 3.12/3.13, native, hygiene, and REUSE checks;
+- kept byte-reproducible distribution construction, vulnerability analysis,
+  remote CAS, greater-than-2-GiB artifacts, real SALOME, GPU backends, full
+  corpus conformance, and MVX explicitly `NOT_RUN` until their named evidence
+  is executed.
+
+### Morphoia Engine E0 bootstrap
+
+- added an immutable baseline register and a machine-readable catalogue of all
+  320 Engine requirements with a separate fail-closed traceability overlay;
+- added the C++20 shared core bootstrap, versioned C11 ABI, strict CMake 3.20
+  package, C and C++ smoke tests, external-consumer test, and sanitizer path;
+- added resumable execution state, ADR-001 through ADR-017, capability and
+  resource reports, a threat model, license metadata, deterministic SBOM, and
+  hash-locked CPU CI profiles;
+- kept SALOME, GPU, HPC, domain-library, vulnerability-scan, and MVX evidence
+  explicitly `NOT_RUN` or `BLOCKED` where the required runtime or validated
+  specification is unavailable.
 
 ### Ajouté
 

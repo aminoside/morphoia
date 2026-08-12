@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools>=77"]
+requires = ["setuptools==83.0.0", "wheel==0.47.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "morphoia"
 version = "0.2.0.dev0"
-description = "Experimental STEP-centred construction graph, validator and SDK for parametric CAD interoperability"
+description = "Morphoia Engine IR SDK with an experimental construction-graph prototype"
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [
@@ -17,7 +17,12 @@ classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Intended Audience :: Science/Research",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.12"
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13"
+]
+
+dependencies = [
+  "jsonschema==4.25.1"
 ]
 
 [project.optional-dependencies]
@@ -26,7 +31,6 @@ report = [
   "reportlab==4.4.9"
 ]
 dev = [
-  "jsonschema>=4.23,<5",
   "pytest>=8,<9",
   "ruff>=0.12,<1"
 ]
@@ -36,6 +40,13 @@ morphoia = "morphoia.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.data-files]
+"share/morphoia/schemas" = [
+  "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+  "schemas/morphoia-engine-ir-replay-0.1.0.schema.json",
+  "schemas/morphoia-ir-0.1.schema.json"
+]
 
 [tool.ruff]
 target-version = "py312"

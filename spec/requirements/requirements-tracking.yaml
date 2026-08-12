@@ -1,0 +1,5302 @@
+{
+  "$schema": "./requirements-tracking.schema.json",
+  "schema_version": "1.0.0",
+  "baseline_records_sha256": "5e65c204e35ba98453669095ede587b2573d3a6f35d7841d16d26104794131ba",
+  "baseline_immutable_records_sha256": "b846a2f284ad0510b43ca6fdba8ad4fae7d1b40daf2f77305c8153e6a9de4072",
+  "status_vocabulary": [
+    "PASS",
+    "FAIL",
+    "BLOCKED",
+    "NOT_RUN",
+    "NOT_APPLICABLE"
+  ],
+  "entries": {
+    "MOR-SCP-001": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-002": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-003": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-004": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-005": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-006": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-007": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-008": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-009": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-010": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-011": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-012": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-013": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-014": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SCP-015": {
+      "component": "spec",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-001": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-002": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-003": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-004": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-005": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-006": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-007": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-008": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-009": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-010": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-011": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-012": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-013": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-ARC-014": {
+      "component": "architecture",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-001": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-002": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-003": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-004": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-005": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-006": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-007": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-008": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-009": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-010": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-011": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-012": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-013": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-014": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-015": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DEV-016": {
+      "component": "build",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-001": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-002": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-003": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-004": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-005": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-006": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-007": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-008": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-009": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-010": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-011": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-012": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-013": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-014": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-015": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-016": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-017": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-API-018": {
+      "component": "capi",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-001": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-002": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-003": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-004": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-005": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-006": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-007": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-008": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-009": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-010": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-011": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-012": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-013": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-014": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-015": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-016": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-017": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IR-018": {
+      "component": "core/ir",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-001": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-002": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-003": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-004": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-005": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-006": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-007": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-008": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-009": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-010": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-011": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CAS-012": {
+      "component": "core/cas",
+      "work_package": "WP1",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-001": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-002": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-003": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-004": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-005": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-006": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-007": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-008": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-009": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-010": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-011": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-012": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-013": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-014": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-015": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-016": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-017": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-018": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-IO-019": {
+      "component": "io",
+      "work_package": "WP2",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-001": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-002": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-003": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-004": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-005": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-006": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-007": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-008": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-009": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-010": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-011": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-012": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-013": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-DIC-014": {
+      "component": "io/dicom",
+      "work_package": "WP3",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-001": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-002": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-003": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-004": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-005": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-006": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-007": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-008": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-009": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-VIS-010": {
+      "component": "io/vtk-and-connectors",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-001": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-002": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-003": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-004": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-005": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-006": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-007": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-008": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-009": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-010": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-011": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-012": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-013": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-014": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-015": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-016": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-017": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-018": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-CMP-019": {
+      "component": "compute-and-workers",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-001": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-002": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-003": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-004": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-005": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-006": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-007": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-008": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-009": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-010": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-011": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-012": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-013": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-014": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-015": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-016": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-AI-017": {
+      "component": "ai-interop",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-001": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-002": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-003": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-004": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-005": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-006": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-007": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-008": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-009": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-010": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-011": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-012": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-013": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-014": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-015": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-016": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-017": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-MVX-018": {
+      "component": "plugins/mvx",
+      "work_package": "WP4",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-001": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-002": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-003": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-004": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-005": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-006": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-007": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-008": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-009": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PLG-010": {
+      "component": "plugins/sdk",
+      "work_package": "WP6",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-001": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-002": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-003": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-004": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-005": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-006": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-007": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-008": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-009": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-010": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-011": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-012": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-013": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-014": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-015": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-016": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-017": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-018": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-019": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-020": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-021": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-022": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-023": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-024": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-025": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-026": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SAL-027": {
+      "component": "salome-protocol-and-agent",
+      "work_package": "WP5",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-001": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-002": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-003": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-004": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-005": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-006": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-007": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-008": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-009": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-010": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-011": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-012": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-013": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-014": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-015": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-HPC-016": {
+      "component": "hpc",
+      "work_package": "WP7",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-001": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-002": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-003": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-004": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-005": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-006": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-007": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-008": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-009": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-010": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-011": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-012": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-013": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-014": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-015": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-016": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-017": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-018": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-019": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-SEC-020": {
+      "component": "security",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-001": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-002": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-003": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-004": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-005": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-006": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-007": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-008": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-009": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-010": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-011": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-012": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-013": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-014": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-015": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-PER-016": {
+      "component": "performance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-001": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-002": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-003": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-004": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-005": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-006": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-007": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-008": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-009": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G4"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-010": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-011": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-012": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-013": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-014": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-015": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-016": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-017": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-QA-018": {
+      "component": "quality-and-conformance",
+      "work_package": "WP8",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-001": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-002": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-003": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-004": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-005": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-006": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-007": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-008": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-009": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-010": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-011": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-012": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-LIC-013": {
+      "component": "licensing",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-001": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-002": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-003": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-004": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-005": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-006": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-007": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-008": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-009": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    },
+    "MOR-GOV-010": {
+      "component": "governance",
+      "work_package": "WP0",
+      "issue": null,
+      "test_ids": [],
+      "evidence": [],
+      "gate_candidates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "dependencies": [],
+      "dependency_mapping": "UNMAPPED",
+      "status": "NOT_RUN",
+      "status_reason": null,
+      "mapping_status": "PARTIAL"
+    }
+  }
+}

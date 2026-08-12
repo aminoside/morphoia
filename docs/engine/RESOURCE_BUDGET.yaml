@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: CC-BY-4.0
+schema_version: 1
+recorded_at: "2026-08-12"
+policy_state: enforced_unexpanded
+scope: engine-p0-bootstrap
+
+observed_environment:
+  status: PASS
+  os: Ubuntu 24.04
+  architecture: x86_64
+  effective_cpu_count: 8
+  cgroup_memory_gib: 20
+  free_disk_gib_at_probe: 54
+  compiler: GCC 13
+  cxx_standard_available: C++20
+  openmp_available: true
+  python: "3.12"
+
+hard_limits_before_explicit_revalidation:
+  maximum_single_download_bytes: 2147483648
+  maximum_job_wall_time_seconds: 3600
+  maximum_fraction_of_probe_free_disk: 0.70
+  maximum_disk_consumption_gib_from_probe: 37.8
+  minimum_free_disk_gib_after_operation: 16.2
+  paid_resources_allowed: false
+  automatic_billing_allowed: false
+
+resource_gated_operations:
+  - fuzzing_longer_than_smoke
+  - benchmarks_longer_than_smoke
+  - tests_with_inputs_over_2_gib
+  - corpus_acquisition
+  - container_image_acquisition
+  - parallel_jobs_with_unbounded_memory
+
+execution_rules:
+  cancellable: true
+  require_preflight_disk_check: true
+  require_estimated_peak_memory: true
+  require_timeout: true
+  require_operation_key: true
+  require_atomic_outputs: true
+  require_success_manifest: true
+  reuse_verified_outputs_by_hash: true
+
+unavailable_profiles_at_probe:
+  salome: NOT_RUN
+  nvidia_gpu: NOT_RUN
+  amd_gpu: NOT_RUN
+  intel_gpu: NOT_RUN
+  containers: NOT_RUN
+  slurm: NOT_RUN
+  eurohpc: NOT_RUN
+  domain_libraries: NOT_RUN
+
+notes:
+  - The 37.8 GiB ceiling is 70 percent of the 54 GiB free-space observation.
+  - A changed filesystem or cgroup requires a fresh probe before long work.
+  - Static generation or compilation does not validate an unavailable runtime.

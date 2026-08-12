@@ -1,0 +1,194 @@
+{
+  "format": "morphoia.engine.ir-manifest",
+  "format_version": "0.1.0",
+  "media_type": "application/vnd.morphoia.ir-manifest.v0+json",
+  "canonical_profile": "morphoia.canonical-json.profile1",
+  "identity": {
+    "algorithm": "sha256",
+    "digest": "e2869c264d27c0e6b398d678901e87351ddc67c2b58af80621fa1a0a80285471",
+    "scope": "content"
+  },
+  "content": {
+    "logical_id": "018f0000-0000-7000-8000-0000000007d0",
+    "revision": 2,
+    "parents": [
+      {
+        "logical_id": "018f0000-0000-7000-8000-0000000007d0",
+        "revision": 1,
+        "content_sha256": "799369a698c68304dfc02c93635a6f1f8edde1a14a7bed7ce707b3d2d753cfb4"
+      }
+    ],
+    "units": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000007d1",
+        "ucum_code": "mm",
+        "dimension": {
+          "length": 1,
+          "mass": 0,
+          "time": 0,
+          "current": 0,
+          "temperature": 0,
+          "amount": 0,
+          "luminous_intensity": 0
+        },
+        "si_factor": {
+          "coefficient": 1,
+          "scale": -3
+        }
+      }
+    ],
+    "frames": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000007d2",
+        "dimension": 3,
+        "origin": [
+          {
+            "coefficient": 0,
+            "scale": 0
+          },
+          {
+            "coefficient": 0,
+            "scale": 0
+          },
+          {
+            "coefficient": 0,
+            "scale": 0
+          }
+        ],
+        "axes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "handedness": "right",
+        "matrix_order": "row-major",
+        "unit_id": "018f0000-0000-7000-8000-0000000007d1"
+      }
+    ],
+    "transforms": [],
+    "source": {
+      "uri": "urn:morphoia:fixture:graph-20",
+      "license_expression": "CC-BY-4.0",
+      "rights_holder": "Morphoia synthetic fixtures",
+      "created_at": "2026-08-12T12:00:00Z",
+      "source_tool": {
+        "name": "morphoia-fixture-generator",
+        "version": "0.1.0"
+      },
+      "artifact": {
+        "uri": "morphoia-cas://sha256/0fdbd38ccc18e418396a89618f5405849df6706852969dd241a6d0ead8c61669",
+        "sha256": "0fdbd38ccc18e418396a89618f5405849df6706852969dd241a6d0ead8c61669",
+        "size_bytes": 73,
+        "media_type": "model/step"
+      }
+    },
+    "product": {
+      "assemblies": [
+        {
+          "id": "018f0000-0000-7000-8000-0000000007d3",
+          "name": "Synthetic graph 20"
+        }
+      ],
+      "instances": [],
+      "names": [
+        {
+          "subject_id": "018f0000-0000-7000-8000-0000000007d3",
+          "value": "Synthetic graph 20"
+        }
+      ],
+      "colors": [
+        {
+          "subject_id": "018f0000-0000-7000-8000-0000000007d3",
+          "rgba": [
+            109,
+            223,
+            245,
+            255
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "subject_id": "018f0000-0000-7000-8000-0000000007d3",
+          "name": "fixture"
+        }
+      ],
+      "properties": [
+        {
+          "subject_id": "018f0000-0000-7000-8000-0000000007d3",
+          "name": "synthetic",
+          "value": true
+        }
+      ]
+    },
+    "representations": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000007d4",
+        "kind": "brep",
+        "authority": "source",
+        "frame_id": "018f0000-0000-7000-8000-0000000007d2",
+        "unit_id": "018f0000-0000-7000-8000-0000000007d1",
+        "payload": {
+          "uri": "morphoia-cas://sha256/a353f01da3dabe3f5a20ccca960fa32654c5d094f62a1fa781784f2550f2fdb0",
+          "sha256": "a353f01da3dabe3f5a20ccca960fa32654c5d094f62a1fa781784f2550f2fdb0",
+          "size_bytes": 81,
+          "media_type": "model/step"
+        },
+        "derived_from": [],
+        "ai_output": false,
+        "topology_identity": {
+          "stable": true
+        }
+      }
+    ],
+    "provenance": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000007d5",
+        "activity": "synthetic-source",
+        "tool": {
+          "name": "morphoia-fixture-generator",
+          "version": "0.1.0",
+          "commit": "synthetic"
+        },
+        "parameters": {
+          "fixture": true
+        },
+        "parents": [],
+        "environment": {
+          "profile": "core-cpu-synthetic",
+          "os": "platform-independent"
+        },
+        "seeds": [
+          2005
+        ],
+        "started_at": "2026-08-12T12:00:00Z",
+        "ended_at": "2026-08-12T12:00:01Z",
+        "inputs": [],
+        "outputs": [
+          "018f0000-0000-7000-8000-0000000007d4"
+        ]
+      }
+    ],
+    "tolerances": [],
+    "fidelity_events": [],
+    "repairs": [],
+    "losses": [],
+    "security": {
+      "classification": "public",
+      "sensitivity": "none",
+      "access_policy": "redistributable synthetic fixture",
+      "signature": {
+        "status": "unsigned",
+        "algorithm": null,
+        "value": null
+      },
+      "trust_level": "fixture"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+Morphoia Engine
+Copyright 2026 Olivier Ami
+
+Morphoia is experimental research software initiated by Dr Olivier Ami.
+
+The repository's pre-existing LICENSE file is the authoritative license for
+material already covered by it. Original Morphoia Engine code added under the
+owner's 2026-08-12 authorization is intended to be offered under
+Apache-2.0 OR MIT once the corresponding license files and per-file SPDX
+identifiers are present. Original Engine documentation identified as
+CC-BY-4.0 is licensed under Creative Commons
+Attribution 4.0 International. No statement in this NOTICE relicenses
+third-party or pre-existing material.
+
+Third-party components, standards, datasets, fonts, marks, and generated
+artifacts retain their own licenses and notices. See DEPENDENCIES.md, the SBOM,
+artifact manifests, and individual files. SALOME, Open CASCADE, VTK, ITK,
+PDAL, MED, Kokkos, PyTorch, NVIDIA, AMD, Intel, ParaView, Slicer, FreeCAD, and
+other names are the property of their respective owners. Their mention does
+not imply endorsement, affiliation, or validated compatibility.
+
+The Morphoia name and official visual assets are legally distinct from the
+software license. No composite Morphoia-SALOME mark is authorized.

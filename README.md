@@ -1,52 +1,87 @@
 # MORPHOIA
 
-MORPHOIA est un projet de recherche et d'ingénierie consacré à la reconstruction, la
-modification, la validation et la génération de modèles CAO paramétriques par l'Homme comme
-par l'IA.
+MORPHOIA is a research and engineering project for reconstructing, modifying,
+validating, and generating parametric CAD models by humans and AI systems.
 
-**Auteur et initiateur : Olivier Ami**
+**Author and project initiator: Olivier Ami**
 
-*Experimental STEP AP242-centred construction graph, Python SDK and validation framework
-for trustworthy AI-assisted parametric CAD reconstruction and interoperability.*
+*Experimental STEP AP242-centered construction graph, Python SDK, and
+validation framework for trustworthy AI-assisted parametric CAD reconstruction
+and interoperability.*
 
-| Composant | Version | Statut |
+| Component | Version | Status |
 |---|---:|---|
-| Façade `.morph` et IR canonique | 0.1 | expérimental, non normatif |
-| SDK Python | 0.2.0.dev0 | pré-alpha |
-| Python | ≥ 3.12 | version minimale prise en charge |
+| `.morph` facade and canonical IR | 0.1 | experimental, non-normative |
+| Python SDK | 0.2.0.dev0 | pre-alpha |
+| Morphoia Engine native component | 0.0.1 | E0 bootstrap, not released |
+| Python | >= 3.12 | minimum supported version |
 
-## Statut
+## Status
 
-Le dépôt public contient deux phases :
+The public repository contains two legacy research phases and a dedicated
+Morphoia Engine integration track:
 
-- **Phase 1** : état de l'art scientifique et industriel, étude de faisabilité et critères
-  Go/No-Go ;
-- **Phase 2** : candidat expérimental 0.1, spécification testable et prototype de référence.
+- **Phase 1**: scientific and industrial state of the art, feasibility study,
+  and Go/No-Go criteria;
+- **Phase 2**: experimental 0.1 candidate, testable specification, and
+  reference prototype;
+- **Engine**: headless C++20/C11 interoperability, provenance, evidence, and
+  orchestration work developed on the `engine` branch.
 
-La façade `.morph` et l'IR MORPHOIA 0.1 ne constituent ni une norme ISO, ni un format
-stable, ni une promesse de round-trip universel. Conformément à la Phase 1, aucune syntaxe
-ne pourra être gelée avant :
+The `.morph` facade and MORPHOIA IR 0.1 are neither an ISO standard, a stable
+format, nor a universal round-trip promise. Phase 1 forbids freezing syntax
+before:
 
-1. l'exécution des profils P1/P2 sur au moins deux backends indépendants ;
-2. une suite de conformité publique ;
-3. un bénéfice industriel mesuré sur des pilotes représentatifs.
+1. running P1/P2 profiles on at least two independent backends;
+2. publishing a conformance suite; and
+3. measuring industrial benefit on representative pilots.
 
-L'hypothèse étudiée est une couche de confiance STEP-centrique, et non un remplacement de
-STEP, d'Open CASCADE ou des noyaux industriels.
+The research hypothesis is a STEP-centered trust layer, not a replacement for
+STEP, Open CASCADE, or industrial geometry kernels. Morphoia Engine is a
+research tool and makes no clinical, diagnostic, or medical-device claim.
 
-## Livrables
+## Deliverables
 
 ### Phase 1
 
-- [Rapport PDF](docs/phase1/MORPHOIA_phase1_etat_art_faisabilite.pdf)
-- [Source du rapport](docs/phase1/MORPHOIA_phase1_etat_art_faisabilite.md)
+- [PDF report](docs/phase1/MORPHOIA_phase1_etat_art_faisabilite.pdf)
+- [Report source](docs/phase1/MORPHOIA_phase1_etat_art_faisabilite.md)
 
 ### Phase 2
 
-- [Rapport PDF - candidat expérimental 0.1](docs/phase2/MORPHOIA_phase2_standard_candidate_v0.1.pdf)
-- [Index de la spécification](docs/phase2/README.md)
-- [Cahier des charges traçable](docs/phase2/requirements.md)
+- [Experimental 0.1 candidate PDF](docs/phase2/MORPHOIA_phase2_standard_candidate_v0.1.pdf)
+- [Specification index](docs/phase2/README.md)
+- [Traceable requirements](docs/phase2/requirements.md)
 - [Architecture](docs/phase2/architecture.md)
+- [Textual facade specification](docs/phase2/language-specification.md)
+- [EBNF grammar](docs/phase2/grammar.ebnf)
+- [SDK and API](docs/phase2/sdk-api.md)
+- [Validation and conformance](docs/phase2/validation-conformance.md)
+- [CAD interoperability](docs/phase2/interoperability.md)
+- [AI and GPU](docs/phase2/ai-gpu.md)
+- [Roadmap and governance](docs/phase2/roadmap-governance.md)
+- [Costs and risks](docs/phase2/costs-risks.md)
+
+### Engine
+
+- [Current status](docs/engine/STATUS.md)
+- [Living execution plan](docs/engine/EXECUTION_PLAN.md)
+- [Compliance matrix](docs/engine/COMPLIANCE_MATRIX.md)
+- [Architecture decisions](docs/engine/DECISIONS.md)
+- [Threat model](docs/engine/THREAT_MODEL.md)
+- [Immutable baseline register](docs/engine/BASELINES.md)
+
+### Quick links
+
+- [User guide](docs/phase2/user-guide.md)
+- [Developer guide](docs/phase2/developer-guide.md)
+- [Tutorials and FAQ](docs/phase2/tutorials-faq.md)
+- [Operation catalog](docs/phase2/operation-catalog.md)
+- [References](docs/phase2/references.md)
+- [Contributing](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
+
+## Architecture under study
 - [Spécification de la façade textuelle](docs/phase2/language-specification.md)
 - [Grammaire EBNF](docs/phase2/grammar.ebnf)
 - [SDK et API](docs/phase2/sdk-api.md)
@@ -75,50 +110,51 @@ STEP, d'Open CASCADE ou des noyaux industriels.
 ## Architecture étudiée
 
 ```text
-Sources et preuves multimodales
+Multimodal sources and evidence
               |
               v
-Candidats IA + confiance + abstention
+AI candidates + confidence + abstention
               |
               v
-Graphe de construction canonique mappé à STEP
+Canonical construction graph mapped to STEP
               |
               v
-Runtime typé, déterministe et transactionnel
+Typed, deterministic, transactional runtime
         /            |             \
-      OCCT        FreeCAD       backends sous licence
+      OCCT        FreeCAD       licensed backends
               |
               v
-B-rep exacte + PMI + propriétés + registre des pertes
+Exact B-rep + PMI + properties + loss register
               |
-     AP242 / CAO / glTF / OpenUSD / JT
+     AP242 / CAD / glTF / OpenUSD / JT
 ```
 
-La façade `.morph` est volontairement bornée, non Turing-complète et remplaçable. Le JSON
-canonique 0.1 est un encodage expérimental ; l'autorité d'échange mécanique visée reste STEP
-AP242 avec les ressources ISO 10303-42/-55/-108/-109/-111/-112/-113.
+The `.morph` facade is intentionally bounded, non-Turing-complete, and
+replaceable. Canonical JSON 0.1 is experimental; the intended mechanical
+exchange authority remains STEP AP242 with ISO 10303-42/-55/-108/-109/-111/
+-112/-113 resources.
 
-## Prototype implémenté
+## Implemented prototype
 
-La version de développement fournit actuellement :
+The current development version provides:
 
-- lexer et parseur sans dépendance d'exécution ;
-- règles lexicales strictes, décimaux exacts et unités ;
-- validation des symboles, types dimensionnels, DAG, profils et tolérances ;
-- compilateur vers un graphe canonique JSON déterministe ;
-- identifiants UUIDv5 et hash sémantique SHA-256 ;
-- résolution topologique explicite `unique`, `ambiguous` ou `missing` ;
-- transactions atomiques, conflit optimiste, undo/redo ;
-- modèles minimaux de provenance, décision et registre des pertes ;
-- CLI, schémas JSON, exemple et tests unitaires.
+- a lexer and parser with no runtime dependency;
+- strict lexical rules, exact decimals, and units;
+- symbol, dimensional type, DAG, profile, and tolerance validation;
+- compilation to a deterministic canonical JSON graph;
+- UUIDv5 identifiers and SHA-256 semantic hashes;
+- explicit `unique`, `ambiguous`, or `missing` topology resolution;
+- atomic transactions, optimistic conflict detection, undo, and redo;
+- minimal provenance, decision, and loss-register models; and
+- a CLI, JSON schemas, examples, and unit tests.
 
-Il ne fournit pas encore de backend OCCT, de solveur d'esquisse, de B-rep, d'import/export
-STEP ou d'adaptateur CAO. Ces composants sont spécifiés comme réemploi et doivent être
-qualifiés dans les étapes POC/Alpha ; ils ne sont pas simulés dans ce dépôt.
+It does not yet provide an OCCT backend, sketch solver, B-rep, STEP import or
+export, or CAD adapter. Those components are specified for reuse and must be
+qualified during POC/Alpha work; this repository does not simulate them.
 
-## Démarrage rapide
+## Quick start
 
-Prérequis : Python 3.12+.
+Prerequisite: Python 3.12 or newer.
 
 ```bash
 git clone https://github.com/Aminoside/morphoia.git
@@ -130,13 +166,13 @@ morphoia validate examples/mounting_plate.morph
 morphoia compile examples/mounting_plate.morph -o build/mounting_plate.mcir.json
 ```
 
-Sous Windows PowerShell, la commande d'activation est
+On Windows PowerShell, activate the environment with
 `.venv\Scripts\Activate.ps1`.
 
-### Vérification complète
+### Full verification
 
-Les polices officielles Aldrich et Barlow sont incluses dans le dépôt. La génération
-reproductible des rapports requiert uniquement les dépendances de rapport et de développement :
+The repository includes the official Aldrich and Barlow fonts. Reproducible
+report generation requires the report and development dependencies:
 
 ```bash
 python -m pip install -e '.[report,dev]'
@@ -144,44 +180,53 @@ make test
 make check
 ```
 
-`make check` régénère et valide les deux PDF, contrôle les schémas, exécute les tests et
-valide l'exemple.
+`make check` rebuilds and validates both generated PDFs, checks schemas, runs
+the tests, and validates the example. Engine CI uses hash-locked dependency
+profiles documented in [requirements/README.md](requirements/README.md).
 
-## Organisation
+## Repository layout
 
 ```text
 MORPHOIA/
-├── docs/phase1/          étude scientifique et industrielle
-├── docs/phase2/          cahier des charges, spécification et guides
-├── examples/             sources MORPHOIA expérimentales
-├── schemas/              encodages JSON expérimentaux
-├── src/morphoia/         SDK et outils de référence Python
-├── tests/                tests syntaxiques, sémantiques et transactionnels
-├── scripts/              contrôles de rapports et de reproductibilité
-└── .github/              CI et propriété du code
+├── cpp/                  Morphoia Engine native bootstrap
+├── docs/engine/          Engine plan, evidence, and immutable baselines
+├── docs/phase1/          scientific and industrial study
+├── docs/phase2/          requirements, specification, and guides
+├── examples/             experimental MORPHOIA sources
+├── schemas/              experimental JSON encodings
+├── spec/                 Engine ADRs and machine-readable requirements
+├── src/morphoia/         Python reference SDK and tools
+├── tests/                syntax, semantics, native, and evidence tests
+├── scripts/              reproducibility and validation controls
+└── .github/              CI and code ownership
 ```
 
-## Gouvernance de conception
+## Design governance
 
-- Réutiliser les standards, noyaux, solveurs et SDK existants avant toute création.
-- Exiger un Component Justification Record avant tout composant nouveau.
-- Distinguer géométrie, intention, comportement après modification et preuve.
-- Ne jamais masquer une ambiguïté, une réparation ou une perte sémantique.
-- Valider toute sortie IA par règles, solveur, noyau exact et scénarios d'édition.
-- Séparer tolérance noyau, incertitude capteur, tolérance dimensionnelle et GD&T.
+- Reuse existing standards, kernels, solvers, and SDKs before creating new ones.
+- Require a component justification record before adding a new component.
+- Distinguish geometry, intent, post-edit behavior, and evidence.
+- Never hide ambiguity, repair, or semantic loss.
+- Validate AI output with rules, solvers, exact kernels, and editing scenarios.
+- Keep kernel tolerance, sensor uncertainty, dimensional tolerance, and GD&T
+  distinct.
 
 ## Citation
 
-Le fichier [CITATION.cff](CITATION.cff) contient les métadonnées de citation de référence :
-**MORPHOIA**, Olivier Ami, version 0.2.0-dev, 3 août 2026. Aucun DOI n'est attribué à ce
-stade.
+[CITATION.cff](CITATION.cff) contains the reference citation metadata:
+**MORPHOIA**, Olivier Ami, version 0.2.0-dev, August 3, 2026. No DOI has been
+assigned at this stage.
 
-## Licence
+## Licensing
 
-Le dépôt est public sous licence [MIT](LICENSE), conformément à la licence choisie lors de sa
-création sur GitHub. Copyright 2026 Olivier Ami.
+Licensing is file- and component-specific. Pre-existing prototype code remains
+under the repository's [MIT license](LICENSE). New original Morphoia Engine
+code is offered under [Apache-2.0](LICENSE-APACHE) OR
+[MIT](LICENSE-MIT), and new original Engine documentation is CC BY 4.0.
+Validated baseline documents and official brand assets retain their own
+rights and trademark terms; they are not relicensed as software.
 
-Une séparation future entre licence du code, licence documentaire, licences de données et
-politique de marque pourra être étudiée avant une version normative. Elle devra faire l'objet
-d'une décision explicite, d'une revue juridique et d'une stratégie compatible avec les droits
-déjà accordés. Le fichier [LICENSE](LICENSE) reste l'autorité pour la version actuelle.
+[REUSE.toml](REUSE.toml), the SPDX annotations, [NOTICE](NOTICE), and
+[DEPENDENCIES.md](DEPENDENCIES.md) provide the authoritative file-level
+inventory and dependency boundaries. No license statement grants rights to
+third-party material beyond its recorded terms.

@@ -1,0 +1,95 @@
+{
+  "assembly_ids": [
+    "018f0000-0000-7000-8000-0000000026af"
+  ],
+  "ended_at": "2026-08-12T12:00:01Z",
+  "frame": {
+    "id": "018f0000-0000-7000-8000-0000000026ae",
+    "dimension": 3,
+    "origin": [
+      {
+        "coefficient": 0,
+        "scale": 0
+      },
+      {
+        "coefficient": 0,
+        "scale": 0
+      },
+      {
+        "coefficient": 0,
+        "scale": 0
+      }
+    ],
+    "axes": [
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "handedness": "right",
+    "matrix_order": "row-major",
+    "unit_id": "018f0000-0000-7000-8000-0000000026ad"
+  },
+  "license_expression": "CC-BY-4.0",
+  "logical_id": "018f0000-0000-7000-8000-0000000026ac",
+  "loss_ids": [
+    "018f0000-0000-7000-8000-0000000026b2",
+    "018f0000-0000-7000-8000-0000000026b3",
+    "018f0000-0000-7000-8000-0000000026b4",
+    "018f0000-0000-7000-8000-0000000026b5"
+  ],
+  "migration_tool": {
+    "name": "morphoia-engine",
+    "version": "0.1.0",
+    "commit": "synthetic"
+  },
+  "provenance_id": "018f0000-0000-7000-8000-0000000026b1",
+  "representation_id": "018f0000-0000-7000-8000-0000000026b0",
+  "rights_holder": "Morphoia synthetic fixtures",
+  "security": {
+    "classification": "public",
+    "sensitivity": "none",
+    "access_policy": "redistributable synthetic fixture",
+    "signature": {
+      "status": "unsigned",
+      "algorithm": null,
+      "value": null
+    },
+    "trust_level": "fixture"
+  },
+  "source_artifact": {
+    "uri": "morphoia-cas://sha256/b9672993c4736ea71baea020795a1f6a8a480ba6026f69a12742e94995fc8692",
+    "sha256": "b9672993c4736ea71baea020795a1f6a8a480ba6026f69a12742e94995fc8692",
+    "size_bytes": 854,
+    "media_type": "application/vnd.morphoia.legacy-construction-graph.v0+json"
+  },
+  "source_created_at": "2026-08-12T12:00:00Z",
+  "source_tool": {
+    "name": "morphoia-legacy-fixture",
+    "version": "0.1"
+  },
+  "source_uri": "urn:morphoia:fixture:legacy-input",
+  "started_at": "2026-08-12T12:00:00Z",
+  "unit": {
+    "id": "018f0000-0000-7000-8000-0000000026ad",
+    "ucum_code": "mm",
+    "dimension": {
+      "length": 1,
+      "mass": 0,
+      "time": 0,
+      "current": 0,
+      "temperature": 0,
+      "amount": 0,
+      "luminous_intensity": 0
+    },
+    "si_factor": {
+      "coefficient": 1,
+      "scale": -3
+    }
+  }
+}

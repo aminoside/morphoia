@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/e2-salome-protocol-traceability-1.0.schema.json",
+  "title": "Morphoia Engine E2 SALOME protocol traceability",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "profile",
+    "source_commit",
+    "real_salome_status",
+    "entries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./e2-salome-protocol-traceability.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "profile": {
+      "const": "e2-salome-protocol-contract"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "real_salome_status": {
+      "const": "NOT_RUN"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "NOT_RUN",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "required": [
+        "requirement_id",
+        "contract_status",
+        "real_salome_status",
+        "test_ids",
+        "evidence",
+        "reason"
+      ],
+      "properties": {
+        "requirement_id": {
+          "type": "string",
+          "pattern": "^MOR-[A-Z]+-[0-9]{3}$"
+        },
+        "contract_status": {
+          "const": "PASS"
+        },
+        "real_salome_status": {
+          "const": "NOT_RUN"
+        },
+        "test_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^test_[a-z0-9_]+$",
+            "maxLength": 256
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?(?:/|$))[A-Za-z0-9._/-]+$",
+            "maxLength": 1024
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

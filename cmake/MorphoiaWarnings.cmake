@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+function(morphoia_enable_strict_warnings target_name)
+  if(MSVC)
+    target_compile_options(${target_name} PRIVATE /W4)
+    if(MORPHOIA_WARNINGS_AS_ERRORS)
+      target_compile_options(${target_name} PRIVATE /WX)
+    endif()
+  elseif(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(${target_name} PRIVATE -Wall -Wextra -Wpedantic)
+    if(MORPHOIA_WARNINGS_AS_ERRORS)
+      target_compile_options(${target_name} PRIVATE -Werror)
+    endif()
+  else()
+    message(WARNING "Strict warning flags are not configured for this compiler family")
+  endif()
+endfunction()

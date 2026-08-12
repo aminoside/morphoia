@@ -1,0 +1,211 @@
+{
+  "logical_id": "018f0000-0000-7000-8000-0000000026ac",
+  "revision": 1,
+  "parents": [],
+  "units": [
+    {
+      "id": "018f0000-0000-7000-8000-0000000026ad",
+      "ucum_code": "mm",
+      "dimension": {
+        "length": 1,
+        "mass": 0,
+        "time": 0,
+        "current": 0,
+        "temperature": 0,
+        "amount": 0,
+        "luminous_intensity": 0
+      },
+      "si_factor": {
+        "coefficient": 1,
+        "scale": -3
+      }
+    }
+  ],
+  "frames": [
+    {
+      "id": "018f0000-0000-7000-8000-0000000026ae",
+      "dimension": 3,
+      "origin": [
+        {
+          "coefficient": 0,
+          "scale": 0
+        },
+        {
+          "coefficient": 0,
+          "scale": 0
+        },
+        {
+          "coefficient": 0,
+          "scale": 0
+        }
+      ],
+      "axes": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "handedness": "right",
+      "matrix_order": "row-major",
+      "unit_id": "018f0000-0000-7000-8000-0000000026ad"
+    }
+  ],
+  "transforms": [],
+  "source": {
+    "uri": "urn:morphoia:fixture:legacy-input",
+    "license_expression": "CC-BY-4.0",
+    "rights_holder": "Morphoia synthetic fixtures",
+    "created_at": "2026-08-12T12:00:00Z",
+    "source_tool": {
+      "name": "morphoia-legacy-fixture",
+      "version": "0.1"
+    },
+    "artifact": {
+      "uri": "morphoia-cas://sha256/b9672993c4736ea71baea020795a1f6a8a480ba6026f69a12742e94995fc8692",
+      "sha256": "b9672993c4736ea71baea020795a1f6a8a480ba6026f69a12742e94995fc8692",
+      "size_bytes": 854,
+      "media_type": "application/vnd.morphoia.legacy-construction-graph.v0+json"
+    }
+  },
+  "product": {
+    "assemblies": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000026af",
+        "name": "Legacy synthetic model"
+      }
+    ],
+    "instances": [],
+    "names": [
+      {
+        "subject_id": "018f0000-0000-7000-8000-0000000026af",
+        "value": "Legacy synthetic model"
+      }
+    ],
+    "colors": [],
+    "layers": [],
+    "properties": [
+      {
+        "subject_id": "018f0000-0000-7000-8000-0000000026af",
+        "name": "legacy_model_id",
+        "value": "legacy-model"
+      }
+    ]
+  },
+  "representations": [
+    {
+      "id": "018f0000-0000-7000-8000-0000000026b0",
+      "kind": "opaque",
+      "authority": "source",
+      "frame_id": "018f0000-0000-7000-8000-0000000026ae",
+      "unit_id": "018f0000-0000-7000-8000-0000000026ad",
+      "payload": {
+        "uri": "morphoia-cas://sha256/b9672993c4736ea71baea020795a1f6a8a480ba6026f69a12742e94995fc8692",
+        "sha256": "b9672993c4736ea71baea020795a1f6a8a480ba6026f69a12742e94995fc8692",
+        "size_bytes": 854,
+        "media_type": "application/vnd.morphoia.legacy-construction-graph.v0+json"
+      },
+      "derived_from": [],
+      "ai_output": false
+    }
+  ],
+  "provenance": [
+    {
+      "id": "018f0000-0000-7000-8000-0000000026b1",
+      "activity": "explicit-legacy-domain-migration",
+      "tool": {
+        "name": "morphoia-engine",
+        "version": "0.1.0",
+        "commit": "synthetic"
+      },
+      "parameters": {
+        "legacy_format": "morphoia.canonical-construction-graph",
+        "legacy_format_version": "0.1",
+        "legacy_semantic_sha256": "f19471e5f68d0b585a7f99f599b3ea5350597d13fca2404cccdf5aedcf7dee9a",
+        "migration_policy": "preserve-opaque-source"
+      },
+      "parents": [],
+      "environment": {
+        "profile": "core-cpu-legacy-migration",
+        "os": "platform-independent"
+      },
+      "seeds": [],
+      "started_at": "2026-08-12T12:00:00Z",
+      "ended_at": "2026-08-12T12:00:01Z",
+      "inputs": [],
+      "outputs": [
+        "018f0000-0000-7000-8000-0000000026b0"
+      ]
+    }
+  ],
+  "tolerances": [],
+  "fidelity_events": [],
+  "repairs": [],
+  "losses": [
+    {
+      "id": "018f0000-0000-7000-8000-0000000026b2",
+      "subject_id": "018f0000-0000-7000-8000-0000000026b0",
+      "category": "identity",
+      "property": "semantic-identity-domain",
+      "before": "legacy:f19471e5f68d0b585a7f99f599b3ea5350597d13fca2404cccdf5aedcf7dee9a",
+      "after": "engine-content-identity-in-envelope",
+      "severity": "warning",
+      "decision": "retain-source",
+      "description": "The legacy semantic hash is retained as provenance but is not an authoritative Engine content identity."
+    },
+    {
+      "id": "018f0000-0000-7000-8000-0000000026b3",
+      "subject_id": "018f0000-0000-7000-8000-0000000026b0",
+      "category": "parametric-history",
+      "property": "structured-construction-history",
+      "before": "legacy imports, declarations, expressions, units, and dependency order",
+      "after": "retained only in the immutable opaque legacy payload",
+      "severity": "warning",
+      "decision": "retain-source",
+      "description": "The bounded migration preserves all legacy bytes but does not map construction history into structured Engine fields."
+    },
+    {
+      "id": "018f0000-0000-7000-8000-0000000026b4",
+      "subject_id": "018f0000-0000-7000-8000-0000000026b0",
+      "category": "behavior",
+      "property": "execution-contract",
+      "before": "legacy execution_contract",
+      "after": "retained only in the immutable opaque legacy payload",
+      "severity": "warning",
+      "decision": "retain-source",
+      "description": "The bounded migration does not reinterpret the legacy execution contract as Engine runtime behavior."
+    },
+    {
+      "id": "018f0000-0000-7000-8000-0000000026b5",
+      "subject_id": "018f0000-0000-7000-8000-0000000026b0",
+      "category": "metadata",
+      "property": "legacy-imports-and-model-attributes",
+      "before": "legacy imports and model attributes",
+      "after": "model names and IDs mapped; remaining metadata retained in opaque payload",
+      "severity": "warning",
+      "decision": "retain-source",
+      "description": "Only model names and legacy IDs receive structured product records in this bounded migration profile."
+    }
+  ],
+  "security": {
+    "classification": "public",
+    "sensitivity": "none",
+    "access_policy": "redistributable synthetic fixture",
+    "signature": {
+      "status": "unsigned",
+      "algorithm": null,
+      "value": null
+    },
+    "trust_level": "fixture"
+  },
+  "extensions": {
+    "org.morphoia.legacy": {
+      "namespace": "synthetic",
+      "source_language": "morphoia/0.1"
+    }
+  }
+}

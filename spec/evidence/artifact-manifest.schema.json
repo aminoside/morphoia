@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/artifact-manifest-1.0.schema.json",
+  "title": "Morphoia Engine artifact manifest",
+  "type": "object",
+  "required": ["schema_version", "project", "generated_at", "manifest_document_license", "hash_algorithm", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project": {"const": "Morphoia Engine"},
+    "generated_at": {"type": "string", "format": "date"},
+    "manifest_document_license": {"const": "CC-BY-4.0"},
+    "hash_algorithm": {"const": "sha256"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "path", "media_type", "size_bytes", "sha256", "license_expression", "provenance", "verification_status"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "kind": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1},
+          "media_type": {"type": "string", "minLength": 1},
+          "size_bytes": {"type": "integer", "minimum": 0},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "license_expression": {"type": "string", "minLength": 1},
+          "pages": {"type": "integer", "minimum": 1},
+          "record_count": {"type": "integer", "minimum": 0},
+          "source_artifact_id": {"type": "string", "minLength": 1},
+          "provenance": {"type": "string", "minLength": 1},
+          "redistribution": {"type": "string", "minLength": 1},
+          "verification_status": {"enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]},
+          "schema_validation_status": {"enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]},
+          "vulnerability_analysis_status": {"enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]},
+          "note": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
