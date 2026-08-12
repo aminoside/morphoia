@@ -129,6 +129,14 @@
     "must_precede_first_child_execution": true,
     "public_github_commit_required_before_plan_creation": true,
     "private_drive_copy_is_not_publication": true,
+    "plan_creation_mode": "PREPARE_ONLY_NO_GEOMETRY_CHILD",
+    "direct_anchored_p2a_run_without_signed_continuity": "FORBIDDEN",
+    "geometry_execution_requires": [
+      "exact_prepared_plan",
+      "private_prefreeze_bundle",
+      "signed_private_continuity_manifest",
+      "detached_continuity_authentication"
+    ],
     "required_bindings": [
       "git_commit_sha1",
       "git_tree_sha1",
@@ -225,6 +233,8 @@
       "work_id"
     ],
     "comparison_unit": "comparison_slot",
+    "authenticated_continuity_required_for_projection": true,
+    "same_authenticated_continuity_required_for_comparison": true,
     "projection_visibility": "PRIVATE_PER_SLOT",
     "public_output": "AGGREGATE_COUNTS_CHANGE_CLASSES_AND_PROJECTION_COMMITMENT_ONLY",
     "v2_repeatability_rule": "SCIENTIFIC_PAYLOAD_MUST_BE_BYTE_IDENTICAL_AFTER_CANONICAL_JSON_PROJECTION",

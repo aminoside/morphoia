@@ -2444,6 +2444,57 @@ def _load_backup_guard_module() -> Any:
     return module
 
 
+def _load_v2_continuity_module() -> Any:
+    path = Path(__file__).with_name("mvx_p2c_v2_continuity.py")
+    spec = importlib.util.spec_from_file_location("mvx_p2c_v2_continuity_for_runner", path)
+    if spec is None or spec.loader is None:
+        raise P2cError("cannot load the P2c v2 continuity verifier")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    try:
+        spec.loader.exec_module(module)
+    except Exception as error:
+        raise P2cError("cannot load the P2c v2 continuity verifier") from error
+    return module
+
+
+def _campaign_plan_context(prefreeze_bundle: Path, slot: str) -> Any:
+    continuity = _load_v2_continuity_module()
+    try:
+        context = continuity.prepared_plan_context_from_bundle(prefreeze_bundle, slot)
+    except Exception as error:
+        raise P2cError("P2c v2 prefreeze bundle or slot is invalid") from error
+    return context
+
+
+def _validate_prepared_campaign_plan(context: Any, prepared_plan: Mapping[str, Any]) -> None:
+    continuity = _load_v2_continuity_module()
+    try:
+        continuity.validate_prepared_plan_value_from_context(context, prepared_plan)
+    except Exception as error:
+        raise P2cError("P2c v2 prepared plan is not bound to the prefreeze bundle") from error
+
+
+def _validate_frozen_campaign_plan(
+    prefreeze_bundle: Path,
+    continuity_manifest: Path,
+    continuity_authentication: Path,
+    slot: str,
+    prepared_plan: Path,
+) -> Any:
+    continuity = _load_v2_continuity_module()
+    try:
+        return continuity.authorize_frozen_plan_from_bundle(
+            prefreeze_bundle,
+            continuity_manifest,
+            continuity_authentication,
+            slot,
+            prepared_plan,
+        )
+    except Exception as error:
+        raise P2cError("P2c v2 signed continuity freeze does not authorize this plan") from error
+
+
 def _canonicalise_materialised_mesh(
     vertices: Sequence[Sequence[float]], faces: Sequence[Sequence[int]]
 ) -> bytes:
@@ -3043,6 +3094,10 @@ def run_checkpointed_p2a(
     external_anchor_readback_receipt: Path | None = None,
     external_anchor_public_key_hex: str | None = None,
 ) -> dict[str, Any]:
+    if external_anchor_public_key_hex is not None and external_anchor is None:
+        raise P2cError(
+            "first anchored P2a execution requires a prepared plan and signed continuity freeze"
+        )
     selected_limits = limits or Limits()
     selected_limits.validate()
     if (
@@ -3083,6 +3138,112 @@ def run_checkpointed_p2a(
         external_anchor,
         external_anchor_readback_receipt,
         external_anchor_public_key_hex,
+    )
+
+
+def prepare_checkpointed_p2a_plan(
+    source_glb: Path,
+    audit_record: Path,
+    execution_plan: Path,
+    p2a_checkpoint_directory: Path,
+    prefreeze_bundle: Path,
+    slot: str,
+    plan_output: Path,
+) -> dict[str, Any]:
+    """Prepare and validate one fixed v2.1 plan without starting an exact child."""
+
+    context = _campaign_plan_context(prefreeze_bundle, slot)
+    try:
+        profile = context.profile_value()
+        limits = Limits(**profile["limits"])
+        max_input_bytes = profile["max_input_bytes"]
+        public_key = profile["external_anchor_public_key_hex"]
+    except (KeyError, TypeError) as error:
+        raise P2cError("P2c v2 prepared-plan profile is incomplete") from error
+    limits.validate()
+    source, _, binding = _prepare_p2a_binding(
+        source_glb,
+        audit_record,
+        execution_plan,
+        p2a_checkpoint_directory,
+        max_input_bytes,
+    )
+    plan = _make_plan(
+        source,
+        binding,
+        limits,
+        max_input_bytes,
+        external_anchor_public_key_hex=public_key,
+    )
+    _validate_prepared_campaign_plan(context, plan)
+    _publish_once(plan_output, _canonical_bytes(plan))
+    return {"action": "PLAN_PREPARED_NO_CHILD"}
+
+
+def execute_prepared_checkpointed_p2a(
+    source_glb: Path,
+    audit_record: Path,
+    execution_plan: Path,
+    p2a_checkpoint_directory: Path,
+    output_root: Path,
+    prefreeze_bundle: Path,
+    continuity_manifest: Path,
+    continuity_authentication: Path,
+    slot: str,
+    prepared_plan: Path,
+    *,
+    external_anchor: Path | None = None,
+    external_anchor_readback_receipt: Path | None = None,
+) -> dict[str, Any]:
+    """Execute one exact prepared plan only after its signed continuity freeze validates."""
+
+    authorization = _validate_frozen_campaign_plan(
+        prefreeze_bundle,
+        continuity_manifest,
+        continuity_authentication,
+        slot,
+        prepared_plan,
+    )
+    try:
+        profile = authorization.profile_value()
+        limits = Limits(**profile["limits"])
+        max_input_bytes = profile["max_input_bytes"]
+        public_key = profile["external_anchor_public_key_hex"]
+    except (KeyError, TypeError) as error:
+        raise P2cError("P2c v2 prepared-plan profile is incomplete") from error
+    limits.validate()
+    source, mesh_bytes, binding = _prepare_p2a_binding(
+        source_glb,
+        audit_record,
+        execution_plan,
+        p2a_checkpoint_directory,
+        max_input_bytes,
+    )
+    expected = _make_plan(
+        source,
+        binding,
+        limits,
+        max_input_bytes,
+        external_anchor_public_key_hex=public_key,
+    )
+    try:
+        persisted = authorization.plan_value()
+    except Exception as error:
+        raise P2cError("authorized prepared plan snapshot is invalid") from error
+    if persisted != expected:
+        raise P2cError("prepared plan differs from rematerialized P2a evidence")
+    if (external_anchor is None) != (external_anchor_readback_receipt is None):
+        raise P2cError("external anchor and signed readback receipt must be supplied together")
+    return _run_prepared(
+        source,
+        mesh_bytes,
+        binding,
+        output_root,
+        limits,
+        max_input_bytes,
+        external_anchor,
+        external_anchor_readback_receipt,
+        public_key,
     )
 
 
@@ -3197,6 +3358,33 @@ def _parser() -> argparse.ArgumentParser:
     p2a_run.add_argument("--external-anchor-readback-receipt", type=Path)
     p2a_run.add_argument("--external-anchor-public-key-hex")
     _add_limits(p2a_run)
+    prepare_p2a = subcommands.add_parser(
+        "prepare-p2a-plan",
+        help="prepare one preregistered P2a-bound plan without starting a geometry child",
+    )
+    prepare_p2a.add_argument("--source-glb", required=True, type=Path)
+    prepare_p2a.add_argument("--audit-record", required=True, type=Path)
+    prepare_p2a.add_argument("--execution-plan", required=True, type=Path)
+    prepare_p2a.add_argument("--p2a-checkpoint-directory", required=True, type=Path)
+    prepare_p2a.add_argument("--prefreeze-bundle", required=True, type=Path)
+    prepare_p2a.add_argument("--slot", required=True)
+    prepare_p2a.add_argument("--plan-output", required=True, type=Path)
+    execute_p2a = subcommands.add_parser(
+        "execute-prepared-p2a",
+        help="execute one prepared P2a plan after validating its signed continuity freeze",
+    )
+    execute_p2a.add_argument("--source-glb", required=True, type=Path)
+    execute_p2a.add_argument("--audit-record", required=True, type=Path)
+    execute_p2a.add_argument("--execution-plan", required=True, type=Path)
+    execute_p2a.add_argument("--p2a-checkpoint-directory", required=True, type=Path)
+    execute_p2a.add_argument("--output-root", required=True, type=Path)
+    execute_p2a.add_argument("--prefreeze-bundle", required=True, type=Path)
+    execute_p2a.add_argument("--continuity-manifest", required=True, type=Path)
+    execute_p2a.add_argument("--continuity-authentication", required=True, type=Path)
+    execute_p2a.add_argument("--slot", required=True)
+    execute_p2a.add_argument("--prepared-plan", required=True, type=Path)
+    execute_p2a.add_argument("--external-anchor", type=Path)
+    execute_p2a.add_argument("--external-anchor-readback-receipt", type=Path)
     template = subcommands.add_parser(
         "anchor-template",
         help="emit canonical unsigned bytes for the precommitted external signer",
@@ -3281,6 +3469,31 @@ def main(argv: Sequence[str] | None = None) -> int:
                 external_anchor=arguments.external_anchor,
                 external_anchor_readback_receipt=(arguments.external_anchor_readback_receipt),
                 external_anchor_public_key_hex=arguments.external_anchor_public_key_hex,
+            )
+        elif arguments.command == "prepare-p2a-plan":
+            result = prepare_checkpointed_p2a_plan(
+                arguments.source_glb,
+                arguments.audit_record,
+                arguments.execution_plan,
+                arguments.p2a_checkpoint_directory,
+                arguments.prefreeze_bundle,
+                arguments.slot,
+                arguments.plan_output,
+            )
+        elif arguments.command == "execute-prepared-p2a":
+            result = execute_prepared_checkpointed_p2a(
+                arguments.source_glb,
+                arguments.audit_record,
+                arguments.execution_plan,
+                arguments.p2a_checkpoint_directory,
+                arguments.output_root,
+                arguments.prefreeze_bundle,
+                arguments.continuity_manifest,
+                arguments.continuity_authentication,
+                arguments.slot,
+                arguments.prepared_plan,
+                external_anchor=arguments.external_anchor,
+                external_anchor_readback_receipt=(arguments.external_anchor_readback_receipt),
             )
         elif arguments.command == "anchor-template":
             run_directory, chain, plan = _load_terminal_run(

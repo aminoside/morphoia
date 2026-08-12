@@ -1118,14 +1118,47 @@ class P2aBoundTests(unittest.TestCase):
 
     def test_real_p2a_terminal_binds_materialized_mesh_and_skips(self) -> None:
         private_key, public_key_hex = external_anchor_key()
-        first = p2c.run_checkpointed_p2a(
+        profile = {
+            "external_anchor_public_key_hex": public_key_hex,
+            "limits": p2c.Limits().as_dict(),
+            "max_input_bytes": p2c.DEFAULT_MAX_INPUT_BYTES,
+            "slot_id": "P2C-V2-01",
+        }
+        source, _, binding = p2c._prepare_p2a_binding(
             self.source_glb,
             self.audit_record_path,
             self.execution_plan_path,
             self.p2a_checkpoint_directory,
-            self.output,
+            p2c.DEFAULT_MAX_INPUT_BYTES,
+        )
+        prepared = p2c._make_plan(
+            source,
+            binding,
+            p2c.Limits(),
+            p2c.DEFAULT_MAX_INPUT_BYTES,
             external_anchor_public_key_hex=public_key_hex,
         )
+        prepared_path = self.root / "prepared-p2c-plan.json"
+        prepared_path.write_bytes(p2c._canonical_bytes(prepared))
+        prepared_path.chmod(0o600)
+        authorization = mock.Mock()
+        authorization.profile_value.return_value = profile
+        authorization.plan_value.return_value = prepared
+        with (
+            mock.patch.object(p2c, "_validate_frozen_campaign_plan", return_value=authorization),
+        ):
+            first = p2c.execute_prepared_checkpointed_p2a(
+                self.source_glb,
+                self.audit_record_path,
+                self.execution_plan_path,
+                self.p2a_checkpoint_directory,
+                self.output,
+                self.root / "synthetic-prefreeze",
+                self.root / "synthetic-continuity",
+                self.root / "synthetic-authentication",
+                "01",
+                prepared_path,
+            )
         run_directory, chain, plan = p2c._load_terminal_run(self.output, first["work_id"])
         drive_evidence = p2c.build_drive_evidence_document(run_directory, chain, plan)
         drive = materialise_drive_triplet(self.root, drive_evidence)
@@ -1149,16 +1182,21 @@ class P2aBoundTests(unittest.TestCase):
         readback = signed_anchor_readback_receipt(readback_payload, private_key)
         readback_path = self.root / "p2a-anchor-readback.json"
         readback_path.write_bytes(p2c._canonical_bytes(readback))
-        second = p2c.run_checkpointed_p2a(
-            self.source_glb,
-            self.audit_record_path,
-            self.execution_plan_path,
-            self.p2a_checkpoint_directory,
-            self.output,
-            external_anchor=anchor_path,
-            external_anchor_readback_receipt=readback_path,
-            external_anchor_public_key_hex=public_key_hex,
-        )
+        with mock.patch.object(p2c, "_validate_frozen_campaign_plan", return_value=authorization):
+            second = p2c.execute_prepared_checkpointed_p2a(
+                self.source_glb,
+                self.audit_record_path,
+                self.execution_plan_path,
+                self.p2a_checkpoint_directory,
+                self.output,
+                self.root / "synthetic-prefreeze",
+                self.root / "synthetic-continuity",
+                self.root / "synthetic-authentication",
+                "01",
+                prepared_path,
+                external_anchor=anchor_path,
+                external_anchor_readback_receipt=readback_path,
+            )
 
         self.assertEqual(first["result"]["input_binding"]["mode"], "P2A_BOUND")
         self.assertEqual(
@@ -1176,6 +1214,72 @@ class P2aBoundTests(unittest.TestCase):
             p2c_plan["input_binding"]["mesh_sha256"],
             first["result"]["input_binding"]["mesh_sha256"],
         )
+
+    def test_prepare_plan_never_starts_child_and_direct_anchored_run_is_rejected(self) -> None:
+        _, public_key_hex = external_anchor_key()
+        profile = {
+            "external_anchor_public_key_hex": public_key_hex,
+            "limits": p2c.Limits().as_dict(),
+            "max_input_bytes": p2c.DEFAULT_MAX_INPUT_BYTES,
+            "slot_id": "P2C-V2-01",
+        }
+        context = mock.Mock()
+        context.profile_value.return_value = profile
+        prepared_path = self.root / "prepared-only.json"
+        with (
+            mock.patch.object(p2c, "_campaign_plan_context", return_value=context),
+            mock.patch.object(p2c, "_validate_prepared_campaign_plan") as validate_plan,
+            mock.patch.object(
+                p2c,
+                "_run_analysis_child",
+                side_effect=AssertionError("prepare must not start exact child"),
+            ),
+        ):
+            result = p2c.prepare_checkpointed_p2a_plan(
+                self.source_glb,
+                self.audit_record_path,
+                self.execution_plan_path,
+                self.p2a_checkpoint_directory,
+                self.root / "synthetic-prefreeze",
+                "01",
+                prepared_path,
+            )
+        self.assertEqual(result, {"action": "PLAN_PREPARED_NO_CHILD"})
+        self.assertTrue(prepared_path.is_file())
+        validate_plan.assert_called_once()
+
+        with self.assertRaisesRegex(p2c.P2cError, "prepared plan and signed continuity"):
+            p2c.run_checkpointed_p2a(
+                self.source_glb,
+                self.audit_record_path,
+                self.execution_plan_path,
+                self.p2a_checkpoint_directory,
+                self.output,
+                external_anchor_public_key_hex=public_key_hex,
+            )
+
+        with (
+            mock.patch.object(
+                p2c,
+                "_validate_frozen_campaign_plan",
+                side_effect=p2c.P2cError("synthetic invalid freeze"),
+            ),
+            mock.patch.object(p2c, "_run_analysis_child") as child,
+            self.assertRaisesRegex(p2c.P2cError, "synthetic invalid freeze"),
+        ):
+            p2c.execute_prepared_checkpointed_p2a(
+                self.source_glb,
+                self.audit_record_path,
+                self.execution_plan_path,
+                self.p2a_checkpoint_directory,
+                self.output,
+                self.root / "synthetic-prefreeze",
+                self.root / "synthetic-continuity",
+                self.root / "synthetic-authentication",
+                "01",
+                prepared_path,
+            )
+        child.assert_not_called()
 
     def test_p2a_materializer_preserves_equal_coordinate_vertex_instances(self) -> None:
         self._install_fixture(

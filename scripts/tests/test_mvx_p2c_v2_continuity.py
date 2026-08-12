@@ -34,6 +34,15 @@ scientific_projection = importlib.util.module_from_spec(PROJECTOR_SPEC)
 sys.modules[PROJECTOR_SPEC.name] = scientific_projection
 PROJECTOR_SPEC.loader.exec_module(scientific_projection)
 
+RUNNER_SCRIPT = Path(__file__).resolve().parents[1] / "mvx_p2c_exact_intersections.py"
+RUNNER_SPEC = importlib.util.spec_from_file_location(
+    "mvx_p2c_exact_intersections_continuity_integration", RUNNER_SCRIPT
+)
+assert RUNNER_SPEC is not None and RUNNER_SPEC.loader is not None
+runner = importlib.util.module_from_spec(RUNNER_SPEC)
+sys.modules[RUNNER_SPEC.name] = runner
+RUNNER_SPEC.loader.exec_module(runner)
+
 
 def _sha(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
@@ -684,6 +693,38 @@ class P2cV2ContinuityTests(unittest.TestCase):
             continuity.validate_continuity_from_bundle(bundle, manifest_path, authentication_path),
             {"action": "CONTINUITY_VALID"},
         )
+        commitments = continuity.validated_continuity_commitments(
+            bundle, manifest_path, authentication_path
+        )
+        self.assertEqual(
+            commitments,
+            {
+                "continuity_authentication_raw_bytes_sha256": _sha(
+                    authentication_path.read_bytes()
+                ),
+                "continuity_manifest_raw_bytes_sha256": _sha(manifest_path.read_bytes()),
+                "prefreeze_bundle_raw_bytes_sha256": _sha(bundle.read_bytes()),
+            },
+        )
+        self.assertEqual(
+            continuity.validate_prepared_plan_from_bundle(bundle, "01", plans["01"]),
+            {"action": "PREPARED_PLAN_VALID"},
+        )
+        self.assertEqual(
+            continuity.validate_frozen_plan_from_bundle(
+                bundle, manifest_path, authentication_path, "01", plans["01"]
+            ),
+            {"action": "FROZEN_PLAN_AUTHORIZED"},
+        )
+        with mock.patch.object(runner, "_load_v2_continuity_module", return_value=continuity):
+            runner_authorization = runner._validate_frozen_campaign_plan(
+                bundle,
+                manifest_path,
+                authentication_path,
+                "01",
+                plans["01"],
+            )
+        self.assertEqual(runner_authorization.plan_value(), json.loads(plans["01"].read_bytes()))
         manifest = json.loads(manifest_path.read_bytes())
         self.assertEqual(
             set(manifest),
@@ -710,6 +751,143 @@ class P2cV2ContinuityTests(unittest.TestCase):
             self.assertEqual(
                 scientific_projection.validate_continuity_manifest(manifest, preregistration),
                 manifest,
+            )
+
+        with (
+            mock.patch.object(
+                scientific_projection,
+                "validate_continuity_manifest",
+                return_value=manifest,
+            ),
+            mock.patch.object(
+                scientific_projection,
+                "_load_continuity_verifier",
+                return_value=continuity,
+            ),
+            mock.patch.object(scientific_projection, "PRIVATE_ROOT", self.root),
+        ):
+            authenticated_manifest, authenticated_commitments = (
+                scientific_projection.validate_authenticated_continuity(
+                    prefreeze_bundle=bundle,
+                    continuity_manifest=manifest_path,
+                    continuity_authentication=authentication_path,
+                    preregistration=preregistration,
+                )
+            )
+        self.assertEqual(authenticated_manifest, manifest)
+        self.assertEqual(authenticated_commitments, commitments)
+
+        original_safe_read = continuity._safe_read
+        original_manifest_payload = manifest_path.read_bytes()
+        substituted_manifest = copy.deepcopy(manifest)
+        substituted_manifest["slots"][0]["v2"], substituted_manifest["slots"][2]["v2"] = (
+            substituted_manifest["slots"][2]["v2"],
+            substituted_manifest["slots"][0]["v2"],
+        )
+        substituted_manifest_payload = _json_bytes(substituted_manifest)
+        read_counts: dict[Path, int] = {}
+
+        def replace_manifest_after_snapshot(path: Path, **kwargs: object) -> bytes:
+            payload = original_safe_read(path, **kwargs)
+            candidate = Path(path)
+            read_counts[candidate] = read_counts.get(candidate, 0) + 1
+            if candidate == manifest_path and read_counts[candidate] == 1:
+                _write(manifest_path, substituted_manifest_payload)
+            return payload
+
+        with (
+            mock.patch.object(
+                continuity, "_safe_read", side_effect=replace_manifest_after_snapshot
+            ),
+            mock.patch.object(
+                scientific_projection,
+                "_load_continuity_verifier",
+                return_value=continuity,
+            ),
+            mock.patch.object(scientific_projection, "V1_ROOT", self.fixture.v1_root),
+        ):
+            snapshotted_manifest, snapshotted_commitments = (
+                scientific_projection.validate_authenticated_continuity(
+                    prefreeze_bundle=bundle,
+                    continuity_manifest=manifest_path,
+                    continuity_authentication=authentication_path,
+                    preregistration=preregistration,
+                )
+            )
+        self.assertEqual(snapshotted_manifest, manifest)
+        self.assertEqual(
+            snapshotted_commitments["continuity_manifest_raw_bytes_sha256"],
+            _sha(original_manifest_payload),
+        )
+        self.assertEqual(read_counts[manifest_path], 1)
+        self.assertEqual(manifest_path.read_bytes(), substituted_manifest_payload)
+        _write(manifest_path, original_manifest_payload)
+
+        original_plan_payload = plans["01"].read_bytes()
+        substituted_plan = json.loads(original_plan_payload)
+        substituted_plan["work_id"] = "0" * 64
+        substituted_plan_payload = _json_bytes(substituted_plan)
+        read_counts = {}
+
+        def replace_plan_after_snapshot(path: Path, **kwargs: object) -> bytes:
+            payload = original_safe_read(path, **kwargs)
+            candidate = Path(path)
+            read_counts[candidate] = read_counts.get(candidate, 0) + 1
+            if candidate == plans["01"] and read_counts[candidate] == 1:
+                _write(plans["01"], substituted_plan_payload)
+            return payload
+
+        with mock.patch.object(continuity, "_safe_read", side_effect=replace_plan_after_snapshot):
+            immutable_authorization = continuity.authorize_frozen_plan_from_bundle(
+                bundle,
+                manifest_path,
+                authentication_path,
+                "01",
+                plans["01"],
+            )
+        self.assertEqual(immutable_authorization.plan_value(), json.loads(original_plan_payload))
+        for path in (bundle, manifest_path, authentication_path, plans["01"]):
+            self.assertEqual(read_counts[path], 1)
+        self.assertEqual(plans["01"].read_bytes(), substituted_plan_payload)
+        _write(plans["01"], original_plan_payload)
+
+        forged_manifest = copy.deepcopy(manifest)
+        forged_manifest["slots"][0]["v2"], forged_manifest["slots"][2]["v2"] = (
+            forged_manifest["slots"][2]["v2"],
+            forged_manifest["slots"][0]["v2"],
+        )
+        forged_path = self.root / "freeze" / "forged-continuity.json"
+        _write_json(forged_path, forged_manifest)
+        with (
+            mock.patch.object(
+                scientific_projection,
+                "_load_continuity_verifier",
+                return_value=continuity,
+            ),
+            mock.patch.object(scientific_projection, "PRIVATE_ROOT", self.root),
+            self.assertRaisesRegex(
+                scientific_projection.ProjectionError,
+                "signed continuity authentication is invalid",
+            ),
+        ):
+            scientific_projection.validate_authenticated_continuity(
+                prefreeze_bundle=bundle,
+                continuity_manifest=forged_path,
+                continuity_authentication=authentication_path,
+                preregistration=preregistration,
+            )
+
+        tampered_plan = json.loads(plans["01"].read_bytes())
+        tampered_plan["work_id"] = "0" * 64
+        tampered_plan_path = self.root / "v2-plans" / "01" / "tampered-plan.json"
+        _write_json(tampered_plan_path, tampered_plan)
+        with self.assertRaises(continuity.ContinuityError):
+            continuity.validate_frozen_plan_from_bundle(
+                bundle,
+                manifest_path,
+                authentication_path,
+                "01",
+                tampered_plan_path,
             )
 
         mismatched_signer = copy.deepcopy(manifest)

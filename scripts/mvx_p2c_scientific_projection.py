@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import math
 import os
@@ -29,6 +30,7 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PRIVATE_ROOT = PROJECT_ROOT / "tmp"
 RUNNER_PATH = PROJECT_ROOT / "scripts" / "mvx_p2c_exact_intersections.py"
+CONTINUITY_PATH = PROJECT_ROOT / "scripts" / "mvx_p2c_v2_continuity.py"
 DEFAULT_PREREGISTRATION = (
     PROJECT_ROOT
     / "docs/mvx/validation/p2c/preregistration/pilot3-2026-08-06-v2.1.0/preregistration.json"
@@ -56,7 +58,7 @@ MAX_JSON_BYTES = 16 * 1024 * 1024
 # versioned.  This closes validation over every nested clause, including ones
 # that do not otherwise influence projection arithmetic.
 FROZEN_PREREGISTRATION_VALUE_SHA256 = (
-    "87b7363030d555f582f094f306c4b7ccd163a610cf2b03efa3b4c349f4e039a5"
+    "628738df8513ee092c46d18a6302b404aed7a33970f87a3baa2e8040c8198871"
 )
 FROZEN_CONTEXT_SET_VALUE_SHA256 = "7453bd9c955c83a936b622a88bad1c7452beae9f0e1ef987f761431cc85ef92c"
 
@@ -190,6 +192,11 @@ ERROR_CODES = {
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 SHA512_HEX = re.compile(r"^[0-9a-f]{128}$")
 RESULT_FILENAME = re.compile(r"^attempt-[0-9]{4}-[0-9a-f]{16}\.json$")
+CONTINUITY_EVIDENCE_FIELDS = {
+    "continuity_authentication_raw_bytes_sha256",
+    "continuity_manifest_raw_bytes_sha256",
+    "prefreeze_bundle_raw_bytes_sha256",
+}
 
 
 class ProjectionError(ValueError):
@@ -322,6 +329,56 @@ def _read_private_json(
     if payload != canonical_bytes(value):
         raise ProjectionError("private JSON evidence is not canonical")
     return payload, value
+
+
+def _load_continuity_verifier() -> Any:
+    specification = importlib.util.spec_from_file_location(
+        "mvx_p2c_v2_continuity_for_projection", CONTINUITY_PATH
+    )
+    if specification is None or specification.loader is None:
+        raise ProjectionError("continuity verifier is unavailable")
+    module = importlib.util.module_from_spec(specification)
+    sys.modules[specification.name] = module
+    try:
+        specification.loader.exec_module(module)
+    except Exception as error:
+        raise ProjectionError("continuity verifier is unavailable") from error
+    return module
+
+
+def _validate_continuity_evidence_fields(value: Mapping[str, Any]) -> dict[str, str]:
+    evidence = dict(value)
+    _require_exact_keys(evidence, CONTINUITY_EVIDENCE_FIELDS, "continuity evidence")
+    for name in CONTINUITY_EVIDENCE_FIELDS:
+        _require_sha256(evidence[name], f"continuity evidence {name}")
+    return evidence
+
+
+def validate_authenticated_continuity(
+    *,
+    prefreeze_bundle: Path,
+    continuity_manifest: Path,
+    continuity_authentication: Path,
+    preregistration: Mapping[str, Any],
+) -> tuple[dict[str, Any], dict[str, str]]:
+    """Verify the signed private freeze and return its exact private commitments."""
+
+    verifier = _load_continuity_verifier()
+    try:
+        snapshot = verifier.validated_continuity_snapshot(
+            prefreeze_bundle,
+            continuity_manifest,
+            continuity_authentication,
+        )
+    except Exception as error:
+        raise ProjectionError("signed continuity authentication is invalid") from error
+    manifest_payload = snapshot.manifest_payload
+    manifest = _decode_json(manifest_payload)
+    validated = validate_continuity_manifest(manifest, preregistration)
+    commitments = _validate_continuity_evidence_fields(snapshot.commitments())
+    if commitments["continuity_manifest_raw_bytes_sha256"] != _sha256(manifest_payload):
+        raise ProjectionError("continuity authentication does not bind the supplied manifest")
+    return validated, commitments
 
 
 def _fsync_directory(directory: Path) -> None:
@@ -596,6 +653,15 @@ def validate_preregistration(value: Mapping[str, Any]) -> dict[str, Any]:
         or freeze.get("must_precede_first_child_execution") is not True
         or freeze.get("public_github_commit_required_before_plan_creation") is not True
         or freeze.get("private_drive_copy_is_not_publication") is not True
+        or freeze.get("plan_creation_mode") != "PREPARE_ONLY_NO_GEOMETRY_CHILD"
+        or freeze.get("direct_anchored_p2a_run_without_signed_continuity") != "FORBIDDEN"
+        or freeze.get("geometry_execution_requires")
+        != [
+            "exact_prepared_plan",
+            "private_prefreeze_bundle",
+            "signed_private_continuity_manifest",
+            "detached_continuity_authentication",
+        ]
         or freeze.get("change_after_freeze") != "REQUIRES_NEW_CAMPAIGN_VERSION_AND_NEW_WORK_IDS"
         or set(freeze.get("required_bindings", []))
         != {
@@ -645,6 +711,8 @@ def validate_preregistration(value: Mapping[str, Any]) -> dict[str, Any]:
         not isinstance(projection, dict)
         or projection.get("projection_visibility") != "PRIVATE_PER_SLOT"
         or projection.get("comparison_unit") != "comparison_slot"
+        or projection.get("authenticated_continuity_required_for_projection") is not True
+        or projection.get("same_authenticated_continuity_required_for_comparison") is not True
         or projection.get("scientific_payload_fields") != list(SCIENTIFIC_FIELDS)
         or projection.get("public_output")
         != "AGGREGATE_COUNTS_CHANGE_CLASSES_AND_PROJECTION_COMMITMENT_ONLY"
@@ -1234,6 +1302,7 @@ def project_bound_result(
     preregistration: Mapping[str, Any],
     context_set: Mapping[str, Any],
     continuity_manifest: Mapping[str, Any],
+    continuity_evidence: Mapping[str, Any],
     execution_plan: Mapping[str, Any],
     terminal_checkpoint: Mapping[str, Any],
     authority_claim: Mapping[str, Any],
@@ -1243,6 +1312,9 @@ def project_bound_result(
     prereg = validate_preregistration(preregistration)
     contexts = validate_contexts(context_set, prereg)
     continuity = validate_continuity_manifest(continuity_manifest, prereg)
+    evidence = _validate_continuity_evidence_fields(continuity_evidence)
+    if evidence["continuity_manifest_raw_bytes_sha256"] != _sha256(canonical_bytes(continuity)):
+        raise ProjectionError("continuity evidence does not bind the supplied manifest")
     slot_rows = [slot for slot in prereg["execution_slots"] if slot["slot_id"] == slot_id]
     context_rows = [row for row in contexts["contexts"] if row["slot_id"] == slot_id]
     continuity_rows = [row for row in continuity["slots"] if row["slot_id"] == slot_id]
@@ -1294,6 +1366,7 @@ def project_bound_result(
         },
         "scientific_payload": scientific_payload,
         "scientific_payload_sha256": sha256_value(scientific_payload),
+        "continuity_evidence": evidence,
         "privacy": {
             "contains_authority_envelope": False,
             "contains_signature": False,
@@ -1309,8 +1382,11 @@ def project_bound_result(
     }
 
 
-def validate_projection(value: Mapping[str, Any]) -> dict[str, Any]:
+def validate_projection(
+    value: Mapping[str, Any], *, continuity_evidence: Mapping[str, Any]
+) -> dict[str, Any]:
     projection = dict(value)
+    expected_evidence = _validate_continuity_evidence_fields(continuity_evidence)
     _require_exact_keys(
         projection,
         {
@@ -1320,6 +1396,7 @@ def validate_projection(value: Mapping[str, Any]) -> dict[str, Any]:
             "implementation",
             "scientific_payload",
             "scientific_payload_sha256",
+            "continuity_evidence",
             "privacy",
             "interpretation",
         },
@@ -1402,6 +1479,8 @@ def validate_projection(value: Mapping[str, Any]) -> dict[str, Any]:
     _validate_scientific_payload(payload, limits)
     if projection.get("scientific_payload_sha256") != sha256_value(payload):
         raise ProjectionError("scientific projection payload hash is invalid")
+    if projection.get("continuity_evidence") != expected_evidence:
+        raise ProjectionError("scientific projection has different continuity evidence")
     if projection.get("privacy") != {
         "contains_authority_envelope": False,
         "contains_signature": False,
@@ -1437,9 +1516,15 @@ def _differences(left: Any, right: Any, path: str = "$") -> list[str]:
     return [] if left == right else [path]
 
 
-def compare_projections(left: Mapping[str, Any], right: Mapping[str, Any]) -> dict[str, Any]:
-    first = validate_projection(left)
-    second = validate_projection(right)
+def compare_projections(
+    left: Mapping[str, Any],
+    right: Mapping[str, Any],
+    *,
+    continuity_evidence: Mapping[str, Any],
+) -> dict[str, Any]:
+    evidence = _validate_continuity_evidence_fields(continuity_evidence)
+    first = validate_projection(left, continuity_evidence=evidence)
+    second = validate_projection(right, continuity_evidence=evidence)
     if first["campaign"]["comparison_slot"] != second["campaign"]["comparison_slot"]:
         raise ProjectionError("projections do not address the same comparison slot")
     versions = {first["campaign"]["campaign_version"], second["campaign"]["campaign_version"]}
@@ -1460,6 +1545,7 @@ def compare_projections(left: Mapping[str, Any], right: Mapping[str, Any]) -> di
         "left_scientific_payload_sha256": first["scientific_payload_sha256"],
         "right_scientific_payload_sha256": second["scientific_payload_sha256"],
         "comparison_scope": "SCIENTIFIC_PAYLOAD_ONLY_ENVELOPES_AND_SIGNATURES_EXCLUDED",
+        "continuity_evidence": evidence,
         "visibility": "PRIVATE",
         "gate_credit": "NONE",
         "solid_status_V_allowed": False,
@@ -1472,6 +1558,8 @@ def _add_project_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--terminal-checkpoint", type=Path, required=True)
     parser.add_argument("--authority-claim", type=Path, required=True)
     parser.add_argument("--continuity-manifest", type=Path, required=True)
+    parser.add_argument("--continuity-authentication", type=Path, required=True)
+    parser.add_argument("--prefreeze-bundle", type=Path, required=True)
     parser.add_argument("--slot-id", required=True)
     parser.add_argument("--preregistration", type=Path, default=DEFAULT_PREREGISTRATION)
     parser.add_argument("--contexts", type=Path, default=DEFAULT_CONTEXTS)
@@ -1486,6 +1574,8 @@ def _parser() -> argparse.ArgumentParser:
     prereg.add_argument("--contexts", type=Path, default=DEFAULT_CONTEXTS)
     continuity = commands.add_parser("validate-continuity-manifest")
     continuity.add_argument("--manifest", type=Path, required=True)
+    continuity.add_argument("--authentication", type=Path, required=True)
+    continuity.add_argument("--prefreeze-bundle", type=Path, required=True)
     continuity.add_argument("--preregistration", type=Path, default=DEFAULT_PREREGISTRATION)
     _add_project_arguments(commands.add_parser("project", help="project one bound P2c v2 result"))
     _add_project_arguments(
@@ -1496,17 +1586,30 @@ def _parser() -> argparse.ArgumentParser:
     )
     validate = commands.add_parser("validate-projection")
     validate.add_argument("--projection", type=Path, required=True)
+    validate.add_argument("--continuity-manifest", type=Path, required=True)
+    validate.add_argument("--continuity-authentication", type=Path, required=True)
+    validate.add_argument("--prefreeze-bundle", type=Path, required=True)
+    validate.add_argument("--preregistration", type=Path, default=DEFAULT_PREREGISTRATION)
     compare = commands.add_parser("compare")
     compare.add_argument("--left", type=Path, required=True)
     compare.add_argument("--right", type=Path, required=True)
     compare.add_argument("--output", type=Path, required=True)
+    compare.add_argument("--continuity-manifest", type=Path, required=True)
+    compare.add_argument("--continuity-authentication", type=Path, required=True)
+    compare.add_argument("--prefreeze-bundle", type=Path, required=True)
+    compare.add_argument("--preregistration", type=Path, default=DEFAULT_PREREGISTRATION)
     return parser
 
 
 def _project_command(arguments: argparse.Namespace, campaign_key: str) -> None:
     preregistration = validate_preregistration(load_json(arguments.preregistration))
     contexts = validate_contexts(load_json(arguments.contexts), preregistration)
-    _, continuity = _read_private_json(arguments.continuity_manifest)
+    continuity, evidence = validate_authenticated_continuity(
+        prefreeze_bundle=arguments.prefreeze_bundle,
+        continuity_manifest=arguments.continuity_manifest,
+        continuity_authentication=arguments.continuity_authentication,
+        preregistration=preregistration,
+    )
     _, plan = _read_private_json(arguments.execution_plan)
     _, terminal = _read_private_json(arguments.terminal_checkpoint)
     _, claim = _read_private_json(arguments.authority_claim)
@@ -1517,6 +1620,7 @@ def _project_command(arguments: argparse.Namespace, campaign_key: str) -> None:
         preregistration=preregistration,
         context_set=contexts,
         continuity_manifest=continuity,
+        continuity_evidence=evidence,
         execution_plan=plan,
         terminal_checkpoint=terminal,
         authority_claim=claim,
@@ -1536,8 +1640,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             return 0
         if arguments.command == "validate-continuity-manifest":
             preregistration = validate_preregistration(load_json(arguments.preregistration))
-            _, manifest = _read_private_json(arguments.manifest)
-            validate_continuity_manifest(manifest, preregistration)
+            validate_authenticated_continuity(
+                prefreeze_bundle=arguments.prefreeze_bundle,
+                continuity_manifest=arguments.manifest,
+                continuity_authentication=arguments.authentication,
+                preregistration=preregistration,
+            )
             print("P2C_PRIVATE_CONTINUITY_VALID")
             return 0
         if arguments.command == "project":
@@ -1549,14 +1657,31 @@ def main(argv: Sequence[str] | None = None) -> int:
             print("P2C_PRIVATE_V1_PROJECTION_WRITTEN")
             return 0
         if arguments.command == "validate-projection":
+            preregistration = validate_preregistration(load_json(arguments.preregistration))
+            _, evidence = validate_authenticated_continuity(
+                prefreeze_bundle=arguments.prefreeze_bundle,
+                continuity_manifest=arguments.continuity_manifest,
+                continuity_authentication=arguments.continuity_authentication,
+                preregistration=preregistration,
+            )
             _, projection = _read_private_json(arguments.projection)
-            validate_projection(projection)
+            validate_projection(projection, continuity_evidence=evidence)
             print("P2C_SCIENTIFIC_PROJECTION_VALID")
             return 0
         if arguments.command == "compare":
+            preregistration = validate_preregistration(load_json(arguments.preregistration))
+            _, evidence = validate_authenticated_continuity(
+                prefreeze_bundle=arguments.prefreeze_bundle,
+                continuity_manifest=arguments.continuity_manifest,
+                continuity_authentication=arguments.continuity_authentication,
+                preregistration=preregistration,
+            )
             _, left = _read_private_json(arguments.left)
             _, right = _read_private_json(arguments.right)
-            _write_private_once(compare_projections(left, right), arguments.output)
+            _write_private_once(
+                compare_projections(left, right, continuity_evidence=evidence),
+                arguments.output,
+            )
             print("P2C_PRIVATE_COMPARISON_WRITTEN")
             return 0
     except ProjectionError as error:

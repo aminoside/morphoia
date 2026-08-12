@@ -205,6 +205,15 @@ class EvidenceFactory:
             "slots": rows,
         }
 
+    def continuity_evidence(self, continuity: dict[str, object]) -> dict[str, str]:
+        return {
+            "continuity_authentication_raw_bytes_sha256": digest("synthetic-authentication"),
+            "continuity_manifest_raw_bytes_sha256": hashlib.sha256(
+                projection.canonical_bytes(continuity)
+            ).hexdigest(),
+            "prefreeze_bundle_raw_bytes_sha256": digest("synthetic-prefreeze-bundle"),
+        }
+
     def result_evidence(
         self,
         campaign_key: str,
@@ -301,6 +310,7 @@ class EvidenceFactory:
             preregistration=self.preregistration,
             context_set=self.contexts,
             continuity_manifest=continuity,
+            continuity_evidence=self.continuity_evidence(continuity),
             execution_plan=plan,
             terminal_checkpoint=terminal,
             authority_claim=claim,
@@ -375,7 +385,9 @@ class ScientificProjectionTests(unittest.TestCase):
 
     def test_runner_polygon_kind_is_valid_and_private_payload_is_exact(self) -> None:
         projected, _, _ = self.factory.project("v2", 0, polygon_scientific(2_000_000))
-        projection.validate_projection(projected)
+        projection.validate_projection(
+            projected, continuity_evidence=projected["continuity_evidence"]
+        )
         self.assertEqual(projected["scientific_payload"]["contact"]["kind"], "POLYGON")
         self.assertEqual(projected["campaign"]["campaign_version"], projection.CAMPAIGN_VERSION)
 
@@ -392,6 +404,7 @@ class ScientificProjectionTests(unittest.TestCase):
                 preregistration=self.factory.preregistration,
                 context_set=self.factory.contexts,
                 continuity_manifest=continuity,
+                continuity_evidence=self.factory.continuity_evidence(continuity),
                 execution_plan=plan,
                 terminal_checkpoint=terminal,
                 authority_claim=claim,
@@ -418,6 +431,7 @@ class ScientificProjectionTests(unittest.TestCase):
                 preregistration=self.factory.preregistration,
                 context_set=self.factory.contexts,
                 continuity_manifest=continuity,
+                continuity_evidence=self.factory.continuity_evidence(continuity),
                 execution_plan=plan,
                 terminal_checkpoint=terminal,
                 authority_claim=claim,
@@ -441,6 +455,7 @@ class ScientificProjectionTests(unittest.TestCase):
             preregistration=self.factory.preregistration,
             context_set=self.factory.contexts,
             continuity_manifest=continuity,
+            continuity_evidence=self.factory.continuity_evidence(continuity),
             execution_plan=v1_plan,
             terminal_checkpoint=v1_terminal,
             authority_claim=v1_claim,
@@ -453,13 +468,16 @@ class ScientificProjectionTests(unittest.TestCase):
             preregistration=self.factory.preregistration,
             context_set=self.factory.contexts,
             continuity_manifest=continuity,
+            continuity_evidence=self.factory.continuity_evidence(continuity),
             execution_plan=v2_plan,
             terminal_checkpoint=v2_terminal,
             authority_claim=v2_claim,
             result_bytes=v2_bytes,
             result=v2_result,
         )
-        comparison = projection.compare_projections(v1, v2)
+        comparison = projection.compare_projections(
+            v1, v2, continuity_evidence=v1["continuity_evidence"]
+        )
         self.assertEqual(v1["campaign"]["campaign_version"], "v1")
         self.assertEqual(v1["implementation"]["algorithm_version"], "0.2.0")
         self.assertFalse(comparison["scientific_payload_equal"])
@@ -467,9 +485,22 @@ class ScientificProjectionTests(unittest.TestCase):
 
     def test_compare_accepts_two_v2_projections_only_for_repeatability(self) -> None:
         first, _, _ = self.factory.project("v2", 0)
-        comparison = projection.compare_projections(first, copy.deepcopy(first))
+        comparison = projection.compare_projections(
+            first,
+            copy.deepcopy(first),
+            continuity_evidence=first["continuity_evidence"],
+        )
         self.assertEqual(comparison["comparison_kind"], "V2_REPEATABILITY")
         self.assertTrue(comparison["scientific_payload_equal"])
+
+        substituted = copy.deepcopy(first["continuity_evidence"])
+        substituted["continuity_authentication_raw_bytes_sha256"] = "0" * 64
+        with self.assertRaisesRegex(projection.ProjectionError, "different continuity evidence"):
+            projection.compare_projections(
+                first,
+                copy.deepcopy(first),
+                continuity_evidence=substituted,
+            )
 
 
 class PrivateCliTests(unittest.TestCase):
@@ -491,6 +522,8 @@ class PrivateCliTests(unittest.TestCase):
     def arguments(self, campaign_key: str, output: Path) -> list[str]:
         plan = self.factory.plan(campaign_key, 0)
         continuity = self.factory.continuity({(campaign_key, 0): plan})
+        self.last_continuity = continuity
+        self.last_evidence = self.factory.continuity_evidence(continuity)
         result_bytes, _, terminal, claim = self.factory.result_evidence(
             campaign_key, plan, free_scientific(2_000_000)
         )
@@ -510,6 +543,10 @@ class PrivateCliTests(unittest.TestCase):
             str(self.write(f"{campaign_key}-claim.json", claim, 0o400)),
             "--continuity-manifest",
             str(self.write(f"{campaign_key}-continuity.json", continuity)),
+            "--continuity-authentication",
+            str(self.write(f"{campaign_key}-continuity-authentication.json", {"synthetic": True})),
+            "--prefreeze-bundle",
+            str(self.write(f"{campaign_key}-prefreeze-bundle.json", {"synthetic": True})),
             "--slot-id",
             "P2C-V2-01",
             "--output",
@@ -518,10 +555,19 @@ class PrivateCliTests(unittest.TestCase):
 
     def test_project_cli_emits_only_generic_action_and_publishes_0600_once(self) -> None:
         output = self.root / "projection.json"
+        arguments = self.arguments("v2", output)
         stdout = io.StringIO()
         stderr = io.StringIO()
-        with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
-            code = projection.main(self.arguments("v2", output))
+        with (
+            mock.patch.object(
+                projection,
+                "validate_authenticated_continuity",
+                return_value=(self.last_continuity, self.last_evidence),
+            ),
+            contextlib.redirect_stdout(stdout),
+            contextlib.redirect_stderr(stderr),
+        ):
+            code = projection.main(arguments)
         self.assertEqual(code, 0, stderr.getvalue())
         self.assertEqual(stdout.getvalue().strip(), "P2C_PRIVATE_V2_PROJECTION_WRITTEN")
         self.assertEqual(stat.S_IMODE(output.stat().st_mode), 0o600)
@@ -529,8 +575,17 @@ class PrivateCliTests(unittest.TestCase):
         self.assertNotIn(private_payload, stdout.getvalue())
 
         stdout = io.StringIO()
-        with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(io.StringIO()):
-            code = projection.main(self.arguments("v2", output))
+        arguments = self.arguments("v2", output)
+        with (
+            mock.patch.object(
+                projection,
+                "validate_authenticated_continuity",
+                return_value=(self.last_continuity, self.last_evidence),
+            ),
+            contextlib.redirect_stdout(stdout),
+            contextlib.redirect_stderr(io.StringIO()),
+        ):
+            code = projection.main(arguments)
         self.assertEqual(code, 2)
         self.assertEqual(output.read_text(encoding="utf-8"), private_payload)
 
@@ -538,15 +593,33 @@ class PrivateCliTests(unittest.TestCase):
         with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             projection._parser().parse_args(["project", "--result", "x"])
         stdout = io.StringIO()
-        with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(io.StringIO()):
-            code = projection.main(self.arguments("v2", Path("-")))
+        arguments = self.arguments("v2", Path("-"))
+        with (
+            mock.patch.object(
+                projection,
+                "validate_authenticated_continuity",
+                return_value=(self.last_continuity, self.last_evidence),
+            ),
+            contextlib.redirect_stdout(stdout),
+            contextlib.redirect_stderr(io.StringIO()),
+        ):
+            code = projection.main(arguments)
         self.assertEqual(code, 2)
         self.assertEqual(stdout.getvalue(), "")
 
     def test_historical_cli_is_not_a_mutated_v2_envelope(self) -> None:
         output = self.root / "historical.json"
-        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-            code = projection.main(self.arguments("v1", output))
+        arguments = self.arguments("v1", output)
+        with (
+            mock.patch.object(
+                projection,
+                "validate_authenticated_continuity",
+                return_value=(self.last_continuity, self.last_evidence),
+            ),
+            contextlib.redirect_stdout(io.StringIO()),
+            contextlib.redirect_stderr(io.StringIO()),
+        ):
+            code = projection.main(arguments)
         self.assertEqual(code, 0)
         historical = json.loads(output.read_bytes())
         self.assertEqual(historical["campaign"]["campaign_version"], "v1")

@@ -71,6 +71,14 @@ After publication, the four plans are derived without starting a child, the
 private continuity manifest is signed, and only then may the first v2 child
 execute.
 
+The official runner enforces this split with `prepare-p2a-plan` followed by
+`execute-prepared-p2a`. The preparation command requires the immutable private
+prefreeze bundle and writes one exact plan without invoking the exact-analysis
+child. A first anchored `run-p2a` invocation is rejected. The execution command
+requires the same prefreeze bundle, the exact prepared plan, the private
+continuity manifest, and its detached Ed25519 authentication; it validates all
+four bindings before the child can start.
+
 ## Restore and comparison
 
 Completion requires a clean restoration into a new workspace from the frozen
@@ -89,10 +97,14 @@ may fingerprint a private source. Only an aggregate and its commitment may be
 published after execution.
 
 Projection is fail-closed. Both the v2 and historical-v1 commands require the
-private continuity manifest, exact execution plan, terminal checkpoint,
-authority claim, and result. The manifest binds each opaque slot to both its v1
-and v2 work identities and to the same sealed P2a parent. A caller cannot assign
-a result to a slot merely by naming that slot.
+private prefreeze bundle, continuity manifest, detached continuity
+authentication, exact execution plan, terminal checkpoint, authority claim,
+and result. The detached signature is validated before projection, and each
+private projection records commitments to those three continuity artifacts.
+Comparison requires both projections to carry the same validated commitments.
+The manifest binds each opaque slot to both its v1 and v2 work identities and
+to the same sealed P2a parent. A caller cannot assign a result to a slot merely
+by naming that slot or by substituting an unsigned continuity manifest.
 
 The projection utility never writes a private projection or comparison to
 standard output. Its output must be a new file below `tmp/`, published

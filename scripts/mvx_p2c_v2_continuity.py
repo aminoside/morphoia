@@ -150,6 +150,58 @@ class Artifact:
         return value
 
 
+@dataclass(frozen=True)
+class ValidatedContinuitySnapshot:
+    """Immutable bytes used for one successful continuity authentication."""
+
+    bundle_payload: bytes
+    manifest_payload: bytes
+    authentication_payload: bytes
+    prefreeze_manifest_payload: bytes
+    preregistration_payload: bytes
+    signer_manifest_payload: bytes
+
+    def manifest_value(self) -> dict[str, Any]:
+        return _snapshot_json_object(self.manifest_payload, "FINAL_CONTINUITY_NOT_OBJECT")
+
+    def commitments(self) -> dict[str, str]:
+        return {
+            "continuity_authentication_raw_bytes_sha256": _sha256(self.authentication_payload),
+            "continuity_manifest_raw_bytes_sha256": _sha256(self.manifest_payload),
+            "prefreeze_bundle_raw_bytes_sha256": _sha256(self.bundle_payload),
+        }
+
+
+@dataclass(frozen=True)
+class PreparedPlanContextSnapshot:
+    """Immutable bundle-derived inputs for one pre-registered plan slot."""
+
+    bundle_payload: bytes
+    slot: str
+    prefreeze_manifest_payload: bytes
+    preregistration_payload: bytes
+    parent_payload: bytes
+    profile_payload: bytes
+
+    def profile_value(self) -> dict[str, Any]:
+        return _snapshot_json_object(self.profile_payload, "V2_PLAN_PROFILE")
+
+
+@dataclass(frozen=True)
+class FrozenPlanAuthorization:
+    """Exact signed freeze and exact prepared-plan bytes authorized together."""
+
+    continuity: ValidatedContinuitySnapshot
+    context: PreparedPlanContextSnapshot
+    plan_payload: bytes
+
+    def plan_value(self) -> dict[str, Any]:
+        return _snapshot_json_object(self.plan_payload, "V2_PLAN_NOT_OBJECT")
+
+    def profile_value(self) -> dict[str, Any]:
+        return self.context.profile_value()
+
+
 def _sha256(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
 
@@ -176,6 +228,13 @@ def _decode_json(payload: bytes) -> Any:
         )
     except (UnicodeError, ValueError, json.JSONDecodeError) as error:
         raise ContinuityError("INVALID_JSON") from error
+
+
+def _snapshot_json_object(payload: bytes, code: str) -> dict[str, Any]:
+    value = _decode_json(payload)
+    if not isinstance(value, dict):
+        raise ContinuityError(code)
+    return value
 
 
 def _canonical_bytes(value: Any, *, newline: bool = False) -> bytes:
@@ -1415,8 +1474,11 @@ def _validate_prefreeze_manifest(manifest: Mapping[str, Any]) -> None:
         raise ContinuityError("PREFREEZE_AUTHENTICATION")
 
 
-def _read_bundle(path: Path) -> tuple[dict[str, bytes], dict[str, int]]:
-    payload = _safe_read(path, limit=MAX_BUNDLE_BYTES, private_modes={0o600})
+def _read_bundle_payload(payload: bytes) -> tuple[dict[str, bytes], dict[str, int]]:
+    """Parse one already snapshotted bundle without reopening its path."""
+
+    if len(payload) > MAX_BUNDLE_BYTES:
+        raise ContinuityError("INPUT_SIZE_LIMIT")
     files: dict[str, bytes] = {}
     modes: dict[str, int] = {}
     try:
@@ -1446,6 +1508,11 @@ def _read_bundle(path: Path) -> tuple[dict[str, bytes], dict[str, int]]:
     except (tarfile.TarError, OSError) as error:
         raise ContinuityError("BUNDLE_INVALID_TAR") from error
     return files, modes
+
+
+def _read_bundle(path: Path) -> tuple[dict[str, bytes], dict[str, int]]:
+    payload = _safe_read(path, limit=MAX_BUNDLE_BYTES, private_modes={0o600})
+    return _read_bundle_payload(payload)
 
 
 def _descriptor_paths(value: Any) -> dict[str, Mapping[str, Any]]:
@@ -1695,10 +1762,12 @@ def _verify_preexecution_bindings(code: Mapping[str, Any], files: Mapping[str, b
     )
 
 
-def validate_bundle(path: Path, *, repository: Path | None = None) -> dict[str, Any]:
-    """Validate bytes, privacy, modes, typed hashes, signature, and code binding."""
+def _validate_bundle_payload(
+    payload: bytes, *, repository: Path | None = None
+) -> tuple[dict[str, bytes], dict[str, int], dict[str, Any]]:
+    """Validate one immutable bundle snapshot and return only derived values."""
 
-    files, modes = _read_bundle(path)
+    files, modes = _read_bundle_payload(payload)
     if "manifest.json" not in files or "manifest-signing-payload.json" not in files:
         raise ContinuityError("BUNDLE_CONTROL_FILES")
     manifest = _decode_json(files["manifest.json"])
@@ -1763,6 +1832,14 @@ def validate_bundle(path: Path, *, repository: Path | None = None) -> dict[str, 
             or parent_tree != manifest["code"]["challenge_git_tree_sha1"]
         ):
             raise ContinuityError("SIGNER_CHALLENGE_GIT_PARENT")
+    return files, modes, manifest
+
+
+def validate_bundle(path: Path, *, repository: Path | None = None) -> dict[str, Any]:
+    """Validate bytes, privacy, modes, typed hashes, signature, and code binding."""
+
+    payload = _safe_read(path, limit=MAX_BUNDLE_BYTES, private_modes={0o600})
+    _validate_bundle_payload(payload, repository=repository)
     return {"action": "BUNDLE_VALID"}
 
 
@@ -2136,16 +2213,15 @@ def _validate_final_continuity(
         raise ContinuityError("FINAL_CONTINUITY_CARDINALITY")
 
 
-def validate_frozen_continuity(
-    manifest_path: Path,
-    authentication_path: Path,
+def _validate_frozen_continuity_payloads(
+    manifest_payload: bytes,
+    authentication_payload: bytes,
     *,
     signer_manifest_payload: bytes,
     preregistration: Mapping[str, Any],
     prefreeze_bundle_raw_bytes_sha256: str,
     prefreeze_manifest_sha256: str,
 ) -> dict[str, Any]:
-    manifest_payload = _safe_read(manifest_path, private_modes={0o600})
     manifest = _decode_json(manifest_payload)
     if not isinstance(manifest, dict) or manifest_payload != _canonical_bytes(
         manifest, newline=True
@@ -2153,7 +2229,6 @@ def validate_frozen_continuity(
         raise ContinuityError("FINAL_CONTINUITY_NOT_CANONICAL")
     public = _signer_public_key(_decode_json(signer_manifest_payload))
     _validate_final_continuity(manifest, preregistration, public)
-    authentication_payload = _safe_read(authentication_path, private_modes={0o600})
     document = _decode_json(authentication_payload)
     if not isinstance(document, dict) or set(document) != {"authentication", "payload"}:
         raise ContinuityError("DETACHED_AUTHENTICATION_FIELDS")
@@ -2198,26 +2273,267 @@ def validate_frozen_continuity(
     return {"action": "CONTINUITY_VALID"}
 
 
-def validate_continuity_from_bundle(
-    bundle: Path, manifest: Path, authentication: Path
+def validate_frozen_continuity(
+    manifest_path: Path,
+    authentication_path: Path,
+    *,
+    signer_manifest_payload: bytes,
+    preregistration: Mapping[str, Any],
+    prefreeze_bundle_raw_bytes_sha256: str,
+    prefreeze_manifest_sha256: str,
 ) -> dict[str, Any]:
-    """Validate a detached final freeze using only the immutable pre-plan bundle."""
+    """Compatibility wrapper that snapshots each detached artifact once."""
 
-    validate_bundle(bundle)
-    files, _ = _read_bundle(bundle)
+    manifest_payload = _safe_read(manifest_path, private_modes={0o600})
+    authentication_payload = _safe_read(authentication_path, private_modes={0o600})
+    return _validate_frozen_continuity_payloads(
+        manifest_payload,
+        authentication_payload,
+        signer_manifest_payload=signer_manifest_payload,
+        preregistration=preregistration,
+        prefreeze_bundle_raw_bytes_sha256=prefreeze_bundle_raw_bytes_sha256,
+        prefreeze_manifest_sha256=prefreeze_manifest_sha256,
+    )
+
+
+def _validated_continuity_snapshot_from_payloads(
+    bundle_payload: bytes,
+    manifest_payload: bytes,
+    authentication_payload: bytes,
+) -> ValidatedContinuitySnapshot:
+    """Authenticate three immutable snapshots without reopening their paths."""
+
+    files, _, prefreeze = _validate_bundle_payload(bundle_payload)
     prefreeze = _bundle_json(files, "manifest.json")
     prereg_path = prefreeze["code"]["bindings"]["preregistration"]["bundle_path"]
     signer_path = prefreeze["code"]["bindings"]["signer_manifest"]["bundle_path"]
-    return validate_frozen_continuity(
-        manifest,
-        authentication,
+    preregistration_payload = files[prereg_path]
+    signer_manifest_payload = files[signer_path]
+    _validate_frozen_continuity_payloads(
+        manifest_payload,
+        authentication_payload,
         signer_manifest_payload=files[signer_path],
         preregistration=_bundle_json(files, prereg_path),
-        prefreeze_bundle_raw_bytes_sha256=_sha256(
-            _safe_read(bundle, limit=MAX_BUNDLE_BYTES, private_modes={0o600})
-        ),
+        prefreeze_bundle_raw_bytes_sha256=_sha256(bundle_payload),
         prefreeze_manifest_sha256=_p2c_hash(prefreeze),
     )
+    return ValidatedContinuitySnapshot(
+        bundle_payload=bundle_payload,
+        manifest_payload=manifest_payload,
+        authentication_payload=authentication_payload,
+        prefreeze_manifest_payload=files["manifest.json"],
+        preregistration_payload=preregistration_payload,
+        signer_manifest_payload=signer_manifest_payload,
+    )
+
+
+def validated_continuity_snapshot(
+    bundle: Path, manifest: Path, authentication: Path
+) -> ValidatedContinuitySnapshot:
+    """Read each artifact once, then authenticate and retain those exact bytes."""
+
+    bundle_payload = _safe_read(bundle, limit=MAX_BUNDLE_BYTES, private_modes={0o600})
+    manifest_payload = _safe_read(manifest, limit=MAX_INPUT_BYTES, private_modes={0o600})
+    authentication_payload = _safe_read(
+        authentication, limit=MAX_INPUT_BYTES, private_modes={0o600}
+    )
+    return _validated_continuity_snapshot_from_payloads(
+        bundle_payload,
+        manifest_payload,
+        authentication_payload,
+    )
+
+
+def validate_continuity_from_bundle(
+    bundle: Path, manifest: Path, authentication: Path
+) -> dict[str, Any]:
+    """Validate a detached final freeze using one snapshot of every input."""
+
+    validated_continuity_snapshot(bundle, manifest, authentication)
+    return {"action": "CONTINUITY_VALID"}
+
+
+def validated_continuity_commitments(
+    bundle: Path, manifest: Path, authentication: Path
+) -> dict[str, str]:
+    """Return private evidence commitments only after full signature validation."""
+
+    return validated_continuity_snapshot(bundle, manifest, authentication).commitments()
+
+
+def _plan_context_from_bundle_payload(
+    bundle_payload: bytes, slot: str
+) -> tuple[
+    dict[str, Any],
+    dict[str, Any],
+    dict[str, Any],
+    dict[str, Any],
+    PreparedPlanContextSnapshot,
+]:
+    files, _, prefreeze = _validate_bundle_payload(bundle_payload)
+    if slot not in {row[0] for row in SLOT_ROWS}:
+        raise ContinuityError("V2_PLAN_SLOT")
+    prereg_path = prefreeze["code"]["bindings"]["preregistration"]["bundle_path"]
+    signer_path = prefreeze["code"]["bindings"]["signer_manifest"]["bundle_path"]
+    preregistration = _bundle_json(files, prereg_path)
+    public = _signer_public_key(_decode_json(files[signer_path]))
+    selected = next(row for row in SLOT_ROWS if row[0] == slot)
+    alias = selected[3]
+    parent_row = next(row for row in prefreeze["parents"] if row["alias"] == alias)
+    parent = {
+        "audit_record_sha256": parent_row["p2a"]["audit_record"]["raw_bytes_sha256"],
+        "p2a_execution_plan_file_sha256": parent_row["p2a"]["execution_plan"]["raw_bytes_sha256"],
+        "p2a_execution_plan_sha256": parent_row["p2a"]["execution_plan"]["typed_canonical_sha256"],
+        "p2a_terminal_checkpoint_sha256": parent_row["p2a"]["checkpoint_chain"][-1][
+            "typed_canonical_sha256"
+        ],
+        "p2a_work_id": parent_row["p2a"]["work_id"],
+        "source_sha256": parent_row["glb"]["raw_bytes_sha256"],
+        "source_size_bytes": parent_row["glb"]["size_bytes"],
+    }
+    profile = {
+        "external_anchor_public_key_hex": public,
+        "limits": {
+            "max_candidate_pairs": selected[5],
+            "max_coordinate_bits": preregistration["limits_common"]["max_coordinate_bits"],
+            "max_runtime_seconds": preregistration["limits_common"]["max_runtime_seconds"],
+            "max_triangles": preregistration["limits_common"]["max_triangles"],
+            "max_vertices": preregistration["limits_common"]["max_vertices"],
+        },
+        "max_input_bytes": preregistration["limits_common"]["max_input_bytes"],
+        "slot_id": selected[1],
+    }
+    context = PreparedPlanContextSnapshot(
+        bundle_payload=bundle_payload,
+        slot=slot,
+        prefreeze_manifest_payload=files["manifest.json"],
+        preregistration_payload=files[prereg_path],
+        parent_payload=_canonical_bytes(parent, newline=True),
+        profile_payload=_canonical_bytes(profile, newline=True),
+    )
+    return prefreeze, preregistration, parent, profile, context
+
+
+def prepared_plan_context_from_bundle(bundle: Path, slot: str) -> PreparedPlanContextSnapshot:
+    """Snapshot and validate one bundle once for plan preparation."""
+
+    bundle_payload = _safe_read(bundle, limit=MAX_BUNDLE_BYTES, private_modes={0o600})
+    return _plan_context_from_bundle_payload(bundle_payload, slot)[4]
+
+
+def prepared_plan_profile_from_bundle(bundle: Path, slot: str) -> dict[str, Any]:
+    """Return the fixed public profile for one pre-plan campaign slot."""
+
+    return prepared_plan_context_from_bundle(bundle, slot).profile_value()
+
+
+def validate_prepared_plan_value_from_context(
+    context: PreparedPlanContextSnapshot, plan: Mapping[str, Any]
+) -> dict[str, Any]:
+    """Validate a plan against the exact bundle bytes held by its context."""
+
+    prefreeze = _snapshot_json_object(
+        context.prefreeze_manifest_payload, "PREFREEZE_MANIFEST_NOT_OBJECT"
+    )
+    preregistration = _snapshot_json_object(
+        context.preregistration_payload, "PREREGISTRATION_NOT_OBJECT"
+    )
+    parent = _snapshot_json_object(context.parent_payload, "V2_PLAN_PARENT")
+    profile = context.profile_value()
+    if not isinstance(plan, dict):
+        raise ContinuityError("V2_PLAN_NOT_CANONICAL")
+    _validate_v2_plan(
+        plan,
+        parent,
+        profile["limits"]["max_candidate_pairs"],
+        profile["external_anchor_public_key_hex"],
+        preregistration,
+        prefreeze["code"]["preexecution_bindings"],
+    )
+    return {"action": "PREPARED_PLAN_VALID"}
+
+
+def validate_prepared_plan_value_from_bundle(
+    bundle: Path, slot: str, plan: Mapping[str, Any]
+) -> dict[str, Any]:
+    """Validate one prepared plan value without authorizing a geometry child."""
+
+    return validate_prepared_plan_value_from_context(
+        prepared_plan_context_from_bundle(bundle, slot), plan
+    )
+
+
+def validate_prepared_plan_from_bundle(bundle: Path, slot: str, plan_path: Path) -> dict[str, Any]:
+    """Validate one canonical prepared-plan file without authorizing a child."""
+
+    payload = _safe_read(plan_path, limit=MAX_INPUT_BYTES, private_modes={0o600})
+    plan = _decode_json(payload)
+    if not isinstance(plan, dict) or payload != _canonical_bytes(plan, newline=True):
+        raise ContinuityError("V2_PLAN_NOT_CANONICAL")
+    context = prepared_plan_context_from_bundle(bundle, slot)
+    return validate_prepared_plan_value_from_context(context, plan)
+
+
+def authorize_frozen_plan_from_bundle(
+    bundle: Path,
+    manifest: Path,
+    authentication: Path,
+    slot: str,
+    plan_path: Path,
+) -> FrozenPlanAuthorization:
+    """Authorize exact snapshots; no input path is reopened after validation."""
+
+    bundle_payload = _safe_read(bundle, limit=MAX_BUNDLE_BYTES, private_modes={0o600})
+    manifest_payload = _safe_read(manifest, limit=MAX_INPUT_BYTES, private_modes={0o600})
+    authentication_payload = _safe_read(
+        authentication, limit=MAX_INPUT_BYTES, private_modes={0o600}
+    )
+    plan_payload = _safe_read(plan_path, limit=MAX_INPUT_BYTES, private_modes={0o600})
+    continuity_snapshot = _validated_continuity_snapshot_from_payloads(
+        bundle_payload,
+        manifest_payload,
+        authentication_payload,
+    )
+    _, _, _, _, context = _plan_context_from_bundle_payload(bundle_payload, slot)
+    plan = _decode_json(plan_payload)
+    if not isinstance(plan, dict) or plan_payload != _canonical_bytes(plan, newline=True):
+        raise ContinuityError("V2_PLAN_NOT_CANONICAL")
+    validate_prepared_plan_value_from_context(context, plan)
+    continuity = continuity_snapshot.manifest_value()
+    selected = next(row for row in SLOT_ROWS if row[0] == slot)
+    rows = [row for row in continuity["slots"] if row["slot_id"] == selected[1]]
+    if len(rows) != 1 or rows[0]["v2"] != {
+        **{
+            name: rows[0]["v1"][name]
+            for name in (
+                "p2a_execution_plan_sha256",
+                "p2a_terminal_checkpoint_sha256",
+                "p2a_work_id",
+                "source_sha256",
+            )
+        },
+        "execution_plan_sha256": _p2c_hash(plan),
+        "work_id": plan.get("work_id"),
+    }:
+        raise ContinuityError("FROZEN_PLAN_BINDING")
+    return FrozenPlanAuthorization(
+        continuity=continuity_snapshot,
+        context=context,
+        plan_payload=plan_payload,
+    )
+
+
+def validate_frozen_plan_from_bundle(
+    bundle: Path,
+    manifest: Path,
+    authentication: Path,
+    slot: str,
+    plan_path: Path,
+) -> dict[str, Any]:
+    """Compatibility wrapper for exact frozen-plan snapshot authorization."""
+
+    authorize_frozen_plan_from_bundle(bundle, manifest, authentication, slot, plan_path)
+    return {"action": "FROZEN_PLAN_AUTHORIZED"}
 
 
 def _parse_plan_arguments(values: Sequence[str]) -> dict[str, Path]:
