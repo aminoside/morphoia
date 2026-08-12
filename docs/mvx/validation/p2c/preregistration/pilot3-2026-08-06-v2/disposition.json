@@ -1,0 +1,37 @@
+{
+  "schema": "morphoia.mvx.p2c.campaign-disposition",
+  "schema_version": "1.0.0",
+  "campaign_id": "P2C-PILOT3-2026-08-06",
+  "campaign_version": "2.0.0",
+  "status": "ABORTED_BEFORE_EXECUTION",
+  "reason_code": "SIGNER_SECRET_CONFIDENTIALITY_LOST_BEFORE_EXECUTION",
+  "signer": {
+    "signer_id": "mvx-p2c-owner-c060c44469a0b0be",
+    "public_key_ed25519_hex": "c060c44469a0b0be1732943056a7c10b53d2efd77f362c166957f8d180ec429c",
+    "provenance_value_after_incident": "NONE",
+    "signature_verification_remains_mathematically_possible": true
+  },
+  "public_artifacts": {
+    "preregistration_raw_bytes_sha256": "0877ad0639e034e1a16ee299ad8c3991be90d703de1259c1d92ea627b0eb1d62",
+    "projection_contexts_raw_bytes_sha256": "d2bff3070c9e4078f910016a3a9a2996694391151fdfbb38b3fd518843415d27",
+    "signer_challenge_raw_bytes_sha256": "085203ba34abaf8c212af9a72c9d072c1d77beacd276a883f4f636f6cfc4d8ba",
+    "signer_manifest_raw_bytes_sha256": "b84902d324f4dbf623b33560d04d5becd1be6696ac0dfa980e9244fbcd311ea1"
+  },
+  "execution": {
+    "plan_count": 0,
+    "work_id_count": 0,
+    "geometry_child_count": 0,
+    "result_count": 0,
+    "anchor_count": 0
+  },
+  "impact": {
+    "scientific_result_impact": "NONE",
+    "gate_credit": "NONE",
+    "solid_certification_count": 0
+  },
+  "disposition": {
+    "preservation": "IMMUTABLE_HISTORICAL_RECORD",
+    "reuse": "FORBIDDEN",
+    "successor_campaign_version": "2.1.0"
+  }
+}
