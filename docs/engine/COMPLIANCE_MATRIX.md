@@ -80,6 +80,7 @@ an unavailable optional profile to `PASS`.
 | Corrective E2 hosted checkpoint | Publication | Engine run `31589424865`; report run `31589424850` | source `e3ec245`: Python 3.12 `94090702646`, hygiene `94090702698`, native `94090702707`, REUSE `94090702764`, Python 3.13 `94090702766`, report `94090702397` | PASS |
 | Final E2 evidence checkpoint | Publication | Engine run `31590141763`; report run `31590141769` | source `b3dfc084`: five Engine jobs plus report job `94092971258` passed | PASS |
 | E2 integration into `engine` | Publication | PR #6 merge plus Engine run `31590418194` | merge `c84dd152`; native `94093829070`, Python 3.12 `94093829134`, Python 3.13 `94093829163`, hygiene `94093829169`, REUSE `94093829190` | PASS |
+| Combined E1/E2 reconciliation | Publication | exact-head PR Engine run `31593255255`; report run `31593255344` | two-parent head `5a96abfc`, tree `bc7714b1`: five Engine jobs plus report job `94102764289` passed; branch-push Engine run `31593250364` also passed | PASS |
 | Real SALOME 9.16 capability probe | E2/G1 optional backend | real isolated runtime | runtime absent | NOT_RUN |
 | SHAPER/GEOM, SMESH/MED, MEDCoupling, fidelity and overhead | E2/G1 optional backend | real isolated runtime | no execution | NOT_RUN |
 

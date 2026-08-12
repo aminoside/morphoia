@@ -14,6 +14,7 @@ Published E2 source checkpoint: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
 Corrective E2 source checkpoint: `e3ec245569bff40533b86789e61b1a78c15915f6`
 Final E2 evidence checkpoint: `b3dfc084c81d9d64ff4079304a4e97b0cf75b294`
 E1 evidence checkpoint: `4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
+E1/E2 reconciliation commit: `5a96abfcb658e26d8e085a25f98b032002719967`
 
 ## Results
 
@@ -37,7 +38,7 @@ E1 evidence checkpoint: `4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
 | Corrective E2 hosted checkpoint | PASS | On corrective source `e3ec245`, Engine run `31589424865` passed Python 3.12 job `94090702646`, hygiene job `94090702698`, native job `94090702707`, REUSE job `94090702764`, and Python 3.13 job `94090702766`; report run `31589424850`, job `94090702397`, passed. |
 | Final E2 evidence checkpoint | PASS | On `b3dfc084`, Engine run `31590141763` passed REUSE `94092971527`, hygiene `94092971593`, native `94092971600`, Python 3.13 `94092971604`, and Python 3.12 `94092971670`; report run `31590141769`, job `94092971258`, passed. |
 | E2 integration | PASS | PR #6 merged only into `engine` at `c84dd152`; exact-SHA push run `31590418194` passed native `94093829070`, Python 3.12 `94093829134`, Python 3.13 `94093829163`, hygiene `94093829169`, and REUSE `94093829190`. The default branch was unchanged. |
-| Combined E1/E2 hosted reconciliation | NOT_RUN | The true merge of `engine` into published E1 history passes locally but is not yet published; exact combined Engine and report workflows have not executed. |
+| Combined E1/E2 hosted reconciliation | PASS | The true two-parent merge `5a96abfc` has tree `bc7714b1`. PR Engine run `31593255255` passed Python 3.12 `94102764284`, REUSE `94102764304`, native `94102764307`, Python 3.13 `94102764368`, and hygiene `94102764390`; report run `31593255344`, job `94102764289`, passed. The duplicate branch-push Engine run `31593250364` also passed all five jobs. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
 | Network capability | PASS | Restricted allowlisted egress and authenticated connector access were observed; unrestricted public egress was not probed or claimed. |

@@ -233,8 +233,12 @@ remain `NOT_RUN`.
 After semantically merging integrated E2 history, the combined local worktree
 passed 94/94 Python tests, 5/5 native CTests, direct bootstrap, ASan/UBSan,
 installation and the external C consumer, report replay, and REUSE 191/191.
-These are local results; combined hosted Engine and report workflows remain
-`NOT_RUN` until the merge commit is published.
+The published two-parent reconciliation `5a96abfc` retained the exact local
+tree `bc7714b1`. PR Engine run `31593255255` passed all five jobs and report run
+`31593255344`, job `94102764289`, passed; branch-push Engine run `31593250364`
+also passed all five jobs. This closes combined hosted reconciliation, not E1
+integration or any unfinished public IR, real SALOME, large-transfer, GPU/HPC,
+or vulnerability criterion.
 
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
@@ -370,9 +374,9 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Complete the semantic E1/E2 durable-state reconciliation on
-`engine-p0-ir-cas`, publish the true merge of `origin/engine`, and verify the
-combined Engine and report workflows. Record those results in a bounded
-follow-up, then integrate PR #7 into `engine` only after all exact-head checks
-pass. Keep real SALOME 9.16 and the unfinished public IR criteria `NOT_RUN`;
-never merge `engine` into the default branch without separate owner instruction.
+Publish this bounded hosted-evidence follow-up on `engine-p0-ir-cas`, require
+fresh exact-head Engine and report checks, verify that PR #7 has no unresolved
+review thread, then integrate PR #7 into `engine` only. Verify the exact merge
+SHA and post-merge Engine checks before opening the next public-IR lot. Keep real
+SALOME 9.16 and the unfinished public IR criteria `NOT_RUN`; never merge
+`engine` into the default branch without separate owner instruction.

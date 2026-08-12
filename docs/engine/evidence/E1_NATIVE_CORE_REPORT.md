@@ -10,6 +10,8 @@ Corrective evidence source commit executed by GitHub Actions:
 `0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`
 Final evidence source commit executed by GitHub Actions:
 `4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
+Combined E1/E2 reconciliation commit executed by GitHub Actions:
+`5a96abfcb658e26d8e085a25f98b032002719967`
 
 ## Result
 
@@ -82,8 +84,25 @@ then execute both combined workflows before integration.
 | Report replay | PASS | Both reports rebuilt and validated; the same 94-test suite passed. |
 | REUSE 6.2.0 | PASS | License metadata resolved for 191/191 files. |
 
-This local PASS proves the reconciled worktree only. Combined hosted Engine and
-report workflows remain `NOT_RUN` until the merge commit is published.
+This local PASS proves the reconciled worktree. The following exact-head hosted
+checks independently executed the published two-parent merge.
+
+## Combined hosted reconciliation
+
+| Workflow or job | Status | Observation |
+|---|---|---|
+| PR Engine run `31593255255` | PASS | All five required jobs passed on exact head `5a96abfc`. |
+| Python 3.12 job `94102764284` | PASS | Unified Python and all three phase-scoped evidence checks passed. |
+| REUSE job `94102764304` | PASS | License metadata validation passed. |
+| Native job `94102764307` | PASS | GCC/C++20 build, five native tests, installed consumer, bootstrap, and sanitizers passed. |
+| Python 3.13 job `94102764368` | PASS | Unified Python and all three phase-scoped evidence checks passed. |
+| Hygiene job `94102764390` | PASS | Secret-signature and whitespace checks passed. |
+| Report run `31593255344`, job `94102764289` | PASS | Both reports and the unified suite passed. |
+| Branch-push Engine run `31593250364` | PASS | The duplicate exact-head push execution also passed all five jobs. |
+
+These results close the combined hosted-reconciliation item. They do not prove
+the public IR, 20-graph corpus, greater-than-2-GiB execution, real SALOME,
+future CAS capabilities, vulnerability analysis, or integration into `engine`.
 
 ## Local executed evidence
 
@@ -123,7 +142,6 @@ limits.
 | `MOR-CAS-011` | NOT_RUN | Workspace quota, retention, pinning, and purge policy are not implemented. |
 | `MOR-CAS-012` | NOT_RUN | The provenance transform path is not implemented. |
 
-The 20-graph IR corpus, replay manifests, whole E1 gate, combined hosted report
-workflow, integration into `engine`, and greater-than-2-GiB execution remain
-`NOT_RUN`.
+The 20-graph IR corpus, replay manifests, whole E1 gate, integration into
+`engine`, and greater-than-2-GiB execution remain `NOT_RUN`.
 The bounded lot and E1 therefore remain `IN_PROGRESS`.

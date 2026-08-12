@@ -45,12 +45,14 @@ EXPECTED_ARTIFACTS = {
             "Generated from local executions and GitHub Actions results for native "
             "source bbf84cb806d95701daa2887e71d90a819c4a4c83 and corrective "
             "evidence sources 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41 and "
-            "4db5c7436a8139d227de58d5f5ff7280e8a0f9ea"
+            "4db5c7436a8139d227de58d5f5ff7280e8a0f9ea, followed by combined "
+            "reconciliation 5a96abfcb658e26d8e085a25f98b032002719967"
         ),
         "verification_status": "PASS",
         "note": (
             "The artifact is hash-verified; its content retains the initial hosted "
-            "FAIL, corrective hosted PASS, and final evidence-head report NOT_RUN"
+            "FAIL, corrective hosted PASS, final evidence-head report NOT_RUN, and "
+            "combined reconciliation PASS"
         ),
     },
     "adr-018-canonical-json-posix-cas": {

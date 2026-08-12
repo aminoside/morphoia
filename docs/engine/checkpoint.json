@@ -13,7 +13,7 @@
     "default_branch": "main",
     "integration_branch": "engine",
     "publication_status": "PASS",
-    "publication_note": "E2 protocol-only is integrated into engine at c84dd152a81b80a7e5c39e51f13b811a0f32d05f with green push checks; E1 evidence head 4db5c7436a8139d227de58d5f5ff7280e8a0f9ea passed all five Engine jobs, while no report workflow run was observed for that exact SHA and no cause is asserted; the true E1/E2 merge is now being reconciled"
+    "publication_note": "The exact two-parent E1/E2 reconciliation 5a96abfcb658e26d8e085a25f98b032002719967 is published on engine-p0-ir-cas with tree bc7714b1c9567662233df0fa95dcc8d48f929c5d; its PR Engine, branch-push Engine, and report workflows passed, while integration into engine remains pending this evidence follow-up"
   },
   "git": {
     "branch": "engine-p0-ir-cas",
@@ -21,8 +21,8 @@
     "base_parent": "cdddaa47ba54742652819d798e1c6f9c0bd9ce6e",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "4db5c7436a8139d227de58d5f5ff7280e8a0f9ea",
-    "note": "Published E1 evidence head 4db5c743 is the first parent of the pending true merge and engine integration c84dd152 is the second; this checkpoint does not predict the SHA of the merge commit that will contain it or claim E1 integration"
+    "published_commit_sha": "5a96abfcb658e26d8e085a25f98b032002719967",
+    "note": "Published true merge 5a96abfc has parents 4db5c743 and c84dd152 and exact tree bc7714b1; this follow-up records its hosted checks but does not claim integration of PR 7 into engine"
   },
   "tasks": {
     "completed": [
@@ -59,14 +59,16 @@
       "e2_protocol_contract_hosted_correction",
       "e2_final_evidence_head_verification",
       "e2_protocol_contract_engine_integration",
-      "e2_engine_push_post_merge_verification"
+      "e2_engine_push_post_merge_verification",
+      "e1_e2_semantic_merge_reconciliation",
+      "e1_e2_combined_hosted_engine_and_report_verification",
+      "e1_pr7_review_thread_verification"
     ],
     "in_progress": [
       "e1_canonical_json_cas_replay",
-      "e1_e2_semantic_merge_reconciliation"
+      "e1_hosted_evidence_followup"
     ],
     "remaining": [
-      "e1_combined_hosted_engine_and_report_verification",
       "e1_engine_integration_after_green_checks",
       "e1_remaining_core_foundations",
       "e2_real_salome_execution_when_runtime_available"
@@ -120,7 +122,7 @@
       },
       {
         "path": "docs/engine",
-        "sha256": "83578a7c90ff0def381e08dfc43ebd514bf1418ed7b34f3cb9e94f1da1ce0c9d",
+        "sha256": "6d8dc1557bac36b6799b6dceb0363f64dcb86bbb29167947a5170cb88d735b98",
         "status": "PASS"
       }
     ],
@@ -361,6 +363,21 @@
       "command": "<hash-locked-python> -m reuse lint on combined reconciliation",
       "result": "PASS",
       "summary": "REUSE 6.2.0 resolved copyright and license metadata for 191 of 191 files"
+    },
+    {
+      "command": "GitHub Actions PR Engine run 31593255255 and report run 31593255344 on reconciliation SHA 5a96abfcb658e26d8e085a25f98b032002719967",
+      "result": "PASS",
+      "summary": "All five Engine jobs and report job 94102764289 completed successfully on the exact two-parent reconciliation tree bc7714b1"
+    },
+    {
+      "command": "GitHub Actions branch-push Engine run 31593250364 on reconciliation SHA 5a96abfcb658e26d8e085a25f98b032002719967",
+      "result": "PASS",
+      "summary": "The duplicate exact-head push execution passed all five Engine jobs"
+    },
+    {
+      "command": "GitHub PR 7 comments, reviews, and GraphQL review-thread inspection",
+      "result": "PASS",
+      "summary": "Zero top-level comments, review submissions, or review threads were present; no unresolved review blocker was observed"
     }
   ],
   "tests": [
@@ -747,8 +764,20 @@
     {
       "id": "E1-E2-COMBINED-HOSTED",
       "profile": "hosted-combined",
-      "status": "NOT_RUN",
-      "reason": "The semantic merge has not yet been published for hosted Engine and report execution"
+      "status": "PASS",
+      "count": 6
+    },
+    {
+      "id": "E1-E2-COMBINED-PUSH",
+      "profile": "hosted-combined-push",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-PR7-REVIEW-THREADS",
+      "profile": "integration-review",
+      "status": "PASS",
+      "count": 0
     },
     {
       "id": "E2-SALOME-REAL",
@@ -827,19 +856,19 @@
     },
     {
       "uri": "repo:docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
-      "sha256": "852737a923ae8744d9ac9bf40cdd1710915a70a024a78afc984e7ca1ccdf9864",
+      "sha256": "6f98f5c1f6045f2df983471531ed936652266566f04d09d28b834bf64521b964",
       "status": "PASS",
       "note": "Hash-exact bounded E1 native report retains the initial hosted FAIL, subsequent corrective PASS, and profile-specific NOT_RUN and NOT_APPLICABLE results"
     },
     {
       "uri": "repo:artifacts/e1/manifest.json",
-      "sha256": "c6c89f2bcb68c1e2162bf00d0f8b075b61e7f12fdf6246c2faf36a2a208aa042",
+      "sha256": "d6018ed8d484808193a3f06568e7b7e96d50d65e48f7ad2df53496af1641fc39",
       "status": "PASS",
       "note": "Fail-closed three-artifact E1 profile manifest with exact paths, sizes, hashes, licenses, provenance, and SBOM self-reference"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e1-native-core.cdx.json",
-      "sha256": "fa9ed53061a0891246704bf739d8ebce70f6c1a752ba326b30769b64a8a3ab32",
+      "sha256": "fb7fae79aec08e93b84a8792a25ccd352b841f27bcc7c03b5605d88018b5ba8c",
       "status": "PASS",
       "note": "Deterministic E1 native-core CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
     },
@@ -936,7 +965,21 @@
     "github-actions:job:94093829134",
     "github-actions:job:94093829163",
     "github-actions:job:94093829169",
-    "github-actions:job:94093829190"
+    "github-actions:job:94093829190",
+    "github-actions:31593250364",
+    "github-actions:job:94102749834",
+    "github-actions:job:94102749841",
+    "github-actions:job:94102749889",
+    "github-actions:job:94102749954",
+    "github-actions:job:94102750008",
+    "github-actions:31593255255",
+    "github-actions:job:94102764284",
+    "github-actions:job:94102764304",
+    "github-actions:job:94102764307",
+    "github-actions:job:94102764368",
+    "github-actions:job:94102764390",
+    "github-actions:31593255344",
+    "github-actions:job:94102764289"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -1024,9 +1067,8 @@
     },
     {
       "name": "combined E1 and E2 reconciliation hosted checks",
-      "status": "NOT_RUN",
-      "blocking_scope": "Integration of PR 7 into engine only",
-      "reason": "The semantic merge is local and must be published before combined Engine and report workflows can execute"
+      "status": "PASS",
+      "reason": "Two-parent reconciliation 5a96abfc has exact tree bc7714b1; PR Engine run 31593255255, report run 31593255344, and branch-push Engine run 31593250364 all passed"
     },
     {
       "name": "SALOME 9.16 runtime",
@@ -1040,5 +1082,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Validate and publish the true E1 and E2 merge on engine-p0-ir-cas, execute combined Engine and report workflows, record their exact results in a bounded follow-up, and integrate PR 7 only after every required exact-head check passes"
+  "next_action": "Publish this bounded hosted-evidence follow-up on engine-p0-ir-cas, require fresh exact-head Engine and report checks, reverify PR 7 review threads, then integrate PR 7 into engine only and verify the exact merge SHA and engine push checks before starting the public-IR lot"
 }
