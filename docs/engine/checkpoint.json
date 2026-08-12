@@ -3,8 +3,8 @@
   "license": "CC-BY-4.0",
   "updated_at": "2026-08-12",
   "project_state": "IN_PROGRESS",
-  "phase": "E2",
-  "lot": "salome-protocol-contract",
+  "phase": "E1",
+  "lot": "canonical-json-cas-replay",
   "remote": {
     "canonical_name": "origin",
     "canonical_url": "https://github.com/aminoside/morphoia.git",
@@ -13,16 +13,16 @@
     "default_branch": "main",
     "integration_branch": "engine",
     "publication_status": "PASS",
-    "publication_note": "Corrective E2 source e3ec245 on PR 6 passed Engine run 31589424865 and report run 31589424850; the earlier aec106f Engine run 31585426276 and report run 31585425822 remain immutable FAIL history"
+    "publication_note": "The exact two-parent E1/E2 reconciliation 5a96abfcb658e26d8e085a25f98b032002719967 is published on engine-p0-ir-cas with tree bc7714b1c9567662233df0fa95dcc8d48f929c5d; its PR Engine, branch-push Engine, and report workflows passed, while integration into engine remains pending this evidence follow-up"
   },
   "git": {
-    "branch": "engine-p0-salome-protocol",
-    "upstream": "origin/engine-p0-salome-protocol",
+    "branch": "engine-p0-ir-cas",
+    "upstream": "origin/engine-p0-ir-cas",
     "base_parent": "cdddaa47ba54742652819d798e1c6f9c0bd9ce6e",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "e3ec245569bff40533b86789e61b1a78c15915f6",
-    "note": "Published corrective E2 source e3ec245 has tree 4842c042ad26704f355ad3f554b96a2761f05ba9 and parent aec106f79e277b3cd3c6dabafe1107280f039aa9; this file deliberately does not predict the SHA of the hosted-evidence follow-up commit that will contain it"
+    "published_commit_sha": "5a96abfcb658e26d8e085a25f98b032002719967",
+    "note": "Published true merge 5a96abfc has parents 4db5c743 and c84dd152 and exact tree bc7714b1; this follow-up records its hosted checks but does not claim integration of PR 7 into engine"
   },
   "tasks": {
     "completed": [
@@ -49,15 +49,28 @@
       "e0_durable_evidence_integrated_in_pr4",
       "engine_integration_after_green_checks",
       "engine_push_post_merge_verification",
-      "e2_protocol_contract_hosted_correction"
+      "e1_native_canonical_json_sha256_posix_cas_implementation",
+      "e1_native_adversarial_review",
+      "e1_source_publication",
+      "e1_first_hosted_failure_capture",
+      "e1_profile_separated_durable_evidence_correction",
+      "e1_corrective_hosted_verification",
+      "e1_final_evidence_head_engine_verification",
+      "e2_protocol_contract_hosted_correction",
+      "e2_final_evidence_head_verification",
+      "e2_protocol_contract_engine_integration",
+      "e2_engine_push_post_merge_verification",
+      "e1_e2_semantic_merge_reconciliation",
+      "e1_e2_combined_hosted_engine_and_report_verification",
+      "e1_pr7_review_thread_verification"
     ],
     "in_progress": [
       "e1_canonical_json_cas_replay",
-      "e2_protocol_contract_hosted_evidence_followup"
+      "e1_hosted_evidence_followup"
     ],
     "remaining": [
+      "e1_engine_integration_after_green_checks",
       "e1_remaining_core_foundations",
-      "e2_protocol_contract_engine_integration_after_green_checks",
       "e2_real_salome_execution_when_runtime_available"
     ]
   },
@@ -99,21 +112,21 @@
     "paths": [
       {
         "path": "cpp",
-        "sha256": "df1cbdb8185db9568cd4f07075e76d053e8d64c0d84257aa23b3c08e04d7d863",
+        "sha256": "9571b44d03541a91d8aa955a743039c029bf37c292791b8c9a517c4246d87220",
         "status": "PASS"
       },
       {
         "path": "spec",
-        "sha256": "ce97a5a31957e5b73024872661746f707b356f0e47f43b9296955871d8e1a443",
+        "sha256": "71903e4959003e6b47793b03d0ef6b3469d706dced15bcdb622de65b109c4a26",
         "status": "PASS"
       },
       {
         "path": "docs/engine",
-        "sha256": "691e68eeeb244d50b9b88a2c9bc9b1d69900c3b06d8b8874cfe60764cb556af7",
+        "sha256": "6d8dc1557bac36b6799b6dceb0363f64dcb86bbb29167947a5170cb88d735b98",
         "status": "PASS"
       }
     ],
-    "note": "Digests represent the current E2 contract tree after durable reconciliation; checkpoint.json itself is excluded to avoid self-reference, while the closed E0 manifest and SBOM remain byte-exact separate outputs"
+    "note": "Digests represent the semantically reconciled E1 plus integrated E2 tree; checkpoint.json itself is excluded to avoid self-reference. The closed E0 outputs remain byte-exact; E1 and E2 are separate profile outputs regenerated only within their own evidence chains."
   },
   "commands": [
     {
@@ -182,24 +195,69 @@
       "summary": "Native job 94069646681, Python 3.13 job 94069646723, hygiene job 94069646761, Python 3.12 job 94069646822, and REUSE job 94069646871 completed successfully"
     },
     {
-      "command": "python scripts/generate_engine_sbom.py --check",
+      "command": "python scripts/validate_engine_e0_evidence.py",
       "result": "PASS",
-      "summary": "Deterministic CycloneDX 1.5 source and declared-tool inventory matched; vulnerability analysis remained NOT_RUN"
+      "summary": "The closed E0 generator, manifest, and CycloneDX source SBOM matched their immutable byte-level SHA-256 values and self-reference"
+    },
+    {
+      "command": "python scripts/generate_engine_e1_sbom.py --check",
+      "result": "PASS",
+      "summary": "The separate fail-closed E1 native-core manifest and CycloneDX profile matched exact source, evidence, license, size, and self hashes; vulnerability analysis remained NOT_RUN"
     },
     {
       "command": "python scripts/validate_engine_checkpoint.py",
       "result": "PASS",
-      "summary": "The durable checkpoint structure, repository paths, output hashes, and frozen source-tree digests matched"
+      "summary": "The durable checkpoint structure, repository paths, output hashes, and current E1 source-tree digests matched"
     },
     {
       "command": "<hash-locked-python> -m reuse lint",
       "result": "PASS",
-      "summary": "REUSE 6.2.0 resolved copyright and license metadata for every repository file in the E0 tree"
+      "summary": "REUSE 6.2.0 resolved copyright and license metadata for 177 of 177 files in the current E1 worktree"
     },
     {
       "command": "bash scripts/scan-secrets.sh",
       "result": "PASS",
       "summary": "Bounded tracked and untracked text signature scan passed; immutable binary baselines were separately hash/type/archive inspected"
+    },
+    {
+      "command": "MORPHOIA_BOOTSTRAP_FORCE_FALLBACK=1 ./scripts/bootstrap-engine.sh",
+      "result": "PASS",
+      "summary": "The E1 native direct-compiler profile executed five tests and retained the exact five-symbol public C ABI export allow-list"
+    },
+    {
+      "command": "two clean CMake 3.20 Release configure/build/CTest/install/consumer executions plus binary comparison",
+      "result": "PASS",
+      "summary": "Five of five native tests passed in both clean builds, the installed C consumer passed, the incompatible consumer was rejected, and native outputs were byte-identical"
+    },
+    {
+      "command": "./scripts/run-engine-sanitizers.sh",
+      "result": "PASS",
+      "summary": "Five E1 native tests passed under AddressSanitizer and fail-fast UndefinedBehaviorSanitizer; LeakSanitizer remains NOT_RUN"
+    },
+    {
+      "command": "GitHub Actions Engine run 31586603633 on source SHA bbf84cb806d95701daa2887e71d90a819c4a4c83",
+      "result": "FAIL",
+      "summary": "REUSE job 94081774196, native job 94081774268, and hygiene job 94081774344 passed; Python 3.12 job 94081774242 and Python 3.13 job 94081774246 failed on the stale E0 evidence replay"
+    },
+    {
+      "command": "GitHub Actions report run 31586603592 on source SHA bbf84cb806d95701daa2887e71d90a819c4a4c83",
+      "result": "FAIL",
+      "summary": "Report job 94081774083 reproduced the same stale checkpoint and closed-E0 SBOM replay failures"
+    },
+    {
+      "command": "GitHub Actions Engine run 31589901243 on source SHA 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41",
+      "result": "PASS",
+      "summary": "Native job 94092209890, REUSE job 94092209947, Python 3.13 job 94092210022, hygiene job 94092210038, and Python 3.12 job 94092210136 completed successfully"
+    },
+    {
+      "command": "GitHub Actions report run 31589901212 on source SHA 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41",
+      "result": "PASS",
+      "summary": "Report job 94092209098 completed successfully"
+    },
+    {
+      "command": "PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v",
+      "result": "PASS",
+      "summary": "62 tests passed locally, including 26 durable-evidence tests for exact E0 freezing, exact E1 truth fields and paths, dirfd-only atomic writes, schema and allow-list enforcement, mutation rejection, license truth, path confinement, and self hashes"
     },
     {
       "command": "git diff --check",
@@ -265,6 +323,61 @@
       "command": "GitHub Actions report run 31589424850, job 94090702397, on corrective E2 source SHA e3ec245569bff40533b86789e61b1a78c15915f6",
       "result": "PASS",
       "summary": "The required report workflow completed successfully"
+    },
+    {
+      "command": "GitHub Actions Engine run 31590141763 and report run 31590141769 on final E2 evidence SHA b3dfc084c81d9d64ff4079304a4e97b0cf75b294",
+      "result": "PASS",
+      "summary": "Five Engine jobs and report job 94092971258 completed successfully"
+    },
+    {
+      "command": "PR 6 merge c84dd152a81b80a7e5c39e51f13b811a0f32d05f and GitHub Actions engine push run 31590418194",
+      "result": "PASS",
+      "summary": "The two-parent merge targeted only engine; all five exact-merge-SHA jobs passed and main was unchanged"
+    },
+    {
+      "command": "GitHub Actions Engine run 31590626838 on final E1 evidence SHA 4db5c7436a8139d227de58d5f5ff7280e8a0f9ea",
+      "result": "PASS",
+      "summary": "Native, Python 3.12, REUSE, hygiene, and Python 3.13 jobs completed successfully"
+    },
+    {
+      "command": "GitHub Actions report workflow on final E1 evidence SHA 4db5c7436a8139d227de58d5f5ff7280e8a0f9ea",
+      "result": "NOT_RUN",
+      "summary": "No report workflow run was observed for the exact SHA; no cause or PASS is inferred"
+    },
+    {
+      "command": "PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v on combined E1/E2 reconciliation",
+      "result": "PASS",
+      "summary": "94 of 94 tests passed on Python 3.12.13"
+    },
+    {
+      "command": "CMake 3.20.5 configure/build/CTest/install, external C consumer, direct bootstrap, and ASan/UBSan on combined reconciliation",
+      "result": "PASS",
+      "summary": "Five CTests, installed consumer, direct native tests, and both executed sanitizer profiles passed; incompatible 0.1 consumer was rejected and LSan remained NOT_RUN"
+    },
+    {
+      "command": "PATH=<hash-locked-report-tools>:$PATH PYTHONPATH=<hash-locked-jsonschema>:src make check on combined reconciliation",
+      "result": "PASS",
+      "summary": "Both reports rebuilt and validated and the unified 94-test suite passed"
+    },
+    {
+      "command": "<hash-locked-python> -m reuse lint on combined reconciliation",
+      "result": "PASS",
+      "summary": "REUSE 6.2.0 resolved copyright and license metadata for 191 of 191 files"
+    },
+    {
+      "command": "GitHub Actions PR Engine run 31593255255 and report run 31593255344 on reconciliation SHA 5a96abfcb658e26d8e085a25f98b032002719967",
+      "result": "PASS",
+      "summary": "All five Engine jobs and report job 94102764289 completed successfully on the exact two-parent reconciliation tree bc7714b1"
+    },
+    {
+      "command": "GitHub Actions branch-push Engine run 31593250364 on reconciliation SHA 5a96abfcb658e26d8e085a25f98b032002719967",
+      "result": "PASS",
+      "summary": "The duplicate exact-head push execution passed all five Engine jobs"
+    },
+    {
+      "command": "GitHub PR 7 comments, reviews, and GraphQL review-thread inspection",
+      "result": "PASS",
+      "summary": "Zero top-level comments, review submissions, or review threads were present; no unresolved review blocker was observed"
     }
   ],
   "tests": [
@@ -379,6 +492,130 @@
       "id": "E0-ENGINE-PUSH-REUSE",
       "profile": "license-metadata",
       "status": "PASS"
+    },
+    {
+      "id": "E1-NATIVE-DIRECT",
+      "profile": "core-cpu-native-internal",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-NATIVE-ASAN-UBSAN",
+      "profile": "core-cpu-native-security",
+      "status": "PASS",
+      "count": 10
+    },
+    {
+      "id": "E1-NATIVE-STRICT-WARNINGS",
+      "profile": "core-cpu-native-internal",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-MOR-CAS-001-003-004-008",
+      "profile": "internal-linux-posix-cas",
+      "status": "PASS",
+      "count": 4,
+      "reason": "Executed native tests prove the bounded internal Linux profile only; whole-E1 integration is not claimed"
+    },
+    {
+      "id": "E1-MOR-IR-002-005-PUBLIC-PATH",
+      "profile": "public-ir",
+      "status": "NOT_RUN",
+      "reason": "Canonical Profile 1 and binary URI inversion are internal and not integrated into the public IR path"
+    },
+    {
+      "id": "E1-CAS-GREATER-THAN-2-GIB",
+      "profile": "core-cpu-large-artifact",
+      "status": "NOT_RUN",
+      "reason": "No resource-approved object larger than 2 GiB was executed"
+    },
+    {
+      "id": "E1-IR-20-GRAPH-REPLAY",
+      "profile": "public-ir-replay",
+      "status": "NOT_RUN",
+      "reason": "The public IR schema, replay manifests, and 20-graph corpus are outside this bounded internal sub-lot"
+    },
+    {
+      "id": "E1-HOSTED-NATIVE-SOURCE",
+      "profile": "core-cpu-native-gcc-cxx20",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-HYGIENE-SOURCE",
+      "profile": "source-hygiene",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-REUSE-SOURCE",
+      "profile": "license-metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-PYTHON-312-SOURCE",
+      "profile": "core-cpu-python-3.12",
+      "status": "FAIL",
+      "reason": "Job 94081774242 executed and failed on stale E0 evidence replay"
+    },
+    {
+      "id": "E1-HOSTED-PYTHON-313-SOURCE",
+      "profile": "core-cpu-python-3.13",
+      "status": "FAIL",
+      "reason": "Job 94081774246 executed and failed on stale E0 evidence replay"
+    },
+    {
+      "id": "E1-HOSTED-REPORT-SOURCE",
+      "profile": "report-validation",
+      "status": "FAIL",
+      "reason": "Job 94081774083 executed and reproduced the stale E0 evidence replay"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-RERUN",
+      "profile": "hosted-corrective-validation",
+      "status": "PASS",
+      "count": 6
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-NATIVE",
+      "profile": "core-cpu-native-gcc-cxx20",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-PYTHON-313",
+      "profile": "core-cpu-python-3.13",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-HYGIENE",
+      "profile": "source-hygiene",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-PYTHON-312",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-REPORT",
+      "profile": "report-validation",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-PYTHON-UNIFIED-LOCAL",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS",
+      "count": 62
+    },
+    {
+      "id": "E1-REUSE-LOCAL",
+      "profile": "license-metadata",
+      "status": "PASS",
+      "count": 177
     },
     {
       "id": "E0-GITHUB-QUOTAS",
@@ -497,8 +734,50 @@
     {
       "id": "E2-HOSTED-EVIDENCE-FOLLOWUP",
       "profile": "publication-required-checks",
+      "status": "PASS",
+      "count": 6
+    },
+    {
+      "id": "E2-ENGINE-INTEGRATION-PUSH",
+      "profile": "engine-integration",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-HOSTED-EVIDENCE-HEAD-ENGINE",
+      "profile": "publication-required-checks",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-HOSTED-EVIDENCE-HEAD-REPORT",
+      "profile": "report-validation",
       "status": "NOT_RUN",
-      "reason": "This hosted-evidence follow-up is not yet published"
+      "reason": "No report workflow run was observed for exact SHA 4db5c7436a8139d227de58d5f5ff7280e8a0f9ea"
+    },
+    {
+      "id": "E1-E2-COMBINED-LOCAL",
+      "profile": "core-cpu-combined",
+      "status": "PASS",
+      "count": 94
+    },
+    {
+      "id": "E1-E2-COMBINED-HOSTED",
+      "profile": "hosted-combined",
+      "status": "PASS",
+      "count": 6
+    },
+    {
+      "id": "E1-E2-COMBINED-PUSH",
+      "profile": "hosted-combined-push",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-PR7-REVIEW-THREADS",
+      "profile": "integration-review",
+      "status": "PASS",
+      "count": 0
     },
     {
       "id": "E2-SALOME-REAL",
@@ -576,6 +855,24 @@
       "note": "Deterministic CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
     },
     {
+      "uri": "repo:docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
+      "sha256": "6f98f5c1f6045f2df983471531ed936652266566f04d09d28b834bf64521b964",
+      "status": "PASS",
+      "note": "Hash-exact bounded E1 native report retains the initial hosted FAIL, subsequent corrective PASS, and profile-specific NOT_RUN and NOT_APPLICABLE results"
+    },
+    {
+      "uri": "repo:artifacts/e1/manifest.json",
+      "sha256": "d6018ed8d484808193a3f06568e7b7e96d50d65e48f7ad2df53496af1641fc39",
+      "status": "PASS",
+      "note": "Fail-closed three-artifact E1 profile manifest with exact paths, sizes, hashes, licenses, provenance, and SBOM self-reference"
+    },
+    {
+      "uri": "repo:artifacts/sbom/engine-e1-native-core.cdx.json",
+      "sha256": "fb7fae79aec08e93b84a8792a25ccd352b841f27bcc7c03b5605d88018b5ba8c",
+      "status": "PASS",
+      "note": "Deterministic E1 native-core CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
+    },
+    {
       "uri": "repo:spec/evidence/e2-salome-protocol-traceability.json",
       "sha256": "ed1d65c6dcaf16c51a6ea66d3d4b2ce770379b980e76463246aa19d801036641",
       "status": "PASS",
@@ -583,19 +880,19 @@
     },
     {
       "uri": "repo:docs/engine/evidence/E2_PROTOCOL_GATE_REPORT.md",
-      "sha256": "9633134d4fb783953d5516f80294b638b0f9d73766c7ea168d44b3fcadc6586a",
+      "sha256": "0f2a988a5bb3cb5f957d9f07befdadc0faee4cfd0f71795da33265493ddd84dc",
       "status": "PASS",
       "note": "Verified report artifact preserves the historical hosted FAIL, corrective hosted PASS, and real SALOME NOT_RUN boundary"
     },
     {
       "uri": "repo:artifacts/manifests/engine-e2-salome-protocol.json",
-      "sha256": "5a052c53e54eb325c5b0029908e8430aaa5ec20d9c4ae28966dd5a92bdb0c55d",
+      "sha256": "043eababc3dfb81b6dd77be043ca5604188f507fea2b4a50348a0e2d2919df2a",
       "status": "PASS",
       "note": "Separate fail-closed 14-artifact E2 profile; closed E0 manifest bytes remain unchanged"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e2-salome-protocol.cdx.json",
-      "sha256": "4ec2d5988ec2773d765bbd66451562b97f355ac093d062d5177887e2dabada15",
+      "sha256": "4fa388d66db998127161c373a54a937eb55099706ec935a9f05fc0013b77431f",
       "status": "PASS",
       "note": "Deterministic CycloneDX 1.5 contract inventory; packages are excluded and vulnerability analysis is NOT_RUN"
     }
@@ -617,6 +914,28 @@
     "github-actions:job:94069646761",
     "github-actions:job:94069646822",
     "github-actions:job:94069646871",
+    "github-actions:31586603633",
+    "github-actions:job:94081774196",
+    "github-actions:job:94081774268",
+    "github-actions:job:94081774344",
+    "github-actions:job:94081774242",
+    "github-actions:job:94081774246",
+    "github-actions:31586603592",
+    "github-actions:job:94081774083",
+    "github-actions:31589901243",
+    "github-actions:job:94092209890",
+    "github-actions:job:94092209947",
+    "github-actions:job:94092210022",
+    "github-actions:job:94092210038",
+    "github-actions:job:94092210136",
+    "github-actions:31589901212",
+    "github-actions:job:94092209098",
+    "github-actions:31590626838",
+    "github-actions:job:94094507250",
+    "github-actions:job:94094507279",
+    "github-actions:job:94094507286",
+    "github-actions:job:94094507324",
+    "github-actions:job:94094507349",
     "github-actions:31585426276",
     "github-actions:job:94078032129",
     "github-actions:job:94078032264",
@@ -632,7 +951,35 @@
     "github-actions:job:94090702764",
     "github-actions:job:94090702766",
     "github-actions:31589424850",
-    "github-actions:job:94090702397"
+    "github-actions:job:94090702397",
+    "github-actions:31590141763",
+    "github-actions:job:94092971527",
+    "github-actions:job:94092971593",
+    "github-actions:job:94092971600",
+    "github-actions:job:94092971604",
+    "github-actions:job:94092971670",
+    "github-actions:31590141769",
+    "github-actions:job:94092971258",
+    "github-actions:31590418194",
+    "github-actions:job:94093829070",
+    "github-actions:job:94093829134",
+    "github-actions:job:94093829163",
+    "github-actions:job:94093829169",
+    "github-actions:job:94093829190",
+    "github-actions:31593250364",
+    "github-actions:job:94102749834",
+    "github-actions:job:94102749841",
+    "github-actions:job:94102749889",
+    "github-actions:job:94102749954",
+    "github-actions:job:94102750008",
+    "github-actions:31593255255",
+    "github-actions:job:94102764284",
+    "github-actions:job:94102764304",
+    "github-actions:job:94102764307",
+    "github-actions:job:94102764368",
+    "github-actions:job:94102764390",
+    "github-actions:31593255344",
+    "github-actions:job:94102764289"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -640,6 +987,8 @@
     "E9-INDEPENDENT is frozen to eight locally verifiable lots",
     "No MVX semantics are inferred before an owner-validated specification",
     "Engine 0.0.1, C ABI 1, existing prototype 0.2.0-dev, and future release tags are distinct version domains",
+    "ADR-018 accepts constrained internal canonical JSON Profile 1 and the verified Linux/POSIX CAS without expanding the five-symbol public ABI",
+    "Closed E0 evidence is byte-frozen; evolving E1 source has a separate fail-closed manifest and CycloneDX profile",
     "ADR-019 accepts the bounded six-operation SALOME control contract and makes FakeSalomeAgent contract evidence only",
     "The control JSON encoder is deterministic transport but not RFC 8785, canonical IR, signable bytes, or a content identifier",
     "E2 uses a separate closed artifact manifest and CycloneDX profile so immutable E0 evidence bytes remain unchanged"
@@ -652,6 +1001,8 @@
     "GitHub Actions, artifact, LFS, storage, and API quotas were not exposed and remain NOT_RUN",
     "The first hosted checkpoint exposed an undeclared pdftotext dependency; the retained-layout correction subsequently passed hosted Python 3.12, Python 3.13, native, hygiene, REUSE, and report execution",
     "Legacy Phase 1/2 guides and documents remain French and require a bounded translation lot before full public-language-policy compliance",
+    "The first E1 hosted source attempt passed native, hygiene, and REUSE but failed Python 3.12, Python 3.13, and report validation because closed-E0 source globs and E0 tree digests were replayed against an evolving E1 tree; the executed FAIL history is retained",
+    "E1 evidence head 4db5c743 passed all five Engine jobs; no report workflow run was observed for that exact SHA, the cause is not asserted, and no report PASS is inferred",
     "Published E2 Engine run 31585426276 and report run 31585425822 remain FAIL because their sole stale checkpoint spec digest failure is immutable execution history",
     "Corrective E2 source e3ec245 passed Engine run 31589424865 and report run 31589424850; this does not rewrite the earlier failed execution",
     "The 3 GiB schema vector is metadata only; a real greater-than-2-GiB transfer remains NOT_RUN"
@@ -673,6 +1024,27 @@
       "reason": "PR 4 merged at 7715a7f7897a3058473732915e372b9835317d17 and engine push run 31582827407 passed all five jobs"
     },
     {
+      "name": "E1 native source publication",
+      "status": "PASS",
+      "reason": "Source commit bbf84cb806d95701daa2887e71d90a819c4a4c83 is published on origin/engine-p0-ir-cas; this does not claim green hosted integration"
+    },
+    {
+      "name": "E1 profile-separated corrective hosted checks",
+      "status": "PASS",
+      "reason": "Engine run 31589901243 and report run 31589901212 passed on corrective source SHA 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41"
+    },
+    {
+      "name": "E1 final evidence-head Engine checks",
+      "status": "PASS",
+      "reason": "Engine run 31590626838 passed all five jobs on evidence head 4db5c7436a8139d227de58d5f5ff7280e8a0f9ea"
+    },
+    {
+      "name": "E1 final evidence-head report check",
+      "status": "NOT_RUN",
+      "blocking_scope": "Integration of PR 7 into engine only",
+      "reason": "No report workflow run was observed for exact SHA 4db5c7436a8139d227de58d5f5ff7280e8a0f9ea; the cause is not asserted and no PASS is inferred"
+    },
+    {
       "name": "published E2 source checks",
       "status": "FAIL",
       "blocking_scope": "Integration of PR 6 into engine only",
@@ -685,9 +1057,18 @@
     },
     {
       "name": "E2 hosted-evidence follow-up checks",
-      "status": "NOT_RUN",
-      "blocking_scope": "Integration of PR 6 into engine only",
-      "reason": "This durable hosted-evidence follow-up is not yet published"
+      "status": "PASS",
+      "reason": "Engine run 31590141763 and report run 31590141769 passed on final E2 evidence head b3dfc084c81d9d64ff4079304a4e97b0cf75b294"
+    },
+    {
+      "name": "E2 engine integration and post-merge checks",
+      "status": "PASS",
+      "reason": "PR 6 merged only into engine at c84dd152a81b80a7e5c39e51f13b811a0f32d05f and exact-SHA push run 31590418194 passed all five jobs"
+    },
+    {
+      "name": "combined E1 and E2 reconciliation hosted checks",
+      "status": "PASS",
+      "reason": "Two-parent reconciliation 5a96abfc has exact tree bc7714b1; PR Engine run 31593255255, report run 31593255344, and branch-push Engine run 31593250364 all passed"
     },
     {
       "name": "SALOME 9.16 runtime",
@@ -701,5 +1082,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Publish this hosted-evidence follow-up to engine-p0-salome-protocol, verify Python 3.12 and 3.13, native, hygiene, REUSE, and report jobs on the follow-up, and integrate PR 6 into engine only after every required check passes; keep real SALOME NOT_RUN"
+  "next_action": "Publish this bounded hosted-evidence follow-up on engine-p0-ir-cas, require fresh exact-head Engine and report checks, reverify PR 7 review threads, then integrate PR 7 into engine only and verify the exact merge SHA and engine push checks before starting the public-IR lot"
 }

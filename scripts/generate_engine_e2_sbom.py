@@ -180,7 +180,8 @@ ARTIFACT_PROVENANCE = {
 }
 ARTIFACT_NOTES = {
     "docs/engine/evidence/E2_PROTOCOL_GATE_REPORT.md": (
-        "The report artifact is verified; the published hosted checkpoint remains FAIL."
+        "The report artifact retains the initial hosted FAIL, final integration PASS, "
+        "and real SALOME NOT_RUN boundary."
     ),
     "src/morphoia/salome_protocol/fake_agent.py": (
         "Contract-test fake only; it is not real SALOME execution evidence."

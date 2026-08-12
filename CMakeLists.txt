@@ -16,6 +16,37 @@ include(cmake/MorphoiaWarnings.cmake)
 
 option(MORPHOIA_WARNINGS_AS_ERRORS "Treat warnings in Morphoia-owned code as errors" ON)
 
+add_library(morphoia_core_internal STATIC)
+target_sources(
+  morphoia_core_internal
+  PRIVATE
+    cpp/src/core/canonical_json.cpp
+    cpp/src/core/canonical_json.hpp
+    cpp/src/core/sha256.cpp
+    cpp/src/core/sha256.hpp
+)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  target_sources(
+    morphoia_core_internal
+    PRIVATE
+      cpp/src/core/posix_cas.cpp
+      cpp/src/core/posix_cas.hpp
+  )
+endif()
+target_compile_features(morphoia_core_internal PUBLIC cxx_std_20)
+target_include_directories(
+  morphoia_core_internal
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/cpp/src>
+)
+set_target_properties(
+  morphoia_core_internal
+  PROPERTIES
+    CXX_EXTENSIONS OFF
+    POSITION_INDEPENDENT_CODE ON
+)
+morphoia_enable_strict_warnings(morphoia_core_internal)
+
 add_library(morphoia_engine SHARED)
 add_library(Morphoia::Engine ALIAS morphoia_engine)
 
@@ -27,6 +58,7 @@ target_sources(
 )
 
 target_compile_features(morphoia_engine PRIVATE cxx_std_20)
+target_link_libraries(morphoia_engine PRIVATE morphoia_core_internal)
 target_include_directories(
   morphoia_engine
   PUBLIC
@@ -90,6 +122,40 @@ if(BUILD_TESTING)
   morphoia_enable_strict_warnings(morphoia_core_smoke)
   add_test(NAME native.core_smoke COMMAND morphoia_core_smoke)
   set_tests_properties(native.core_smoke PROPERTIES LABELS "native;core;smoke")
+
+  add_executable(morphoia_sha256_test tests/native/sha256_test.cpp)
+  target_link_libraries(morphoia_sha256_test PRIVATE morphoia_core_internal)
+  target_compile_features(morphoia_sha256_test PRIVATE cxx_std_20)
+  set_target_properties(morphoia_sha256_test PROPERTIES CXX_EXTENSIONS OFF)
+  morphoia_enable_strict_warnings(morphoia_sha256_test)
+  add_test(NAME native.sha256 COMMAND morphoia_sha256_test)
+  set_tests_properties(native.sha256 PROPERTIES LABELS "native;core;sha256")
+
+  add_executable(morphoia_canonical_json_test tests/native/canonical_json_test.cpp)
+  target_link_libraries(morphoia_canonical_json_test PRIVATE morphoia_core_internal)
+  target_compile_features(morphoia_canonical_json_test PRIVATE cxx_std_20)
+  target_compile_definitions(
+    morphoia_canonical_json_test
+    PRIVATE MORPHOIA_TEST_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+  )
+  set_target_properties(morphoia_canonical_json_test PROPERTIES CXX_EXTENSIONS OFF)
+  morphoia_enable_strict_warnings(morphoia_canonical_json_test)
+  add_test(NAME native.canonical_json COMMAND morphoia_canonical_json_test)
+  set_tests_properties(native.canonical_json PROPERTIES LABELS "native;core;json;ir")
+
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    find_package(Threads REQUIRED)
+    add_executable(morphoia_posix_cas_test tests/native/posix_cas_test.cpp)
+    target_link_libraries(
+      morphoia_posix_cas_test
+      PRIVATE morphoia_core_internal Threads::Threads
+    )
+    target_compile_features(morphoia_posix_cas_test PRIVATE cxx_std_20)
+    set_target_properties(morphoia_posix_cas_test PROPERTIES CXX_EXTENSIONS OFF)
+    morphoia_enable_strict_warnings(morphoia_posix_cas_test)
+    add_test(NAME native.posix_cas COMMAND morphoia_posix_cas_test)
+    set_tests_properties(native.posix_cas PROPERTIES LABELS "native;core;cas;posix")
+  endif()
 endif()
 
 install(

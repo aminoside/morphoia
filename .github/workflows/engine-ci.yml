@@ -110,10 +110,12 @@ jobs:
           PYTHONPATH: src
         run: python -m unittest discover -s tests -v
 
-      - name: Validate durable checkpoint and SBOM
+      - name: Validate durable checkpoint and phase-scoped SBOMs
         run: |
           python scripts/validate_engine_checkpoint.py
-          python scripts/generate_engine_sbom.py --check
+          python scripts/validate_engine_e0_evidence.py
+          python scripts/generate_engine_e1_sbom.py --check
+          python scripts/generate_engine_e2_sbom.py --check
 
   hygiene:
     name: Source hygiene

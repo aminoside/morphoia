@@ -4,14 +4,19 @@
 
 Last updated: 2026-08-12
 Owner: Dr Olivier Ami
-Current operational phase: E2 protocol-only, with E1 work in parallel
-Current lot: `salome-protocol-contract`
-Work branch: `engine-p0-salome-protocol`
+Current operational phase: E1; E2 protocol-only lot integrated
+Current lot: `canonical-json-cas-replay`
+Work branch: `engine-p0-ir-cas`
 Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
-E1/E2 durable-state base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
+E1 base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
+E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
+E1 corrective evidence commit: `0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`
 Published E2 source checkpoint: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
 Corrective E2 source checkpoint: `e3ec245569bff40533b86789e61b1a78c15915f6`
+Final E2 evidence checkpoint: `b3dfc084c81d9d64ff4079304a4e97b0cf75b294`
+E2 integration commit: `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`
+E1 evidence checkpoint: `4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
 
 ## Objective
 
@@ -111,6 +116,11 @@ validated specification is received.
   3.13 job `94090702766`. Report run `31589424850`, job `94090702397`, also
   passed. This new execution proves the durable correction; it does not rewrite
   either historical failed workflow.
+- Final E2 evidence source `b3dfc084c81d9d64ff4079304a4e97b0cf75b294`
+  passed Engine run `31590141763` and report run `31590141769`. PR #6 then
+  merged only into `engine` at `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`;
+  exact-merge-SHA Engine run `31590418194` passed all five jobs. This closes
+  only the protocol-contract integration, not the real SALOME sub-gate.
 
 ## Milestones
 
@@ -145,7 +155,6 @@ cmake --preset ci-gcc && cmake --build --preset ci-gcc && ctest --preset ci-gcc
 PYTHONPATH=src python3 -m morphoia --help
 PYTHONPATH=src <locked-python> -m unittest discover -s tests -v
 python3 scripts/extract_engine_requirements.py --check
-python3 scripts/generate_engine_sbom.py --check
 python3 scripts/validate_engine_checkpoint.py
 <hash-locked-python> -m reuse lint
 bash scripts/scan-secrets.sh
@@ -179,6 +188,57 @@ Current bounded lot: implement canonical JSON, SHA-256 CAS storage, immutable
 URI/size/hash references, and deterministic replay manifests, with invalid
 input, collision/integrity, idempotence, and golden-vector tests. Do not add
 format adapters, GPU work, or MVX semantics to this lot.
+
+The internal native sub-lot now has a constrained canonical JSON Profile 1,
+incremental SHA-256, and an atomic Linux/POSIX CAS implementation under
+ADR-018. This does not yet satisfy MOR-IR-002 on the public IR path: the legacy
+Python `canonical_json` and `semantic_hash` functions preserve a pre-Engine,
+non-JCS identity domain and are explicitly non-authoritative. The complete IR
+schema, deterministic replay manifests, 20 graph corpus, green hosted results,
+and integration evidence remain required before this bounded lot or E1 can
+close.
+
+The first hosted execution of source commit
+`bbf84cb806d95701daa2887e71d90a819c4a4c83` is retained as a failed source
+attempt. Engine run `31586603633` passed native job `94081774268`, hygiene job
+`94081774344`, and REUSE job `94081774196`, but Python 3.12 job `94081774242`
+and Python 3.13 job `94081774246` failed because the E1 tree was replayed
+through closed-E0 source globs and stale E0 checkpoint digests. Report run
+`31586603592`, job `94081774083`, reproduced the same evidence failures.
+Those executed failures remain in the durable history.
+
+Correction uses separate evidence profiles. The E0 generator, manifest, and
+SBOM stay byte-exact and are validated by frozen hashes. A new fail-closed E1
+manifest and CycloneDX profile own evolving E1 native source, exact license
+mapping, and the bounded evidence report. The current validation commands are:
+
+```bash
+python3 scripts/validate_engine_e0_evidence.py
+python3 scripts/generate_engine_e1_sbom.py --check
+python3 scripts/generate_engine_e2_sbom.py --check
+python3 scripts/validate_engine_checkpoint.py
+PYTHONPATH=src <locked-python> -m unittest discover -s tests -v
+```
+
+The historical E0 regeneration command remains only in the closed E0 gate
+report; it is not a valid current-tree check. On corrective evidence commit
+`0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`, Engine run `31589901243`
+passed native job `94092209890`, REUSE job `94092209947`, Python 3.13 job
+`94092210022`, hygiene job `94092210038`, and Python 3.12 job `94092210136`.
+Report run `31589901212`, job `94092209098`, also passed. This proves the
+corrective hosted profile only; public IR, 20-graph replay, greater-than-2-GiB
+execution, future CAS capabilities, vulnerability analysis, and integration
+remain `NOT_RUN`.
+
+After semantically merging integrated E2 history, the combined local worktree
+passed 94/94 Python tests, 5/5 native CTests, direct bootstrap, ASan/UBSan,
+installation and the external C consumer, report replay, and REUSE 191/191.
+The published two-parent reconciliation `5a96abfc` retained the exact local
+tree `bc7714b1`. PR Engine run `31593255255` passed all five jobs and report run
+`31593255344`, job `94102764289`, passed; branch-push Engine run `31593250364`
+also passed all five jobs. This closes combined hosted reconciliation, not E1
+integration or any unfinished public IR, real SALOME, large-transfer, GPU/HPC,
+or vulnerability criterion.
 
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
@@ -286,10 +346,14 @@ large-artifact evidence, and the specified MVX micro-corpus.
 ## Decisions and known deviations
 
 - ADR-001..014 retain the statuses in the architecture baseline; ADR-015 and
-  ADR-016 remain proposed. ADR-017 accepts explicit component-version domains;
+  ADR-016 remain proposed. ADR-017 accepts explicit component-version domains.
+  ADR-018 accepts the bounded internal canonical JSON Profile 1 and Linux/POSIX
+  CAS protocol without claiming completion of the public IR or all CAS MUSTs.
   ADR-019 accepts the bounded SALOME control contract and fake-evidence boundary.
 - E2 evidence uses its own closed manifest and SBOM profile. The immutable E0
   manifest/SBOM are not regenerated to absorb later-phase files.
+- E1 and E2 each use a separate manifest and SBOM profile and are regenerated
+  only within their own scope. The immutable E0 manifest/SBOM stay byte-exact.
 - Absence of branch protection is recorded, not treated as compliance.
 - Missing build/domain tools are environment facts, not evidence that their
   integrations fail.
@@ -310,8 +374,9 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Publish this hosted-evidence follow-up to `engine-p0-salome-protocol`, verify
-every required hosted job on the follow-up, and integrate PR #6 into `engine`
-only after they pass. Continue the bounded E1 lot independently. Keep real
-SALOME 9.16 execution `NOT_RUN`; never merge `engine` into the default branch
-without separate owner instruction.
+Publish this bounded hosted-evidence follow-up on `engine-p0-ir-cas`, require
+fresh exact-head Engine and report checks, verify that PR #7 has no unresolved
+review thread, then integrate PR #7 into `engine` only. Verify the exact merge
+SHA and post-merge Engine checks before opening the next public-IR lot. Keep real
+SALOME 9.16 and the unfinished public IR criteria `NOT_RUN`; never merge
+`engine` into the default branch without separate owner instruction.

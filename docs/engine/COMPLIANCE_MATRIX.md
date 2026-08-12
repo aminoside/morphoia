@@ -1,14 +1,14 @@
-# E0 and E2 protocol compliance matrix
+# E0, E1 native-core, and E2 protocol compliance matrix
 
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 Snapshot: 2026-08-12
-Declared profiles: E0 audit/bootstrap and E2 SALOME protocol contract on Linux
-x86-64 CPU
+Declared profiles: E0 audit/bootstrap, bounded E1 native core, and E2 SALOME
+protocol contract on Linux x86-64 CPU
 
 The complete 320-item catalogue is machine-readable in
 `spec/requirements/requirements.yaml`. This view records E0 gate evidence plus
-the bounded E2 contract profile. It does not replace the complete
+the bounded E1 native and E2 contract profiles. It does not replace the complete
 per-requirement links and does not assert G1-G5 completion.
 
 | Control | Component/lot | Test or inspection | Evidence | Status |
@@ -38,14 +38,14 @@ per-requirement links and does not assert G1-G5 completion.
 | Existing CLI smoke | Existing prototype | CLI help/smoke | successful invocation | PASS |
 | Native C++20 direct-compiler bootstrap | Engine core | `./scripts/bootstrap-engine.sh` fallback | ABI and core smoke executed with GCC/G++ 13 | PASS |
 | Native CMake/CTest bootstrap | Engine core | CMake 3.20.5 configure/build/test | two CTests, install and external C consumer | PASS |
-| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 50 tests | PASS |
+| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 94 tests on the combined E1/E2 reconciliation | PASS |
 | Immutable normative PDFs excluded from report branding | Baselines/reporting | tracked-report manifest test plus full `make check` | two Engine baseline PDFs remain hash-identical and outside generated-report policy | PASS |
 | Second clean bootstrap | Reproducibility | two isolated direct GCC/G++ builds/tests | both executions passed | PASS |
 | ASan/UBSan smoke | Security | fail-fast sanitizer script | two native executables | PASS |
 | LeakSanitizer | Security | leak detection | deliberately disabled; environment limitation retained | NOT_RUN |
 | Secret/sensitive-data scan of E0 diff | Security | bounded fail-closed text signature scan plus binary/hash inspection | no supported signature; not a full PII audit | PASS |
 | E0 SBOM | Supply chain | deterministic CycloneDX generator/check | source, artifacts and hashed locks inventoried; vulnerability analysis NOT_RUN | PASS |
-| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 161/161 files resolved; component vulnerability analysis NOT_RUN | PASS |
+| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 191/191 combined files resolved; component vulnerability analysis NOT_RUN | PASS |
 | Public English language policy | Documentation | repository-language inspection | root README and contribution guide are English; legacy Phase 1/2 guides/documents remain French under R-021 | FAIL |
 | SALOME 9.16 headless | Optional SALOME | real runtime probe | runtime absent | NOT_RUN |
 | CUDA, HIP, and SYCL execution | Optional compute | real hardware execution | hardware/runtime absent | NOT_RUN |
@@ -78,6 +78,9 @@ an unavailable optional profile to `PASS`.
 | E2 vulnerability analysis | Supply chain security | vulnerability scanner | inventory is not a vulnerability scan | NOT_RUN |
 | Published E2 hosted checkpoint | Publication | Engine run `31585426276`; report run `31585425822` | 69 tests ran, 68 passed, sole stale `spec` digest failure | FAIL |
 | Corrective E2 hosted checkpoint | Publication | Engine run `31589424865`; report run `31589424850` | source `e3ec245`: Python 3.12 `94090702646`, hygiene `94090702698`, native `94090702707`, REUSE `94090702764`, Python 3.13 `94090702766`, report `94090702397` | PASS |
+| Final E2 evidence checkpoint | Publication | Engine run `31590141763`; report run `31590141769` | source `b3dfc084`: five Engine jobs plus report job `94092971258` passed | PASS |
+| E2 integration into `engine` | Publication | PR #6 merge plus Engine run `31590418194` | merge `c84dd152`; native `94093829070`, Python 3.12 `94093829134`, Python 3.13 `94093829163`, hygiene `94093829169`, REUSE `94093829190` | PASS |
+| Combined E1/E2 reconciliation | Publication | exact-head PR Engine run `31593255255`; report run `31593255344` | two-parent head `5a96abfc`, tree `bc7714b1`: five Engine jobs plus report job `94102764289` passed; branch-push Engine run `31593250364` also passed | PASS |
 | Real SALOME 9.16 capability probe | E2/G1 optional backend | real isolated runtime | runtime absent | NOT_RUN |
 | SHAPER/GEOM, SMESH/MED, MEDCoupling, fidelity and overhead | E2/G1 optional backend | real isolated runtime | no execution | NOT_RUN |
 

@@ -1,0 +1,12 @@
+{
+  "\u20ac": "Euro",
+  "\r": "CR",
+  "1": "one",
+  "\ud83d\ude00": "grin",
+  "\u0080": "control-plane",
+  "\u00f6": "o-diaeresis",
+  "$": "dollar",
+  "escaped": "line\nslash\/quote\"",
+  "negative_zero": -0,
+  "nested": [true, null, false, 9007199254740991, -9007199254740991]
+}

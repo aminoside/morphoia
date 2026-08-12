@@ -3,11 +3,13 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 Date: 2026-08-12
-Operational phase: E2 protocol-only work in parallel with E1
+Operational phase: E2 protocol-only lot integrated; real SALOME sub-gate open
 Lot branch: `engine-p0-salome-protocol`
 Base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
 Published source commit: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
 Corrective source commit: `e3ec245569bff40533b86789e61b1a78c15915f6`
+Final evidence commit: `b3dfc084c81d9d64ff4079304a4e97b0cf75b294`
+Integration commit: `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`
 Declared profile: `e2-salome-protocol-contract`
 
 ## Disposition
@@ -26,10 +28,11 @@ two Python jobs and report job on the single stale `spec` tree digest in
 retained below as executed `FAIL` evidence; they are not replaced by the later
 local correction.
 
-The corrective durable-state source `e3ec245` is published and its Engine and
-report workflows passed. The present hosted-evidence follow-up still requires
-its own publication and required checks before PR #6 is integrated into
-`engine`. The real E2 SALOME sub-gate remains `NOT_RUN`.
+The corrective durable-state source `e3ec245` passed its Engine and report
+workflows. Final evidence source `b3dfc084` also passed its Engine and report
+workflows, after which PR #6 merged only into `engine` at `c84dd152`. The exact
+merge-SHA Engine push workflow passed. The real E2 SALOME sub-gate remains
+`NOT_RUN`.
 
 ## Contract artifacts
 
@@ -77,6 +80,25 @@ both workflows remain recorded as `FAIL`.
 
 This corrective execution is separate from the immutable failed execution on
 `aec106f`; both records remain visible with their observed statuses.
+
+## Final evidence and integration execution
+
+| Workflow/job | Result | Exact observation |
+|---|---|---|
+| Engine run `31590141763` | PASS | All five jobs passed on final evidence source `b3dfc084`. |
+| REUSE job `94092971527` | PASS | Repository-license validation passed. |
+| Hygiene job `94092971593` | PASS | Source-hygiene validation passed. |
+| Native job `94092971600` | PASS | Native GCC/C++20 validation passed. |
+| Python 3.13 job `94092971604` | PASS | Unified protocol and evidence validation passed. |
+| Python 3.12 job `94092971670` | PASS | Unified protocol and evidence validation passed. |
+| Report run `31590141769`, job `94092971258` | PASS | Report generation and unified validation passed. |
+| PR #6 merge `c84dd152` | PASS | True two-parent merge into `engine`; default branch unchanged. |
+| Engine push run `31590418194` | PASS | All five exact-merge-SHA jobs passed. |
+| Native job `94093829070` | PASS | Native validation passed on the merge SHA. |
+| Python 3.12 job `94093829134` | PASS | Python 3.12 validation passed on the merge SHA. |
+| Python 3.13 job `94093829163` | PASS | Python 3.13 validation passed on the merge SHA. |
+| Hygiene job `94093829169` | PASS | Source hygiene passed on the merge SHA. |
+| REUSE job `94093829190` | PASS | License metadata passed on the merge SHA. |
 
 ## Local execution before durable reconciliation
 
@@ -138,6 +160,8 @@ execution scope as `contract-only`, and the SALOME runtime as `NOT_RUN`.
 | Explicit fake lifecycle | PASS | Dispatch and idempotency executed; every response remains visibly fake and makes no artifact/runtime claim. |
 | Published hosted checkpoint | FAIL | Engine and report workflows on `aec106f` failed on the stale durable `spec` digest; this immutable execution history is retained. |
 | Corrective hosted checkpoint | PASS | Engine run `31589424865` and report run `31589424850` passed on `e3ec245`. |
+| Final evidence checkpoint | PASS | Engine run `31590141763` and report run `31590141769` passed on `b3dfc084`. |
+| Integration into `engine` | PASS | PR #6 merged at `c84dd152`; exact-SHA push run `31590418194` passed all five jobs. |
 | SALOME 9.16 `ProbeCapabilities` | NOT_RUN | Runtime absent. Fake capability shape is not detected-runtime evidence. |
 | SHAPER/GEOM/SMESH/MED/MEDCoupling | NOT_RUN | No real SALOME runtime or domain library execution. |
 | Greater-than-2-GiB transfer | NOT_RUN | A 3 GiB integer appears only in a small schema vector; no payload was created or transferred. |
@@ -148,7 +172,6 @@ execution scope as `contract-only`, and the SALOME runtime as `NOT_RUN`.
 
 ## Next idempotent action
 
-Publish this hosted-evidence follow-up to `engine-p0-salome-protocol`, verify
-new Python 3.12/3.13, native, hygiene, REUSE, and report jobs, and integrate PR
-#6 into `engine` only if every required hosted check passes. Never promote the
-fake agent to real SALOME evidence.
+Preserve this protocol-only evidence while E1 continues on the merged history.
+When a real isolated SALOME 9.16 runtime becomes available, execute the bounded
+runtime spike; never promote the fake agent to real SALOME evidence.

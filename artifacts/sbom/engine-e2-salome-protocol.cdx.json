@@ -310,7 +310,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "9633134d4fb783953d5516f80294b638b0f9d73766c7ea168d44b3fcadc6586a"
+          "content": "0f2a988a5bb3cb5f957d9f07befdadc0faee4cfd0f71795da33265493ddd84dc"
         }
       ],
       "licenses": [
@@ -340,7 +340,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "a7c81aecfce10df8597138558b4e1e387141f69ec4355343f26b6c434564120c"
+          "content": "e189c5f56f895fdcbc80e41ff001c00494cd3a89a271c786e6903dac017b9c90"
         }
       ],
       "licenses": [
@@ -950,7 +950,7 @@
       "version": "0.0.1"
     }
   },
-  "serialNumber": "urn:uuid:3e2a1ac9-5a94-5b7c-a62d-4a9d0301ebcc",
+  "serialNumber": "urn:uuid:37059068-413a-5b3c-8d56-2bfdc9982b18",
   "specVersion": "1.5",
   "version": 1
 }
