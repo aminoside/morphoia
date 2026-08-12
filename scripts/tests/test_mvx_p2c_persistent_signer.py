@@ -188,6 +188,24 @@ class PersistentSignerTests(unittest.TestCase):
         _, parsed = signer._load_manifest(newline_manifest)
         self.assertEqual(parsed, self.manifest_document)
 
+    def test_bind_existing_reuses_key_and_binds_new_challenge(self) -> None:
+        rebound = self.root / "rebound-public.json"
+        document = signer.bind_existing_signer(
+            self.key,
+            rebound,
+            challenge=b"r" * 32,
+            created_at="2026-08-08T00:00:00Z",
+        )
+        self.assertEqual(
+            document["public_key_ed25519_hex"],
+            self.manifest_document["public_key_ed25519_hex"],
+        )
+        self.assertEqual(document["challenge_hex"], (b"r" * 32).hex())
+        self.assertEqual(signer.verify_manifest(document), document)
+        self.assertEqual(stat.S_IMODE(self.key.stat().st_mode), 0o400)
+        with self.assertRaisesRegex(signer.SignerError, "MANIFEST_ALREADY_EXISTS"):
+            signer.bind_existing_signer(self.key, rebound, challenge=b"s" * 32)
+
     def test_cli_never_prints_key_secret_hash_or_signature(self) -> None:
         second_root = self.root / "second"
         second_root.mkdir(mode=0o700)

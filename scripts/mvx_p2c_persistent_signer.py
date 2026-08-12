@@ -425,6 +425,46 @@ def initialize_signer(
     return manifest
 
 
+def bind_existing_signer(
+    key_path: Path,
+    manifest_path: Path,
+    *,
+    challenge: bytes,
+    created_at: str | None = None,
+) -> dict[str, Any]:
+    """Publish a new public challenge manifest for an existing raw key."""
+
+    if manifest_path.exists() or manifest_path.is_symlink():
+        raise SignerError("MANIFEST_ALREADY_EXISTS")
+    if not isinstance(challenge, bytes) or len(challenge) != 32:
+        raise SignerError("CHALLENGE_LENGTH")
+    _prepare_parent(manifest_path, private=False)
+    _, private_key = _private_key(key_path)
+    selected_time = created_at or _utc_now()
+    if not _valid_utc(selected_time):
+        raise SignerError("MANIFEST_TIME_INVALID")
+    public_key_hex = _public_hex(private_key)
+    core = {
+        "assurances": dict(ASSURANCES),
+        "challenge_hex": challenge.hex(),
+        "created_at": selected_time,
+        "public_key_ed25519_hex": public_key_hex,
+        "purpose": PURPOSE,
+        "schema": MANIFEST_SCHEMA,
+        "schema_version": SCHEMA_VERSION,
+        "signature_algorithm": SIGNATURE_ALGORITHM,
+        "signer_id": f"mvx-p2c-owner-{public_key_hex[:16]}",
+        "trust_model": TRUST_MODEL,
+    }
+    manifest = {
+        **core,
+        "challenge_signature_hex": private_key.sign(_manifest_message(core)).hex(),
+    }
+    verify_manifest(manifest)
+    _publish_once(manifest_path, _canonical_bytes(manifest), mode=0o644, private=False)
+    return manifest
+
+
 def verify_manifest(manifest: Mapping[str, Any]) -> dict[str, Any]:
     expected = {
         "assurances",
@@ -883,6 +923,14 @@ def _parser() -> argparse.ArgumentParser:
         "--challenge-hex",
         help="verifier-defined 32-byte pre-execution challenge in lowercase hex",
     )
+
+    bind = commands.add_parser(
+        "bind-existing", help="bind an existing persistent raw key to a new challenge"
+    )
+    bind.add_argument("--key", required=True, type=Path)
+    bind.add_argument("--manifest", required=True, type=Path)
+    bind.add_argument("--challenge-hex", required=True)
+    bind.add_argument("--created-at")
     init.add_argument(
         "--created-at",
         help="explicit UTC creation time ending in Z",
@@ -997,6 +1045,24 @@ def main(argv: Sequence[str] | None = None) -> int:
                 created_at=arguments.created_at,
             )
             _emit("INITIALIZED")
+        elif arguments.command == "bind-existing":
+            try:
+                challenge = (
+                    bytes.fromhex(arguments.challenge_hex)
+                    if HEX_32.fullmatch(arguments.challenge_hex) is not None
+                    else None
+                )
+            except ValueError as error:  # pragma: no cover - guarded by the regex
+                raise SignerError("CHALLENGE_HEX_INVALID") from error
+            if challenge is None:
+                raise SignerError("CHALLENGE_HEX_INVALID")
+            bind_existing_signer(
+                arguments.key,
+                arguments.manifest,
+                challenge=challenge,
+                created_at=arguments.created_at,
+            )
+            _emit("BOUND")
         elif arguments.command == "verify":
             _verify_command(arguments)
             _emit("VERIFIED")
