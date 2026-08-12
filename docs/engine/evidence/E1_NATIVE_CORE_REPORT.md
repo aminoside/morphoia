@@ -4,8 +4,10 @@
 
 Date: 2026-08-12
 Profile: Linux x86-64, GCC/G++ 13.3.0, C++20, core CPU
-Source commit executed by GitHub Actions:
+Native implementation source commit:
 `bbf84cb806d95701daa2887e71d90a819c4a4c83`
+Corrective evidence source commit executed by GitHub Actions:
+`0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`
 
 ## Result
 
@@ -14,12 +16,12 @@ incremental SHA-256, and the verified local POSIX CAS passed its native,
 sanitizer, strict-warning, and adversarial tests. It adds no installed API and
 does not change the five-symbol public C ABI.
 
-The hosted source attempt is nevertheless `FAIL`, not `PASS`: later E1 source
-made the closed E0 source-glob SBOM replay differ and also made the E0-era
-checkpoint tree digests stale. These evidence-design failures did not fail the
-native job. The corrective durable-state lot freezes E0 evidence byte for byte
-and gives E1 a separate manifest and SBOM profile. It does not rewrite the
-source-run result below.
+The first hosted source attempt is `FAIL`, not `PASS`: later E1 source made the
+closed E0 source-glob SBOM replay differ and also made the E0-era checkpoint
+tree digests stale. These evidence-design failures did not fail the native job.
+The corrective durable-state lot freezes E0 evidence byte for byte and gives E1
+a separate manifest and SBOM profile. That correction subsequently passed the
+hosted Engine and report workflows without rewriting the first result.
 
 ## Hosted source results
 
@@ -33,8 +35,23 @@ source-run result below.
 | Python 3.13 job `94081774246` | FAIL | Same evidence-profile and checkpoint-digest failures as Python 3.12. |
 | Report run `31586603592`, job `94081774083` | FAIL | The unified evidence suite reached and reproduced the same failures. |
 
-No failed job is reclassified as skipped or passed. A later corrective run is
-required before this lot can be integrated.
+No failed job is reclassified as skipped or passed.
+
+## Hosted corrective results
+
+| Workflow or job | Status | Observation |
+|---|---|---|
+| Engine run `31589901243` | PASS | All five jobs passed on corrective evidence source `0e1f6cf`. |
+| Native job `94092209890` | PASS | GCC/C++20 native build and executed test path passed. |
+| REUSE job `94092209947` | PASS | License metadata validation passed. |
+| Python 3.13 job `94092210022` | PASS | Unified Python and phase-scoped evidence validation passed. |
+| Hygiene job `94092210038` | PASS | Secret-signature and whitespace checks passed. |
+| Python 3.12 job `94092210136` | PASS | Unified Python and phase-scoped evidence validation passed. |
+| Report run `31589901212`, job `94092209098` | PASS | Report generation and the unified validation path passed. |
+
+These results close the corrective hosted-check item only. They do not prove
+the public IR path, the 20-graph corpus, greater-than-2-GiB execution, future
+CAS capabilities, vulnerability analysis, or integration into `engine`.
 
 ## Local executed evidence
 

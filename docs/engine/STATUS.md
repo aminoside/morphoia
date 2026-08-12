@@ -8,6 +8,7 @@ Overall state: `IN_PROGRESS`
 Work branch: `engine-p0-ir-cas`
 E0 integration commit: `7715a7f7897a3058473732915e372b9835317d17`
 E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
+E1 corrective evidence commit: `0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`
 
 ## Results
 
@@ -22,6 +23,7 @@ E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
 | Hosted corrective checks | PASS | On corrective source SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc`, Engine run `31581879387` passed Python 3.12, Python 3.13, source hygiene, native GCC/C++20, and REUSE; report run `31581879373` passed. Earlier runs `31578405786` and `31578405812` remain recorded as the failures that exposed the implicit `pdftotext` dependency. |
 | Hosted integration checks | PASS | Engine push run `31582827407` passed on merge SHA `7715a7f7897a3058473732915e372b9835317d17`: native `94069646681`, Python 3.13 `94069646723`, hygiene `94069646761`, Python 3.12 `94069646822`, and REUSE `94069646871`. |
 | E1 native source hosted attempt | FAIL | Engine run `31586603633` on `bbf84cb806d95701daa2887e71d90a819c4a4c83` failed overall: native `94081774268`, hygiene `94081774344`, and REUSE `94081774196` passed; Python 3.12 `94081774242` and Python 3.13 `94081774246` failed on stale E0-era evidence replay. Report run `31586603592`, job `94081774083`, reproduced the evidence failure. |
+| E1 corrective hosted checks | PASS | On `0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`, Engine run `31589901243` passed native `94092209890`, REUSE `94092209947`, Python 3.13 `94092210022`, hygiene `94092210038`, and Python 3.12 `94092210136`; report run `31589901212`, job `94092209098`, also passed. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
 | Network capability | PASS | Restricted allowlisted egress and authenticated connector access were observed; unrestricted public egress was not probed or claimed. |
@@ -37,7 +39,7 @@ E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
 | CMake/CTest minimum path | PASS | Hash-locked CMake 3.20.5 configured, built and ran two CTests; install plus external C `find_package` consumer also passed. |
 | Sanitizers | PASS | Fail-fast ASan and UBSan smoke passed; LSan remains `NOT_RUN` and is not included in this claim. |
 | E0 durable evidence/SBOM | PASS | The closed E0 generator, manifest, and CycloneDX output remain byte-exact and are checked as an immutable profile. Vulnerability analysis remains `NOT_RUN`. |
-| E1 durable evidence/SBOM correction | PASS | A separate fail-closed three-artifact E1 manifest and CycloneDX native-core profile cover the evolving source; exact truth fields and paths, dirfd-only atomic writes, mutation, license-map, self-hash, path-confinement, E0-freeze, and deterministic checks pass. Hosted corrective execution remains `NOT_RUN`. |
+| E1 durable evidence/SBOM correction | PASS | A separate fail-closed three-artifact E1 manifest and CycloneDX native-core profile cover the evolving source; exact truth fields and paths, dirfd-only atomic writes, mutation, license-map, self-hash, path-confinement, E0-freeze, deterministic checks, and hosted corrective workflows pass. Vulnerability analysis remains `NOT_RUN`. |
 | License metadata | PASS | Hash-locked REUSE 6.2.0 lint resolves copyright and license metadata for 177/177 files in the current E1 worktree; dependency vulnerability analysis remains `NOT_RUN`. |
 | Secret signature scan | PASS | Bounded fail-closed scan covered tracked and untracked text; binary baselines were separately hash/type/archive inspected. This is not a full secret/PII audit. |
 | Public language policy | FAIL | Engine code/governance material and contribution guidance are English, but the legacy Phase 1/2 README and developer guides remain French; R-021 records the bounded migration gap. |
@@ -81,15 +83,16 @@ The hosted native, hygiene, and REUSE jobs passed on source commit `bbf84cb`,
 but the overall Engine and report runs failed because an evolving E1 tree was
 incorrectly replayed through the closed E0 SBOM glob and E0 checkpoint digests.
 That executed source result remains `FAIL`. The corrective evidence architecture
-freezes E0 byte for byte and owns E1 in a separate profile; its hosted rerun,
-integration, deterministic replay manifests, and the 20-graph IR corpus remain
-`NOT_RUN`. The bounded lot and E1 therefore remain `IN_PROGRESS`.
+freezes E0 byte for byte and owns E1 in a separate profile. Engine run
+`31589901243` and report run `31589901212` passed on corrective commit
+`0e1f6cf`; integration, deterministic replay manifests, and the 20-graph IR
+corpus remain `NOT_RUN`. The bounded lot and E1 therefore remain `IN_PROGRESS`.
 The legacy Python prototype serializers are intentionally unchanged and are
 neither RFC 8785/JCS nor authoritative Engine/CAS identities.
 
 ## Next action
 
-Publish the locally validated E1-specific manifest/SBOM and reconciled
-checkpoint on `engine-p0-ir-cas`, then rerun both hosted workflows. Integrate
-only after the corrective checks pass. Parallel E2 work remains isolated; real
-SALOME 9.16 execution remains `NOT_RUN`.
+Publish this hosted-evidence follow-up on `engine-p0-ir-cas`, verify its checks,
+then integrate the bounded lot into `engine` through the compensating PR path.
+Parallel E2 work remains isolated; real SALOME 9.16 execution remains
+`NOT_RUN`.

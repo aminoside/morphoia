@@ -11,6 +11,7 @@ Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
 E1 base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
 E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
+E1 corrective evidence commit: `0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`
 
 ## Objective
 
@@ -178,6 +179,7 @@ attempt. Engine run `31586603633` passed native job `94081774268`, hygiene job
 and Python 3.13 job `94081774246` failed because the E1 tree was replayed
 through closed-E0 source globs and stale E0 checkpoint digests. Report run
 `31586603592`, job `94081774083`, reproduced the same evidence failures.
+Those executed failures remain in the durable history.
 
 Correction uses separate evidence profiles. The E0 generator, manifest, and
 SBOM stay byte-exact and are validated by frozen hashes. A new fail-closed E1
@@ -191,9 +193,15 @@ python3 scripts/validate_engine_checkpoint.py
 PYTHONPATH=src <locked-python> -m unittest discover -s tests -v
 ```
 
-The historical E0 regeneration command remains only in the closed E0 gate report;
-it is not a valid current-tree check. Corrective hosted Engine and report runs
-remain `NOT_RUN` until this durable-state change is published.
+The historical E0 regeneration command remains only in the closed E0 gate
+report; it is not a valid current-tree check. On corrective evidence commit
+`0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`, Engine run `31589901243`
+passed native job `94092209890`, REUSE job `94092209947`, Python 3.13 job
+`94092210022`, hygiene job `94092210038`, and Python 3.12 job `94092210136`.
+Report run `31589901212`, job `94092209098`, also passed. This proves the
+corrective hosted profile only; public IR, 20-graph replay, greater-than-2-GiB
+execution, future CAS capabilities, vulnerability analysis, and integration
+remain `NOT_RUN`.
 
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
@@ -296,8 +304,8 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Validate and publish the profile-separated E1 evidence correction on
-`engine-p0-ir-cas`, rerun both hosted workflows, and integrate the lot only
-after required checks pass. Keep the parallel E2 worktree isolated and real
-SALOME 9.16 execution `NOT_RUN`; never merge `engine` into the default branch
-without separate owner instruction.
+Publish this hosted-evidence follow-up on `engine-p0-ir-cas`, verify its hosted
+checks, and integrate the bounded lot into `engine` only through the
+compensating PR path. Keep the parallel E2 worktree isolated and real SALOME
+9.16 execution `NOT_RUN`; never merge `engine` into the default branch without
+separate owner instruction.

@@ -44,13 +44,14 @@ EXPECTED_ARTIFACTS = {
         "media_type": "text/markdown",
         "license_expression": "CC-BY-4.0",
         "provenance": (
-            "Generated from local executions and GitHub Actions results for source "
-            "commit bbf84cb806d95701daa2887e71d90a819c4a4c83"
+            "Generated from local executions and GitHub Actions results for native "
+            "source bbf84cb806d95701daa2887e71d90a819c4a4c83 and corrective "
+            "evidence source 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41"
         ),
         "verification_status": "PASS",
         "note": (
-            "The artifact is hash-verified; its content truthfully records the hosted "
-            "source run as FAIL"
+            "The artifact is hash-verified; its content retains the initial hosted "
+            "FAIL and the corrective hosted PASS"
         ),
     },
     "adr-018-canonical-json-posix-cas": {

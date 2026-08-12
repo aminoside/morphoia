@@ -13,7 +13,7 @@
     "default_branch": "main",
     "integration_branch": "engine",
     "publication_status": "PASS",
-    "publication_note": "E0 was integrated through PR 4 and remains green; E1 native source bbf84cb806d95701daa2887e71d90a819c4a4c83 is published on engine-p0-ir-cas but its first hosted workflow attempt failed on durable-evidence replay"
+    "publication_note": "E0 was integrated through PR 4 and remains green; E1 corrective evidence source 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41 is published on engine-p0-ir-cas and its Engine and report workflows passed, while the first hosted FAIL remains recorded"
   },
   "git": {
     "branch": "engine-p0-ir-cas",
@@ -21,8 +21,8 @@
     "base_parent": "cdddaa47ba54742652819d798e1c6f9c0bd9ce6e",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "bbf84cb806d95701daa2887e71d90a819c4a4c83",
-    "note": "This is the published E1 native source commit whose hosted failure is recorded below, not the SHA of the later durable-state correction containing this file; no integration into engine is claimed"
+    "published_commit_sha": "0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41",
+    "note": "This is the published E1 corrective evidence commit whose hosted PASS is recorded below, not the SHA of this follow-up checkpoint; integration into engine is not claimed"
   },
   "tasks": {
     "completed": [
@@ -52,11 +52,12 @@
       "e1_native_canonical_json_sha256_posix_cas_implementation",
       "e1_native_adversarial_review",
       "e1_source_publication",
-      "e1_first_hosted_failure_capture"
+      "e1_first_hosted_failure_capture",
+      "e1_profile_separated_durable_evidence_correction",
+      "e1_corrective_hosted_verification"
     ],
     "in_progress": [
       "e1_canonical_json_cas_replay",
-      "e1_profile_separated_durable_evidence_correction",
       "e2_protocol_only_contract"
     ],
     "remaining": [
@@ -112,7 +113,7 @@
       },
       {
         "path": "docs/engine",
-        "sha256": "8285f30b5c33127d7ebbe720d36c4014b9c93e19b229d8e4b0876117ba3657e8",
+        "sha256": "4f89023b51bf1e2998f73d339959cac50ba3a326c628cc6779e73b5cf94b19a1",
         "status": "PASS"
       }
     ],
@@ -233,6 +234,16 @@
       "command": "GitHub Actions report run 31586603592 on source SHA bbf84cb806d95701daa2887e71d90a819c4a4c83",
       "result": "FAIL",
       "summary": "Report job 94081774083 reproduced the same stale checkpoint and closed-E0 SBOM replay failures"
+    },
+    {
+      "command": "GitHub Actions Engine run 31589901243 on source SHA 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41",
+      "result": "PASS",
+      "summary": "Native job 94092209890, REUSE job 94092209947, Python 3.13 job 94092210022, hygiene job 94092210038, and Python 3.12 job 94092210136 completed successfully"
+    },
+    {
+      "command": "GitHub Actions report run 31589901212 on source SHA 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41",
+      "result": "PASS",
+      "summary": "Report job 94092209098 completed successfully"
     },
     {
       "command": "PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v",
@@ -437,8 +448,38 @@
     {
       "id": "E1-HOSTED-CORRECTIVE-RERUN",
       "profile": "hosted-corrective-validation",
-      "status": "NOT_RUN",
-      "reason": "The profile-separated durable correction is not yet published"
+      "status": "PASS",
+      "count": 6
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-NATIVE",
+      "profile": "core-cpu-native-gcc-cxx20",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-PYTHON-313",
+      "profile": "core-cpu-python-3.13",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-HYGIENE",
+      "profile": "source-hygiene",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-PYTHON-312",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-REPORT",
+      "profile": "report-validation",
+      "status": "PASS"
     },
     {
       "id": "E1-PYTHON-UNIFIED-LOCAL",
@@ -541,19 +582,19 @@
     },
     {
       "uri": "repo:docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
-      "sha256": "25f5d84f600856990e6e8ef177e0b84e61c72fdbb1253c5091f1315de13dc458",
+      "sha256": "447d4931359051770d3e46632a053779c9a32c66f6df13de8856dc6c939c9453",
       "status": "PASS",
-      "note": "Hash-exact bounded E1 native report retains the hosted source FAIL and profile-specific PASS, NOT_RUN, and NOT_APPLICABLE results"
+      "note": "Hash-exact bounded E1 native report retains the initial hosted FAIL, subsequent corrective PASS, and profile-specific NOT_RUN and NOT_APPLICABLE results"
     },
     {
       "uri": "repo:artifacts/e1/manifest.json",
-      "sha256": "a819cf9ed22569de9c4a5c1009a5ddeb375d06a6c9ba2f56fbd11293e89bd983",
+      "sha256": "47a301d3e6f0b3dd4c65634821f7c4cf7afe2883fb14bb03c720edd6d5c25439",
       "status": "PASS",
       "note": "Fail-closed three-artifact E1 profile manifest with exact paths, sizes, hashes, licenses, provenance, and SBOM self-reference"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e1-native-core.cdx.json",
-      "sha256": "aba88c706a64cd0156537a136749a07ed3b05849ada026281a7fc2f26bfa6f77",
+      "sha256": "e1aeacc32bb24574f1ed538d2c9c15913634b8fcfaa8cd691fafb7181ba293ce",
       "status": "PASS",
       "note": "Deterministic E1 native-core CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
     }
@@ -582,7 +623,15 @@
     "github-actions:job:94081774242",
     "github-actions:job:94081774246",
     "github-actions:31586603592",
-    "github-actions:job:94081774083"
+    "github-actions:job:94081774083",
+    "github-actions:31589901243",
+    "github-actions:job:94092209890",
+    "github-actions:job:94092209947",
+    "github-actions:job:94092210022",
+    "github-actions:job:94092210038",
+    "github-actions:job:94092210136",
+    "github-actions:31589901212",
+    "github-actions:job:94092209098"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -626,9 +675,8 @@
     },
     {
       "name": "E1 profile-separated corrective hosted checks",
-      "status": "NOT_RUN",
-      "blocking_scope": "Integration of the bounded E1 lot into engine only",
-      "reason": "The durable evidence correction is local and must be published before Engine and report workflows can be rerun"
+      "status": "PASS",
+      "reason": "Engine run 31589901243 and report run 31589901212 passed on corrective source SHA 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41"
     },
     {
       "name": "SALOME 9.16 runtime",
@@ -642,5 +690,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Validate and publish the profile-separated E1 evidence correction on engine-p0-ir-cas, rerun Engine and report workflows, and integrate only after required checks pass while leaving the separate E2 worktree untouched"
+  "next_action": "Validate and publish this hosted-evidence follow-up on engine-p0-ir-cas, verify its required checks, and integrate the bounded E1 lot through the compensating PR path while leaving the separate E2 worktree untouched"
 }
