@@ -6,10 +6,10 @@ Author: Dr Olivier Ami
 
 This directory preregisters the rekeyed P2c campaign over the same private three
 P2a parents and four resource profiles as the frozen v1 diagnostic. It contains
-no v2.1 result, source identity, P2a work identifier, source hash, Drive
-locator, signer manifest, signature, or private key. The signer manifest and
-its public proof-of-possession signature are added only in the final public
-precommit.
+no v2.1 result, source identity, P2a work identifier, source hash, private Drive
+locator, or private key. The final public precommit adds only the signer
+challenge and the public signer manifest with its proof-of-possession
+signature.
 
 ## Fixed scope
 

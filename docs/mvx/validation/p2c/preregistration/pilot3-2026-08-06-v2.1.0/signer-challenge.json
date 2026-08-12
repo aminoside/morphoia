@@ -1,0 +1,11 @@
+{
+  "campaign_id": "P2C-PILOT3-2026-08-06",
+  "code_commit_sha1": "924b3cc2dd226c6acfde99cee9ab990d54953d49",
+  "git_tree_sha1": "b151b2b8813760933e899bc1b2789cb284fa231d",
+  "preregistration_sha256": "f68d8a5414e977b16674e08bae1e38ab766fb9f29b288927c55a6296403e3c93",
+  "runner_sha256": "993f493edbe8e216815e229ad1783acf7546614a13662a2a9d48dd4d1fd0b91a",
+  "runtime_sha256": "1e5cb3bc8bf1187fb1855000b3236db5ed5a80e6b50671a31026630768e5abab",
+  "schema": "MVX-P2C-V2-PERSISTENT-SIGNER-CHALLENGE",
+  "schema_version": "1.0.0",
+  "tests_sha256": "33adf7c2f010fb6d2115c2c28d080be114fd0c638b7efd69dc8b4cb35e989f4b"
+}
