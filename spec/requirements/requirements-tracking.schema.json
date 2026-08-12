@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/requirements-tracking-1.0.schema.json",
+  "title": "Morphoia Engine requirements tracking overlay",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "baseline_records_sha256",
+    "baseline_immutable_records_sha256",
+    "status_vocabulary",
+    "entries"
+  ],
+  "properties": {
+    "$schema": {"const": "./requirements-tracking.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "baseline_records_sha256": {
+      "const": "5e65c204e35ba98453669095ede587b2573d3a6f35d7841d16d26104794131ba"
+    },
+    "baseline_immutable_records_sha256": {
+      "const": "b846a2f284ad0510b43ca6fdba8ad4fae7d1b40daf2f77305c8153e6a9de4072"
+    },
+    "status_vocabulary": {
+      "const": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]
+    },
+    "entries": {
+      "type": "object",
+      "minProperties": 320,
+      "maxProperties": 320,
+      "propertyNames": {"pattern": "^MOR-[A-Z]{2,4}-[0-9]{3}$"},
+      "additionalProperties": {"$ref": "#/$defs/tracking_entry"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "tracking_entry": {
+      "type": "object",
+      "required": [
+        "component",
+        "work_package",
+        "issue",
+        "test_ids",
+        "evidence",
+        "gate_candidates",
+        "dependencies",
+        "dependency_mapping",
+        "status",
+        "status_reason",
+        "mapping_status"
+      ],
+      "properties": {
+        "component": {
+          "enum": [
+            "spec",
+            "architecture",
+            "build",
+            "capi",
+            "core/ir",
+            "core/cas",
+            "io",
+            "io/dicom",
+            "io/vtk-and-connectors",
+            "compute-and-workers",
+            "ai-interop",
+            "plugins/mvx",
+            "plugins/sdk",
+            "salome-protocol-and-agent",
+            "hpc",
+            "security",
+            "performance",
+            "quality-and-conformance",
+            "licensing",
+            "governance"
+          ]
+        },
+        "work_package": {"type": "string", "pattern": "^WP[0-8]$"},
+        "issue": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string", "minLength": 1}
+          ]
+        },
+        "test_ids": {"$ref": "#/$defs/string_set"},
+        "evidence": {"$ref": "#/$defs/string_set"},
+        "gate_candidates": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {"enum": ["G1", "G2", "G3", "G4", "G5"]}
+        },
+        "dependencies": {"$ref": "#/$defs/string_set"},
+        "dependency_mapping": {
+          "enum": ["UNMAPPED", "PARTIAL", "COMPLETE", "NOT_APPLICABLE"]
+        },
+        "status": {
+          "enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]
+        },
+        "status_reason": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string", "minLength": 1}
+          ]
+        },
+        "mapping_status": {"enum": ["UNMAPPED", "PARTIAL", "COMPLETE"]}
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"enum": ["PASS", "FAIL"]}}},
+          "then": {
+            "properties": {
+              "test_ids": {"minItems": 1},
+              "evidence": {"minItems": 1}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "PASS"}}},
+          "then": {
+            "properties": {
+              "mapping_status": {"const": "COMPLETE"},
+              "dependency_mapping": {"enum": ["COMPLETE", "NOT_APPLICABLE"]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "BLOCKED"}}},
+          "then": {
+            "properties": {
+              "status_reason": {"type": "string", "minLength": 1},
+              "evidence": {"minItems": 1},
+              "dependencies": {"minItems": 1}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "NOT_APPLICABLE"}}},
+          "then": {
+            "properties": {
+              "status_reason": {"type": "string", "minLength": 1},
+              "evidence": {"minItems": 1}
+            }
+          }
+        }
+      ]
+    },
+    "string_set": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

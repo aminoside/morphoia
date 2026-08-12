@@ -28,9 +28,26 @@ class SchemaTests(unittest.TestCase):
             "morphoia-ir-0.1.schema.json",
             "morphoia-loss-register-0.1.schema.json",
             "morphoia-backend-manifest-0.1.schema.json",
+            "../spec/requirements/requirements-catalog.schema.json",
+            "../spec/requirements/requirements-tracking.schema.json",
         ):
             with self.subTest(name=name):
                 Draft202012Validator.check_schema(load_schema(name))
+
+    def test_engine_requirements_match_their_schemas(self) -> None:
+        requirements_root = ROOT / "spec" / "requirements"
+        for instance_name, schema_name in (
+            ("requirements.yaml", "requirements-catalog.schema.json"),
+            ("requirements-tracking.yaml", "requirements-tracking.schema.json"),
+        ):
+            with self.subTest(instance=instance_name):
+                instance = json.loads(
+                    (requirements_root / instance_name).read_text(encoding="utf-8")
+                )
+                schema = json.loads(
+                    (requirements_root / schema_name).read_text(encoding="utf-8")
+                )
+                Draft202012Validator(schema).validate(instance)
 
     def test_compiled_example_matches_ir_schema(self) -> None:
         result = validate_file(ROOT / "examples" / "mounting_plate.morph")

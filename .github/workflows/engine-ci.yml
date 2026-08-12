@@ -1,0 +1,174 @@
+# SPDX-FileCopyrightText: 2026 Olivier Ami
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+name: Morphoia Engine core CPU
+
+on:
+  push:
+    branches:
+      - engine
+      - "engine-p*"
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: engine-core-cpu-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native-core:
+    name: Native core / GCC / C++20
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Record toolchain
+        run: |
+          uname -a
+          gcc --version
+          g++ --version
+          cmake --version
+
+      - name: Configure
+        run: cmake --preset ci-gcc
+
+      - name: Build
+        run: cmake --build --preset ci-gcc --parallel 2
+
+      - name: Test
+        run: ctest --preset ci-gcc --output-on-failure
+
+      - name: Install and test an external C consumer
+        run: |
+          install_prefix="$RUNNER_TEMP/morphoia-engine-install"
+          consumer_build="$RUNNER_TEMP/morphoia-engine-consumer"
+          cmake --install build/ci-gcc --prefix "$install_prefix"
+          cmake -S tests/native/consumer -B "$consumer_build" \
+            -DCMAKE_PREFIX_PATH="$install_prefix"
+          cmake --build "$consumer_build" --parallel 2
+          ctest --test-dir "$consumer_build" --output-on-failure
+          if cmake -S tests/native/incompatible_consumer \
+            -B "$RUNNER_TEMP/morphoia-engine-incompatible-consumer" \
+            -DCMAKE_PREFIX_PATH="$install_prefix"; then
+            echo "future 0.1 consumer unexpectedly accepted pre-v1 package" >&2
+            exit 1
+          fi
+
+      - name: Verify standalone bootstrap
+        env:
+          MORPHOIA_BOOTSTRAP_FORCE_FALLBACK: "1"
+        run: bash scripts/bootstrap-engine.sh
+
+      - name: Run bounded AddressSanitizer and UndefinedBehaviorSanitizer smoke
+        run: bash scripts/run-engine-sanitizers.sh
+
+  requirements:
+    name: Requirements baseline / Python ${{ matrix.python-version }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements/engine-ci.lock
+
+      - name: Verify immutable baselines
+        run: |
+          echo "8519bba50ab9a05d469780ec074588034714d83d24ef09404705d292bfa02368  docs/engine/baselines/Morphoia_Engine_Architecture_Reference_v0.2.pdf" | sha256sum --check
+          echo "40cdb3288e7b1a38a557d1459147aed7ac1d5646aaa5d6ab09a287abc9b22263  docs/engine/baselines/Morphoia_Engine_Cahier_des_charges_technique_v0.1.pdf" | sha256sum --check
+          echo "d9957fb70c18f2cdea37b7a036e3ddab6b05492d1a3ea978f5ea9f33313c00c5  docs/engine/baselines/morphoia-logo-vectoriel.zip" | sha256sum --check
+          echo "de8444574a59e1520222062587bc6c55f7184cf0e384d7d499f5ea24ad653175  spec/requirements/Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt" | sha256sum --check
+
+      - name: Validate the 320-requirement catalogue
+        run: python scripts/extract_engine_requirements.py --check
+
+      - name: Install Python test dependencies
+        run: >-
+          python -m pip install --disable-pip-version-check
+          --require-hashes --only-binary=:all:
+          -r requirements/engine-ci.lock
+
+      - name: Run Python tests
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -v
+
+      - name: Validate durable checkpoint and SBOM
+        run: |
+          python scripts/validate_engine_checkpoint.py
+          python scripts/generate_engine_sbom.py --check
+
+  hygiene:
+    name: Source hygiene
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Scan tracked files for credential signatures
+        run: bash scripts/scan-secrets.sh
+
+      - name: Reject whitespace errors
+        env:
+          BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          base_sha="$BASE_SHA"
+          if [[ "$base_sha" =~ ^0+$ ]]; then
+            base_sha="$(git hash-object -t tree /dev/null)"
+          fi
+          git diff --check "$base_sha" "$GITHUB_SHA"
+
+  license-metadata:
+    name: REUSE license metadata
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements/reuse-build-e0.lock
+            requirements/reuse-e0.lock
+
+      - name: Install hash-locked REUSE build backend
+        run: |
+          python -m pip install --disable-pip-version-check \
+            --require-hashes --only-binary=:all: \
+            -r requirements/reuse-build-e0.lock
+
+      - name: Build and install hash-locked REUSE
+        run: |
+          python -m pip install --disable-pip-version-check \
+            --require-hashes --no-build-isolation \
+            -r requirements/reuse-e0.lock
+
+      - name: Validate repository license metadata
+        run: python -m reuse lint

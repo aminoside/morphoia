@@ -1,0 +1,408 @@
+{
+  "schema_version": "1.0.0",
+  "license": "CC-BY-4.0",
+  "updated_at": "2026-08-12",
+  "project_state": "IN_PROGRESS",
+  "phase": "E0",
+  "lot": "p0-bootstrap",
+  "remote": {
+    "canonical_name": "origin",
+    "canonical_url": "https://github.com/aminoside/morphoia.git",
+    "repository": "Aminoside/morphoia",
+    "visibility": "public",
+    "default_branch": "main",
+    "integration_branch": "engine",
+    "publication_status": "PASS",
+    "publication_note": "The authenticated app published corrective source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc and verified its exact tree; Engine run 31581879387 and report run 31581879373 passed"
+  },
+  "git": {
+    "branch": "engine-p0-bootstrap",
+    "upstream": "origin/engine-p0-bootstrap",
+    "base_parent": "fcee715a2d99517f00aacf7d8ce2797658194f83",
+    "integration_branch_initially_present": false,
+    "branch_protection_observed": false,
+    "published_commit_sha": "8b41fa8435e5812b5bd10ae92e35878d9803e0bc",
+    "note": "This is the remotely verified corrective source commit, not the SHA of the later evidence-only commit containing this file; Git, remote refs, tags, and pull requests are authoritative"
+  },
+  "tasks": {
+    "completed": [
+      "repository_identity_remote_and_permission_audit",
+      "initial_branches_tags_pull_requests_releases_and_workflows_audit",
+      "preexisting_worktree_preservation",
+      "capability_and_resource_probe",
+      "baseline_hash_page_and_archive_verification",
+      "requirements_320_exact_extraction_and_tracking_split",
+      "requirements_schema_semantic_and_mutation_tests",
+      "governance_security_and_e9_memory",
+      "native_cpp20_c11_abi_shared_bootstrap",
+      "cmake_3_20_install_and_external_consumer",
+      "unified_python_50_test_suite",
+      "immutable_pdf_baseline_and_generated_report_policy_separation",
+      "asan_ubsan_fail_fast_smoke",
+      "deterministic_cyclonedx_source_sbom",
+      "reuse_161_file_license_metadata_lint",
+      "bounded_secret_signature_scan",
+      "versioned_e0_gate_report",
+      "authenticated_checkpoint_publication_and_remote_tree_verification",
+      "first_hosted_check_execution_and_failure_capture",
+      "retained_layout_ci_correction_and_hosted_reverification"
+    ],
+    "in_progress": [
+      "evidence_only_followup_publication_and_hosted_verification"
+    ],
+    "remaining": [
+      "engine_integration_after_green_checks"
+    ]
+  },
+  "environment": {
+    "os": "Ubuntu 24.04.3 LTS",
+    "kernel": "Linux 6.18.35",
+    "architecture": "x86_64",
+    "effective_cpus": 8,
+    "cgroup_ram_gib": 20,
+    "free_disk_gib_at_probe": 54,
+    "compiler": "GCC and G++ 13.3.0",
+    "cxx": "C++20 syntax and runtime smoke PASS",
+    "openmp": "GCC OpenMP 4.5 available",
+    "python": "3.12.13",
+    "cmake_validation": "hash-locked CMake 3.20.5",
+    "reuse_validation": "hash-locked REUSE 6.2.0 with Poetry Core 2.4.1 build backend",
+    "pdf_text_validation": "pdftotext 24.02.0 from poppler-utils 24.02.0-1ubuntu9.9 executed locally; hosted replay uses the retained hash-verified layout and passed without requiring pdftotext",
+    "network": "restricted allowlisted egress; authenticated repository connector available; unrestricted public egress not probed",
+    "github_hosted_state": "no initial Engine branch, tag, or release; unrelated draft PR 3 preserved; existing report workflow and green default-branch run observed",
+    "github_quotas": "NOT_RUN: Actions, artifact, LFS, storage, and API quota limits were not exposed by the connector",
+    "missing_or_unobserved": [
+      "ninja",
+      "pkg-config",
+      "gh",
+      "SALOME 9.16",
+      "NVIDIA GPU/runtime",
+      "AMD GPU/runtime",
+      "Intel GPU/runtime",
+      "container runtime",
+      "Slurm/EuroHPC",
+      "OCCT/VTK/ITK/PDAL/MED/Kokkos/PETSc and other domain libraries"
+    ]
+  },
+  "source_digests": {
+    "algorithm": "sha256 over sorted path, NUL, file sha256, LF records",
+    "excluded": [
+      "docs/engine/checkpoint.json"
+    ],
+    "paths": [
+      {
+        "path": "cpp",
+        "sha256": "df1cbdb8185db9568cd4f07075e76d053e8d64c0d84257aa23b3c08e04d7d863",
+        "status": "PASS"
+      },
+      {
+        "path": "spec",
+        "sha256": "8cd36cbd2228f3d1d76b3f9df5d77d6e254ca69e83a528a91338714b53e89b0a",
+        "status": "PASS"
+      },
+      {
+        "path": "docs/engine",
+        "sha256": "e59b172f3e7b9e9bac3074f88ba373a5365f15ffa24635b95e976005e89224d1",
+        "status": "PASS"
+      }
+    ],
+    "note": "Digests are frozen after all E0 files settle; checkpoint.json itself is excluded to avoid self-reference"
+  },
+  "commands": [
+    {
+      "command": "MORPHOIA_BOOTSTRAP_FORCE_FALLBACK=1 ./scripts/bootstrap-engine.sh (two isolated runs)",
+      "result": "PASS",
+      "summary": "Both GCC/G++ 13.3 shared C facade and C++ core executions passed with an exact five-symbol export allow-list"
+    },
+    {
+      "command": "CMake 3.20.5 configure/build/CTest/install plus external C find_package consumer",
+      "result": "PASS",
+      "summary": "Two native tests and one installed-package consumer test executed and passed; a future 0.1 compatibility request was rejected"
+    },
+    {
+      "command": "./scripts/run-engine-sanitizers.sh",
+      "result": "PASS",
+      "summary": "AddressSanitizer and fail-fast UndefinedBehaviorSanitizer smoke passed; LeakSanitizer remained NOT_RUN"
+    },
+    {
+      "command": "PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v",
+      "result": "PASS",
+      "summary": "50 legacy, schema, duplicate-key, requirements, retained-layout, anti-alias and atomic-write, immutable-PDF separation, checkpoint, artifact provenance and lock fail-closed, native-consumer inventory, and SBOM tests passed on Python 3.12.13"
+    },
+    {
+      "command": "PATH=<hash-locked-report-tools>:$PATH PYTHONPATH=src make check",
+      "result": "PASS",
+      "summary": "Both generated reports rebuilt and validated while the immutable Engine baseline PDFs remained byte-identical and excluded from generated-report branding policy"
+    },
+    {
+      "command": "python scripts/extract_engine_requirements.py --check",
+      "result": "PASS",
+      "summary": "The PDF, retained layout, 320 exact records, distributions, source fragments, hashes, schemas, derived fields, and fail-closed tracking invariants passed without Poppler"
+    },
+    {
+      "command": "python scripts/extract_engine_requirements.py --check --extract-pdf",
+      "result": "PASS",
+      "summary": "pdftotext 24.02.0 output from poppler-utils 24.02.0-1ubuntu9.9 matched the retained layout after the one documented terminal-LF normalization"
+    },
+    {
+      "command": "GitHub Actions run 31578405786",
+      "result": "FAIL",
+      "summary": "Native GCC, source hygiene, and REUSE jobs passed; Python 3.12 and 3.13 requirements jobs failed because pdftotext was absent on the hosted runner"
+    },
+    {
+      "command": "GitHub Actions run 31578405812",
+      "result": "FAIL",
+      "summary": "Report validation reached the unified suite and failed on the same missing-pdftotext regeneration path"
+    },
+    {
+      "command": "GitHub Actions Engine run 31581879387 on source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc",
+      "result": "PASS",
+      "summary": "Python 3.12 job 94066599023, Python 3.13 job 94066599003, source hygiene job 94066599046, native GCC/C++20 job 94066599158, and REUSE job 94066599178 completed with every step successful"
+    },
+    {
+      "command": "GitHub Actions report run 31581879373 on source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc",
+      "result": "PASS",
+      "summary": "Report job 94066598895 completed with every step successful; transient Phase 1 artifact 9135485164 was 373119 bytes and Phase 2 artifact 9135485442 was 604306 bytes, both expire 2026-11-10 and are supplementary rather than the sole durable proof"
+    },
+    {
+      "command": "python scripts/generate_engine_sbom.py --check",
+      "result": "PASS",
+      "summary": "Deterministic CycloneDX 1.5 source and declared-tool inventory matched; vulnerability analysis remained NOT_RUN"
+    },
+    {
+      "command": "python scripts/validate_engine_checkpoint.py",
+      "result": "PASS",
+      "summary": "The durable checkpoint structure, repository paths, output hashes, and frozen source-tree digests matched"
+    },
+    {
+      "command": "<hash-locked-python> -m reuse lint",
+      "result": "PASS",
+      "summary": "REUSE 6.2.0 resolved copyright and license metadata for every repository file in the E0 tree"
+    },
+    {
+      "command": "bash scripts/scan-secrets.sh",
+      "result": "PASS",
+      "summary": "Bounded tracked and untracked text signature scan passed; immutable binary baselines were separately hash/type/archive inspected"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS",
+      "summary": "No whitespace errors were detected"
+    }
+  ],
+  "tests": [
+    {
+      "id": "E0-PYTHON-UNIFIED",
+      "profile": "core-cpu",
+      "status": "PASS",
+      "count": 50
+    },
+    {
+      "id": "E0-REQ-EXACT-SCHEMA",
+      "profile": "specification",
+      "status": "PASS",
+      "count": 320
+    },
+    {
+      "id": "E0-NATIVE-DIRECT",
+      "profile": "core-cpu",
+      "status": "PASS",
+      "count": 2
+    },
+    {
+      "id": "E0-CMAKE-INSTALL-CONSUMER",
+      "profile": "core-cpu",
+      "status": "PASS",
+      "count": 3
+    },
+    {
+      "id": "E0-ASAN-UBSAN",
+      "profile": "core-cpu-security",
+      "status": "PASS",
+      "count": 2
+    },
+    {
+      "id": "E0-LSAN",
+      "profile": "core-cpu-security",
+      "status": "NOT_RUN",
+      "reason": "LeakSanitizer is excluded under the observed ptrace-constrained environment"
+    },
+    {
+      "id": "E0-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS",
+      "count": 161
+    },
+    {
+      "id": "E0-VULNERABILITY-SCAN",
+      "profile": "supply-chain-security",
+      "status": "NOT_RUN",
+      "reason": "No pinned vulnerability scanner was executed in E0"
+    },
+    {
+      "id": "E0-HOSTED-PYTHON-312",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS",
+      "count": 50
+    },
+    {
+      "id": "E0-HOSTED-PYTHON-313",
+      "profile": "core-cpu-python-3.13",
+      "status": "PASS",
+      "count": 50
+    },
+    {
+      "id": "E0-HOSTED-REPORT",
+      "profile": "report-validation",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-HOSTED-NATIVE",
+      "profile": "core-cpu-native-gcc-cxx20",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-HOSTED-HYGIENE",
+      "profile": "source-hygiene",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-HOSTED-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-GITHUB-QUOTAS",
+      "profile": "hosted-resources",
+      "status": "NOT_RUN",
+      "reason": "Actions, artifact, LFS, storage, and API quota limits were not exposed by the connector; no paid resource is assumed"
+    },
+    {
+      "id": "E0-BRANCH-PROTECTION",
+      "profile": "governance",
+      "status": "FAIL",
+      "reason": "Protection and ruleset inspection executed and found no protection on engine; PR plus checks is a compensating control only"
+    },
+    {
+      "id": "E0-SALOME",
+      "profile": "salome",
+      "status": "NOT_RUN",
+      "reason": "SALOME 9.16 runtime is absent"
+    },
+    {
+      "id": "E0-GPU",
+      "profile": "cuda-hip-sycl",
+      "status": "NOT_RUN",
+      "reason": "Matching hardware devices and runtimes are absent"
+    },
+    {
+      "id": "E0-HPC",
+      "profile": "container-slurm-eurohpc",
+      "status": "NOT_RUN",
+      "reason": "Container, Slurm, and EuroHPC runtimes or access are absent"
+    }
+  ],
+  "parameters": {
+    "maximum_single_download_bytes": 2147483648,
+    "maximum_job_seconds": 3600,
+    "maximum_disk_fraction": 0.7,
+    "maximum_disk_consumption_gib_at_probe": 37.8
+  },
+  "seeds": [],
+  "inputs": [
+    {
+      "path": "docs/engine/baselines/Morphoia_Engine_Cahier_des_charges_technique_v0.1.pdf",
+      "sha256": "40cdb3288e7b1a38a557d1459147aed7ac1d5646aaa5d6ab09a287abc9b22263"
+    },
+    {
+      "path": "docs/engine/baselines/Morphoia_Engine_Architecture_Reference_v0.2.pdf",
+      "sha256": "8519bba50ab9a05d469780ec074588034714d83d24ef09404705d292bfa02368"
+    },
+    {
+      "path": "docs/engine/baselines/morphoia-logo-vectoriel.zip",
+      "sha256": "d9957fb70c18f2cdea37b7a036e3ddab6b05492d1a3ea978f5ea9f33313c00c5"
+    },
+    {
+      "path": "spec/requirements/Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt",
+      "sha256": "de8444574a59e1520222062587bc6c55f7184cf0e384d7d499f5ea24ad653175"
+    }
+  ],
+  "outputs": [
+    {
+      "uri": "repo:spec/requirements/requirements.yaml",
+      "sha256": "0fa8953f164018e76caaa8a9690a033f8c6f6c495d118957bbc791afa3787cbe",
+      "status": "PASS",
+      "note": "Immutable exact extraction and Draft 2020-12 validation passed"
+    },
+    {
+      "uri": "repo:spec/requirements/requirements-tracking.yaml",
+      "sha256": "7af677456e74f0fece87dbbae7db3637892ab1c24271dcc4603df2633e57dec4",
+      "status": "PASS",
+      "note": "Living fail-closed traceability overlay and schema validation passed"
+    },
+    {
+      "uri": "repo:docs/engine/evidence/E0_GATE_REPORT.md",
+      "sha256": "7f3316f4649497f186a3d84e0ae33f2a2e7a951339cf20bda69577a24cff1ebf",
+      "status": "PASS",
+      "note": "Versioned compact gate report records environment, commands, evidence truth, and optional-profile limits"
+    },
+    {
+      "uri": "repo:artifacts/manifest.json",
+      "sha256": "f7388aff3e4c1f745332309bd30d899018c22f672f41c5e2c1e40fae356185c4",
+      "status": "PASS",
+      "note": "Artifact manifest resolves exact paths, sizes, hashes, provenance, and per-artifact licensing"
+    },
+    {
+      "uri": "repo:artifacts/sbom/engine-e0-source-native.cdx.json",
+      "sha256": "18952f88f1ebde81c3b62947c9c67bf935ac25b8b61c1ca7608d6cc8d2b92ace",
+      "status": "PASS",
+      "note": "Deterministic CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
+    }
+  ],
+  "job_ids": [
+    "github-actions:31578405786",
+    "github-actions:31578405812",
+    "github-actions:31581879387",
+    "github-actions:job:94066599003",
+    "github-actions:job:94066599023",
+    "github-actions:job:94066599046",
+    "github-actions:job:94066599158",
+    "github-actions:job:94066599178",
+    "github-actions:31581879373",
+    "github-actions:job:94066598895"
+  ],
+  "decisions": [
+    "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
+    "Pull requests plus checks compensate operationally for absent branch protection without claiming protected-branch compliance",
+    "E9-INDEPENDENT is frozen to eight locally verifiable lots",
+    "No MVX semantics are inferred before an owner-validated specification",
+    "Engine 0.0.1, C ABI 1, existing prototype 0.2.0-dev, and future release tags are distinct version domains"
+  ],
+  "deviations": [
+    "No branch protection or ruleset was observed",
+    "Local CLI publication is unavailable; the authenticated app path is used",
+    "SALOME, GPU, container, HPC, and domain runtimes are absent and remain NOT_RUN",
+    "Vulnerability analysis and LeakSanitizer were not executed",
+    "GitHub Actions, artifact, LFS, storage, and API quotas were not exposed and remain NOT_RUN",
+    "The first hosted checkpoint exposed an undeclared pdftotext dependency; the retained-layout correction subsequently passed hosted Python 3.12, Python 3.13, native, hygiene, REUSE, and report execution",
+    "Legacy Phase 1/2 guides and documents remain French and require a bounded translation lot before full public-language-policy compliance"
+  ],
+  "external_dependencies": [
+    {
+      "name": "authenticated GitHub app publication",
+      "status": "PASS",
+      "reason": "Corrective source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc and its exact remote tree were published and verified"
+    },
+    {
+      "name": "hosted corrective checks",
+      "status": "PASS",
+      "reason": "Engine run 31581879387 and report run 31581879373 passed on corrective source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc"
+    },
+    {
+      "name": "validated Morphoia MVX specification",
+      "status": "BLOCKED",
+      "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
+    }
+  ],
+  "next_action": "Publish this evidence-only follow-up to origin/engine-p0-bootstrap, verify its remote SHA and required PR 4 checks, then integrate into engine only after that follow-up passes"
+}

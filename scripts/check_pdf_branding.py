@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Validate the official MORPHOIA identity on every PDF tracked by Git."""
+"""Validate official branding on generated reports tracked by Git.
+
+Immutable normative baselines are input evidence rather than generated public
+reports. They are deliberately excluded by repository path and must never be
+rewritten to satisfy the visual-identity checks below.
+"""
 
 from __future__ import annotations
 
@@ -9,10 +14,14 @@ import re
 import subprocess
 from pathlib import Path
 
-from pypdf import PdfReader
-
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "reports.json"
+IMMUTABLE_BASELINE_PDFS = frozenset(
+    {
+        "docs/engine/baselines/Morphoia_Engine_Architecture_Reference_v0.2.pdf",
+        "docs/engine/baselines/Morphoia_Engine_Cahier_des_charges_technique_v0.1.pdf",
+    }
+)
 A4_PORTRAIT = (595.276, 841.89)
 A4_LANDSCAPE = tuple(reversed(A4_PORTRAIT))
 SUBSET_PREFIX = re.compile(r"^/[A-Z]{6}\+")
@@ -34,7 +43,8 @@ def tracked_pdfs() -> list[str]:
         capture_output=True,
         text=True,
     )
-    return sorted(line.strip() for line in result.stdout.splitlines() if line.strip())
+    tracked = {line.strip() for line in result.stdout.splitlines() if line.strip()}
+    return sorted(tracked - IMMUTABLE_BASELINE_PDFS)
 
 
 def normalized_font_name(value: object) -> str:
@@ -68,6 +78,8 @@ def close_size(actual: tuple[float, float], expected: tuple[float, float]) -> bo
 
 
 def validate_report(path: Path, brand: dict) -> tuple[int, set[str]]:
+    from pypdf import PdfReader
+
     reader = PdfReader(str(path))
     metadata = reader.metadata or {}
     title = str(metadata.get("/Title", ""))

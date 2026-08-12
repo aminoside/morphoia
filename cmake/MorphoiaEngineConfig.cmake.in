@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Olivier Ami
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/MorphoiaEngineTargets.cmake")
+
+check_required_components(MorphoiaEngine)

@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/checkpoint-1.0.schema.json",
+  "title": "Morphoia Engine durable checkpoint",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "license",
+    "updated_at",
+    "project_state",
+    "phase",
+    "lot",
+    "remote",
+    "git",
+    "tasks",
+    "environment",
+    "source_digests",
+    "commands",
+    "tests",
+    "parameters",
+    "seeds",
+    "inputs",
+    "outputs",
+    "job_ids",
+    "decisions",
+    "deviations",
+    "external_dependencies",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "license": {"const": "CC-BY-4.0"},
+    "updated_at": {"type": "string", "format": "date"},
+    "project_state": {"type": "string", "minLength": 1},
+    "phase": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "WAITING_FOR_MVX_SPEC"]},
+    "lot": {"type": "string", "minLength": 1},
+    "remote": {
+      "type": "object",
+      "required": ["canonical_name", "canonical_url", "repository", "visibility", "default_branch", "integration_branch", "publication_status", "publication_note"],
+      "properties": {
+        "canonical_name": {"const": "origin"},
+        "canonical_url": {"type": "string", "format": "uri"},
+        "repository": {"const": "Aminoside/morphoia"},
+        "visibility": {"enum": ["public", "private", "internal"]},
+        "default_branch": {"type": "string", "minLength": 1},
+        "integration_branch": {"const": "engine"},
+        "publication_status": {"$ref": "#/$defs/status"},
+        "publication_note": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "git": {
+      "type": "object",
+      "required": ["branch", "upstream", "base_parent", "integration_branch_initially_present", "branch_protection_observed", "published_commit_sha", "note"],
+      "properties": {
+        "branch": {"type": "string", "pattern": "^engine(?:-p[0-9]+-[a-z0-9][a-z0-9-]*)?$"},
+        "upstream": {"type": "string", "minLength": 1},
+        "base_parent": {"$ref": "#/$defs/commit"},
+        "integration_branch_initially_present": {"type": "boolean"},
+        "branch_protection_observed": {"type": "boolean"},
+        "published_commit_sha": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/commit"}]},
+        "note": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "tasks": {
+      "type": "object",
+      "required": ["completed", "in_progress", "remaining"],
+      "properties": {
+        "completed": {"$ref": "#/$defs/stringSet"},
+        "in_progress": {"$ref": "#/$defs/stringSet"},
+        "remaining": {"$ref": "#/$defs/stringSet"}
+      },
+      "additionalProperties": false
+    },
+    "environment": {"type": "object", "minProperties": 1},
+    "source_digests": {
+      "type": "object",
+      "required": ["algorithm", "excluded", "paths", "note"],
+      "properties": {
+        "algorithm": {"const": "sha256 over sorted path, NUL, file sha256, LF records"},
+        "excluded": {"$ref": "#/$defs/stringSet"},
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["path", "sha256", "status"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+              "status": {"$ref": "#/$defs/status"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "note": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "commands": {"type": "array", "items": {"$ref": "#/$defs/command"}},
+    "tests": {"type": "array", "items": {"$ref": "#/$defs/test"}},
+    "parameters": {
+      "type": "object",
+      "required": ["maximum_single_download_bytes", "maximum_job_seconds", "maximum_disk_fraction", "maximum_disk_consumption_gib_at_probe"],
+      "properties": {
+        "maximum_single_download_bytes": {"type": "integer", "minimum": 1, "maximum": 2147483648},
+        "maximum_job_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "maximum_disk_fraction": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.7},
+        "maximum_disk_consumption_gib_at_probe": {"type": "number", "exclusiveMinimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "seeds": {"type": "array", "uniqueItems": true, "items": {"type": ["string", "integer"]}},
+    "inputs": {"type": "array", "items": {"$ref": "#/$defs/input"}},
+    "outputs": {"type": "array", "items": {"$ref": "#/$defs/output"}},
+    "job_ids": {"$ref": "#/$defs/stringSet"},
+    "decisions": {"$ref": "#/$defs/stringSet"},
+    "deviations": {"$ref": "#/$defs/stringSet"},
+    "external_dependencies": {"type": "array", "items": {"$ref": "#/$defs/externalDependency"}},
+    "next_action": {"type": "string", "minLength": 20}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "status": {"enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "stringSet": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "command": {
+      "type": "object",
+      "required": ["command", "result", "summary"],
+      "properties": {
+        "command": {"type": "string", "minLength": 1},
+        "result": {"$ref": "#/$defs/status"},
+        "summary": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "test": {
+      "type": "object",
+      "required": ["id", "profile", "status"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "profile": {"type": "string", "minLength": 1},
+        "status": {"$ref": "#/$defs/status"},
+        "count": {"type": "integer", "minimum": 0},
+        "reason": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "input": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}},
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "required": ["uri", "sha256", "status", "note"],
+      "properties": {
+        "uri": {"type": "string", "minLength": 1},
+        "sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "status": {"$ref": "#/$defs/status"},
+        "note": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "externalDependency": {
+      "type": "object",
+      "required": ["name", "status"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "status": {"$ref": "#/$defs/status"},
+        "blocking_scope": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  }
+}

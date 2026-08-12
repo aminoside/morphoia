@@ -4,6 +4,19 @@ Toutes les modifications notables de MORPHOIA seront documentées ici.
 
 ## [Non publié]
 
+### Morphoia Engine E0 bootstrap
+
+- added an immutable baseline register and a machine-readable catalogue of all
+  320 Engine requirements with a separate fail-closed traceability overlay;
+- added the C++20 shared core bootstrap, versioned C11 ABI, strict CMake 3.20
+  package, C and C++ smoke tests, external-consumer test, and sanitizer path;
+- added resumable execution state, ADR-001 through ADR-017, capability and
+  resource reports, a threat model, license metadata, deterministic SBOM, and
+  hash-locked CPU CI profiles;
+- kept SALOME, GPU, HPC, domain-library, vulnerability-scan, and MVX evidence
+  explicitly `NOT_RUN` or `BLOCKED` where the required runtime or validated
+  specification is unavailable.
+
 ### Modifié
 
 - application de l'identité visuelle officielle MORPHOIA aux rapports PDF des phases 1 et 2 ;
