@@ -162,6 +162,14 @@ URI/size/hash references, and deterministic replay manifests, with invalid
 input, collision/integrity, idempotence, and golden-vector tests. Do not add
 format adapters, GPU work, or MVX semantics to this lot.
 
+The internal native sub-lot now has a constrained canonical JSON Profile 1,
+incremental SHA-256, and an atomic Linux/POSIX CAS implementation under
+ADR-018. This does not yet satisfy MOR-IR-002 on the public IR path: the legacy
+Python `canonical_json` and `semantic_hash` functions preserve a pre-Engine,
+non-JCS identity domain and are explicitly non-authoritative. The complete IR
+schema, deterministic replay manifests, 20 graph corpus, hosted results, and
+integration evidence remain required before this bounded lot or E1 can close.
+
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
 Implement protocol and a clearly named fake contract agent. Execute real SALOME
@@ -241,6 +249,8 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 - ADR-001..014 retain the statuses in the architecture baseline; ADR-015 and
   ADR-016 remain proposed. ADR-017 accepts explicit component-version domains.
+  ADR-018 accepts the bounded internal canonical JSON Profile 1 and Linux/POSIX
+  CAS protocol without claiming completion of the public IR or all CAS MUSTs.
 - Absence of branch protection is recorded, not treated as compliance.
 - Missing build/domain tools are environment facts, not evidence that their
   integrations fail.

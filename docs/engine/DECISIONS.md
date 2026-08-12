@@ -27,6 +27,7 @@ technical specification.
 | [ADR-015](../../spec/adr/ADR-015-p0-p1-monorepo.md) | Permissive monorepo for P0-P1 foundation | Proposed by specification | Proposed |
 | [ADR-016](../../spec/adr/ADR-016-independent-mvx-gate.md) | MVX gate independent from functional foundation | Proposed by specification | Proposed |
 | [ADR-017](../../spec/adr/ADR-017-component-versioning.md) | Separate prototype, Engine, ABI and release versions | N/A | Accepted |
+| [ADR-018](../../spec/adr/ADR-018-canonical-json-profile-posix-cas.md) | Constrained canonical JSON and atomic Linux/POSIX CAS | Bounded E1 lot | Accepted |
 
 ## E0 operational decisions
 

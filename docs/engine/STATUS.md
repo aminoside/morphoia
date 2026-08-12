@@ -66,6 +66,18 @@ integrated into `engine`: PR #4 produced merge
 Branch protection and the R-021 public-language control remain `FAIL`; optional
 runtimes remain `NOT_RUN`.
 
+## Active E1 bounded lot
+
+The native internal core now implements and locally tests a constrained
+RFC-8785-compatible canonical JSON profile, incremental SHA-256, deterministic
+CAS URIs, and atomic verified Linux/POSIX storage. ADR-018 defines the exact
+numeric/Unicode domain and crash-safe publication protocol. Direct bootstrap,
+CMake 3.20, strict conversion warnings, and ASan/UBSan are locally `PASS`.
+Hosted checks, integration, deterministic replay manifests, and the 20-graph IR
+corpus are `NOT_RUN`; therefore the bounded lot and E1 remain `IN_PROGRESS`.
+The legacy Python prototype serializers are intentionally unchanged and are
+neither RFC 8785/JCS nor authoritative Engine/CAS identities.
+
 ## Next action
 
 Start the bounded E1 canonical-JSON/CAS/replay lot from merge

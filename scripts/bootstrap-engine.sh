@@ -36,6 +36,7 @@ trap cleanup EXIT
 
 common_warnings=(-Wall -Wextra -Wpedantic -Werror)
 include_arg=(-I"${repo_dir}/cpp/include")
+internal_include_arg=(-I"${repo_dir}/cpp/src")
 
 echo "bootstrap-engine: using direct compiler fallback"
 "${cxx}" -std=c++20 "${common_warnings[@]}" "${include_arg[@]}" \
@@ -80,4 +81,30 @@ fi
 
 "${fallback_dir}/abi_c_smoke"
 "${fallback_dir}/core_smoke"
+
+"${cxx}" -std=c++20 "${common_warnings[@]}" "${internal_include_arg[@]}" \
+  "${repo_dir}/cpp/src/core/sha256.cpp" \
+  "${repo_dir}/tests/native/sha256_test.cpp" \
+  -o "${fallback_dir}/sha256_test"
+"${fallback_dir}/sha256_test"
+
+"${cxx}" -std=c++20 "${common_warnings[@]}" "${internal_include_arg[@]}" \
+  -DMORPHOIA_TEST_SOURCE_DIR="\"${repo_dir}\"" \
+  "${repo_dir}/cpp/src/core/sha256.cpp" \
+  "${repo_dir}/cpp/src/core/canonical_json.cpp" \
+  "${repo_dir}/tests/native/canonical_json_test.cpp" \
+  -o "${fallback_dir}/canonical_json_test"
+"${fallback_dir}/canonical_json_test"
+
+if [[ "$(uname -s)" == "Linux" ]]; then
+  "${cxx}" -std=c++20 "${common_warnings[@]}" "${internal_include_arg[@]}" \
+    "${repo_dir}/cpp/src/core/sha256.cpp" \
+    "${repo_dir}/cpp/src/core/posix_cas.cpp" \
+    "${repo_dir}/tests/native/posix_cas_test.cpp" \
+    -pthread \
+    -o "${fallback_dir}/posix_cas_test"
+  "${fallback_dir}/posix_cas_test"
+else
+  echo "posix_cas_test: NOT_RUN (Linux atomic no-clobber backend only)"
+fi
 echo "bootstrap-engine: PASS (shared C ABI direct compiler fallback)"

@@ -31,6 +31,7 @@ sanitizers=(
   -fno-omit-frame-pointer
 )
 include_arg=(-I"${repo_dir}/cpp/include")
+internal_include_arg=(-I"${repo_dir}/cpp/src")
 
 "${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${include_arg[@]}" \
   -c "${repo_dir}/cpp/src/engine.cpp" -o "${work_dir}/engine.o"
@@ -49,4 +50,33 @@ ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1"
   "${work_dir}/abi_c_smoke"
 ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
   "${work_dir}/core_smoke"
+
+"${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${internal_include_arg[@]}" \
+  "${repo_dir}/cpp/src/core/sha256.cpp" \
+  "${repo_dir}/tests/native/sha256_test.cpp" \
+  -o "${work_dir}/sha256_test"
+ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
+  "${work_dir}/sha256_test"
+
+"${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${internal_include_arg[@]}" \
+  -DMORPHOIA_TEST_SOURCE_DIR="\"${repo_dir}\"" \
+  "${repo_dir}/cpp/src/core/sha256.cpp" \
+  "${repo_dir}/cpp/src/core/canonical_json.cpp" \
+  "${repo_dir}/tests/native/canonical_json_test.cpp" \
+  -o "${work_dir}/canonical_json_test"
+ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
+  "${work_dir}/canonical_json_test"
+
+if [[ "$(uname -s)" == "Linux" ]]; then
+  "${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${internal_include_arg[@]}" \
+    "${repo_dir}/cpp/src/core/sha256.cpp" \
+    "${repo_dir}/cpp/src/core/posix_cas.cpp" \
+    "${repo_dir}/tests/native/posix_cas_test.cpp" \
+    -pthread \
+    -o "${work_dir}/posix_cas_test"
+  ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
+    "${work_dir}/posix_cas_test"
+else
+  echo "posix_cas_test: NOT_RUN (Linux atomic no-clobber backend only)"
+fi
 echo "engine-sanitizers: PASS (ASan+UBSan; LSan NOT_RUN)"

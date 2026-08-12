@@ -164,6 +164,13 @@ def compile_document(document: Document) -> dict[str, Any]:
 
 
 def canonical_json(ir: dict[str, Any], *, indent: int | None = 2) -> str:
+    """Serialize the legacy construction-graph prototype for display/replay.
+
+    This compatibility function is not RFC 8785/JCS and is not the
+    authoritative Morphoia Engine canonicalizer. Engine content identities use
+    the constrained, tested C++ profile documented by ADR-018. Retaining this
+    function unchanged preserves the pre-Engine prototype schema and hashes.
+    """
     return (
         json.dumps(
             ir,
@@ -177,6 +184,11 @@ def canonical_json(ir: dict[str, Any], *, indent: int | None = 2) -> str:
 
 
 def semantic_hash(ir: dict[str, Any]) -> str:
+    """Hash the legacy Python construction-graph serialization.
+
+    The result belongs only to the prototype's historic identity domain. It is
+    not an Engine CAS identity and must not be presented as RFC 8785/JCS.
+    """
     payload = dict(ir)
     payload.pop("semantic_sha256", None)
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode(
