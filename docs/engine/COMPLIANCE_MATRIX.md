@@ -18,6 +18,8 @@ does not replace per-requirement links and does not assert G1-G5 completion.
 | Protected integration branch | Governance | ruleset/protection inspection | inspection executed; no protection observed | FAIL |
 | Authenticated checkpoint publication | Publication | app publication and remote tree verification | corrective source checkpoint `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` and PR #4 published | PASS |
 | Hosted corrective checks | Publication | GitHub Actions runs `31581879387`, `31581879373` | corrective source SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc`: Python 3.12/3.13, hygiene, native GCC/C++20, REUSE, and report jobs all passed | PASS |
+| E0 integration into `engine` | Publication | PR #4 merge inspection | merge `7715a7f7897a3058473732915e372b9835317d17`, tree `1a2c31b55e284edd521616c3fec7a7f017b883eb`, parents `fcee715a…` + `66a3526…` | PASS |
+| Hosted `engine` push checks | Publication | GitHub Actions run `31582827407` | merge SHA `7715a7f…`: native, Python 3.12/3.13, hygiene, and REUSE jobs all passed | PASS |
 | Initial branches/tags/PR/releases/workflows audit | Hosted-state audit | connector inspection | no Engine refs/releases; unrelated PR #3 preserved; existing report workflow observed | PASS |
 | GitHub Actions/artifact/LFS/API quotas | Capability | quota inspection | connector did not expose limits; no paid capacity assumed | NOT_RUN |
 | Network capability | Capability | environment policy and connector probe | restricted allowlist plus authenticated repository connector | PASS |
@@ -57,10 +59,11 @@ an unavailable optional profile to `PASS`.
 
 ## E0 disposition
 
-The local mandatory E0/core-CPU checks pass. Corrective source SHA
-`8b41fa8435e5812b5bd10ae92e35878d9803e0bc` was published with remote tree
-equality and passed Engine run `31581879387` and report run `31581879373`.
-The gate stays operationally open only for publication and hosted verification
-of this evidence-only follow-up, then PR #4 integration. Branch protection and
-the R-021 public-language control remain `FAIL`. Full per-requirement
-test/evidence mapping is a living E1+ task and no G1-G5 gate is claimed.
+E0/core-CPU is `PASS` and integrated. Corrective source SHA
+`8b41fa8435e5812b5bd10ae92e35878d9803e0bc` passed Engine/report runs
+`31581879387` and `31581879373`; PR #4 merged the completed lot into `engine` at
+`7715a7f7897a3058473732915e372b9835317d17`; `engine` push run `31582827407`
+then passed all five jobs. Branch protection and R-021 remain `FAIL`. Full
+per-requirement test/evidence mapping is a living E1+ task and no G1-G5 gate is
+claimed. E1 canonical-JSON/CAS/replay and E2 protocol-only work are next; real
+SALOME remains `NOT_RUN`.

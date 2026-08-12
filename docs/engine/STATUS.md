@@ -3,10 +3,10 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 As of: 2026-08-12
-Phase: E0 — audit, capability, and resumable bootstrap
+Phase: E1 — core foundations; E2 protocol-only in parallel
 Overall state: `IN_PROGRESS`
-Branch: `engine-p0-bootstrap`
-Base: `fcee715a2d99517f00aacf7d8ce2797658194f83`
+Branch: `engine`
+E0 integration commit: `7715a7f7897a3058473732915e372b9835317d17`
 
 ## Results
 
@@ -14,11 +14,12 @@ Base: `fcee715a2d99517f00aacf7d8ce2797658194f83`
 |---|---|---|
 | Repository identity | PASS | Public `Aminoside/morphoia`; default `main`; canonical remote `origin` verified during E0. |
 | User work preservation | PASS | Pre-existing worktrees with unique MVX commits were observed and left untouched. |
-| Bootstrap lot branch | PASS | `origin/engine-p0-bootstrap` is published; corrective source commit `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` is the latest remotely verified checkpoint. |
-| Integration branch | PASS | `engine` was created from the verified default-branch base only after the native CPU smoke passed; PR #4 targets it and remains unmerged. |
+| Bootstrap lot branch | PASS | `origin/engine-p0-bootstrap` was published and integrated through PR #4; source commit `66a3526f3ed5dd4263e16fbe333a4da41041f1fb` is the second parent of the merge. |
+| E0 integration | PASS | PR #4 merged into `engine` at `7715a7f7897a3058473732915e372b9835317d17`, tree `1a2c31b55e284edd521616c3fec7a7f017b883eb`, with parents `fcee715a2d99517f00aacf7d8ce2797658194f83` and `66a3526f3ed5dd4263e16fbe333a4da41041f1fb`; no merge to the default branch occurred. |
 | Branch protection | FAIL | Protection/ruleset inspection executed and found none; PR plus checks is the compensating workflow, not proof of protection. |
 | Authenticated publication | PASS | The authenticated app published the checkpoint and exact remote tree; `gh` remains absent and local CLI push remains unauthenticated. |
 | Hosted corrective checks | PASS | On corrective source SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc`, Engine run `31581879387` passed Python 3.12, Python 3.13, source hygiene, native GCC/C++20, and REUSE; report run `31581879373` passed. Earlier runs `31578405786` and `31578405812` remain recorded as the failures that exposed the implicit `pdftotext` dependency. |
+| Hosted integration checks | PASS | Engine push run `31582827407` passed on merge SHA `7715a7f7897a3058473732915e372b9835317d17`: native `94069646681`, Python 3.13 `94069646723`, hygiene `94069646761`, Python 3.12 `94069646822`, and REUSE `94069646871`. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
 | Network capability | PASS | Restricted allowlisted egress and authenticated connector access were observed; unrestricted public egress was not probed or claimed. |
@@ -58,16 +59,16 @@ The local E0 core-CPU acceptance set is satisfied: repository and work
 preservation, baselines, 320-requirement extraction/tracking, two native
 bootstraps, CMake 3.20 minimum path, external consumer, unified Python/schema
 suite, ASan/UBSan, durable evidence, source SBOM, REUSE and bounded scans pass.
-The retained local gate report is `evidence/E0_GATE_REPORT.md`. Corrective
-source SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` passed the complete hosted
-Engine and report workflows in runs `31581879387` and `31581879373`. E0 remains
-`IN_PROGRESS` until this evidence-only follow-up is published, its own remote
-SHA and required checks are verified, and PR #4 is integrated into `engine`.
+The retained gate report is `evidence/E0_GATE_REPORT.md`. E0 is `PASS` and
+integrated into `engine`: PR #4 produced merge
+`7715a7f7897a3058473732915e372b9835317d17`, followed by green Engine push run
+`31582827407`. This operational E0 gate does not claim G1/P0 completion.
 Branch protection and the R-021 public-language control remain `FAIL`; optional
 runtimes remain `NOT_RUN`.
 
 ## Next action
 
-Publish this evidence-only follow-up on `engine-p0-bootstrap`, verify its remote
-SHA and required checks, then integrate PR #4 into `engine` only when that
-follow-up is green. Begin E1 and the protocol-only E2 work after integration.
+Start the bounded E1 canonical-JSON/CAS/replay lot from merge
+`7715a7f7897a3058473732915e372b9835317d17`, while developing only the E2
+protocol and contract tests that do not require SALOME. Real SALOME 9.16
+execution remains `NOT_RUN`.

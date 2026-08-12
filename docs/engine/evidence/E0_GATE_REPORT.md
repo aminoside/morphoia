@@ -5,8 +5,9 @@
 Date: 2026-08-12
 Operational phase: E0
 Lot: `p0-bootstrap`
-Branch under test: `engine-p0-bootstrap`
+Integrated branch: `engine`
 Base parent: `fcee715a2d99517f00aacf7d8ce2797658194f83`
+Merge commit: `7715a7f7897a3058473732915e372b9835317d17`
 Declared profile: Linux x86-64 core CPU
 
 ## Disposition
@@ -16,8 +17,11 @@ The mandatory E0/core-CPU acceptance set passed locally. The first hosted runs
 `pdftotext`. After correction, published source SHA
 `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` passed the complete Engine workflow
 in run `31581879387` and the report workflow in run `31581879373`. This report
-does not claim E1, P0/G1, branch-protection compliance, complete public-language
-compliance, SALOME, GPU, HPC, vulnerability-scan, or MVX conformance.
+is closed `PASS`: PR #4 integrated the lot into `engine` at merge
+`7715a7f7897a3058473732915e372b9835317d17`, and the resulting Engine push run
+`31582827407` passed. It does not claim E1, P0/G1, branch-protection compliance,
+complete public-language compliance, SALOME, GPU, HPC, vulnerability-scan, or
+MVX conformance.
 
 ## Frozen inputs
 
@@ -63,6 +67,8 @@ PETSc, or other target domain runtime was observed.
 | `git diff --check` | PASS | No whitespace errors in the E0 change set. |
 | GitHub Actions Engine run `31581879387` on SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` | PASS | Jobs `94066599023` (Python 3.12), `94066599003` (Python 3.13), `94066599046` (source hygiene), `94066599158` (native GCC/C++20), and `94066599178` (REUSE) completed with every step successful. |
 | GitHub Actions report run `31581879373` on SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` | PASS | Job `94066598895` completed with every step successful; transient Phase 1 artifact `9135485164` (373,119 bytes) and Phase 2 artifact `9135485442` (604,306 bytes) expire 2026-11-10 and are not the sole durable proof. Committed reproducible reports, source, locks, and this run/job record remain durable. |
+| PR #4 merge into `engine` | PASS | Merge `7715a7f7897a3058473732915e372b9835317d17`, tree `1a2c31b55e284edd521616c3fec7a7f017b883eb`, parents `fcee715a2d99517f00aacf7d8ce2797658194f83` and `66a3526f3ed5dd4263e16fbe333a4da41041f1fb`. |
+| GitHub Actions Engine push run `31582827407` on merge `7715a7f7897a3058473732915e372b9835317d17` | PASS | Jobs `94069646681` (native), `94069646723` (Python 3.13), `94069646761` (hygiene), `94069646822` (Python 3.12), and `94069646871` (REUSE) completed successfully. |
 
 The sanitizer run did not execute leak detection because LeakSanitizer is not
 reliable under the observed ptrace-constrained environment. No skip, mock,
@@ -80,6 +86,7 @@ compile-only result, or older result is promoted to `PASS`.
 | Hosted source hygiene job | PASS | Corrective Engine run `31581879387`, job `94066599046`, executed successfully on the same source SHA. |
 | Hosted REUSE job | PASS | Corrective Engine run `31581879387`, job `94066599178`, executed successfully on the same source SHA. |
 | Hosted report job | PASS | Corrective report run `31581879373`, job `94066598895`, executed successfully on the same source SHA. |
+| `engine` integration | PASS | PR #4 merged at `7715a7f7897a3058473732915e372b9835317d17`; push run `31582827407` passed all five Engine jobs. |
 | Public English language policy | FAIL | Root Engine and contribution material is English, but legacy Phase 1/2 guides and documents remain French under R-021. |
 | Vulnerability analysis | NOT_RUN | No pinned vulnerability scanner was executed. |
 | LeakSanitizer | NOT_RUN | Environment limitation; excluded from the sanitizer PASS. |
@@ -91,7 +98,8 @@ compile-only result, or older result is promoted to `PASS`.
 
 ## Next idempotent action
 
-Publish this evidence-only follow-up to `engine-p0-bootstrap`, verify its remote
-SHA and required PR #4 checks, then integrate through the lot-to-`engine` pull
-request only when that follow-up is green. Never merge `engine` into the
-default branch under this authorization.
+Begin the E1 canonical-JSON/CAS/replay lot from merge
+`7715a7f7897a3058473732915e372b9835317d17`, while implementing only the E2
+protocol/fake-agent contract surface in parallel. Keep real SALOME 9.16
+execution `NOT_RUN`. Never merge `engine` into the default branch under this
+authorization.

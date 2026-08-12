@@ -4,12 +4,12 @@
 
 Last updated: 2026-08-12
 Owner: Dr Olivier Ami
-Current operational phase: E0
-Current lot: `p0-bootstrap`
-Work branch: `engine-p0-bootstrap`
-Integration branch: `engine` (created from the verified base after native smoke)
+Current operational phase: E1, with E2 protocol-only work in parallel
+Current lot: `canonical-json-cas-replay`
+Work branch: `engine`
+Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
-Base commit: `fcee715a2d99517f00aacf7d8ce2797658194f83`
+E1/E2 base commit: `7715a7f7897a3058473732915e372b9835317d17`
 
 ## Objective
 
@@ -45,17 +45,20 @@ validated specification is received.
   `fcee715a2d99517f00aacf7d8ce2797658194f83`.
 - `origin` was validated as the canonical fetch/push URL. The remote `engine`
   branch did not exist initially and was created at the verified base.
-  `origin/engine-p0-bootstrap` is published; PR #4 targets `engine` and remains
-  unmerged.
+  `origin/engine-p0-bootstrap` was published and PR #4 merged it into `engine`.
+  The merge is `7715a7f7897a3058473732915e372b9835317d17`, with tree
+  `1a2c31b55e284edd521616c3fec7a7f017b883eb` and parents
+  `fcee715a2d99517f00aacf7d8ce2797658194f83` and
+  `66a3526f3ed5dd4263e16fbe333a4da41041f1fb`.
 - The authenticated GitHub app identity `aminoside` was observed with
   administrative and push capability. No branch protection/ruleset was found.
   This is a governance gap, so lot-to-`engine` integration must use PR review
   and required checks as a compensating discipline.
 - The `gh` executable is absent and a local command-line push is unauthenticated.
   The authenticated app publication path successfully published and verified
-  the checkpoint tree. Corrective source commit
-  `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` is the current remote authority;
-  the durable evidence follow-up intentionally does not claim its own commit SHA.
+  the checkpoint tree. The authoritative integration checkpoint is merge
+  `7715a7f7897a3058473732915e372b9835317d17`; the current durable follow-up does
+  not attempt to record the SHA of the commit that will contain itself.
 - Initial hosted-state audit found no `engine`/`engine-p*` branch, tag, or
   release; one unrelated draft PR #3 (`agent/add-official-brand-assets` to
   `main`) was preserved; the only observed workflow was the existing report
@@ -85,10 +88,15 @@ validated specification is received.
   hashes the exact E0 layout extraction so ordinary offline replay needs no
   implicit system package; explicit `--extract-pdf` remains the provenance
   audit. The earlier failures remain historical executed results, not skips.
+- PR #4 was merged into `engine` at
+  `7715a7f7897a3058473732915e372b9835317d17`. Engine push run `31582827407`
+  then passed native job `94069646681`, Python 3.13 job `94069646723`, hygiene
+  job `94069646761`, Python 3.12 job `94069646822`, and REUSE job
+  `94069646871`.
 
 ## Milestones
 
-### E0 — audit, capability, and resumable bootstrap (integration pending)
+### E0 — audit, capability, and resumable bootstrap (PASS, integrated)
 
 Deliverables:
 
@@ -130,9 +138,12 @@ All listed local commands passed; the
 compact report is retained in `docs/engine/evidence/E0_GATE_REPORT.md`. The
 requirements lock and retained-layout path also passed on hosted Python 3.12
 and 3.13 in corrective Engine run `31581879387`; report run `31581879373`
-passed. Source SBOM generation is independent of the executing
-Python/compiler patch level. Vulnerability analysis, LSan and the unavailable
-optional profiles remain `NOT_RUN`.
+passed. PR #4 then integrated E0 at
+`7715a7f7897a3058473732915e372b9835317d17`, and the resulting `engine` push
+run `31582827407` passed all five jobs. Source SBOM generation is independent
+of the executing Python/compiler patch level. Vulnerability analysis, LSan and
+the unavailable optional profiles remain `NOT_RUN`. Branch-protection and
+R-021 language-policy controls remain `FAIL` without changing E0 core-CPU PASS.
 
 ### E1 — core foundations and P0
 
@@ -146,12 +157,19 @@ Entry: E0 CPU bootstrap is green and integrated into `engine`.
 Exit: all mandatory E1/core-cpu checks `PASS`; optional profiles remain
 explicitly `NOT_RUN` or `BLOCKED`.
 
+Current bounded lot: implement canonical JSON, SHA-256 CAS storage, immutable
+URI/size/hash references, and deterministic replay manifests, with invalid
+input, collision/integrity, idempotence, and golden-vector tests. Do not add
+format adapters, GPU work, or MVX semantics to this lot.
+
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
 Implement protocol and a clearly named fake contract agent. Execute real SALOME
 9.16 headless tests only in a verified isolated runtime. Current environment has
 no SALOME, so real `ProbeCapabilities`, SHAPER/GEOM, SMESH/MED, MEDCoupling, and
 >2 GiB transfer results are `NOT_RUN`; mocks cannot change that status.
+Only the versioned JSON/URI/hash protocol, capability schema, explicitly named
+fake agent, and contract tests may proceed in parallel with the current E1 lot.
 
 ### E3 — vertical imports and fidelity
 
@@ -243,8 +261,8 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Publish this evidence-only follow-up to `engine-p0-bootstrap`, verify its remote
-SHA and all required PR #4 checks, then integrate by PR into `engine` only when
-that follow-up is green. Start E1 and the protocol-only E2 lot after that
-integration; never merge `engine` into the default branch without separate
-owner instruction.
+Create the bounded E1 canonical-JSON/CAS/replay implementation lot from
+`7715a7f7897a3058473732915e372b9835317d17`, and in parallel implement only the
+E2 protocol/fake-agent contract surface. Keep real SALOME 9.16 execution
+`NOT_RUN`; never merge `engine` into the default branch without separate owner
+instruction.

@@ -3,8 +3,8 @@
   "license": "CC-BY-4.0",
   "updated_at": "2026-08-12",
   "project_state": "IN_PROGRESS",
-  "phase": "E0",
-  "lot": "p0-bootstrap",
+  "phase": "E1",
+  "lot": "canonical-json-cas-replay",
   "remote": {
     "canonical_name": "origin",
     "canonical_url": "https://github.com/aminoside/morphoia.git",
@@ -13,16 +13,16 @@
     "default_branch": "main",
     "integration_branch": "engine",
     "publication_status": "PASS",
-    "publication_note": "The authenticated app published corrective source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc and verified its exact tree; Engine run 31581879387 and report run 31581879373 passed"
+    "publication_note": "E0 was integrated through PR 4 at merge 7715a7f7897a3058473732915e372b9835317d17; engine push run 31582827407 passed all five jobs"
   },
   "git": {
-    "branch": "engine-p0-bootstrap",
-    "upstream": "origin/engine-p0-bootstrap",
-    "base_parent": "fcee715a2d99517f00aacf7d8ce2797658194f83",
+    "branch": "engine",
+    "upstream": "origin/engine",
+    "base_parent": "7715a7f7897a3058473732915e372b9835317d17",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "8b41fa8435e5812b5bd10ae92e35878d9803e0bc",
-    "note": "This is the remotely verified corrective source commit, not the SHA of the later evidence-only commit containing this file; Git, remote refs, tags, and pull requests are authoritative"
+    "published_commit_sha": "7715a7f7897a3058473732915e372b9835317d17",
+    "note": "This is the remotely verified E0 integration merge and E1 parent, not the SHA of the later durable-state commit containing this file; its tree is 1a2c31b55e284edd521616c3fec7a7f017b883eb and its parents are fcee715a2d99517f00aacf7d8ce2797658194f83 and 66a3526f3ed5dd4263e16fbe333a4da41041f1fb"
   },
   "tasks": {
     "completed": [
@@ -45,13 +45,18 @@
       "versioned_e0_gate_report",
       "authenticated_checkpoint_publication_and_remote_tree_verification",
       "first_hosted_check_execution_and_failure_capture",
-      "retained_layout_ci_correction_and_hosted_reverification"
+      "retained_layout_ci_correction_and_hosted_reverification",
+      "e0_durable_evidence_integrated_in_pr4",
+      "engine_integration_after_green_checks",
+      "engine_push_post_merge_verification"
     ],
     "in_progress": [
-      "evidence_only_followup_publication_and_hosted_verification"
+      "e1_canonical_json_cas_replay",
+      "e2_protocol_only_contract"
     ],
     "remaining": [
-      "engine_integration_after_green_checks"
+      "e1_remaining_core_foundations",
+      "e2_real_salome_execution_when_runtime_available"
     ]
   },
   "environment": {
@@ -102,7 +107,7 @@
       },
       {
         "path": "docs/engine",
-        "sha256": "e59b172f3e7b9e9bac3074f88ba373a5365f15ffa24635b95e976005e89224d1",
+        "sha256": "fb1af6be65c81055807b220e606e320caf7e303027f2a5a4d11d69ea6b97f5b2",
         "status": "PASS"
       }
     ],
@@ -163,6 +168,16 @@
       "command": "GitHub Actions report run 31581879373 on source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc",
       "result": "PASS",
       "summary": "Report job 94066598895 completed with every step successful; transient Phase 1 artifact 9135485164 was 373119 bytes and Phase 2 artifact 9135485442 was 604306 bytes, both expire 2026-11-10 and are supplementary rather than the sole durable proof"
+    },
+    {
+      "command": "PR 4 merge into engine at 7715a7f7897a3058473732915e372b9835317d17",
+      "result": "PASS",
+      "summary": "Merge tree 1a2c31b55e284edd521616c3fec7a7f017b883eb has parents fcee715a2d99517f00aacf7d8ce2797658194f83 and 66a3526f3ed5dd4263e16fbe333a4da41041f1fb"
+    },
+    {
+      "command": "GitHub Actions engine push run 31582827407 on merge 7715a7f7897a3058473732915e372b9835317d17",
+      "result": "PASS",
+      "summary": "Native job 94069646681, Python 3.13 job 94069646723, hygiene job 94069646761, Python 3.12 job 94069646822, and REUSE job 94069646871 completed successfully"
     },
     {
       "command": "python scripts/generate_engine_sbom.py --check",
@@ -272,6 +287,38 @@
       "status": "PASS"
     },
     {
+      "id": "E0-INTEGRATION-MERGE",
+      "profile": "engine-integration",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-ENGINE-PUSH-NATIVE",
+      "profile": "core-cpu-native-gcc-cxx20",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-ENGINE-PUSH-PYTHON-312",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS",
+      "count": 50
+    },
+    {
+      "id": "E0-ENGINE-PUSH-PYTHON-313",
+      "profile": "core-cpu-python-3.13",
+      "status": "PASS",
+      "count": 50
+    },
+    {
+      "id": "E0-ENGINE-PUSH-HYGIENE",
+      "profile": "source-hygiene",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-ENGINE-PUSH-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS"
+    },
+    {
       "id": "E0-GITHUB-QUOTAS",
       "profile": "hosted-resources",
       "status": "NOT_RUN",
@@ -342,19 +389,19 @@
     },
     {
       "uri": "repo:docs/engine/evidence/E0_GATE_REPORT.md",
-      "sha256": "7f3316f4649497f186a3d84e0ae33f2a2e7a951339cf20bda69577a24cff1ebf",
+      "sha256": "737e3da2fc23372ab165d7e6f3823d945074502fe0bcd889d47188b250a99799",
       "status": "PASS",
       "note": "Versioned compact gate report records environment, commands, evidence truth, and optional-profile limits"
     },
     {
       "uri": "repo:artifacts/manifest.json",
-      "sha256": "f7388aff3e4c1f745332309bd30d899018c22f672f41c5e2c1e40fae356185c4",
+      "sha256": "df017341a5bdbb43dacd8a39bcb0cc5037c2fc885e60cb568392f7c93f8a312d",
       "status": "PASS",
       "note": "Artifact manifest resolves exact paths, sizes, hashes, provenance, and per-artifact licensing"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e0-source-native.cdx.json",
-      "sha256": "18952f88f1ebde81c3b62947c9c67bf935ac25b8b61c1ca7608d6cc8d2b92ace",
+      "sha256": "30db23e7e3fc1edacce0627386152d0246f909adf0ffbefc7b441926b583414b",
       "status": "PASS",
       "note": "Deterministic CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
     }
@@ -369,7 +416,13 @@
     "github-actions:job:94066599158",
     "github-actions:job:94066599178",
     "github-actions:31581879373",
-    "github-actions:job:94066598895"
+    "github-actions:job:94066598895",
+    "github-actions:31582827407",
+    "github-actions:job:94069646681",
+    "github-actions:job:94069646723",
+    "github-actions:job:94069646761",
+    "github-actions:job:94069646822",
+    "github-actions:job:94069646871"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -399,10 +452,21 @@
       "reason": "Engine run 31581879387 and report run 31581879373 passed on corrective source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc"
     },
     {
+      "name": "E0 engine integration and post-merge checks",
+      "status": "PASS",
+      "reason": "PR 4 merged at 7715a7f7897a3058473732915e372b9835317d17 and engine push run 31582827407 passed all five jobs"
+    },
+    {
+      "name": "SALOME 9.16 runtime",
+      "status": "NOT_RUN",
+      "blocking_scope": "E2 real ProbeCapabilities, SHAPER/GEOM, SMESH/MED, MEDCoupling, and large-artifact execution only",
+      "reason": "Runtime is absent; protocol and explicitly fake contract-agent work may proceed without upgrading real SALOME status"
+    },
+    {
       "name": "validated Morphoia MVX specification",
       "status": "BLOCKED",
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Publish this evidence-only follow-up to origin/engine-p0-bootstrap, verify its remote SHA and required PR 4 checks, then integrate into engine only after that follow-up passes"
+  "next_action": "Start the bounded E1 canonical-JSON, CAS, and replay lot from 7715a7f7897a3058473732915e372b9835317d17 while implementing only the E2 protocol and fake-agent contract; keep real SALOME NOT_RUN"
 }
