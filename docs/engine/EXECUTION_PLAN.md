@@ -53,8 +53,9 @@ validated specification is received.
   and required checks as a compensating discipline.
 - The `gh` executable is absent and a local command-line push is unauthenticated.
   The authenticated app publication path successfully published and verified
-  the checkpoint tree; commit `95ba898d1dc3a1a35c15343b59f832808d850396`
-  is the remote authority before the current corrective commit.
+  the checkpoint tree. Corrective source commit
+  `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` is the current remote authority;
+  the durable evidence follow-up intentionally does not claim its own commit SHA.
 - Initial hosted-state audit found no `engine`/`engine-p*` branch, tag, or
   release; one unrelated draft PR #3 (`agent/add-official-brand-assets` to
   `main`) was preserved; the only observed workflow was the existing report
@@ -76,16 +77,18 @@ validated specification is received.
   hash-locked E0 dependencies, the combined 50-test Python/schema/evidence
   suite also passes on Python 3.12. Native direct and CMake 3.20.5 minimum paths,
   install/consumer, and fail-fast ASan/UBSan smoke pass. LSan remains `NOT_RUN`.
-- Hosted runs `31578405786` and `31578405812` executed the first checkpoint.
-  Native GCC, source hygiene, and REUSE jobs passed. Python 3.12, Python 3.13,
-  and report replay failed because the hosted image has no `pdftotext`. This is
-  an executed `FAIL`, not a skip. The correction retains and hashes the exact
-  E0 layout extraction so ordinary offline replay needs no implicit system
-  package; explicit `--extract-pdf` remains the provenance audit.
+- Hosted runs `31578405786` and `31578405812` executed the first checkpoint and
+  exposed the missing-`pdftotext` dependency. The corrective source SHA
+  `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` then passed all Engine jobs in run
+  `31581879387` (Python 3.12/3.13, source hygiene, native GCC/C++20, and REUSE)
+  and the report workflow in run `31581879373`. The correction retains and
+  hashes the exact E0 layout extraction so ordinary offline replay needs no
+  implicit system package; explicit `--extract-pdf` remains the provenance
+  audit. The earlier failures remain historical executed results, not skips.
 
 ## Milestones
 
-### E0 — audit, capability, and resumable bootstrap (hosted correction pending)
+### E0 — audit, capability, and resumable bootstrap (integration pending)
 
 Deliverables:
 
@@ -123,14 +126,13 @@ bash scripts/scan-secrets.sh
 git diff --check
 ```
 
-All listed local commands passed for the first published checkpoint; the
+All listed local commands passed; the
 compact report is retained in `docs/engine/evidence/E0_GATE_REPORT.md`. The
-requirements lock was also resolved with Python 3.13 wheel/hash compatibility.
-Hosted 3.13 then executed but failed solely at the missing-Poppler regeneration
-test; the retained-layout correction must be replayed before its status can
-become PASS. Source SBOM generation is independent
-of the executing Python/compiler patch level. Vulnerability analysis, LSan and
-the unavailable optional profiles remain `NOT_RUN`.
+requirements lock and retained-layout path also passed on hosted Python 3.12
+and 3.13 in corrective Engine run `31581879387`; report run `31581879373`
+passed. Source SBOM generation is independent of the executing
+Python/compiler patch level. Vulnerability analysis, LSan and the unavailable
+optional profiles remain `NOT_RUN`.
 
 ### E1 — core foundations and P0
 
@@ -241,8 +243,8 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Validate and publish the deterministic retained-layout correction to
-`engine-p0-bootstrap`, verify its remote SHA, rerun all PR #4 checks, and
-integrate by PR into `engine` only when green. Start E1 and the protocol-only E2
-lot after that integration; never merge `engine` into the default branch
-without separate owner instruction.
+Publish this evidence-only follow-up to `engine-p0-bootstrap`, verify its remote
+SHA and all required PR #4 checks, then integrate by PR into `engine` only when
+that follow-up is green. Start E1 and the protocol-only E2 lot after that
+integration; never merge `engine` into the default branch without separate
+owner instruction.

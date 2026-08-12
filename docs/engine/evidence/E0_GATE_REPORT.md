@@ -11,13 +11,13 @@ Declared profile: Linux x86-64 core CPU
 
 ## Disposition
 
-The mandatory E0/core-CPU acceptance set passed locally. The first checkpoint
-was published and its remote tree verified, but hosted runs `31578405786` and
-`31578405812` are `FAIL`: the native, hygiene, and REUSE jobs passed while the
-Python 3.12, Python 3.13, and report jobs exposed an undeclared dependency on
-`pdftotext`. The corrective retained-layout tree is not eligible for
-integration until local and hosted replay pass. This report does not claim E1,
-P0/G1, SALOME, GPU, HPC, vulnerability-scan, or MVX conformance.
+The mandatory E0/core-CPU acceptance set passed locally. The first hosted runs
+`31578405786` and `31578405812` exposed an undeclared dependency on
+`pdftotext`. After correction, published source SHA
+`8b41fa8435e5812b5bd10ae92e35878d9803e0bc` passed the complete Engine workflow
+in run `31581879387` and the report workflow in run `31581879373`. This report
+does not claim E1, P0/G1, branch-protection compliance, complete public-language
+compliance, SALOME, GPU, HPC, vulnerability-scan, or MVX conformance.
 
 ## Frozen inputs
 
@@ -61,6 +61,8 @@ PETSc, or other target domain runtime was observed.
 | Hash-locked REUSE 6.2.0 `lint` | PASS | 161/161 repository files carry resolved copyright and license metadata. |
 | `bash scripts/scan-secrets.sh` | PASS | Bounded tracked/untracked text signature scan; not a complete secret or PII assessment. |
 | `git diff --check` | PASS | No whitespace errors in the E0 change set. |
+| GitHub Actions Engine run `31581879387` on SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` | PASS | Jobs `94066599023` (Python 3.12), `94066599003` (Python 3.13), `94066599046` (source hygiene), `94066599158` (native GCC/C++20), and `94066599178` (REUSE) completed with every step successful. |
+| GitHub Actions report run `31581879373` on SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` | PASS | Job `94066598895` completed with every step successful; transient Phase 1 artifact `9135485164` (373,119 bytes) and Phase 2 artifact `9135485442` (604,306 bytes) expire 2026-11-10 and are not the sole durable proof. Committed reproducible reports, source, locks, and this run/job record remain durable. |
 
 The sanitizer run did not execute leak detection because LeakSanitizer is not
 reliable under the observed ptrace-constrained environment. No skip, mock,
@@ -72,9 +74,13 @@ compile-only result, or older result is promoted to `PASS`.
 |---|---|---|
 | E0 core CPU bootstrap | PASS | Native ABI/runtime, CMake package/consumer, Python/schema, sanitizer, evidence, and license checks executed. |
 | Branch protection | FAIL | Inspection executed and found no repository protection/ruleset; PR plus checks is only a compensating control. |
-| Hosted Python 3.12 job | FAIL | Run `31578405786` reached the regeneration test and failed because `pdftotext` is absent on the runner; corrective replay is pending. |
-| Hosted Python 3.13 job | FAIL | Run `31578405786` reached the same test under Python 3.13.14; this is real execution, not a compatibility PASS. |
-| Hosted report job | FAIL | Run `31578405812` failed in the unified suite for the same missing host tool; report branding itself was not the cause. |
+| Hosted Python 3.12 job | PASS | Corrective Engine run `31581879387`, job `94066599023`, executed successfully on source SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc`. |
+| Hosted Python 3.13 job | PASS | Corrective Engine run `31581879387`, job `94066599003`, executed successfully on the same source SHA. |
+| Hosted native GCC/C++20 job | PASS | Corrective Engine run `31581879387`, job `94066599158`, executed successfully on the same source SHA. |
+| Hosted source hygiene job | PASS | Corrective Engine run `31581879387`, job `94066599046`, executed successfully on the same source SHA. |
+| Hosted REUSE job | PASS | Corrective Engine run `31581879387`, job `94066599178`, executed successfully on the same source SHA. |
+| Hosted report job | PASS | Corrective report run `31581879373`, job `94066598895`, executed successfully on the same source SHA. |
+| Public English language policy | FAIL | Root Engine and contribution material is English, but legacy Phase 1/2 guides and documents remain French under R-021. |
 | Vulnerability analysis | NOT_RUN | No pinned vulnerability scanner was executed. |
 | LeakSanitizer | NOT_RUN | Environment limitation; excluded from the sanitizer PASS. |
 | SALOME 9.16 | NOT_RUN | Runtime absent. |
@@ -85,7 +91,7 @@ compile-only result, or older result is promoted to `PASS`.
 
 ## Next idempotent action
 
-Finish the retained-layout correction, replay the complete local gate, publish
-it to `engine-p0-bootstrap`, verify the remote commit, and rerun every PR #4
-check. Integrate through the lot-to-`engine` pull request only when green.
-Never merge `engine` into the default branch under this authorization.
+Publish this evidence-only follow-up to `engine-p0-bootstrap`, verify its remote
+SHA and required PR #4 checks, then integrate through the lot-to-`engine` pull
+request only when that follow-up is green. Never merge `engine` into the
+default branch under this authorization.

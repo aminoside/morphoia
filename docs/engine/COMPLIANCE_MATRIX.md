@@ -16,8 +16,8 @@ does not replace per-requirement links and does not assert G1-G5 completion.
 | User changes and worktrees preserved | E0 audit | worktree and ref inspection | `RISKS.md` R-012 | PASS |
 | Bootstrap work isolated from default branch | E0 Git | branch/upstream inspection | `engine-p0-bootstrap` | PASS |
 | Protected integration branch | Governance | ruleset/protection inspection | inspection executed; no protection observed | FAIL |
-| Authenticated checkpoint publication | Publication | app publication and remote tree verification | checkpoint `95ba898d1dc3a1a35c15343b59f832808d850396` and PR #4 published | PASS |
-| Hosted corrective checks | Publication | GitHub Actions runs `31578405786`, `31578405812` | first runs exposed missing `pdftotext`; retained-layout correction awaits rerun | FAIL |
+| Authenticated checkpoint publication | Publication | app publication and remote tree verification | corrective source checkpoint `8b41fa8435e5812b5bd10ae92e35878d9803e0bc` and PR #4 published | PASS |
+| Hosted corrective checks | Publication | GitHub Actions runs `31581879387`, `31581879373` | corrective source SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc`: Python 3.12/3.13, hygiene, native GCC/C++20, REUSE, and report jobs all passed | PASS |
 | Initial branches/tags/PR/releases/workflows audit | Hosted-state audit | connector inspection | no Engine refs/releases; unrelated PR #3 preserved; existing report workflow observed | PASS |
 | GitHub Actions/artifact/LFS/API quotas | Capability | quota inspection | connector did not expose limits; no paid capacity assumed | NOT_RUN |
 | Network capability | Capability | environment policy and connector probe | restricted allowlist plus authenticated repository connector | PASS |
@@ -57,9 +57,10 @@ an unavailable optional profile to `PASS`.
 
 ## E0 disposition
 
-The local mandatory E0/core-CPU checks pass and the first checkpoint was
-published with remote tree equality. Its hosted Python/report checks executed
-and failed on an implicit `pdftotext` dependency. The gate stays operationally
-open until the retained-layout correction is published and every corrective
-check passes. Full per-requirement test/evidence mapping is a living E1+ task
-and no G1-G5 contractual gate is claimed.
+The local mandatory E0/core-CPU checks pass. Corrective source SHA
+`8b41fa8435e5812b5bd10ae92e35878d9803e0bc` was published with remote tree
+equality and passed Engine run `31581879387` and report run `31581879373`.
+The gate stays operationally open only for publication and hosted verification
+of this evidence-only follow-up, then PR #4 integration. Branch protection and
+the R-021 public-language control remain `FAIL`. Full per-requirement
+test/evidence mapping is a living E1+ task and no G1-G5 gate is claimed.

@@ -13,7 +13,7 @@
     "default_branch": "main",
     "integration_branch": "engine",
     "publication_status": "PASS",
-    "publication_note": "The authenticated app published the first checkpoint and verified its exact tree; hosted checks executed and failed on the missing-pdftotext replay dependency, so the corrective tree remains pending"
+    "publication_note": "The authenticated app published corrective source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc and verified its exact tree; Engine run 31581879387 and report run 31581879373 passed"
   },
   "git": {
     "branch": "engine-p0-bootstrap",
@@ -21,8 +21,8 @@
     "base_parent": "fcee715a2d99517f00aacf7d8ce2797658194f83",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "95ba898d1dc3a1a35c15343b59f832808d850396",
-    "note": "This is the previous remotely verified checkpoint, not the SHA of the commit containing this file; Git, remote refs, tags, and pull requests are authoritative"
+    "published_commit_sha": "8b41fa8435e5812b5bd10ae92e35878d9803e0bc",
+    "note": "This is the remotely verified corrective source commit, not the SHA of the later evidence-only commit containing this file; Git, remote refs, tags, and pull requests are authoritative"
   },
   "tasks": {
     "completed": [
@@ -44,13 +44,13 @@
       "bounded_secret_signature_scan",
       "versioned_e0_gate_report",
       "authenticated_checkpoint_publication_and_remote_tree_verification",
-      "first_hosted_check_execution_and_failure_capture"
-    ],
-    "in_progress": [
+      "first_hosted_check_execution_and_failure_capture",
       "retained_layout_ci_correction_and_hosted_reverification"
     ],
+    "in_progress": [
+      "evidence_only_followup_publication_and_hosted_verification"
+    ],
     "remaining": [
-      "corrective_remote_sha_and_ci_verification",
       "engine_integration_after_green_checks"
     ]
   },
@@ -67,7 +67,7 @@
     "python": "3.12.13",
     "cmake_validation": "hash-locked CMake 3.20.5",
     "reuse_validation": "hash-locked REUSE 6.2.0 with Poetry Core 2.4.1 build backend",
-    "pdf_text_validation": "pdftotext 24.02.0 from poppler-utils 24.02.0-1ubuntu9.9 executed locally; hosted runner did not provide pdftotext",
+    "pdf_text_validation": "pdftotext 24.02.0 from poppler-utils 24.02.0-1ubuntu9.9 executed locally; hosted replay uses the retained hash-verified layout and passed without requiring pdftotext",
     "network": "restricted allowlisted egress; authenticated repository connector available; unrestricted public egress not probed",
     "github_hosted_state": "no initial Engine branch, tag, or release; unrelated draft PR 3 preserved; existing report workflow and green default-branch run observed",
     "github_quotas": "NOT_RUN: Actions, artifact, LFS, storage, and API quota limits were not exposed by the connector",
@@ -102,7 +102,7 @@
       },
       {
         "path": "docs/engine",
-        "sha256": "238f20542b0e9028621979103f41e0dc15292ba9bbc5a70baedbef4c96fc1724",
+        "sha256": "e59b172f3e7b9e9bac3074f88ba373a5365f15ffa24635b95e976005e89224d1",
         "status": "PASS"
       }
     ],
@@ -153,6 +153,16 @@
       "command": "GitHub Actions run 31578405812",
       "result": "FAIL",
       "summary": "Report validation reached the unified suite and failed on the same missing-pdftotext regeneration path"
+    },
+    {
+      "command": "GitHub Actions Engine run 31581879387 on source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc",
+      "result": "PASS",
+      "summary": "Python 3.12 job 94066599023, Python 3.13 job 94066599003, source hygiene job 94066599046, native GCC/C++20 job 94066599158, and REUSE job 94066599178 completed with every step successful"
+    },
+    {
+      "command": "GitHub Actions report run 31581879373 on source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc",
+      "result": "PASS",
+      "summary": "Report job 94066598895 completed with every step successful; transient Phase 1 artifact 9135485164 was 373119 bytes and Phase 2 artifact 9135485442 was 604306 bytes, both expire 2026-11-10 and are supplementary rather than the sole durable proof"
     },
     {
       "command": "python scripts/generate_engine_sbom.py --check",
@@ -232,20 +242,34 @@
     {
       "id": "E0-HOSTED-PYTHON-312",
       "profile": "core-cpu-python-3.12",
-      "status": "FAIL",
-      "reason": "Run 31578405786 executed and failed at requirements regeneration because pdftotext was absent; corrective retained-layout replay awaits execution"
+      "status": "PASS",
+      "count": 50
     },
     {
       "id": "E0-HOSTED-PYTHON-313",
       "profile": "core-cpu-python-3.13",
-      "status": "FAIL",
-      "reason": "Run 31578405786 executed on Python 3.13.14 and failed at the same missing-pdftotext path; this is not a compatibility PASS"
+      "status": "PASS",
+      "count": 50
     },
     {
       "id": "E0-HOSTED-REPORT",
       "profile": "report-validation",
-      "status": "FAIL",
-      "reason": "Run 31578405812 executed and failed in the unified requirements regeneration test because pdftotext was absent"
+      "status": "PASS"
+    },
+    {
+      "id": "E0-HOSTED-NATIVE",
+      "profile": "core-cpu-native-gcc-cxx20",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-HOSTED-HYGIENE",
+      "profile": "source-hygiene",
+      "status": "PASS"
+    },
+    {
+      "id": "E0-HOSTED-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS"
     },
     {
       "id": "E0-GITHUB-QUOTAS",
@@ -318,26 +342,34 @@
     },
     {
       "uri": "repo:docs/engine/evidence/E0_GATE_REPORT.md",
-      "sha256": "de6df3d085b768941f2d9485d7a27b9dd125de713d08109582d9fd6e5eab5c5b",
+      "sha256": "7f3316f4649497f186a3d84e0ae33f2a2e7a951339cf20bda69577a24cff1ebf",
       "status": "PASS",
       "note": "Versioned compact gate report records environment, commands, evidence truth, and optional-profile limits"
     },
     {
       "uri": "repo:artifacts/manifest.json",
-      "sha256": "d8108a05d5180fa9a13274822cf4b17ab2f8b7f1ca69a3e341db92428e7160e7",
+      "sha256": "f7388aff3e4c1f745332309bd30d899018c22f672f41c5e2c1e40fae356185c4",
       "status": "PASS",
       "note": "Artifact manifest resolves exact paths, sizes, hashes, provenance, and per-artifact licensing"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e0-source-native.cdx.json",
-      "sha256": "62fd5d0a332598582838501f6cbb30f67b387681a7be47a9674371dd8acaf137",
+      "sha256": "18952f88f1ebde81c3b62947c9c67bf935ac25b8b61c1ca7608d6cc8d2b92ace",
       "status": "PASS",
       "note": "Deterministic CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
     }
   ],
   "job_ids": [
     "github-actions:31578405786",
-    "github-actions:31578405812"
+    "github-actions:31578405812",
+    "github-actions:31581879387",
+    "github-actions:job:94066599003",
+    "github-actions:job:94066599023",
+    "github-actions:job:94066599046",
+    "github-actions:job:94066599158",
+    "github-actions:job:94066599178",
+    "github-actions:31581879373",
+    "github-actions:job:94066598895"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -352,20 +384,19 @@
     "SALOME, GPU, container, HPC, and domain runtimes are absent and remain NOT_RUN",
     "Vulnerability analysis and LeakSanitizer were not executed",
     "GitHub Actions, artifact, LFS, storage, and API quotas were not exposed and remain NOT_RUN",
-    "The first hosted checkpoint exposed an undeclared pdftotext dependency; its Python 3.12, Python 3.13, and report jobs remain FAIL until the retained-layout correction passes",
+    "The first hosted checkpoint exposed an undeclared pdftotext dependency; the retained-layout correction subsequently passed hosted Python 3.12, Python 3.13, native, hygiene, REUSE, and report execution",
     "Legacy Phase 1/2 guides and documents remain French and require a bounded translation lot before full public-language-policy compliance"
   ],
   "external_dependencies": [
     {
       "name": "authenticated GitHub app publication",
       "status": "PASS",
-      "reason": "The first checkpoint and exact remote tree were published and verified"
+      "reason": "Corrective source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc and its exact remote tree were published and verified"
     },
     {
       "name": "hosted corrective checks",
-      "status": "FAIL",
-      "blocking_scope": "E0 lot integration into engine only",
-      "reason": "The first runs failed on missing pdftotext; the retained-layout correction has not yet been published or executed remotely"
+      "status": "PASS",
+      "reason": "Engine run 31581879387 and report run 31581879373 passed on corrective source SHA 8b41fa8435e5812b5bd10ae92e35878d9803e0bc"
     },
     {
       "name": "validated Morphoia MVX specification",
@@ -373,5 +404,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Validate and publish the retained-layout correction to origin/engine-p0-bootstrap, verify its remote SHA and rerun PR 4 checks, then integrate into engine only after every required check passes"
+  "next_action": "Publish this evidence-only follow-up to origin/engine-p0-bootstrap, verify its remote SHA and required PR 4 checks, then integrate into engine only after that follow-up passes"
 }
