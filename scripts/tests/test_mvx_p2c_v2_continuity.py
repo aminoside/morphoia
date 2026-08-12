@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import contextlib
+import copy
 import hashlib
 import importlib.util
 import io
@@ -12,6 +13,7 @@ import tarfile
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -22,6 +24,15 @@ assert SPEC is not None and SPEC.loader is not None
 continuity = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = continuity
 SPEC.loader.exec_module(continuity)
+
+PROJECTOR_SCRIPT = Path(__file__).resolve().parents[1] / "mvx_p2c_scientific_projection.py"
+PROJECTOR_SPEC = importlib.util.spec_from_file_location(
+    "mvx_p2c_scientific_projection_continuity_integration", PROJECTOR_SCRIPT
+)
+assert PROJECTOR_SPEC is not None and PROJECTOR_SPEC.loader is not None
+scientific_projection = importlib.util.module_from_spec(PROJECTOR_SPEC)
+sys.modules[PROJECTOR_SPEC.name] = scientific_projection
+PROJECTOR_SPEC.loader.exec_module(scientific_projection)
 
 
 def _sha(payload: bytes) -> str:
@@ -678,6 +689,7 @@ class P2cV2ContinuityTests(unittest.TestCase):
             set(manifest),
             {
                 "campaign_id",
+                "persistent_signer_public_key_ed25519_hex",
                 "preregistration_value_sha256",
                 "schema",
                 "schema_version",
@@ -687,7 +699,25 @@ class P2cV2ContinuityTests(unittest.TestCase):
             },
         )
         self.assertEqual(manifest["schema"], continuity.CONTINUITY_SCHEMA)
+        self.assertEqual(
+            manifest["persistent_signer_public_key_ed25519_hex"], self.fixture.public_key
+        )
         self.assertEqual(len(manifest["slots"]), 4)
+        preregistration = json.loads(
+            (self.fixture.repository / self.fixture.binding_paths["preregistration"]).read_bytes()
+        )
+        with mock.patch.object(scientific_projection, "V1_ROOT", self.fixture.v1_root):
+            self.assertEqual(
+                scientific_projection.validate_continuity_manifest(manifest, preregistration),
+                manifest,
+            )
+
+        mismatched_signer = copy.deepcopy(manifest)
+        mismatched_signer["persistent_signer_public_key_ed25519_hex"] = "0" * 64
+        with self.assertRaisesRegex(continuity.ContinuityError, "FINAL_CONTINUITY_IDENTITY"):
+            continuity._validate_final_continuity(
+                mismatched_signer, preregistration, self.fixture.public_key
+            )
         authentication = json.loads(authentication_path.read_bytes())["authentication"]
         self.assertEqual(
             authentication["context"]["prefreeze_bundle_raw_bytes_sha256"],

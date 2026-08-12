@@ -1897,6 +1897,7 @@ def freeze_continuity(
         )
     manifest = {
         "campaign_id": CAMPAIGN_ID,
+        "persistent_signer_public_key_ed25519_hex": public,
         "preregistration_value_sha256": _p2c_hash(preregistration),
         "schema": CONTINUITY_SCHEMA,
         "schema_version": SCHEMA_VERSION,
@@ -1904,7 +1905,7 @@ def freeze_continuity(
         "status": "FROZEN_BEFORE_FIRST_V2_CHILD",
         "v1_terminal_evidence_root_sha256": V1_ROOT,
     }
-    _validate_final_continuity(manifest, preregistration)
+    _validate_final_continuity(manifest, preregistration, public)
     authentication, payload = _authentication(
         CONTINUITY_SIGNATURE_DOMAIN,
         manifest,
@@ -2031,10 +2032,13 @@ def _validate_v2_plan(
 
 
 def _validate_final_continuity(
-    manifest: Mapping[str, Any], preregistration: Mapping[str, Any]
+    manifest: Mapping[str, Any],
+    preregistration: Mapping[str, Any],
+    persistent_signer_public_key: str,
 ) -> None:
     expected_top = {
         "campaign_id",
+        "persistent_signer_public_key_ed25519_hex",
         "preregistration_value_sha256",
         "schema",
         "schema_version",
@@ -2044,11 +2048,19 @@ def _validate_final_continuity(
     }
     if set(manifest) != expected_top:
         raise ContinuityError("FINAL_CONTINUITY_FIELDS")
+    expected_public_key = _require_sha256(
+        persistent_signer_public_key, "FINAL_CONTINUITY_SIGNER_PUBLIC_KEY"
+    )
+    manifest_public_key = _require_sha256(
+        manifest.get("persistent_signer_public_key_ed25519_hex"),
+        "FINAL_CONTINUITY_SIGNER_PUBLIC_KEY",
+    )
     if (
         manifest.get("schema") != CONTINUITY_SCHEMA
         or manifest.get("schema_version") != SCHEMA_VERSION
         or manifest.get("campaign_id") != CAMPAIGN_ID
         or manifest.get("status") != "FROZEN_BEFORE_FIRST_V2_CHILD"
+        or manifest_public_key != expected_public_key
         or manifest.get("v1_terminal_evidence_root_sha256") != V1_ROOT
         or manifest.get("preregistration_value_sha256") != _p2c_hash(preregistration)
     ):
@@ -2133,7 +2145,8 @@ def validate_frozen_continuity(
         manifest, newline=True
     ):
         raise ContinuityError("FINAL_CONTINUITY_NOT_CANONICAL")
-    _validate_final_continuity(manifest, preregistration)
+    public = _signer_public_key(_decode_json(signer_manifest_payload))
+    _validate_final_continuity(manifest, preregistration, public)
     authentication_payload = _safe_read(authentication_path, private_modes={0o600})
     document = _decode_json(authentication_payload)
     if not isinstance(document, dict) or set(document) != {"authentication", "payload"}:
@@ -2165,7 +2178,6 @@ def validate_frozen_continuity(
         != _sha256(signer_manifest_payload)
     ):
         raise ContinuityError("DETACHED_AUTHENTICATION_BINDING")
-    public = _signer_public_key(_decode_json(signer_manifest_payload))
     if authentication.get("public_key_ed25519_hex") != public:
         raise ContinuityError("DETACHED_AUTHENTICATION_SIGNER")
     signature = authentication.get("signature_hex")
