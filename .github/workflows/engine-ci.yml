@@ -114,7 +114,7 @@ jobs:
         run: |
           python scripts/validate_engine_checkpoint.py
           python scripts/validate_engine_e0_evidence.py
-          python scripts/generate_engine_e1_sbom.py --check
+          python scripts/validate_engine_e1_native_evidence.py
           python scripts/generate_engine_e2_sbom.py --check
 
   hygiene:

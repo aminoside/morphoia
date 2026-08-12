@@ -34,6 +34,7 @@ CHECKPOINT_SCRIPT = ROOT / "scripts" / "validate_engine_checkpoint.py"
 SBOM_SCRIPT = ROOT / "scripts" / "generate_engine_sbom.py"
 E1_SBOM_SCRIPT = ROOT / "scripts" / "generate_engine_e1_sbom.py"
 E0_EVIDENCE_SCRIPT = ROOT / "scripts" / "validate_engine_e0_evidence.py"
+E1_EVIDENCE_SCRIPT = ROOT / "scripts" / "validate_engine_e1_native_evidence.py"
 
 
 def load_script(name: str, path: Path) -> ModuleType:
@@ -220,12 +221,8 @@ class EngineSbomTests(unittest.TestCase):
             set(e1_sbom_module.EXPECTED_ARTIFACTS),
         )
 
-    def test_e1_sbom_is_deterministic_and_matches_manifest_digest(self) -> None:
-        generated = e1_sbom_module.canonical_json(
-            e1_sbom_module.build_bom(ROOT, E1_MANIFEST)
-        )
+    def test_e1_sbom_is_frozen_and_matches_manifest_digest(self) -> None:
         committed = E1_SBOM.read_text(encoding="utf-8")
-        self.assertEqual(generated, committed)
         manifest = read_json(E1_MANIFEST)
         entry = next(
             item
@@ -235,7 +232,7 @@ class EngineSbomTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(committed.encode("utf-8")).hexdigest(), entry["sha256"])
         self.assertEqual(len(committed.encode("utf-8")), entry["size_bytes"])
         completed = subprocess.run(
-            [sys.executable, str(E1_SBOM_SCRIPT), "--root", str(ROOT), "--check"],
+            [sys.executable, str(E1_EVIDENCE_SCRIPT), "--root", str(ROOT)],
             cwd=ROOT,
             check=False,
             capture_output=True,
@@ -319,7 +316,7 @@ class EngineSbomTests(unittest.TestCase):
             for item in read_json(E1_SBOM)["components"]
             if item["bom-ref"].startswith("urn:morphoia:e1-native-source:")
         }
-        for relative in e1_sbom_module.collect_source_files(ROOT):
+        for relative in sorted(sbom_components):
             with self.subTest(relative=relative):
                 declared = {
                     annotation["SPDX-License-Identifier"]

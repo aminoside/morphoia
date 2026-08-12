@@ -3,9 +3,9 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 As of: 2026-08-12
-Phase: E1 — core foundations; E2 protocol-only lot integrated
+Phase: E1 — public IR 0.1 and 20-graph replay; E2 protocol-only lot integrated
 Overall state: `IN_PROGRESS`
-Work branch: `engine-p0-ir-cas`
+Work branch: `engine-p0-public-ir-replay`
 E0 integration commit: `7715a7f7897a3058473732915e372b9835317d17`
 E2 integration commit: `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`
 E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
@@ -15,6 +15,8 @@ Corrective E2 source checkpoint: `e3ec245569bff40533b86789e61b1a78c15915f6`
 Final E2 evidence checkpoint: `b3dfc084c81d9d64ff4079304a4e97b0cf75b294`
 E1 evidence checkpoint: `4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
 E1/E2 reconciliation commit: `5a96abfcb658e26d8e085a25f98b032002719967`
+E1/E2 integration and public-IR base:
+`12656708ccc3031670c4b3efd43996e46fa27998`
 
 ## Results
 
@@ -39,6 +41,13 @@ E1/E2 reconciliation commit: `5a96abfcb658e26d8e085a25f98b032002719967`
 | Final E2 evidence checkpoint | PASS | On `b3dfc084`, Engine run `31590141763` passed REUSE `94092971527`, hygiene `94092971593`, native `94092971600`, Python 3.13 `94092971604`, and Python 3.12 `94092971670`; report run `31590141769`, job `94092971258`, passed. |
 | E2 integration | PASS | PR #6 merged only into `engine` at `c84dd152`; exact-SHA push run `31590418194` passed native `94093829070`, Python 3.12 `94093829134`, Python 3.13 `94093829163`, hygiene `94093829169`, and REUSE `94093829190`. The default branch was unchanged. |
 | Combined E1/E2 hosted reconciliation | PASS | The true two-parent merge `5a96abfc` has tree `bc7714b1`. PR Engine run `31593255255` passed Python 3.12 `94102764284`, REUSE `94102764304`, native `94102764307`, Python 3.13 `94102764368`, and hygiene `94102764390`; report run `31593255344`, job `94102764289`, passed. The duplicate branch-push Engine run `31593250364` also passed all five jobs. |
+| E1/E2 integration into `engine` | PASS | PR #7 merged only into `engine` at `12656708ccc3031670c4b3efd43996e46fa27998`, tree `9c21bc6544ee41c084208412805e93dbd5a85e70`, with parents `c84dd152` and `4eacd006`; the default branch was unchanged. |
+| E1/E2 post-merge hosted checks | PASS | Exact-merge Engine run `31593999716` passed native `94105119978`, Python 3.12 `94105119984`, REUSE `94105120004`, hygiene `94105120031`, and Python 3.13 `94105120081`. |
+| Public-IR lot isolation and entry smoke | PASS | `engine-p0-public-ir-replay` was created from exact integration merge `12656708`; branch inspection was clean and the direct CPU bootstrap passed. This is entry evidence, not public-IR implementation evidence. |
+| Public-IR entry checkpoint local validation | PASS | Frozen E0/E1 evidence, E2 SBOM, checkpoint, 320 requirements, 102/102 Python tests, report replay, native five-test bootstrap, Ruff on new Python, REUSE 194/194, secret scan, and whitespace checks passed. |
+| Public Engine IR 0.1 design | NOT_RUN | ADR-020 is `Proposed`; schemas, native/Python/CLI contract, and semantic validation have not yet executed. |
+| Public Engine IR 20-graph replay | NOT_RUN | No 20-graph input/golden corpus has yet been executed on this branch. |
+| Legacy prototype byte preservation | PASS | The five entry hashes in ADR-020 were recomputed and match; those files remain non-authoritative for Engine identity. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
 | Network capability | PASS | Restricted allowlisted egress and authenticated connector access were observed; unrestricted public egress was not probed or claimed. |
@@ -90,21 +99,37 @@ runtimes remain `NOT_RUN`.
 
 ## Active E1 bounded lot
 
-The native internal core now implements and locally tests a constrained
-RFC-8785-compatible canonical JSON profile, incremental SHA-256, deterministic
-CAS URIs, and atomic verified Linux/POSIX storage. ADR-018 defines the exact
-numeric/Unicode domain and crash-safe publication protocol. Direct bootstrap,
-CMake 3.20, strict conversion warnings, and ASan/UBSan are locally `PASS`.
-The hosted native, hygiene, and REUSE jobs passed on source commit `bbf84cb`,
-but the overall Engine and report runs failed because an evolving E1 tree was
-incorrectly replayed through the closed E0 SBOM glob and E0 checkpoint digests.
-That executed source result remains `FAIL`. The corrective evidence architecture
-freezes E0 byte for byte and owns E1 in a separate profile. Engine run
-`31589901243` and report run `31589901212` passed on corrective commit
-`0e1f6cf`; integration, deterministic replay manifests, and the 20-graph IR
-corpus remain `NOT_RUN`. The bounded lot and E1 therefore remain `IN_PROGRESS`.
-The legacy Python prototype serializers are intentionally unchanged and are
-neither RFC 8785/JCS nor authoritative Engine/CAS identities.
+The native internal core implements a constrained RFC-8785-compatible
+canonical JSON profile, incremental SHA-256, deterministic CAS URIs, and atomic
+verified Linux/POSIX storage. ADR-018 defines the exact numeric/Unicode domain
+and crash-safe publication protocol. Its historical failed and corrective runs
+remain recorded above. PR #7 integrated the verified E1 native and E2 protocol
+foundations only into `engine` at `12656708`; exact-merge Engine run
+`31593999716` passed all five jobs.
+
+The current finite lot is `public-ir-0.1-and-20-graph-replay` on
+`engine-p0-public-ir-replay`. ADR-020 proposes the distinct public Engine IR
+0.1 identity domain, strict lexical/schema/semantic validation order,
+reverse-DNS extensions, and a native C ABI limited to capability query and
+canonicalization. Track A owns schema, contract, migration, and exactly 20
+input/golden graph fixtures. Track B owns the native ABI, required-native Python
+binding, CLI, replay, build, consumer, and sanitizer coverage. Track C owns the
+frozen prior evidence, public-IR traceability, manifest/SBOM, CI, licensing, and
+durable state. The schema, public APIs, and 20-graph replay remain `NOT_RUN`, so
+the lot and E1 remain `IN_PROGRESS`.
+
+The legacy prototype boundary was recomputed at lot entry:
+
+| Path | SHA-256 |
+|---|---|
+| `schemas/morphoia-ir-0.1.schema.json` | `7bf9b3fbac2189516c30b15d3630ee2ff6bef5edeaae719942ce862b530ddc3e` |
+| `src/morphoia/compiler.py` | `54535e93126fff0c1c2bd38df39be65a6d34e42c83dc6913a701584e5f3ed71f` |
+| `src/morphoia/runtime.py` | `f6a0683ba80b02ff12b715ba2197f7d22f5b7a8e3f2e913c2db007fc1a69cfbb` |
+| `src/morphoia/backends/json_backend.py` | `8336dadd5b9889c8039963c5cbe2d0df0eeffe38896d5a6e8d673b7c298399f3` |
+| `schemas/morphoia-loss-register-0.1.schema.json` | `4d1a19eea8b7b64dcf3b559e42ba5833380e9701528e92771ec4ea8deb153329` |
+
+Those bytes remain intentionally unchanged and non-authoritative for Engine
+identity. Migration must be explicit and evidence-bearing.
 
 ## Integrated E2 protocol-only checkpoint
 
@@ -137,8 +162,8 @@ E2 or G1/P0.
 
 ## Next action
 
-Complete and publish the semantic E1/E2 merge on `engine-p0-ir-cas`, verify its
-combined Engine and report workflows, record the exact results in a bounded
-follow-up, and integrate PR #7 only after every exact-head check passes. Real
-SALOME 9.16, public IR replay, and the other declared future criteria remain
-`NOT_RUN`.
+Complete and publish the bounded public-IR entry checkpoint on
+`engine-p0-public-ir-replay`, verify its exact-head checks, then start Tracks A,
+B, and C in parallel under their declared file ownership. Real SALOME 9.16,
+GPU backends, public IR replay, and the real greater-than-2-GiB transfer remain
+`NOT_RUN` until their named tests execute.

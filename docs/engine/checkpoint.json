@@ -4,7 +4,7 @@
   "updated_at": "2026-08-12",
   "project_state": "IN_PROGRESS",
   "phase": "E1",
-  "lot": "canonical-json-cas-replay",
+  "lot": "public-ir-0.1-and-20-graph-replay",
   "remote": {
     "canonical_name": "origin",
     "canonical_url": "https://github.com/aminoside/morphoia.git",
@@ -12,17 +12,17 @@
     "visibility": "public",
     "default_branch": "main",
     "integration_branch": "engine",
-    "publication_status": "PASS",
-    "publication_note": "The exact two-parent E1/E2 reconciliation 5a96abfcb658e26d8e085a25f98b032002719967 is published on engine-p0-ir-cas with tree bc7714b1c9567662233df0fa95dcc8d48f929c5d; its PR Engine, branch-push Engine, and report workflows passed, while integration into engine remains pending this evidence follow-up"
+    "publication_status": "NOT_RUN",
+    "publication_note": "E1 and E2 foundations are integrated in engine at 12656708ccc3031670c4b3efd43996e46fa27998; engine-p0-public-ir-replay exists at that base, while this bounded ADR-020 and E1-evidence-freeze checkpoint is not yet published"
   },
   "git": {
-    "branch": "engine-p0-ir-cas",
-    "upstream": "origin/engine-p0-ir-cas",
-    "base_parent": "cdddaa47ba54742652819d798e1c6f9c0bd9ce6e",
+    "branch": "engine-p0-public-ir-replay",
+    "upstream": "origin/engine-p0-public-ir-replay",
+    "base_parent": "12656708ccc3031670c4b3efd43996e46fa27998",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "5a96abfcb658e26d8e085a25f98b032002719967",
-    "note": "Published true merge 5a96abfc has parents 4db5c743 and c84dd152 and exact tree bc7714b1; this follow-up records its hosted checks but does not claim integration of PR 7 into engine"
+    "published_commit_sha": "12656708ccc3031670c4b3efd43996e46fa27998",
+    "note": "The work branch was created from exact engine merge 12656708, tree 9c21bc65, after PR 7 and its post-merge Engine run passed; no public-IR checkpoint commit is published yet"
   },
   "tasks": {
     "completed": [
@@ -62,14 +62,20 @@
       "e2_engine_push_post_merge_verification",
       "e1_e2_semantic_merge_reconciliation",
       "e1_e2_combined_hosted_engine_and_report_verification",
-      "e1_pr7_review_thread_verification"
+      "e1_pr7_review_thread_verification",
+      "e1_engine_integration_after_green_checks",
+      "e1_engine_push_post_merge_verification",
+      "public_ir_lot_branch_creation_and_entry_smoke",
+      "legacy_prototype_entry_hash_freeze",
+      "e1_native_evidence_byte_freeze"
     ],
     "in_progress": [
-      "e1_canonical_json_cas_replay",
-      "e1_hosted_evidence_followup"
+      "e1_public_ir_entry_checkpoint"
     ],
     "remaining": [
-      "e1_engine_integration_after_green_checks",
+      "e1_public_ir_schema_contract_and_corpus",
+      "e1_public_ir_native_abi_python_cli_and_replay",
+      "e1_public_ir_traceability_sbom_and_gate_evidence",
       "e1_remaining_core_foundations",
       "e2_real_salome_execution_when_runtime_available"
     ]
@@ -117,16 +123,16 @@
       },
       {
         "path": "spec",
-        "sha256": "71903e4959003e6b47793b03d0ef6b3469d706dced15bcdb622de65b109c4a26",
+        "sha256": "439953618d6853649e703ff261e5687ef20218feed9740ef4baa0de09182c10f",
         "status": "PASS"
       },
       {
         "path": "docs/engine",
-        "sha256": "6d8dc1557bac36b6799b6dceb0363f64dcb86bbb29167947a5170cb88d735b98",
+        "sha256": "38b7d6d5d0ed2603dd297279b2fd7478cd8edbe6d67e503736d12f3e97ed60fc",
         "status": "PASS"
       }
     ],
-    "note": "Digests represent the semantically reconciled E1 plus integrated E2 tree; checkpoint.json itself is excluded to avoid self-reference. The closed E0 outputs remain byte-exact; E1 and E2 are separate profile outputs regenerated only within their own evidence chains."
+    "note": "Digests represent the public-IR lot entry after E1 and E2 integration; checkpoint.json itself is excluded to avoid self-reference. Closed E0 and E1 native outputs are byte-frozen, E2 remains a separate closed profile, and ADR-020 is proposed without executable public-IR evidence."
   },
   "commands": [
     {
@@ -378,6 +384,36 @@
       "command": "GitHub PR 7 comments, reviews, and GraphQL review-thread inspection",
       "result": "PASS",
       "summary": "Zero top-level comments, review submissions, or review threads were present; no unresolved review blocker was observed"
+    },
+    {
+      "command": "PR 7 merge 12656708ccc3031670c4b3efd43996e46fa27998 into engine and GitHub Actions engine push run 31593999716",
+      "result": "PASS",
+      "summary": "The two-parent merge targeted engine only; native job 94105119978, Python 3.12 job 94105119984, REUSE job 94105120004, hygiene job 94105120031, and Python 3.13 job 94105120081 passed; main was unchanged"
+    },
+    {
+      "command": "Create engine-p0-public-ir-replay from 12656708, verify clean worktree and baseline hashes, then run MORPHOIA_BOOTSTRAP_FORCE_FALLBACK=1 bash scripts/bootstrap-engine.sh",
+      "result": "PASS",
+      "summary": "The isolated lot branch starts at the exact engine integration merge; all five existing native tests passed and the five legacy prototype entry hashes matched"
+    },
+    {
+      "command": "python scripts/validate_engine_e1_native_evidence.py and PYTHONPATH=src python -m unittest tests.test_e1_native_freeze -v",
+      "result": "PASS",
+      "summary": "The closed E1 native generator, report, manifest, and SBOM are byte-exact; eight fail-closed mutation, JSON-domain, path, manifest, and CycloneDX tests passed"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v on the public-IR entry checkpoint",
+      "result": "PASS",
+      "summary": "102 of 102 tests passed on Python 3.12.13, including the eight new frozen-E1-evidence tests"
+    },
+    {
+      "command": "PATH=<hash-locked-report-tools>:$PATH PYTHONPATH=src make check on the public-IR entry checkpoint",
+      "result": "PASS",
+      "summary": "Both reports rebuilt and validated, the 102-test suite passed, schema JSON and legacy CLI validation passed, and immutable baseline policy remained enforced"
+    },
+    {
+      "command": "<hash-locked-python> -m reuse lint on the public-IR entry checkpoint",
+      "result": "PASS",
+      "summary": "REUSE 6.2.0 resolved copyright and license metadata for 194 of 194 files"
     }
   ],
   "tests": [
@@ -780,6 +816,42 @@
       "count": 0
     },
     {
+      "id": "E1-ENGINE-INTEGRATION-PUSH",
+      "profile": "engine-integration",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-NATIVE-EVIDENCE-FREEZE",
+      "profile": "e1-native-core-frozen",
+      "status": "PASS",
+      "count": 8
+    },
+    {
+      "id": "E1-PUBLIC-IR-ENTRY-LOCAL",
+      "profile": "core-cpu-entry-checkpoint",
+      "status": "PASS",
+      "count": 102
+    },
+    {
+      "id": "E1-PUBLIC-IR-ENTRY-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS",
+      "count": 194
+    },
+    {
+      "id": "E1-PUBLIC-IR-IMPLEMENTATION",
+      "profile": "core-cpu-public-ir",
+      "status": "NOT_RUN",
+      "reason": "ADR-020 is proposed; the schema, ABI additions, native-required Python API, CLI, and semantic validator are not implemented at this checkpoint"
+    },
+    {
+      "id": "E1-PUBLIC-IR-20-GRAPH-REPLAY",
+      "profile": "core-cpu-public-ir-replay",
+      "status": "NOT_RUN",
+      "reason": "The bounded 20-graph input and golden corpus has not yet been implemented or executed"
+    },
+    {
       "id": "E2-SALOME-REAL",
       "profile": "salome-9.16-headless",
       "status": "NOT_RUN",
@@ -821,6 +893,26 @@
     {
       "path": "spec/requirements/Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt",
       "sha256": "de8444574a59e1520222062587bc6c55f7184cf0e384d7d499f5ea24ad653175"
+    },
+    {
+      "path": "schemas/morphoia-ir-0.1.schema.json",
+      "sha256": "7bf9b3fbac2189516c30b15d3630ee2ff6bef5edeaae719942ce862b530ddc3e"
+    },
+    {
+      "path": "src/morphoia/compiler.py",
+      "sha256": "54535e93126fff0c1c2bd38df39be65a6d34e42c83dc6913a701584e5f3ed71f"
+    },
+    {
+      "path": "src/morphoia/runtime.py",
+      "sha256": "f6a0683ba80b02ff12b715ba2197f7d22f5b7a8e3f2e913c2db007fc1a69cfbb"
+    },
+    {
+      "path": "src/morphoia/backends/json_backend.py",
+      "sha256": "8336dadd5b9889c8039963c5cbe2d0df0eeffe38896d5a6e8d673b7c298399f3"
+    },
+    {
+      "path": "schemas/morphoia-loss-register-0.1.schema.json",
+      "sha256": "4d1a19eea8b7b64dcf3b559e42ba5833380e9701528e92771ec4ea8deb153329"
     }
   ],
   "outputs": [
@@ -862,15 +954,21 @@
     },
     {
       "uri": "repo:artifacts/e1/manifest.json",
-      "sha256": "d6018ed8d484808193a3f06568e7b7e96d50d65e48f7ad2df53496af1641fc39",
+      "sha256": "2fee29f645651dafbeafa5d240e9148cad12334f1eac0045d5c27fb7ddee273b",
       "status": "PASS",
       "note": "Fail-closed three-artifact E1 profile manifest with exact paths, sizes, hashes, licenses, provenance, and SBOM self-reference"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e1-native-core.cdx.json",
-      "sha256": "fb7fae79aec08e93b84a8792a25ccd352b841f27bcc7c03b5605d88018b5ba8c",
+      "sha256": "e098c130a535bb0a0f8d92f89c76015051d9296e3228475bfee5cc1afa214176",
       "status": "PASS",
-      "note": "Deterministic E1 native-core CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
+      "note": "Frozen E1 native-core CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
+    },
+    {
+      "uri": "repo:scripts/validate_engine_e1_native_evidence.py",
+      "sha256": "c410050aa462eaf597ede5d20ebd15a75a359f74dd0fb017dcd6b1cf27c0498e",
+      "status": "PASS",
+      "note": "Standard-library fail-closed validator pins the completed E1 native generator, report, manifest, and SBOM and preserves their explicit NOT_RUN security boundary"
     },
     {
       "uri": "repo:spec/evidence/e2-salome-protocol-traceability.json",
@@ -979,7 +1077,13 @@
     "github-actions:job:94102764368",
     "github-actions:job:94102764390",
     "github-actions:31593255344",
-    "github-actions:job:94102764289"
+    "github-actions:job:94102764289",
+    "github-actions:31593999716",
+    "github-actions:job:94105119978",
+    "github-actions:job:94105119984",
+    "github-actions:job:94105120004",
+    "github-actions:job:94105120031",
+    "github-actions:job:94105120081"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -991,7 +1095,11 @@
     "Closed E0 evidence is byte-frozen; evolving E1 source has a separate fail-closed manifest and CycloneDX profile",
     "ADR-019 accepts the bounded six-operation SALOME control contract and makes FakeSalomeAgent contract evidence only",
     "The control JSON encoder is deterministic transport but not RFC 8785, canonical IR, signable bytes, or a content identifier",
-    "E2 uses a separate closed artifact manifest and CycloneDX profile so immutable E0 evidence bytes remain unchanged"
+    "E2 uses a separate closed artifact manifest and CycloneDX profile so immutable E0 evidence bytes remain unchanged",
+    "The completed E1 native evidence profile is byte-frozen and later phases validate it without replaying evolving source globs",
+    "ADR-020 proposes a distinct public Engine IR manifest 0.1 identity domain while preserving the legacy prototype byte-exact and non-authoritative",
+    "Public Engine IR identity is SHA-256 over morphoia.canonical-json.profile1 bytes; lowercase UUIDv7 identifies logical entities and morphoia-cas SHA-256 URIs identify immutable payload bytes",
+    "No public C IR object model or MVX semantics are introduced in the bounded public-IR lot"
   ],
   "deviations": [
     "No branch protection or ruleset was observed",
@@ -1041,7 +1149,7 @@
     {
       "name": "E1 final evidence-head report check",
       "status": "NOT_RUN",
-      "blocking_scope": "Integration of PR 7 into engine only",
+      "blocking_scope": "Historical exact-head report execution for 4db5c743 only; later combined report and integration checks passed",
       "reason": "No report workflow run was observed for exact SHA 4db5c7436a8139d227de58d5f5ff7280e8a0f9ea; the cause is not asserted and no PASS is inferred"
     },
     {
@@ -1071,6 +1179,17 @@
       "reason": "Two-parent reconciliation 5a96abfc has exact tree bc7714b1; PR Engine run 31593255255, report run 31593255344, and branch-push Engine run 31593250364 all passed"
     },
     {
+      "name": "E1 and E2 engine integration and post-merge checks",
+      "status": "PASS",
+      "reason": "PR 7 merged only into engine at 12656708ccc3031670c4b3efd43996e46fa27998 and exact-merge Engine run 31593999716 passed all five jobs; main was unchanged"
+    },
+    {
+      "name": "public IR entry checkpoint publication and hosted checks",
+      "status": "NOT_RUN",
+      "blocking_scope": "Start of public IR implementation tracks A, B, and C",
+      "reason": "The lot branch exists at the integrated engine base, but the ADR-020 and frozen-E1-evidence checkpoint is not yet published or executed by hosted workflows"
+    },
+    {
       "name": "SALOME 9.16 runtime",
       "status": "NOT_RUN",
       "blocking_scope": "E2 real ProbeCapabilities, SHAPER/GEOM, SMESH/MED, MEDCoupling, and large-artifact execution only",
@@ -1082,5 +1201,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Publish this bounded hosted-evidence follow-up on engine-p0-ir-cas, require fresh exact-head Engine and report checks, reverify PR 7 review threads, then integrate PR 7 into engine only and verify the exact merge SHA and engine push checks before starting the public-IR lot"
+  "next_action": "Publish the bounded ADR-020 and frozen-E1-evidence entry checkpoint on engine-p0-public-ir-replay, require fresh exact-head Engine and report checks, then start the declared non-overlapping public-IR Tracks A, B, and C while real SALOME, GPU, greater-than-2-GiB, and MVX criteria remain NOT_RUN or BLOCKED"
 }
