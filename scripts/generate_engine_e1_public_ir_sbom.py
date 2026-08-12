@@ -50,7 +50,10 @@ CMAKE_ADD_TEST_RE = re.compile(
 RENAME_NOREPLACE = 1
 RENAME_EXCHANGE = 2
 
-LOCK_FILES = ("requirements/engine-ci.lock",)
+LOCK_FILES = (
+    "requirements/engine-ci.lock",
+    "requirements/wheel-build-e1.lock",
+)
 LICENSE_FILES = {
     "LICENSE": "MIT",
     "LICENSE-APACHE": "Apache-2.0",
@@ -276,8 +279,8 @@ PUBLIC_IR_OWNED_SPECS: dict[str, ArtifactSpec] = {
     "scripts/validate-engine-wheel.sh": ArtifactSpec(
         "engine-ir-wheel-validator", "validation-script", "text/x-shellscript",
         "Apache-2.0 OR MIT", "python-project-metadata",
-        "Isolated installed-wheel smoke with observed, non-hash-locked build backend.",
-        "Distribution build reproducibility remains NOT_RUN.",
+        "Isolated installed-wheel smoke with exact hash-locked Python build dependencies.",
+        "Byte-for-byte distribution reproducibility remains NOT_RUN.",
     ),
     "tests/native/canonical_json_c_api_test.c": ArtifactSpec(
         "canonical-json-c-api-test", "native-test", "text/x-c",
@@ -1095,13 +1098,13 @@ TRACEABILITY_BLOCKING_SCOPES: dict[str, str] = {
     "MOR-API-018": "none-public-ir-core-cpu-profile",
     "MOR-DEV-001": "none-public-ir-core-cpu-profile",
     "MOR-DEV-002": "none-public-ir-core-cpu-profile",
-    "MOR-DEV-003": "python-3.13-profile-not-executed",
+    "MOR-DEV-003": "corrective-python-3.13-wheel-smoke-not-executed",
     "MOR-DEV-005": "none-public-ir-core-cpu-profile",
     "MOR-DEV-008": "none-public-ir-core-cpu-profile",
     "MOR-DEV-009": "none-public-ir-core-cpu-profile",
     "MOR-DEV-010": "complete-owned-memory-inspection-not-executed",
     "MOR-DEV-011": "static-type-checker-not-executed",
-    "MOR-DEV-012": "distribution-build-backend-is-not-hash-locked",
+    "MOR-DEV-012": "system-toolchain-image-is-not-hash-concretized",
     "MOR-DEV-014": "final-committed-public-tree-policy-check-not-executed",
     "MOR-CAS-001": "none-public-ir-core-cpu-profile",
     "MOR-CAS-003": "none-public-ir-core-cpu-profile",

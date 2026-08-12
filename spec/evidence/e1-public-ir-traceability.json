@@ -37,7 +37,7 @@
         "id": "wheel-smoke",
         "command": "MORPHOIA_ENGINE_LIBRARY=$PWD/build/engine-cpu-debug/libmorphoia_engine.so MORPHOIA_WHEEL_BUILD_PYTHON=python3 MORPHOIA_WHEEL_RUNTIME_VENV_TEMPLATE=/tmp/morphoia-e1-evidence-venv bash scripts/validate-engine-wheel.sh",
         "status": "PASS",
-        "result": "Isolated installed-wheel origin, validate, replay, and migration passed with observed setuptools 83.0.0 and wheel 0.47.0; distribution reproducibility NOT_RUN."
+        "result": "Isolated installed-wheel origin, validate, replay, and migration passed with hash-locked setuptools 83.0.0 and wheel 0.47.0; byte-for-byte distribution reproducibility NOT_RUN."
       },
       {
         "id": "frozen-evidence",
@@ -55,7 +55,7 @@
         "id": "evidence-profile",
         "command": "python scripts/generate_engine_e1_public_ir_sbom.py --check && python -m unittest -v tests.test_e1_public_ir_evidence",
         "status": "PASS",
-        "result": "Deterministic generator check and 21/21 evidence, schema, truth-boundary, mutation, confinement, and atomic-publication tests passed."
+        "result": "Deterministic generator check and 22/22 evidence, schema, truth-boundary, mutation, confinement, and atomic-publication tests passed."
       },
       {
         "id": "python-3-13",
@@ -620,8 +620,8 @@
         "tests/test_engine_ir_cli.py",
         "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
       ],
-      "reason": "The complete local lot passed on CPython 3.12.13, but the configured hosted Python 3.13 matrix was not executed.",
-      "blocking_scope": "python-3.13-profile-not-executed"
+      "reason": "The published Python 3.13 jobs passed all 184 tests and the public-IR lot, then failed at the wheel smoke because setuptools was absent. The separated-lock correction has not yet been executed on hosted Python 3.13.",
+      "blocking_scope": "corrective-python-3.13-wheel-smoke-not-executed"
     },
     {
       "requirement_id": "MOR-DEV-005",
@@ -716,8 +716,8 @@
         "artifacts/sbom/engine-e1-public-ir.cdx.json",
         "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
       ],
-      "reason": "The runtime/test dependencies are hash-locked, but pyproject.toml declares mutable setuptools>=77 for the build backend; the wheel smoke is not a reproducible distribution build.",
-      "blocking_scope": "distribution-build-backend-is-not-hash-locked"
+      "reason": "Python runtime, test, and wheel-build dependencies are version-and-hash locked, but the hosted system compiler, binutils, and base image are not hash-concretized.",
+      "blocking_scope": "system-toolchain-image-is-not-hash-concretized"
     },
     {
       "requirement_id": "MOR-DEV-014",

@@ -107,6 +107,41 @@
       "version": "4.25.1"
     },
     {
+      "bom-ref": "pkg:pypi/packaging@26.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "packaging",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/wheel-build-e1.lock"
+        }
+      ],
+      "purl": "pkg:pypi/packaging@26.3",
+      "scope": "excluded",
+      "type": "library",
+      "version": "26.3"
+    },
+    {
       "bom-ref": "pkg:pypi/referencing@0.37.0",
       "hashes": [
         {
@@ -181,6 +216,41 @@
       "version": "2026.6.3"
     },
     {
+      "bom-ref": "pkg:pypi/setuptools@83.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "setuptools",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/wheel-build-e1.lock"
+        }
+      ],
+      "purl": "pkg:pypi/setuptools@83.0.0",
+      "scope": "excluded",
+      "type": "library",
+      "version": "83.0.0"
+    },
+    {
       "bom-ref": "pkg:pypi/typing-extensions@4.16.0",
       "hashes": [
         {
@@ -214,6 +284,41 @@
       "scope": "excluded",
       "type": "library",
       "version": "4.16.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/wheel@0.47.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "212281cab4dff978f6cedd499cd893e1f620791ca6ff7107cf270781e587eced"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "wheel",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/wheel-build-e1.lock"
+        }
+      ],
+      "purl": "pkg:pypi/wheel@0.47.0",
+      "scope": "excluded",
+      "type": "library",
+      "version": "0.47.0"
     },
     {
       "bom-ref": "urn:morphoia:e1-public-ir-artifact:adr-020-public-engine-ir",
@@ -310,7 +415,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "1f9cc737f2302c33d6fda0c2c4d12725b27c9486226d86af9fb95e35395a131f"
+          "content": "2b1493540624d60cb89856751d70895e6f918f8637280e138de436c6b6c91699"
         }
       ],
       "licenses": [
@@ -340,7 +445,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "4baf0e45b37e3821ad5fac3b60b549a9306efccf9d7fbfa0e2fe00317bf4f3b2"
+          "content": "6df8d6bcc87d7a54e02961b68ac5fd840f2dd5b55e886444354567b143b7640c"
         }
       ],
       "licenses": [
@@ -370,7 +475,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "0b57b9b6c792c600ebac39dc996d3e9425c9f1eb940623cd1cebab4bdef7dce1"
+          "content": "eeb775186cad59884d3161e5ec4724cc622fc011fbe3414b18b78e6313dd2456"
         }
       ],
       "licenses": [
@@ -400,7 +505,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "3613492cce804d4716ef37caf47bd8cd7e1d215fe288559e2e4f70a555733fc4"
+          "content": "5e41cf8ec378e840111814fb3f9b7597802faa526e6fc8d3c775889b4d703517"
         }
       ],
       "licenses": [
@@ -580,7 +685,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "8442400a9a0764244be28f2df3a99e251a47c52161c178e63bd9682df39a1065"
+          "content": "250e8ae180113ce8d38f945d28a38258d7ae9feae9308417e2e300cebba01529"
         }
       ],
       "licenses": [
@@ -3460,7 +3565,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "228c8b0151e376cd3595cd5a6176400e89310d9916e0f6bc34289caeddf638a2"
+          "content": "da89aa9e375aa4e32a98203ffe2b1261b8087fbd2b188add5b0f09facbde181e"
         }
       ],
       "licenses": [
@@ -3790,7 +3895,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "14572048e3e382ab21295ff20e30d0f1b7c2d62946b3c9dbe3c27369087d0b1b"
+          "content": "5d52d787968ec54253e17172df87b0973a993a8c820fde997afbc195ebbffedb"
         }
       ],
       "licenses": [
@@ -4058,6 +4163,36 @@
         }
       ],
       "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-lock:requirements%2Fwheel-build-e1.lock",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "956fc7f0da13aa17e1acad4c2e7a4e20c73f0448fa9f49184b9718e417024035"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "requirements/wheel-build-e1.lock",
+      "properties": [
+        {
+          "name": "morphoia:profile",
+          "value": "e1-public-ir-core-cpu"
+        },
+        {
+          "name": "morphoia:role",
+          "value": "hashed-test-lock"
+        },
+        {
+          "name": "morphoia:source-base-commit",
+          "value": "c475288961d40bb16c4cc10a333034a247acb451"
+        }
+      ],
+      "type": "file"
     }
   ],
   "dependencies": [
@@ -4066,9 +4201,12 @@
         "pkg:pypi/attrs@26.1.0",
         "pkg:pypi/jsonschema-specifications@2025.9.1",
         "pkg:pypi/jsonschema@4.25.1",
+        "pkg:pypi/packaging@26.3",
         "pkg:pypi/referencing@0.37.0",
         "pkg:pypi/rpds-py@2026.6.3",
+        "pkg:pypi/setuptools@83.0.0",
         "pkg:pypi/typing-extensions@4.16.0",
+        "pkg:pypi/wheel@0.47.0",
         "urn:morphoia:e1-public-ir-artifact:adr-020-public-engine-ir",
         "urn:morphoia:e1-public-ir-artifact:canonical-json-c-api-test",
         "urn:morphoia:e1-public-ir-artifact:e1-public-ir-artifact-manifest-schema",
@@ -4198,7 +4336,8 @@
         "urn:morphoia:e1-public-ir-license:LICENSES%2FCC-BY-4.0.txt",
         "urn:morphoia:e1-public-ir-license:LICENSES%2FMIT.txt",
         "urn:morphoia:e1-public-ir-license:NOTICE",
-        "urn:morphoia:e1-public-ir-lock:requirements%2Fengine-ci.lock"
+        "urn:morphoia:e1-public-ir-lock:requirements%2Fengine-ci.lock",
+        "urn:morphoia:e1-public-ir-lock:requirements%2Fwheel-build-e1.lock"
       ],
       "ref": "pkg:generic/morphoia-engine-e1-public-ir@0.0.1"
     },
@@ -4216,6 +4355,10 @@
     },
     {
       "dependsOn": [],
+      "ref": "pkg:pypi/packaging@26.3"
+    },
+    {
+      "dependsOn": [],
       "ref": "pkg:pypi/referencing@0.37.0"
     },
     {
@@ -4224,7 +4367,15 @@
     },
     {
       "dependsOn": [],
+      "ref": "pkg:pypi/setuptools@83.0.0"
+    },
+    {
+      "dependsOn": [],
       "ref": "pkg:pypi/typing-extensions@4.16.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/wheel@0.47.0"
     },
     {
       "dependsOn": [],
@@ -4745,6 +4896,10 @@
     {
       "dependsOn": [],
       "ref": "urn:morphoia:e1-public-ir-lock:requirements%2Fengine-ci.lock"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-lock:requirements%2Fwheel-build-e1.lock"
     }
   ],
   "metadata": {
@@ -4797,7 +4952,7 @@
       "version": "0.0.1"
     }
   },
-  "serialNumber": "urn:uuid:70d4df35-8f0e-573c-972f-dcee19d1bb5c",
+  "serialNumber": "urn:uuid:7851e018-6154-5603-815c-5c672a5010a9",
   "specVersion": "1.5",
   "version": 1
 }

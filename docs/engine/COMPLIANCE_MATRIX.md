@@ -40,7 +40,7 @@ completion.
 | Existing CLI smoke | Existing prototype | CLI help/smoke | successful invocation | PASS |
 | Native C++20 direct-compiler bootstrap | Engine core | `./scripts/bootstrap-engine.sh` fallback | ABI and core smoke executed with GCC/G++ 13 | PASS |
 | Native CMake/CTest bootstrap | Engine core | CMake 3.20.5 configure/build/test | two CTests, install and external C consumer | PASS |
-| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 183 tests on the local public-IR checkpoint | PASS |
+| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 184 tests on the local public-IR checkpoint | PASS |
 | E1/E2 foundations integrated into `engine` | Publication | PR #7 merge inspection | merge `12656708ccc3031670c4b3efd43996e46fa27998`, tree `9c21bc6544ee41c084208412805e93dbd5a85e70`, parents `c84dd152…` + `4eacd006…`; default branch unchanged | PASS |
 | E1/E2 exact-merge hosted checks | Publication | Engine run `31593999716` | native `94105119978`, Python 3.12 `94105119984`, REUSE `94105120004`, hygiene `94105120031`, and Python 3.13 `94105120081` passed | PASS |
 | Public-IR lot branch and entry bootstrap | E1 public IR | branch/base inspection plus direct CPU bootstrap | `engine-p0-public-ir-replay` starts from exact merge `12656708`; entry smoke passed | PASS |
@@ -48,8 +48,9 @@ completion.
 | Public-IR entry checkpoint hosted validation | E1 public IR | PR #8 exact-head workflows | Engine `31596165398` passed five jobs; report `31596165378`, job `94112106640`, passed on `a69d35b5` | PASS |
 | Public Engine IR 0.1 local implementation | E1 public IR | schema, native/Python/CLI, semantic validation, and migration | bounded Linux x86-64/CPython 3.12 profile passed; ADR-020 remains proposed pending publication/integration | PASS |
 | Public Engine IR 20-graph replay | E1 public IR | canonical input/golden corpus replay | 20/20 graphs passed native/Python byte and digest agreement, two workspaces, and checkpoint resume | PASS |
-| Public-IR evidence profile | E1 public IR | exact manifest/SBOM/traceability and mutation tests | 32 bounded PASS, 17 broader NOT_RUN, 123 artifacts, 136 CycloneDX components, 21/21 evidence tests | PASS |
-| Public-IR final publication and hosted checks | Publication | exact prospective commit, PR #8, Python 3.13, report, review and integration | prospective implementation is not yet published | NOT_RUN |
+| Public-IR evidence profile | E1 public IR | exact manifest/SBOM/traceability and mutation tests | 32 bounded PASS, 17 broader NOT_RUN, 123 artifacts, 140 CycloneDX components, 22/22 evidence tests | PASS |
+| Public-IR first implementation hosted attempt | Publication | exact `5ee8cebc` workflows | report passed; Engine native/hygiene/REUSE and Python 3.12/3.13 tests passed, but both Python jobs failed at the wheel smoke because setuptools was absent | FAIL |
+| Public-IR final publication and hosted checks | Publication | corrective exact commit, PR #8, report, review and integration | correction and exact-head replay pending | NOT_RUN |
 | Legacy prototype bytes at public-IR entry | E1 public IR | SHA-256 inspection of five declared files | exact hashes recorded in ADR-020 and `STATUS.md`; files are non-authoritative for Engine identity | PASS |
 | Immutable normative PDFs excluded from report branding | Baselines/reporting | tracked-report manifest test plus full `make check` | two Engine baseline PDFs remain hash-identical and outside generated-report policy | PASS |
 | Second clean bootstrap | Reproducibility | two isolated direct GCC/G++ builds/tests | both executions passed | PASS |
@@ -57,7 +58,7 @@ completion.
 | LeakSanitizer | Security | leak detection | deliberately disabled; environment limitation retained | NOT_RUN |
 | Secret/sensitive-data scan of E0 diff | Security | bounded fail-closed text signature scan plus binary/hash inspection | no supported signature; not a full PII audit | PASS |
 | E0 SBOM | Supply chain | deterministic CycloneDX generator/check | source, artifacts and hashed locks inventoried; vulnerability analysis NOT_RUN | PASS |
-| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 298/298 public-IR worktree files resolved; component vulnerability analysis NOT_RUN | PASS |
+| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 299/299 public-IR worktree files resolved; component vulnerability analysis NOT_RUN | PASS |
 | Public English language policy | Documentation | repository-language inspection | root README and contribution guide are English; legacy Phase 1/2 guides/documents remain French under R-021 | FAIL |
 | SALOME 9.16 headless | Optional SALOME | real runtime probe | runtime absent | NOT_RUN |
 | CUDA, HIP, and SYCL execution | Optional compute | real hardware execution | hardware/runtime absent | NOT_RUN |

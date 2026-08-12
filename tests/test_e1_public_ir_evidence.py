@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tomllib
 import unittest
 from pathlib import Path
 from types import ModuleType
@@ -58,6 +59,36 @@ def copy_evidence_profile(destination: Path) -> None:
 
 
 class PublicIrEvidenceTests(unittest.TestCase):
+    def test_wheel_build_backend_is_exactly_hash_locked(self) -> None:
+        project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual(
+            project["build-system"]["requires"],
+            ["setuptools==83.0.0", "wheel==0.47.0"],
+        )
+        engine_lock = ROOT / "requirements" / "engine-ci.lock"
+        self.assertEqual(
+            hashlib.sha256(engine_lock.read_bytes()).hexdigest(),
+            "ee1e00b79e51678243beb7dedefb043fa675ed9c4d8c458b2fe576aa7082ade5",
+        )
+        lock = (ROOT / "requirements" / "wheel-build-e1.lock").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("packaging==26.3", lock)
+        self.assertIn(
+            "sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+            lock,
+        )
+        self.assertIn("setuptools==83.0.0", lock)
+        self.assertIn(
+            "sha256:29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3",
+            lock,
+        )
+        self.assertIn("wheel==0.47.0", lock)
+        self.assertIn(
+            "sha256:212281cab4dff978f6cedd499cd893e1f620791ca6ff7107cf270781e587eced",
+            lock,
+        )
+
     def test_manifest_and_traceability_match_published_schemas(self) -> None:
         for instance_path, schema_path in (
             (MANIFEST, MANIFEST_SCHEMA),

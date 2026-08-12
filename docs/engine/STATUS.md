@@ -49,8 +49,9 @@ E1/E2 integration and public-IR base:
 | Public Engine IR 0.1 local contract | PASS | Draft 2020-12 schema validation, bounded SPDX syntax, semantic invariants, native Profile 1 canonicalization, required-native Python, CLI, and explicit migration passed on Linux x86-64/CPython 3.12.13. ADR-020 remains `Proposed` until the lot is published and integrated. |
 | Public Engine IR 20-graph replay | PASS | Exactly 20 synthetic input/golden/replay graphs passed byte-identical native/Python canonicalization, two-workspace execution, and checkpoint resume; the 79-file corpus contains 13 declared invalid cases and no payload bytes. |
 | Public-IR local native/build gate | PASS | The bounded lot passed 60/60 owned tests, exact seven-symbol ABI inspection, direct bootstrap, ASan/UBSan, two fresh CMake 3.20.5 build/install/CTest 7/7 plus consumer 1/1 runs, and an isolated installed-wheel smoke. LSan and reproducible wheel construction remain `NOT_RUN`. |
-| Public-IR local evidence profile | PASS | The separate profile records 32 bounded `PASS` and 17 broader `NOT_RUN` requirements, 123 hash-verified artifacts, a 136-component CycloneDX inventory, 21/21 evidence/mutation tests, and REUSE 298/298. Vulnerability analysis remains `NOT_RUN`; the closed E0 tracking overlay is byte-exact. |
-| Public-IR implementation publication and hosted validation | NOT_RUN | The prospective implementation tree is not yet committed or pushed. PR #8 still points at entry checkpoint `c475288`; exact-head Python 3.13, report, review, integration, and post-merge checks remain required. |
+| Public-IR local evidence profile | PASS | The separate profile records 32 bounded `PASS` and 17 broader `NOT_RUN` requirements, 123 hash-verified artifacts, a 140-component CycloneDX inventory, 22/22 evidence/mutation tests, and REUSE 299/299. Vulnerability analysis remains `NOT_RUN`; the closed E0 tracking overlay is byte-exact. |
+| Public-IR first implementation hosted attempt | FAIL | On exact source `5ee8cebc`, report run `31609319695`, job `94156289420`, passed. Push Engine run `31609314553` and PR Engine run `31609319697` passed native, hygiene, REUSE, full Python 3.12/3.13 tests, and the 60-test IR lot, but both Python jobs failed only in the wheel smoke because setuptools was absent from the job environment. The correction uses a separate hash-locked E1 wheel-build profile so the closed Engine test lock and frozen evidence remain unchanged. |
+| Public-IR corrective publication and hosted validation | NOT_RUN | Implementation checkpoint `5ee8cebc` is published on PR #8 and its first hosted attempt remains `FAIL`. The separated-lock correction, corrective exact-head Engine/report checks, review, integration, and post-merge checks remain required. |
 | Legacy prototype byte preservation | PASS | The five entry hashes in ADR-020 were recomputed and match; those files remain non-authoritative for Engine identity. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
@@ -69,7 +70,7 @@ E1/E2 integration and public-IR base:
 | Sanitizers | PASS | Fail-fast ASan and UBSan smoke passed; LSan remains `NOT_RUN` and is not included in this claim. |
 | E0 durable evidence/SBOM | PASS | The closed E0 generator, manifest, and CycloneDX output remain byte-exact and are checked as an immutable profile. Vulnerability analysis remains `NOT_RUN`. |
 | E1 durable evidence/SBOM correction | PASS | A separate fail-closed three-artifact E1 manifest and CycloneDX native-core profile cover the evolving source; exact truth fields and paths, dirfd-only atomic writes, mutation, license-map, self-hash, path-confinement, E0-freeze, deterministic checks, and hosted corrective workflows pass. Vulnerability analysis remains `NOT_RUN`. |
-| License metadata | PASS | Hash-locked REUSE 6.2.0 lint resolves copyright and license metadata for 298/298 files in the public-IR worktree; dependency vulnerability analysis remains `NOT_RUN`. |
+| License metadata | PASS | Hash-locked REUSE 6.2.0 lint resolves copyright and license metadata for 299/299 files in the public-IR worktree; dependency vulnerability analysis remains `NOT_RUN`. |
 | Secret signature scan | PASS | Bounded fail-closed scan covered tracked and untracked text; binary baselines were separately hash/type/archive inspected. This is not a full secret/PII audit. |
 | Public language policy | FAIL | Engine code/governance material and contribution guidance are English, but the legacy Phase 1/2 README and developer guides remain French; R-021 records the bounded migration gap. |
 | SALOME 9.16 | NOT_RUN | Runtime absent. |
@@ -121,9 +122,10 @@ seven-symbol native ABI, required-native Python binding, CLI, replay,
 build/install consumer, sanitizer, and isolated-wheel coverage. Track C
 delivered a separate fail-closed traceability/manifest/SBOM profile while
 preserving the E0 overlay byte-exact. The bounded local contract and replay
-profile is `PASS`; publication, hosted Python 3.13, PR review, integration into
-`engine`, and post-merge verification remain `NOT_RUN`, so the lot and E1
-remain `IN_PROGRESS`.
+profile is `PASS`; the implementation is published and its first hosted
+Python 3.13 attempt remains `FAIL` only at the wheel smoke. Corrective hosted
+checks, PR review, integration into `engine`, and post-merge verification
+remain `NOT_RUN`, so the lot and E1 remain `IN_PROGRESS`.
 
 The legacy prototype boundary was recomputed at lot entry:
 
@@ -169,7 +171,7 @@ E2 or G1/P0.
 
 ## Next action
 
-Publish the reviewed public-IR implementation as one signed checkpoint on
+Publish the separated-lock correction as one signed checkpoint on
 `engine-p0-public-ir-replay`, update draft PR #8, and require exact-head native,
 Python 3.12/3.13, hygiene, REUSE, and report workflows. Integrate PR #8 only
 into `engine` after every required check and review is green, then verify the

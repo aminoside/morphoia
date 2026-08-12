@@ -219,10 +219,12 @@ incremental SHA-256, and an atomic Linux/POSIX CAS implementation under
 ADR-018. The new public path now exposes that profile through a distinct
 versioned contract; the legacy Python `canonical_json` and `semantic_hash`
 functions preserve a pre-Engine, non-JCS identity domain and remain explicitly
-non-authoritative. The local public-IR contract and 20-graph replay pass, while
-publication, hosted Python 3.13, review, integration, and post-merge evidence
-remain required before the current lot can close. E1 also retains later
-foundations outside this bounded lot.
+non-authoritative. The local public-IR contract and 20-graph replay pass, and
+the implementation checkpoint is published. Its first hosted Python 3.13 job
+passed the tests and lot but failed the wheel smoke; corrective exact-head
+Python 3.13, review, integration, and post-merge evidence remain required
+before the current lot can close. E1 also retains later foundations outside
+this bounded lot.
 
 The first hosted execution of source commit
 `bbf84cb806d95701daa2887e71d90a819c4a4c83` is retained as a failed source
@@ -314,16 +316,27 @@ JSON Schema and semantic validation; deterministic native/Python/CLI bytes and
 digests for all 20 graphs; explicit provenance/loss on migration; invalid and
 resource-bound rejection; exact seven-symbol ABI; two clean CPU
 build/install/consumer executions; ASan/UBSan; locked Python 3.12; REUSE
-298/298; bounded secret scan; and deterministic evidence. The owned lot ran
-60/60 tests, the evidence profile ran 21/21 mutation tests, and the complete
-suite runs 183 tests after checkpoint reconciliation. Hosted Python 3.13,
-exact-head workflows, review, integration into `engine`, and post-merge
-verification remain `NOT_RUN` until publication. The lot excludes domain
+299/299; bounded secret scan; and deterministic evidence. The owned lot ran
+60/60 tests, the evidence profile ran 22/22 mutation tests, and the complete
+suite runs 184 tests after checkpoint reconciliation. The first hosted Python
+3.13 execution remains `FAIL` at its wheel step; corrective exact-head
+workflows, review, integration into `engine`, and post-merge verification
+remain `NOT_RUN` until the correction is published. The lot excludes domain
 importers, remote CAS/GC/chunk resume, a greater-than-2-GiB execution, real
 SALOME, GPU/HPC backends, and all MVX semantics.
 
+The first implementation publication at `5ee8cebc` produced a successful
+report run `31609319695`, job `94156289420`. Push Engine run `31609314553`
+and PR Engine run `31609319697` passed native, hygiene, REUSE, the full Python
+3.12/3.13 suites, and the bounded IR lot; both Python matrix jobs failed only
+when the installed-wheel smoke found that setuptools was not installed. The
+correction installs exact setuptools 83.0.0, wheel 0.47.0, and packaging 26.3
+from a separate hash-locked E1 wheel-build profile; the closed Engine test lock
+and frozen E1/E2 evidence stay unchanged. Byte-for-byte wheel reproducibility
+remains `NOT_RUN`.
+
 The closed public-IR evidence profile contains 123 hash-verified artifacts and
-a 136-component CycloneDX inventory. Its 49 requirement mappings classify 32
+a 140-component CycloneDX inventory. Its 49 requirement mappings classify 32
 bounded claims `PASS` and retain 17 broader claims as `NOT_RUN`, including
 complete object identity, resolvable payloads, full UCUM, MVX typing, Python
 3.13, reproducible distribution construction, external CAS, and the full G1

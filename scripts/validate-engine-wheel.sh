@@ -30,10 +30,17 @@ trap cleanup EXIT
 
 mkdir -p -- "${work_dir}/wheel" "${work_dir}/pip-cache" "${work_dir}/outside"
 build_versions="$(
-  "${build_python}" -c \
-    'import setuptools, wheel; print(f"setuptools={setuptools.__version__} wheel={wheel.__version__}")'
+  "${build_python}" - <<'PY'
+from importlib.metadata import version
+
+expected = {"setuptools": "83.0.0", "wheel": "0.47.0"}
+observed = {name: version(name) for name in expected}
+if observed != expected:
+    raise SystemExit(f"unexpected wheel build backend: {observed!r} != {expected!r}")
+print(" ".join(f"{name}={observed[name]}" for name in expected))
+PY
 )"
-echo "validate-engine-wheel: observed local build backend ${build_versions}"
+echo "validate-engine-wheel: verified hash-locked build backend ${build_versions}"
 
 PIP_CACHE_DIR="${work_dir}/pip-cache" "${build_python}" -m pip wheel \
   --disable-pip-version-check --no-deps --no-build-isolation \
@@ -120,5 +127,5 @@ print("installed_wheel_migration: PASS")
 PY
 )
 
-echo "validate-engine-wheel: PASS (isolated wheel install; build backend observed, not hash-locked)"
-echo "validate-engine-wheel: distribution build reproducibility NOT_RUN"
+echo "validate-engine-wheel: PASS (isolated wheel install; build dependencies hash-locked)"
+echo "validate-engine-wheel: byte-for-byte distribution reproducibility NOT_RUN"

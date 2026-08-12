@@ -55,12 +55,12 @@ Exact commands and truth-valued results are retained in
 | Two fresh local clone builds | `PASS` | Strict Debug build/install; native CTest 7/7 and installed consumer 1/1 in each clone |
 | AddressSanitizer and UndefinedBehaviorSanitizer | `PASS` | Bounded native suite; LeakSanitizer is `NOT_RUN` |
 | Installed-wheel smoke | `PASS` | Origin, validation, replay, and migration from an isolated install |
-| Distribution build reproducibility | `NOT_RUN` | Observed setuptools 83.0.0 and wheel 0.47.0; `setuptools>=77` is not hash-locked |
+| Distribution build reproducibility | `NOT_RUN` | setuptools 83.0.0 and wheel 0.47.0 are hash-locked; byte-identical wheels were not compared |
 | Python 3.12 | `PASS` | CPython 3.12.13 |
 | Python 3.13 | `NOT_RUN` | Hosted matrix is configured but was not executed in this local gate |
 | E0, frozen E1, and E2 evidence validators | `PASS` | Exact validators rerun without mutating frozen bytes |
 | Ruff, requirements replay, REUSE, secret signatures, whitespace | `PASS` | Executed on the frozen working tree |
-| Deterministic public-IR manifest and SBOM | `PASS` | Closed allowlist, exact hashes, provenance DAG, SBOM self hash, and 21/21 evidence tests verified |
+| Deterministic public-IR manifest and SBOM | `PASS` | Closed allowlist, exact hashes, provenance DAG, SBOM self hash, and 22/22 evidence tests verified |
 | Vulnerability analysis | `NOT_RUN` | Inventory generation is not a vulnerability assessment |
 
 The two fresh clones were local clones of the source-base repository with the
@@ -94,8 +94,8 @@ sub-claim never promotes its broader MUST:
   idempotency key, and incomplete package/API/protocol SemVer proof.
 - `MOR-DEV-003`, `MOR-DEV-010`, `MOR-DEV-011`, `MOR-DEV-012`, and
   `MOR-DEV-014` remain `NOT_RUN` for Python 3.13, complete native ownership
-  inspection, static typing, hash-locked build backend, and final committed
-  public-tree policy evidence.
+  inspection, static typing, a hash-concretized system toolchain image, and
+  final committed public-tree policy evidence.
 - Only the frozen and rerun `MOR-CAS-001`, `MOR-CAS-003`, `MOR-CAS-004`, and
   `MOR-CAS-008` claims are promoted. `MOR-CAS-006`, `MOR-CAS-010`, and
   `MOR-CAS-012` remain `NOT_RUN` for missing distinct cache/backend roles,
@@ -126,8 +126,9 @@ cleanup.
 The CycloneDX file is an inventory. Its root metadata and every artifact state
 that vulnerability analysis is `NOT_RUN`. Dependency license review also
 remains `NOT_RUN`; REUSE metadata success is not a dependency license audit.
-The installed-wheel command is a functional smoke only, because the build
-backend version is observed rather than hash-locked.
+The installed-wheel command uses hash-locked Python build dependencies. It is
+still a functional smoke rather than a reproducible-build proof because two
+independent wheel archives were not compared byte-for-byte.
 
 ## Reproduction
 
