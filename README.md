@@ -56,6 +56,12 @@ STEP, d'Open CASCADE ou des noyaux industriels.
 - [Roadmap et gouvernance](docs/phase2/roadmap-governance.md)
 - [Coûts et risques](docs/phase2/costs-risks.md)
 
+### Identité visuelle
+
+- [Charte graphique officielle, version 1.0](assets/brand/MORPHOIA_charte_graphique_v1.0.pdf)
+- [Kit logo vectoriel téléchargeable](assets/brand/morphoia-logo-vectoriel.zip)
+- [Masters, déclinaisons et règles d'usage](assets/brand/README.md)
+
 ### Accès rapide
 
 - [Guide utilisateur](docs/phase2/user-guide.md)

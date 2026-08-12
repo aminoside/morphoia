@@ -4,6 +4,12 @@ Toutes les modifications notables de MORPHOIA seront documentées ici.
 
 ## [Non publié]
 
+### Ajouté
+
+- publication de la charte graphique MORPHOIA version 1.0, du kit vectoriel complet et des
+  déclinaisons SVG/PNG officielles dans `assets/brand/` ;
+- contrôle d'intégrité dédié aux documents graphiques de référence suivis par Git.
+
 ### Modifié
 
 - application de l'identité visuelle officielle MORPHOIA aux rapports PDF des phases 1 et 2 ;
