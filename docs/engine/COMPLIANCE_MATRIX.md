@@ -1,13 +1,15 @@
-# E0 compliance matrix
+# E0, E1 native-core, and E2 protocol compliance matrix
 
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 Snapshot: 2026-08-12
-Declared profile: E0 audit/bootstrap on Linux x86-64 CPU
+Declared profiles: E0 audit/bootstrap, bounded E1 native core, and E2 SALOME
+protocol contract on Linux x86-64 CPU
 
 The complete 320-item catalogue is machine-readable in
-`spec/requirements/requirements.yaml`. This E0 view records gate evidence; it
-does not replace per-requirement links and does not assert G1-G5 completion.
+`spec/requirements/requirements.yaml`. This view records E0 gate evidence plus
+the bounded E1 native and E2 contract profiles. It does not replace the complete
+per-requirement links and does not assert G1-G5 completion.
 
 | Control | Component/lot | Test or inspection | Evidence | Status |
 |---|---|---|---|---|
@@ -36,14 +38,14 @@ does not replace per-requirement links and does not assert G1-G5 completion.
 | Existing CLI smoke | Existing prototype | CLI help/smoke | successful invocation | PASS |
 | Native C++20 direct-compiler bootstrap | Engine core | `./scripts/bootstrap-engine.sh` fallback | ABI and core smoke executed with GCC/G++ 13 | PASS |
 | Native CMake/CTest bootstrap | Engine core | CMake 3.20.5 configure/build/test | two CTests, install and external C consumer | PASS |
-| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 50 tests | PASS |
+| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 94 tests on the combined E1/E2 reconciliation | PASS |
 | Immutable normative PDFs excluded from report branding | Baselines/reporting | tracked-report manifest test plus full `make check` | two Engine baseline PDFs remain hash-identical and outside generated-report policy | PASS |
 | Second clean bootstrap | Reproducibility | two isolated direct GCC/G++ builds/tests | both executions passed | PASS |
 | ASan/UBSan smoke | Security | fail-fast sanitizer script | two native executables | PASS |
 | LeakSanitizer | Security | leak detection | deliberately disabled; environment limitation retained | NOT_RUN |
 | Secret/sensitive-data scan of E0 diff | Security | bounded fail-closed text signature scan plus binary/hash inspection | no supported signature; not a full PII audit | PASS |
 | E0 SBOM | Supply chain | deterministic CycloneDX generator/check | source, artifacts and hashed locks inventoried; vulnerability analysis NOT_RUN | PASS |
-| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 161/161 files resolved; component vulnerability analysis NOT_RUN | PASS |
+| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 191/191 combined files resolved; component vulnerability analysis NOT_RUN | PASS |
 | Public English language policy | Documentation | repository-language inspection | root README and contribution guide are English; legacy Phase 1/2 guides/documents remain French under R-021 | FAIL |
 | SALOME 9.16 headless | Optional SALOME | real runtime probe | runtime absent | NOT_RUN |
 | CUDA, HIP, and SYCL execution | Optional compute | real hardware execution | hardware/runtime absent | NOT_RUN |
@@ -57,6 +59,34 @@ condition was absent; compensating PR discipline is documented separately.
 A mock, static generator, compiled object, or alternative backend cannot upgrade
 an unavailable optional profile to `PASS`.
 
+## E2 SALOME protocol-only profile
+
+| Control | Requirement(s) | Test or inspection | Evidence | Status |
+|---|---|---|---|---|
+| Core remains independent from SALOME runtime imports | MOR-ARC-002 | forbidden-import inspection | `tests/test_salome_protocol.py` | PASS |
+| Control plane carries bounded metadata and URI/hash/size references | MOR-ARC-007 | positive and negative schema vectors | protocol schema 0.1 and contract tests | PASS |
+| Six operations are closed and versioned | MOR-SAL-015 | request/response schema validation | `test_all_six_request_and_fake_response_contracts_validate` | PASS |
+| Capability shape is truthful in fake profile | MOR-SAL-016 | fake truth and anti-claim mutations | fake reports null/empty detections and `NOT_RUN` | PASS |
+| Submit carries operation, inputs, budgets, outputs, and idempotency | MOR-SAL-017 | lifecycle and schema tests | protocol contract suite | PASS |
+| Observe/Cancel model state, attempts, logs, timeout, and terminality | MOR-SAL-018, MOR-SAL-020 | lifecycle and contradiction mutations | protocol contract suite | PASS |
+| Publish models immutable artifact metadata, units, losses, and metrics | MOR-SAL-019 | fake publish anti-claim test | no fake output artifact is published | PASS |
+| Greater-than-2-GiB metadata shape | MOR-SAL-010 | 3 GiB URI/hash/size schema vector | no payload created or transferred | PASS |
+| Greater-than-2-GiB real transfer | MOR-SAL-010 | real bridge transfer | SALOME runtime and payload absent | NOT_RUN |
+| Bounded E2 requirement traceability | MOR-ARC-002, MOR-ARC-007, MOR-SAL-010, MOR-SAL-015..020 | schema plus custom fail-closed mutations | E2 traceability JSON | PASS |
+| E2 artifact provenance and CycloneDX inventory | Supply chain | deterministic generation and exact allowlist/path/hash/size/license/graph/provenance/source-digest/test-map/lock mutations | separate E2 manifest and SBOM | PASS |
+| Closed E0 evidence preservation | Supply chain | exact byte-hash assertions | E0 manifest `df017341…`; E0 SBOM `30db23e7…` | PASS |
+| E2 vulnerability analysis | Supply chain security | vulnerability scanner | inventory is not a vulnerability scan | NOT_RUN |
+| Published E2 hosted checkpoint | Publication | Engine run `31585426276`; report run `31585425822` | 69 tests ran, 68 passed, sole stale `spec` digest failure | FAIL |
+| Corrective E2 hosted checkpoint | Publication | Engine run `31589424865`; report run `31589424850` | source `e3ec245`: Python 3.12 `94090702646`, hygiene `94090702698`, native `94090702707`, REUSE `94090702764`, Python 3.13 `94090702766`, report `94090702397` | PASS |
+| Final E2 evidence checkpoint | Publication | Engine run `31590141763`; report run `31590141769` | source `b3dfc084`: five Engine jobs plus report job `94092971258` passed | PASS |
+| E2 integration into `engine` | Publication | PR #6 merge plus Engine run `31590418194` | merge `c84dd152`; native `94093829070`, Python 3.12 `94093829134`, Python 3.13 `94093829163`, hygiene `94093829169`, REUSE `94093829190` | PASS |
+| Real SALOME 9.16 capability probe | E2/G1 optional backend | real isolated runtime | runtime absent | NOT_RUN |
+| SHAPER/GEOM, SMESH/MED, MEDCoupling, fidelity and overhead | E2/G1 optional backend | real isolated runtime | no execution | NOT_RUN |
+
+The metadata-shape row for MOR-SAL-010 is intentionally separate from real
+transfer evidence. Similarly, `FakeSalomeAgent` passing its tests proves only
+the software contract. It cannot satisfy any row requiring SALOME 9.16.
+
 ## E0 disposition
 
 E0/core-CPU is `PASS` and integrated. Corrective source SHA
@@ -64,6 +94,8 @@ E0/core-CPU is `PASS` and integrated. Corrective source SHA
 `31581879387` and `31581879373`; PR #4 merged the completed lot into `engine` at
 `7715a7f7897a3058473732915e372b9835317d17`; `engine` push run `31582827407`
 then passed all five jobs. Branch protection and R-021 remain `FAIL`. Full
-per-requirement test/evidence mapping is a living E1+ task and no G1-G5 gate is
-claimed. E1 canonical-JSON/CAS/replay and E2 protocol-only work are next; real
-SALOME remains `NOT_RUN`.
+per-requirement test/evidence mapping outside the nine-item E2 profile is a
+living E1+ task and no G1-G5 gate is claimed. The E2 contract profile passes
+locally. Its first published hosted checkpoint remains `FAIL`, while corrective
+source `e3ec245` passed Engine run `31589424865` and report run `31589424850`;
+real SALOME remains `NOT_RUN`.

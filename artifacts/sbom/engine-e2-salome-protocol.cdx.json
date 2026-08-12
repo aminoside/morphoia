@@ -1,0 +1,956 @@
+{
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "bom-ref": "pkg:pypi/attrs@26.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "attrs",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/attrs@26.1.0",
+      "scope": "excluded",
+      "type": "library",
+      "version": "26.1.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "jsonschema-specifications",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "scope": "excluded",
+      "type": "library",
+      "version": "2025.9.1"
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema@4.25.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3fba0169e345c7175110351d456342c364814cfcf3b964ba4587f22915230a63"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "jsonschema",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema@4.25.1",
+      "scope": "excluded",
+      "type": "library",
+      "version": "4.25.1"
+    },
+    {
+      "bom-ref": "pkg:pypi/referencing@0.37.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "referencing",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/referencing@0.37.0",
+      "scope": "excluded",
+      "type": "library",
+      "version": "0.37.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/rpds-py@2026.6.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "acac386b453c2516111b50985d60ce46e7fadb5ea71ae7b25f4c946935bf27cf"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ecabd69db66de867690f9797f2f8fa27ba501bbc24540cbdbdc649cd15888ba6"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "rpds-py",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/rpds-py@2026.6.3",
+      "scope": "excluded",
+      "type": "library",
+      "version": "2026.6.3"
+    },
+    {
+      "bom-ref": "pkg:pypi/typing-extensions@4.16.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "typing-extensions",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/typing-extensions@4.16.0",
+      "scope": "excluded",
+      "type": "library",
+      "version": "4.16.0"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:adr-019",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7581e07695e567690df5ff61784acdfae33d8b3eb8a160cd68721da0fc82fda7"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/adr/ADR-019-salome-control-protocol-v0.1.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "adr-019"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "architecture-decision-record"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:e2-artifact-manifest-schema",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d959564e8bca9e60f9f23f7ed87e499b52ae5a00d4b77ef76d8ba50d8d39bc4d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "spec/evidence/e2-salome-protocol-artifact-manifest.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e2-artifact-manifest-schema"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-schema"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:e2-evidence-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5f03a15bb2168b32a7ea31f2aca7919e554a7c61554a0fd990e222c593634ede"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_e2_evidence.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e2-evidence-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:e2-protocol-gate-report",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0f2a988a5bb3cb5f957d9f07befdadc0faee4cfd0f71795da33265493ddd84dc"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/evidence/E2_PROTOCOL_GATE_REPORT.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e2-protocol-gate-report"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "gate-report"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:e2-sbom-generator",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e189c5f56f895fdcbc80e41ff001c00494cd3a89a271c786e6903dac017b9c90"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/generate_engine_e2_sbom.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e2-sbom-generator"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-generator"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:e2-traceability",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ed1d65c6dcaf16c51a6ea66d3d4b2ce770379b980e76463246aa19d801036641"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/evidence/e2-salome-protocol-traceability.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e2-traceability"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "traceability"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:e2-traceability-schema",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e65b7f45a2523741b20887bc53e95593611ddaa77e1d468b60c9d89518e6519d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "spec/evidence/e2-salome-protocol-traceability.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e2-traceability-schema"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-schema"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:fake-salome-agent",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3e4ba847a3df3fcd5dcc1b405d2ebd82519d86e75458aa22bec5b8c791d01320"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "src/morphoia/salome_protocol/fake_agent.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "fake-salome-agent"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "contract-implementation"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:salome-protocol-contract",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c06b3f4187e0ad855cd5e25e90e79e864a5f9ca04804e7c32135fffdcdacb19e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "src/morphoia/salome_protocol/contract.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "salome-protocol-contract"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "contract-implementation"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:salome-protocol-contract-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "85065138701cb4d1da1adf02cd7fabe6b9973d7747ad4896204542a7856446b8"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_salome_protocol.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "salome-protocol-contract-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "contract-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:salome-protocol-package-init",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7d26ad9a946a166206ce304240f81b7b78651c3a526da4b52cc909ff87d2a2c7"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "src/morphoia/salome_protocol/__init__.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "salome-protocol-package-init"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "contract-implementation"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:salome-protocol-schema-0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8c20efe80430168151cb197bd27f45d86515f7ee05451a910ff92e32fe249963"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "schemas/morphoia-salome-protocol-0.1.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "salome-protocol-schema-0.1"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "protocol-schema"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-artifact:schema-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "65b40357498ff8e21895b3998170a5f23bac31ffe056c69d9c7d87ff6c73201f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "tests/test_schemas.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "schema-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "schema-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-license:LICENSE",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b844215f70ea1e2b8815118e2a787b7337ac9492fd50a9ffbd7cd8bf93b34965"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "LICENSE",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-license:LICENSE-APACHE",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d87584c23e1f28621fb407e3bfd2d2c3303c088e5f2337bad9d4a919a4384067"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0"
+        }
+      ],
+      "name": "LICENSE-APACHE",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-license:LICENSE-MIT",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b844215f70ea1e2b8815118e2a787b7337ac9492fd50a9ffbd7cd8bf93b34965"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "LICENSE-MIT",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-license:LICENSES%2FApache-2.0.txt",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d87584c23e1f28621fb407e3bfd2d2c3303c088e5f2337bad9d4a919a4384067"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0"
+        }
+      ],
+      "name": "LICENSES/Apache-2.0.txt",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-license:LICENSES%2FCC-BY-4.0.txt",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "419896aea50c15d6e40c5b4baf4bd346f78223b9a354c7357ad00262afdc08ec"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "LICENSES/CC-BY-4.0.txt",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-license:LICENSES%2FMIT.txt",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b844215f70ea1e2b8815118e2a787b7337ac9492fd50a9ffbd7cd8bf93b34965"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "LICENSES/MIT.txt",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-license:NOTICE",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1db6af37682adf5473a53066d839ec6ddc600930401097530fa985b81619432f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "NOTICE",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e2-lock:requirements%2Fengine-ci.lock",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ee1e00b79e51678243beb7dedefb043fa675ed9c4d8c458b2fe576aa7082ade5"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "requirements/engine-ci.lock",
+      "properties": [
+        {
+          "name": "morphoia:implementation-base-commit",
+          "value": "aec106f79e277b3cd3c6dabafe1107280f039aa9"
+        },
+        {
+          "name": "morphoia:profile",
+          "value": "e2-salome-protocol-contract"
+        },
+        {
+          "name": "morphoia:role",
+          "value": "hashed-test-lock"
+        }
+      ],
+      "type": "file"
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": [],
+      "ref": "pkg:generic/morphoia-engine-e2-salome-protocol@0.0.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/attrs@26.1.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/jsonschema-specifications@2025.9.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/jsonschema@4.25.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/referencing@0.37.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/rpds-py@2026.6.3"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/typing-extensions@4.16.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:adr-019"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:e2-artifact-manifest-schema"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:e2-evidence-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:e2-protocol-gate-report"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:e2-sbom-generator"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:e2-traceability"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:e2-traceability-schema"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:fake-salome-agent"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:salome-protocol-contract"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:salome-protocol-contract-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:salome-protocol-package-init"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:salome-protocol-schema-0.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-artifact:schema-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-license:LICENSE"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-license:LICENSE-APACHE"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-license:LICENSE-MIT"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-license:LICENSES%2FApache-2.0.txt"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-license:LICENSES%2FCC-BY-4.0.txt"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-license:LICENSES%2FMIT.txt"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-license:NOTICE"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e2-lock:requirements%2Fengine-ci.lock"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "pkg:generic/morphoia-engine-e2-salome-protocol@0.0.1",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Aminoside/morphoia"
+        }
+      ],
+      "group": "org.morphoia",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "morphoia-engine-e2-salome-protocol",
+      "properties": [
+        {
+          "name": "morphoia:profile",
+          "value": "e2-salome-protocol-contract"
+        },
+        {
+          "name": "morphoia:implementation-base-commit",
+          "value": "aec106f79e277b3cd3c6dabafe1107280f039aa9"
+        },
+        {
+          "name": "morphoia:execution-scope",
+          "value": "contract-only"
+        },
+        {
+          "name": "morphoia:salome-runtime-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-note",
+          "value": "Inventory generation is not a vulnerability assessment"
+        }
+      ],
+      "type": "application",
+      "version": "0.0.1"
+    }
+  },
+  "serialNumber": "urn:uuid:37059068-413a-5b3c-8d56-2bfdc9982b18",
+  "specVersion": "1.5",
+  "version": 1
+}

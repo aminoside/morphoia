@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # SPDX-FileCopyrightText: 2026 Olivier Ami
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 """Generate the deterministic CycloneDX E1 native-core source SBOM."""
@@ -6,21 +5,20 @@
 from __future__ import annotations
 
 import argparse
-from datetime import date
 import fnmatch
 import hashlib
 import json
 import os
-from pathlib import Path
-from pathlib import PurePosixPath
 import re
 import secrets
 import stat
 import sys
-from typing import Any, Callable
 import urllib.parse
 import uuid
-
+from collections.abc import Callable
+from datetime import date
+from pathlib import Path, PurePosixPath
+from typing import Any
 
 PROFILE = "e1-native-core"
 PROJECT_VERSION = "0.0.1"
@@ -46,12 +44,13 @@ EXPECTED_ARTIFACTS = {
         "provenance": (
             "Generated from local executions and GitHub Actions results for native "
             "source bbf84cb806d95701daa2887e71d90a819c4a4c83 and corrective "
-            "evidence source 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41"
+            "evidence sources 0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41 and "
+            "4db5c7436a8139d227de58d5f5ff7280e8a0f9ea"
         ),
         "verification_status": "PASS",
         "note": (
             "The artifact is hash-verified; its content retains the initial hosted "
-            "FAIL and the corrective hosted PASS"
+            "FAIL, corrective hosted PASS, and final evidence-head report NOT_RUN"
         ),
     },
     "adr-018-canonical-json-posix-cas": {
@@ -212,7 +211,7 @@ def source_license_expression(relative: str) -> str:
 
 def safe_root_file(root: Path, relative: str) -> Path:
     if not isinstance(relative, str):
-        raise ValueError("repository path must be a string")
+        raise ValueError("repository path must be a string")  # noqa: TRY004
     posix = PurePosixPath(relative)
     if not relative or posix.is_absolute() or "." in posix.parts or ".." in posix.parts:
         raise ValueError(f"unsafe repository path: {relative!r}")
@@ -286,7 +285,7 @@ def parse_manifest_text(content: str) -> dict[str, Any]:
         parse_constant=reject_constant,
     )
     if not isinstance(manifest, dict):
-        raise ValueError("E1 manifest root must be an object")
+        raise ValueError("E1 manifest root must be an object")  # noqa: TRY004
     validate_unicode(manifest)
     return manifest
 
@@ -322,7 +321,7 @@ def validate_manifest_value(root: Path, manifest: dict[str, Any]) -> dict[str, A
     paths: set[str] = set()
     for artifact in artifacts:
         if not isinstance(artifact, dict):
-            raise ValueError("E1 manifest artifact must be an object")
+            raise ValueError("E1 manifest artifact must be an object")  # noqa: TRY004
         identifier = artifact.get("id")
         expected_identity = EXPECTED_ARTIFACTS.get(identifier)
         if expected_identity is None:

@@ -8,6 +8,8 @@ Native implementation source commit:
 `bbf84cb806d95701daa2887e71d90a819c4a4c83`
 Corrective evidence source commit executed by GitHub Actions:
 `0e1f6cf45b7b4d0721fc9fb94cb9b1582b7e5b41`
+Final evidence source commit executed by GitHub Actions:
+`4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
 
 ## Result
 
@@ -53,6 +55,36 @@ These results close the corrective hosted-check item only. They do not prove
 the public IR path, the 20-graph corpus, greater-than-2-GiB execution, future
 CAS capabilities, vulnerability analysis, or integration into `engine`.
 
+## Hosted final evidence-head results
+
+| Workflow or job | Status | Observation |
+|---|---|---|
+| Engine run `31590626838` | PASS | All five jobs passed on final E1 evidence head `4db5c743`. |
+| Native job `94094507250` | PASS | GCC/C++20 native build and executed tests passed. |
+| Python 3.12 job `94094507279` | PASS | Unified Python and phase-scoped evidence validation passed. |
+| REUSE job `94094507286` | PASS | License metadata validation passed. |
+| Hygiene job `94094507324` | PASS | Secret-signature and whitespace checks passed. |
+| Python 3.13 job `94094507349` | PASS | Unified Python and phase-scoped evidence validation passed. |
+| Report workflow | NOT_RUN | No report workflow run was observed for exact SHA `4db5c743`; the cause is not asserted. |
+
+No report result is inferred from the green Engine run. The non-rewriting merge
+of `engine` at `c84dd152` into this published E1 history must be reconciled and
+then execute both combined workflows before integration.
+
+## Combined local reconciliation
+
+| Check | Status | Executed result |
+|---|---|---|
+| Unified Python suite | PASS | 94/94 tests passed with hash-locked dependencies. |
+| CMake 3.20.5 build and CTest | PASS | 5/5 native tests passed; install and external C consumer passed; incompatible 0.1 consumer was rejected. |
+| Direct bootstrap | PASS | ABI/core/SHA-256/canonical JSON/POSIX CAS tests passed. |
+| ASan and fail-fast UBSan | PASS | All five native tests passed; LSan remains `NOT_RUN`. |
+| Report replay | PASS | Both reports rebuilt and validated; the same 94-test suite passed. |
+| REUSE 6.2.0 | PASS | License metadata resolved for 191/191 files. |
+
+This local PASS proves the reconciled worktree only. Combined hosted Engine and
+report workflows remain `NOT_RUN` until the merge commit is published.
+
 ## Local executed evidence
 
 | Check | Status | Executed result |
@@ -91,6 +123,7 @@ limits.
 | `MOR-CAS-011` | NOT_RUN | Workspace quota, retention, pinning, and purge policy are not implemented. |
 | `MOR-CAS-012` | NOT_RUN | The provenance transform path is not implemented. |
 
-The 20-graph IR corpus, replay manifests, whole E1 gate, integration into
-`engine`, and greater-than-2-GiB execution remain `NOT_RUN`. The bounded lot and
-E1 therefore remain `IN_PROGRESS`.
+The 20-graph IR corpus, replay manifests, whole E1 gate, combined hosted report
+workflow, integration into `engine`, and greater-than-2-GiB execution remain
+`NOT_RUN`.
+The bounded lot and E1 therefore remain `IN_PROGRESS`.
