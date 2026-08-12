@@ -1,0 +1,1922 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/morphoia-salome-protocol-0.1.schema.json",
+  "title": "Morphoia SALOME control protocol 0.1",
+  "description": "A narrow control-plane contract. Payload bytes are forbidden: immutable artifacts cross the process boundary only by validated URI, SHA-256 digest, size, and media type. Conformance to this schema does not demonstrate execution of SALOME.",
+  "type": "object",
+  "required": [
+    "protocol_version",
+    "message_id",
+    "request_id",
+    "direction",
+    "operation",
+    "sent_at",
+    "body"
+  ],
+  "properties": {
+    "protocol_version": {
+      "const": "0.1.0"
+    },
+    "message_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "request_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "direction": {
+      "enum": [
+        "request",
+        "response"
+      ]
+    },
+    "agent_kind": {
+      "enum": [
+        "real",
+        "fake"
+      ]
+    },
+    "simulation": {
+      "type": "boolean"
+    },
+    "operation": {
+      "enum": [
+        "ProbeCapabilities",
+        "Submit",
+        "Observe",
+        "Cancel",
+        "Publish",
+        "Health"
+      ]
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "running",
+        "succeeded",
+        "failed",
+        "cancelled",
+        "not_available"
+      ]
+    },
+    "body": {
+      "type": "object"
+    },
+    "attempt": {
+      "$ref": "#/$defs/attempt"
+    },
+    "diagnostics": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "request"
+          }
+        },
+        "required": [
+          "direction"
+        ]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "agent_kind"
+              ]
+            },
+            {
+              "required": [
+                "simulation"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          }
+        },
+        "required": [
+          "direction"
+        ]
+      },
+      "then": {
+        "required": [
+          "agent_kind",
+          "simulation"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "agent_kind": {
+            "const": "fake"
+          }
+        },
+        "required": [
+          "direction",
+          "agent_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "simulation": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "agent_kind": {
+            "const": "real"
+          }
+        },
+        "required": [
+          "direction",
+          "agent_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "simulation": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "request"
+          },
+          "operation": {
+            "const": "ProbeCapabilities"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "body": {
+            "$ref": "#/$defs/probe_request"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "status"
+              ]
+            },
+            {
+              "required": [
+                "attempt"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "operation": {
+            "const": "ProbeCapabilities"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "succeeded",
+              "failed",
+              "not_available"
+            ]
+          },
+          "body": {
+            "$ref": "#/$defs/probe_response"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "request"
+          },
+          "operation": {
+            "const": "Submit"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "body": {
+            "$ref": "#/$defs/submit_request"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "status"
+              ]
+            },
+            {
+              "required": [
+                "attempt"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "operation": {
+            "const": "Submit"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "required": [
+          "status",
+          "attempt"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "accepted",
+              "failed",
+              "not_available"
+            ]
+          },
+          "body": {
+            "$ref": "#/$defs/submit_response"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "request"
+          },
+          "operation": {
+            "const": "Observe"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "body": {
+            "$ref": "#/$defs/job_request"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "status"
+              ]
+            },
+            {
+              "required": [
+                "attempt"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "operation": {
+            "const": "Observe"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "required": [
+          "status",
+          "attempt"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled",
+              "not_available"
+            ]
+          },
+          "body": {
+            "$ref": "#/$defs/observe_response"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "request"
+          },
+          "operation": {
+            "const": "Cancel"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "body": {
+            "$ref": "#/$defs/cancel_request"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "status"
+              ]
+            },
+            {
+              "required": [
+                "attempt"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "operation": {
+            "const": "Cancel"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "required": [
+          "status",
+          "attempt"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "cancelled",
+              "failed",
+              "not_available"
+            ]
+          },
+          "body": {
+            "$ref": "#/$defs/cancel_response"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "request"
+          },
+          "operation": {
+            "const": "Publish"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "body": {
+            "$ref": "#/$defs/job_request"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "status"
+              ]
+            },
+            {
+              "required": [
+                "attempt"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "operation": {
+            "const": "Publish"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "required": [
+          "status",
+          "attempt"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "succeeded",
+              "failed",
+              "cancelled",
+              "not_available"
+            ]
+          },
+          "body": {
+            "$ref": "#/$defs/publish_response"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "request"
+          },
+          "operation": {
+            "const": "Health"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "body": {
+            "$ref": "#/$defs/health_request"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "status"
+              ]
+            },
+            {
+              "required": [
+                "attempt"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "operation": {
+            "const": "Health"
+          }
+        },
+        "required": [
+          "direction",
+          "operation"
+        ]
+      },
+      "then": {
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "succeeded",
+              "failed",
+              "not_available"
+            ]
+          },
+          "body": {
+            "$ref": "#/$defs/health_response"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "operation": {
+            "const": "ProbeCapabilities"
+          },
+          "body": {
+            "properties": {
+              "agent_kind": {
+                "const": "fake"
+              }
+            },
+            "required": [
+              "agent_kind"
+            ]
+          }
+        },
+        "required": [
+          "direction",
+          "operation",
+          "body"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "not_available"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "direction": {
+            "const": "response"
+          },
+          "operation": {
+            "const": "Health"
+          },
+          "body": {
+            "properties": {
+              "agent_kind": {
+                "const": "fake"
+              }
+            },
+            "required": [
+              "agent_kind"
+            ]
+          }
+        },
+        "required": [
+          "direction",
+          "operation",
+          "body"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "not_available"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "evidence_status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "NOT_RUN",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "artifact_uri": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 2048,
+      "pattern": "^(cas\\+sha256|file|https|s3):"
+    },
+    "media_type": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9!#$&^_.+-]+/[A-Za-z0-9!#$&^_.+-]+(?:;[A-Za-z0-9!#$&^_.+\\-=]+)*$"
+    },
+    "unit": {
+      "type": "object",
+      "required": [
+        "symbol",
+        "dimension"
+      ],
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "dimension": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact_ref": {
+      "type": "object",
+      "required": [
+        "uri",
+        "sha256",
+        "size_bytes",
+        "media_type"
+      ],
+      "properties": {
+        "uri": {
+          "$ref": "#/$defs/artifact_uri"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "media_type": {
+          "$ref": "#/$defs/media_type"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "units": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/unit"
+          }
+        },
+        "dimensions": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "provenance_uri": {
+          "$ref": "#/$defs/artifact_uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_-]{2,63}$"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "details_uri": {
+          "$ref": "#/$defs/artifact_uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "log_record": {
+      "type": "object",
+      "required": [
+        "time",
+        "level",
+        "code",
+        "message"
+      ],
+      "properties": {
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "level": {
+          "enum": [
+            "debug",
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_-]{2,63}$"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "additionalProperties": false
+    },
+    "attempt": {
+      "type": "object",
+      "required": [
+        "attempt_id",
+        "sequence",
+        "state",
+        "terminal",
+        "environment",
+        "logs"
+      ],
+      "properties": {
+        "attempt_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "state": {
+          "enum": [
+            "queued",
+            "running",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "timed_out",
+            "not_available"
+          ]
+        },
+        "terminal": {
+          "type": "boolean"
+        },
+        "environment": {
+          "type": "object",
+          "required": [
+            "profile",
+            "os",
+            "architecture",
+            "python_version",
+            "salome_version",
+            "salome_status"
+          ],
+          "properties": {
+            "profile": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "os": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "architecture": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "python_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            "salome_version": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 64
+            },
+            "salome_status": {
+              "$ref": "#/$defs/evidence_status"
+            }
+          },
+          "additionalProperties": false
+        },
+        "logs": {
+          "type": "array",
+          "maxItems": 1024,
+          "items": {
+            "$ref": "#/$defs/log_record"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "queued",
+                  "running"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "terminal": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "timed_out",
+                  "not_available"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "terminal": {
+                "const": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "client": {
+      "type": "object",
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "additionalProperties": false
+    },
+    "probe_request": {
+      "type": "object",
+      "required": [
+        "client"
+      ],
+      "properties": {
+        "client": {
+          "$ref": "#/$defs/client"
+        }
+      },
+      "additionalProperties": false
+    },
+    "runtime_capabilities": {
+      "type": "object",
+      "required": [
+        "status",
+        "salome_version",
+        "python_version",
+        "cpp_standard",
+        "occt_version",
+        "med_file_version",
+        "launch_mode",
+        "gui_active",
+        "detected_at"
+      ],
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/evidence_status"
+        },
+        "salome_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "python_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "cpp_standard": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "occt_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "med_file_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "launch_mode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "gui_active": {
+          "type": "boolean"
+        },
+        "detected_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "module_capability": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "status"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "status": {
+          "$ref": "#/$defs/evidence_status"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mesher_capability": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "license",
+        "status"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "status": {
+          "$ref": "#/$defs/evidence_status"
+        }
+      },
+      "additionalProperties": false
+    },
+    "license_capability": {
+      "type": "object",
+      "required": [
+        "component",
+        "expression",
+        "status"
+      ],
+      "properties": {
+        "component": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expression": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "$ref": "#/$defs/evidence_status"
+        }
+      },
+      "additionalProperties": false
+    },
+    "capability_limits": {
+      "type": "object",
+      "required": [
+        "max_control_message_bytes",
+        "max_inputs",
+        "max_outputs",
+        "max_parameter_properties",
+        "max_runtime_seconds",
+        "max_memory_bytes",
+        "max_temp_bytes"
+      ],
+      "properties": {
+        "max_control_message_bytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 9007199254740991
+        },
+        "max_inputs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "max_outputs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "max_parameter_properties": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "max_runtime_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "max_memory_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "max_temp_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false
+    },
+    "probe_response": {
+      "type": "object",
+      "required": [
+        "agent_kind",
+        "simulation",
+        "backend_available",
+        "runtime",
+        "modules",
+        "med_formats",
+        "oss_meshers",
+        "limits",
+        "licenses",
+        "supported_operations"
+      ],
+      "properties": {
+        "agent_kind": {
+          "enum": [
+            "real",
+            "fake"
+          ]
+        },
+        "simulation": {
+          "type": "boolean"
+        },
+        "backend_available": {
+          "type": "boolean"
+        },
+        "runtime": {
+          "$ref": "#/$defs/runtime_capabilities"
+        },
+        "modules": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/module_capability"
+          }
+        },
+        "med_formats": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "oss_meshers": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/mesher_capability"
+          }
+        },
+        "limits": {
+          "$ref": "#/$defs/capability_limits"
+        },
+        "licenses": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/license_capability"
+          }
+        },
+        "supported_operations": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "ProbeCapabilities",
+              "Submit",
+              "Observe",
+              "Cancel",
+              "Publish",
+              "Health"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "agent_kind": {
+                "const": "fake"
+              }
+            },
+            "required": [
+              "agent_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "simulation": {
+                "const": true
+              },
+              "backend_available": {
+                "const": false
+              },
+              "runtime": {
+                "properties": {
+                  "status": {
+                    "const": "NOT_RUN"
+                  },
+                  "salome_version": {
+                    "type": "null"
+                  },
+                  "python_version": {
+                    "type": "null"
+                  },
+                  "cpp_standard": {
+                    "type": "null"
+                  },
+                  "occt_version": {
+                    "type": "null"
+                  },
+                  "med_file_version": {
+                    "type": "null"
+                  },
+                  "launch_mode": {
+                    "type": "null"
+                  },
+                  "gui_active": {
+                    "const": false
+                  },
+                  "detected_at": {
+                    "type": "null"
+                  }
+                }
+              },
+              "modules": {
+                "items": {
+                  "properties": {
+                    "status": {
+                      "const": "NOT_RUN"
+                    }
+                  }
+                }
+              },
+              "med_formats": {
+                "maxItems": 0
+              },
+              "oss_meshers": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "agent_kind": {
+                "const": "real"
+              }
+            },
+            "required": [
+              "agent_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "simulation": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "control_scalar": {
+      "oneOf": [
+        {
+          "type": "string",
+          "maxLength": 4096
+        },
+        {
+          "type": "number",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "control_value": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/control_scalar"
+        },
+        {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/control_scalar"
+          }
+        },
+        {
+          "type": "object",
+          "maxProperties": 64,
+          "propertyNames": {
+            "maxLength": 128,
+            "not": {
+              "enum": [
+                "payload",
+                "data",
+                "content",
+                "bytes",
+                "blob",
+                "base64"
+              ]
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/control_scalar"
+          }
+        }
+      ]
+    },
+    "budget": {
+      "type": "object",
+      "required": [
+        "wall_time_seconds",
+        "memory_bytes",
+        "temp_bytes"
+      ],
+      "properties": {
+        "wall_time_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "memory_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "temp_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false
+    },
+    "expected_output": {
+      "type": "object",
+      "required": [
+        "role",
+        "format",
+        "media_type"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "format": {
+          "enum": [
+            "STEP_AP242",
+            "XAO",
+            "MED",
+            "SALOME_HDF"
+          ]
+        },
+        "media_type": {
+          "$ref": "#/$defs/media_type"
+        }
+      },
+      "additionalProperties": false
+    },
+    "submit_request": {
+      "type": "object",
+      "required": [
+        "operation_name",
+        "parameters",
+        "inputs",
+        "budget",
+        "expected_outputs",
+        "idempotency_key"
+      ],
+      "properties": {
+        "operation_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-z][a-z0-9_.-]*$"
+        },
+        "parameters": {
+          "type": "object",
+          "maxProperties": 64,
+          "propertyNames": {
+            "maxLength": 128,
+            "not": {
+              "enum": [
+                "payload",
+                "data",
+                "content",
+                "bytes",
+                "blob",
+                "base64"
+              ]
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/control_value"
+          }
+        },
+        "inputs": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/artifact_ref"
+          }
+        },
+        "budget": {
+          "$ref": "#/$defs/budget"
+        },
+        "expected_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/expected_output"
+          }
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "additionalProperties": false
+    },
+    "submit_response": {
+      "type": "object",
+      "required": [
+        "job_id",
+        "accepted",
+        "duplicate",
+        "execution_profile"
+      ],
+      "properties": {
+        "job_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "accepted": {
+          "type": "boolean"
+        },
+        "duplicate": {
+          "type": "boolean"
+        },
+        "execution_profile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "additionalProperties": false
+    },
+    "job_request": {
+      "type": "object",
+      "required": [
+        "job_id"
+      ],
+      "properties": {
+        "job_id": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "additionalProperties": false
+    },
+    "observe_response": {
+      "type": "object",
+      "required": [
+        "job_id",
+        "job_state",
+        "progress",
+        "timeout"
+      ],
+      "properties": {
+        "job_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "job_state": {
+          "enum": [
+            "queued",
+            "running",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "timed_out",
+            "not_available"
+          ]
+        },
+        "progress": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "timeout": {
+          "type": "object",
+          "required": [
+            "deadline",
+            "exceeded"
+          ],
+          "properties": {
+            "deadline": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "exceeded": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "cancel_request": {
+      "type": "object",
+      "required": [
+        "job_id",
+        "idempotency_key"
+      ],
+      "properties": {
+        "job_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "additionalProperties": false
+    },
+    "cancel_response": {
+      "type": "object",
+      "required": [
+        "job_id",
+        "job_state",
+        "cancellation_effect",
+        "idempotent"
+      ],
+      "properties": {
+        "job_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "job_state": {
+          "enum": [
+            "succeeded",
+            "failed",
+            "cancelled",
+            "timed_out",
+            "not_available"
+          ]
+        },
+        "cancellation_effect": {
+          "enum": [
+            "cancelled",
+            "already_terminal",
+            "already_cancelled",
+            "not_found"
+          ]
+        },
+        "idempotent": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "loss": {
+      "type": "object",
+      "required": [
+        "id",
+        "category",
+        "severity",
+        "message"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "additionalProperties": false
+    },
+    "metric": {
+      "type": "object",
+      "required": [
+        "name",
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "value": {
+          "type": "number",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "additionalProperties": false
+    },
+    "published_artifact": {
+      "type": "object",
+      "required": [
+        "uri",
+        "sha256",
+        "size_bytes",
+        "media_type",
+        "format",
+        "units",
+        "losses",
+        "metrics"
+      ],
+      "properties": {
+        "uri": {
+          "$ref": "#/$defs/artifact_uri"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "media_type": {
+          "$ref": "#/$defs/media_type"
+        },
+        "format": {
+          "enum": [
+            "STEP_AP242",
+            "XAO",
+            "MED",
+            "SALOME_HDF"
+          ]
+        },
+        "units": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/unit"
+          }
+        },
+        "losses": {
+          "type": "array",
+          "maxItems": 1024,
+          "items": {
+            "$ref": "#/$defs/loss"
+          }
+        },
+        "metrics": {
+          "type": "array",
+          "maxItems": 1024,
+          "items": {
+            "$ref": "#/$defs/metric"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "publish_response": {
+      "type": "object",
+      "required": [
+        "job_id",
+        "artifacts",
+        "losses",
+        "metrics"
+      ],
+      "properties": {
+        "job_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "artifacts": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/published_artifact"
+          }
+        },
+        "losses": {
+          "type": "array",
+          "maxItems": 1024,
+          "items": {
+            "$ref": "#/$defs/loss"
+          }
+        },
+        "metrics": {
+          "type": "array",
+          "maxItems": 1024,
+          "items": {
+            "$ref": "#/$defs/metric"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "health_request": {
+      "type": "object",
+      "properties": {
+        "client_time": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "health_response": {
+      "type": "object",
+      "required": [
+        "agent_kind",
+        "simulation",
+        "runtime_ready",
+        "salome_status",
+        "gui_active",
+        "temp_space_available_bytes",
+        "protocol_version"
+      ],
+      "properties": {
+        "agent_kind": {
+          "enum": [
+            "real",
+            "fake"
+          ]
+        },
+        "simulation": {
+          "type": "boolean"
+        },
+        "runtime_ready": {
+          "type": "boolean"
+        },
+        "salome_status": {
+          "$ref": "#/$defs/evidence_status"
+        },
+        "gui_active": {
+          "type": "boolean"
+        },
+        "temp_space_available_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "protocol_version": {
+          "const": "0.1.0"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "agent_kind": {
+                "const": "fake"
+              }
+            },
+            "required": [
+              "agent_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "simulation": {
+                "const": true
+              },
+              "runtime_ready": {
+                "const": false
+              },
+              "salome_status": {
+                "const": "NOT_RUN"
+              },
+              "gui_active": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

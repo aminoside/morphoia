@@ -4,12 +4,14 @@
 
 Last updated: 2026-08-12
 Owner: Dr Olivier Ami
-Current operational phase: E1, with E2 protocol-only work in parallel
-Current lot: `canonical-json-cas-replay`
-Work branch: `engine`
+Current operational phase: E2 protocol-only, with E1 work in parallel
+Current lot: `salome-protocol-contract`
+Work branch: `engine-p0-salome-protocol`
 Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
-E1/E2 base commit: `7715a7f7897a3058473732915e372b9835317d17`
+E1/E2 durable-state base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
+Published E2 source checkpoint: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
+Corrective E2 source checkpoint: `e3ec245569bff40533b86789e61b1a78c15915f6`
 
 ## Objective
 
@@ -93,6 +95,22 @@ validated specification is received.
   then passed native job `94069646681`, Python 3.13 job `94069646723`, hygiene
   job `94069646761`, Python 3.12 job `94069646822`, and REUSE job
   `94069646871`.
+- The first E2 protocol source checkpoint was published at
+  `aec106f79e277b3cd3c6dabafe1107280f039aa9` on
+  `engine-p0-salome-protocol`, with draft PR #6 targeting `engine`. Engine run
+  `31585426276` was overall `FAIL`: REUSE job `94078032129`, hygiene job
+  `94078032264`, and native job `94078032366` passed; Python 3.12 job
+  `94078032322` and Python 3.13 job `94078032333` failed. Report run
+  `31585425822`, job `94078030193`, also failed. The logs show 69 tests ran,
+  68 passed, and the sole failure was the stale checkpoint `spec` tree digest.
+  This history remains `FAIL`; it is not reclassified because the protocol
+  assertions themselves passed.
+- Corrective source `e3ec245569bff40533b86789e61b1a78c15915f6` then passed
+  Engine run `31589424865`: Python 3.12 job `94090702646`, hygiene job
+  `94090702698`, native job `94090702707`, REUSE job `94090702764`, and Python
+  3.13 job `94090702766`. Report run `31589424850`, job `94090702397`, also
+  passed. This new execution proves the durable correction; it does not rewrite
+  either historical failed workflow.
 
 ## Milestones
 
@@ -171,6 +189,34 @@ no SALOME, so real `ProbeCapabilities`, SHAPER/GEOM, SMESH/MED, MEDCoupling, and
 Only the versioned JSON/URI/hash protocol, capability schema, explicitly named
 fake agent, and contract tests may proceed in parallel with the current E1 lot.
 
+Bounded protocol checkpoint results:
+
+- protocol 0.1 defines six closed operations (`ProbeCapabilities`, `Submit`,
+  `Observe`, `Cancel`, `Publish`, and `Health`) with URI/size/SHA-256 artifact
+  references and bounded structured diagnostics;
+- the strict loader/encoder rejects duplicate keys, non-finite values, unsafe
+  integers, invalid UTF-8, lone surrogates, oversized messages, and non-object
+  roots; its deterministic encoding is explicitly not RFC 8785 or canonical IR;
+- `FakeSalomeAgent` is unambiguously simulated and cannot claim a real backend
+  or publish a real SALOME artifact;
+- a separate E2 artifact manifest, traceability profile, and CycloneDX inventory
+  preserve the closed E0 manifest and E0 SBOM bytes exactly. The E2 generator
+  is standard-library-only and bounded to explicit files, exact provenance and
+  source edges, pinned published-source digests, exact requirement/test links,
+  one hashed lock, and declared licenses. Strict evidence JSON and confined
+  descriptor-relative output reject duplicate keys, symlink/alias escapes, and
+  collisions; vulnerability analysis remains `NOT_RUN`;
+- the first published hosted checkpoint remains `FAIL` because of its stale
+  durable digest; corrective source `e3ec245` passed hosted Python 3.12/3.13,
+  native, hygiene, REUSE, and report execution;
+- real SALOME 9.16, SHAPER/GEOM, SMESH/MED, MEDCoupling, fidelity comparison,
+  startup/overhead, and a real greater-than-2-GiB transfer remain `NOT_RUN`.
+
+Acceptance for this contract-only lot is local protocol/schema/evidence tests,
+deterministic manifest/SBOM validation, E0 evidence immutability, license and
+secret controls, a green full locked suite, and then green required hosted
+checks. Passing the lot never upgrades the real E2 SALOME sub-gate.
+
 ### E3 — vertical imports and fidelity
 
 Implement and test STEP/AP242, synthetic DICOM authority graph, LAS/LAZ/COPC,
@@ -240,7 +286,10 @@ large-artifact evidence, and the specified MVX micro-corpus.
 ## Decisions and known deviations
 
 - ADR-001..014 retain the statuses in the architecture baseline; ADR-015 and
-  ADR-016 remain proposed. ADR-017 accepts explicit component-version domains.
+  ADR-016 remain proposed. ADR-017 accepts explicit component-version domains;
+  ADR-019 accepts the bounded SALOME control contract and fake-evidence boundary.
+- E2 evidence uses its own closed manifest and SBOM profile. The immutable E0
+  manifest/SBOM are not regenerated to absorb later-phase files.
 - Absence of branch protection is recorded, not treated as compliance.
 - Missing build/domain tools are environment facts, not evidence that their
   integrations fail.
@@ -261,8 +310,8 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Create the bounded E1 canonical-JSON/CAS/replay implementation lot from
-`7715a7f7897a3058473732915e372b9835317d17`, and in parallel implement only the
-E2 protocol/fake-agent contract surface. Keep real SALOME 9.16 execution
-`NOT_RUN`; never merge `engine` into the default branch without separate owner
-instruction.
+Publish this hosted-evidence follow-up to `engine-p0-salome-protocol`, verify
+every required hosted job on the follow-up, and integrate PR #6 into `engine`
+only after they pass. Continue the bounded E1 lot independently. Keep real
+SALOME 9.16 execution `NOT_RUN`; never merge `engine` into the default branch
+without separate owner instruction.
