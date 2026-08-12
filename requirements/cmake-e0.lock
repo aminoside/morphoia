@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Olivier Ami
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+# CMake 3.20 minimum-version validation tool for Linux x86-64 E0.
+
+cmake==3.20.5 \
+    --hash=sha256:6c66b37e20246daf01886ee42287f27b182aac0dddd397a370e0988406fc3bf9

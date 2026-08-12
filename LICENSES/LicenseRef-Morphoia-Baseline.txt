@@ -1,0 +1,7 @@
+Morphoia validated baseline documents
+
+No general license grant is asserted for the immutable owner-supplied baseline
+documents or their faithful requirements transcription. They are retained for
+project specification, audit, and change-control purposes under the project
+owner's explicit instruction. This notice does not relicense any prior or
+third-party content.

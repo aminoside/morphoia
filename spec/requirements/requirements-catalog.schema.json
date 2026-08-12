@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/requirements-catalog-1.1.schema.json",
+  "title": "Morphoia Engine immutable requirements catalogue",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "baseline",
+    "status_vocabulary",
+    "summary",
+    "requirements"
+  ],
+  "properties": {
+    "$schema": {"const": "./requirements-catalog.schema.json"},
+    "schema_version": {"const": "1.1.0"},
+    "baseline": {
+      "const": {
+        "title": "Morphoia Engine - Cahier des charges technique",
+        "document_version": "0.1",
+        "date": "2026-08-06",
+        "language": "fr",
+        "source_pdf_sha256": "40cdb3288e7b1a38a557d1459147aed7ac1d5646aaa5d6ab09a287abc9b22263",
+        "layout_extraction_sha256": "e31699cb803edb1b86d01b04a230fd71418a5865965313bac376758f3e0f1a10",
+        "records_sha256": "5e65c204e35ba98453669095ede587b2573d3a6f35d7841d16d26104794131ba",
+        "immutable_records_sha256": "b846a2f284ad0510b43ca6fdba8ad4fae7d1b40daf2f77305c8153e6a9de4072",
+        "normative_precedence": 3
+      }
+    },
+    "status_vocabulary": {
+      "const": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]
+    },
+    "summary": {
+      "const": {
+        "total": 320,
+        "families": {
+          "SCP": 15,
+          "ARC": 14,
+          "DEV": 16,
+          "API": 18,
+          "IR": 18,
+          "CAS": 12,
+          "IO": 19,
+          "DIC": 14,
+          "VIS": 10,
+          "CMP": 19,
+          "AI": 17,
+          "MVX": 18,
+          "PLG": 10,
+          "SAL": 27,
+          "HPC": 16,
+          "SEC": 20,
+          "PER": 16,
+          "QA": 18,
+          "LIC": 13,
+          "GOV": 10
+        },
+        "priorities": {"MUST": 305, "SHOULD": 10, "MAY": 5},
+        "phases": {
+          "P0-P1": 136,
+          "P0-P2": 87,
+          "P0-P3": 30,
+          "P0-P4": 17,
+          "P0": 14,
+          "P1-P2": 10,
+          "P1": 7,
+          "P2": 6,
+          "P3": 5,
+          "P2+": 3,
+          "P4": 2,
+          "P2-P3": 2,
+          "P3+": 1
+        },
+        "proof_methods": {
+          "T/I": 121,
+          "T": 55,
+          "T/A": 47,
+          "I/T": 40,
+          "I": 21,
+          "T/I/A/D": 17,
+          "T/D": 13,
+          "D": 6
+        },
+        "source_continuation_rows": 135,
+        "modal_priority_mismatches": [
+          "MOR-AI-015",
+          "MOR-CAS-002",
+          "MOR-CMP-008",
+          "MOR-HPC-016",
+          "MOR-IR-004",
+          "MOR-LIC-003",
+          "MOR-MVX-015",
+          "MOR-PER-011",
+          "MOR-SAL-003",
+          "MOR-VIS-008"
+        ]
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 320,
+      "maxItems": 320,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/requirement"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "phase": {
+      "oneOf": [
+        {"const": {"raw": "P0-P1", "start": 0, "end": 1, "open_ended": false}},
+        {"const": {"raw": "P0-P2", "start": 0, "end": 2, "open_ended": false}},
+        {"const": {"raw": "P0-P3", "start": 0, "end": 3, "open_ended": false}},
+        {"const": {"raw": "P0-P4", "start": 0, "end": 4, "open_ended": false}},
+        {"const": {"raw": "P0", "start": 0, "end": 0, "open_ended": false}},
+        {"const": {"raw": "P1-P2", "start": 1, "end": 2, "open_ended": false}},
+        {"const": {"raw": "P1", "start": 1, "end": 1, "open_ended": false}},
+        {"const": {"raw": "P2", "start": 2, "end": 2, "open_ended": false}},
+        {"const": {"raw": "P3", "start": 3, "end": 3, "open_ended": false}},
+        {"const": {"raw": "P2+", "start": 2, "end": 4, "open_ended": true}},
+        {"const": {"raw": "P4", "start": 4, "end": 4, "open_ended": false}},
+        {"const": {"raw": "P2-P3", "start": 2, "end": 3, "open_ended": false}},
+        {"const": {"raw": "P3+", "start": 3, "end": 4, "open_ended": true}}
+      ]
+    },
+    "proof": {
+      "oneOf": [
+        {"const": {"raw": "T/I", "methods": ["test", "inspection"]}},
+        {"const": {"raw": "T", "methods": ["test"]}},
+        {"const": {"raw": "T/A", "methods": ["test", "analysis"]}},
+        {"const": {"raw": "I/T", "methods": ["inspection", "test"]}},
+        {"const": {"raw": "I", "methods": ["inspection"]}},
+        {"const": {"raw": "T/I/A/D", "methods": ["test", "inspection", "analysis", "demonstration"]}},
+        {"const": {"raw": "T/D", "methods": ["test", "demonstration"]}},
+        {"const": {"raw": "D", "methods": ["demonstration"]}}
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": ["pdf", "pdf_sha256", "text_lines", "fragments", "source_sha256"],
+      "properties": {
+        "pdf": {
+          "const": "docs/engine/baselines/Morphoia_Engine_Cahier_des_charges_technique_v0.1.pdf"
+        },
+        "pdf_sha256": {
+          "const": "40cdb3288e7b1a38a557d1459147aed7ac1d5646aaa5d6ab09a287abc9b22263"
+        },
+        "text_lines": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"type": "integer", "minimum": 1}
+        },
+        "fragments": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "requirement": {
+      "type": "object",
+      "required": [
+        "id",
+        "family",
+        "ordinal",
+        "wording_fr",
+        "priority",
+        "phase",
+        "proof",
+        "source",
+        "quality_flags",
+        "record_sha256"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^MOR-[A-Z]{2,4}-[0-9]{3}$"},
+        "family": {
+          "enum": [
+            "SCP", "ARC", "DEV", "API", "IR", "CAS", "IO", "DIC", "VIS", "CMP",
+            "AI", "MVX", "PLG", "SAL", "HPC", "SEC", "PER", "QA", "LIC", "GOV"
+          ]
+        },
+        "ordinal": {"type": "integer", "minimum": 1, "maximum": 999},
+        "wording_fr": {"type": "string", "minLength": 1, "pattern": "[.;]$"},
+        "priority": {"enum": ["MUST", "SHOULD", "MAY"]},
+        "phase": {"$ref": "#/$defs/phase"},
+        "proof": {"$ref": "#/$defs/proof"},
+        "source": {"$ref": "#/$defs/source"},
+        "quality_flags": {
+          "type": "array",
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {"const": "modal_priority_mismatch"}
+        },
+        "record_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2026 Olivier Ami
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+MORPHOIA_ENGINE_0.0 {
+  global:
+    morphoia_context_create;
+    morphoia_context_destroy;
+    morphoia_context_get_abi_version;
+    morphoia_engine_get_version;
+    morphoia_status_name;
+  local:
+    *;
+};

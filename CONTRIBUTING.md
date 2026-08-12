@@ -32,6 +32,13 @@ Les nouveaux PDF doivent :
 
 La CI refuse automatiquement un PDF suivi par Git qui n'est pas déclaré ou conforme.
 
+Exception : les deux PDF normatifs immuables explicitement enregistrés sous
+`docs/engine/baselines/` sont des entrées de preuve hashées, pas des rapports
+générés. Ils ne sont ni reconstruits, ni rebrandés, ni ajoutés à
+`reports.json`; la CI vérifie leur liste exacte et leurs empreintes séparément.
+Tout autre PDF, y compris dans ce répertoire, reste soumis au manifeste des
+rapports ou fait échouer le contrôle.
+
 ## Convention d'auteur
 
 Olivier Ami reste l'auteur et l'initiateur du projet MORPHOIA. Les contributeurs conservent l'attribution de leurs commits et contributions spécifiques.

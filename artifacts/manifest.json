@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0.0",
+  "project": "Morphoia Engine",
+  "generated_at": "2026-08-12",
+  "manifest_document_license": "CC-BY-4.0",
+  "hash_algorithm": "sha256",
+  "artifacts": [
+    {
+      "id": "baseline-technical-spec-v0.1",
+      "kind": "immutable_baseline",
+      "path": "docs/engine/baselines/Morphoia_Engine_Cahier_des_charges_technique_v0.1.pdf",
+      "media_type": "application/pdf",
+      "size_bytes": 257770,
+      "sha256": "40cdb3288e7b1a38a557d1459147aed7ac1d5646aaa5d6ab09a287abc9b22263",
+      "license_expression": "LicenseRef-Morphoia-Baseline",
+      "pages": 37,
+      "provenance": "Owner-supplied validated copy",
+      "redistribution": "Retained by explicit owner instruction; no third-party relicensing inferred",
+      "verification_status": "PASS"
+    },
+    {
+      "id": "baseline-architecture-v0.2",
+      "kind": "immutable_baseline",
+      "path": "docs/engine/baselines/Morphoia_Engine_Architecture_Reference_v0.2.pdf",
+      "media_type": "application/pdf",
+      "size_bytes": 261922,
+      "sha256": "8519bba50ab9a05d469780ec074588034714d83d24ef09404705d292bfa02368",
+      "license_expression": "LicenseRef-Morphoia-Baseline",
+      "pages": 39,
+      "provenance": "Owner-supplied validated copy",
+      "redistribution": "Retained by explicit owner instruction; no third-party relicensing inferred",
+      "verification_status": "PASS"
+    },
+    {
+      "id": "baseline-official-logo-archive",
+      "kind": "immutable_brand_asset_archive",
+      "path": "docs/engine/baselines/morphoia-logo-vectoriel.zip",
+      "media_type": "application/zip",
+      "size_bytes": 167259,
+      "sha256": "d9957fb70c18f2cdea37b7a036e3ddab6b05492d1a3ea978f5ea9f33313c00c5",
+      "license_expression": "LicenseRef-Morphoia-Brand-Assets",
+      "provenance": "Owner-supplied official Morphoia visual archive",
+      "redistribution": "Marks remain separate from software licensing",
+      "verification_status": "PASS"
+    },
+    {
+      "id": "requirements-catalog-v0.1",
+      "kind": "generated_machine_readable_specification",
+      "path": "spec/requirements/requirements.yaml",
+      "media_type": "application/json",
+      "source_artifact_id": "baseline-technical-spec-v0.1",
+      "record_count": 320,
+      "size_bytes": 351054,
+      "sha256": "84e0e1ba8878a657eb6a5c3bcfdf5b52658ace81a52ecac26b42117268300c91",
+      "license_expression": "LicenseRef-Morphoia-Baseline",
+      "provenance": "Deterministic extraction from technical specification v0.1",
+      "verification_status": "PASS",
+      "schema_validation_status": "PASS",
+      "note": "Standard-library integrity validation and Draft 2020-12 validation with hash-locked jsonschema 4.25.1 passed"
+    },
+    {
+      "id": "requirements-tracking-v1",
+      "kind": "living_requirements_traceability_overlay",
+      "path": "spec/requirements/requirements-tracking.yaml",
+      "media_type": "application/json",
+      "source_artifact_id": "requirements-catalog-v0.1",
+      "record_count": 320,
+      "size_bytes": 122649,
+      "sha256": "7af677456e74f0fece87dbbae7db3637892ab1c24271dcc4603df2633e57dec4",
+      "license_expression": "CC-BY-4.0",
+      "provenance": "Deterministic tracking overlay generated from the immutable requirement catalogue",
+      "verification_status": "PASS",
+      "schema_validation_status": "PASS",
+      "note": "All 320 entries start fail-closed; Draft 2020-12 validation with hash-locked jsonschema 4.25.1 passed"
+    },
+    {
+      "id": "e0-gate-report-core-cpu",
+      "kind": "versioned_gate_report",
+      "path": "docs/engine/evidence/E0_GATE_REPORT.md",
+      "media_type": "text/markdown",
+      "size_bytes": 5034,
+      "sha256": "67fa2ceacf92819d3e8608d8bf83f8ef17429dac7fb950841fdee5435e70de7f",
+      "license_expression": "CC-BY-4.0",
+      "provenance": "Generated from the executed E0 core-CPU validation set",
+      "verification_status": "PASS",
+      "note": "Hosted publication and optional-profile limits remain explicit in the report"
+    },
+    {
+      "id": "sbom-engine-e0-source-native",
+      "kind": "cyclonedx_source_and_declared_tools_sbom",
+      "path": "artifacts/sbom/engine-e0-source-native.cdx.json",
+      "media_type": "application/vnd.cyclonedx+json",
+      "size_bytes": 58159,
+      "sha256": "080a9428da7fd8ec5f3e326f43b77c3dbee9a1e192ed092079045e60950af014",
+      "license_expression": "CC-BY-4.0",
+      "provenance": "Deterministic generation from the E0 artifact manifest, native source set, and hashed Python locks",
+      "verification_status": "PASS",
+      "vulnerability_analysis_status": "NOT_RUN",
+      "note": "Inventory only; no vulnerability assessment or redistribution claim is implied"
+    }
+  ]
+}

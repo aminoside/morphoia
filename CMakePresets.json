@@ -1,0 +1,88 @@
+{
+  "version": 2,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "engine-cpu-debug",
+      "displayName": "Morphoia Engine CPU Debug",
+      "description": "Dependency-free native CPU bootstrap with tests and strict warnings",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/engine-cpu-debug",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "MORPHOIA_WARNINGS_AS_ERRORS": "ON"
+      }
+    },
+    {
+      "name": "engine-cpu-release",
+      "displayName": "Morphoia Engine CPU Release",
+      "inherits": "engine-cpu-debug",
+      "binaryDir": "${sourceDir}/build/engine-cpu-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "ci-gcc",
+      "displayName": "Morphoia Engine CI (GCC)",
+      "inherits": "engine-cpu-debug",
+      "binaryDir": "${sourceDir}/build/ci-gcc",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "engine-cpu-debug",
+      "configurePreset": "engine-cpu-debug"
+    },
+    {
+      "name": "engine-cpu-release",
+      "configurePreset": "engine-cpu-release"
+    },
+    {
+      "name": "ci-gcc",
+      "configurePreset": "ci-gcc"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "engine-cpu-debug",
+      "configurePreset": "engine-cpu-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "engine-cpu-release",
+      "configurePreset": "engine-cpu-release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "ci-gcc",
+      "configurePreset": "ci-gcc",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+Morphoia official brand assets
+
+The Morphoia name, logo, symbol, typography, and supplied visual archive are
+brand assets, not software licensed under Apache-2.0 or MIT. No general
+trademark or redistribution license is asserted here. Their inclusion follows
+the project owner's explicit instruction and does not authorize composite
+marks, including a Morphoia-SALOME mark.
