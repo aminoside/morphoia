@@ -21,6 +21,7 @@ path = [
   "tests/native/**",
   "tests/test_engine_evidence.py",
   "tests/test_engine_requirements.py",
+  "tests/test_salome_protocol.py",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Olivier Ami"

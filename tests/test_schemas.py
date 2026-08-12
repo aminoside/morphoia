@@ -28,6 +28,7 @@ class SchemaTests(unittest.TestCase):
             "morphoia-ir-0.1.schema.json",
             "morphoia-loss-register-0.1.schema.json",
             "morphoia-backend-manifest-0.1.schema.json",
+            "morphoia-salome-protocol-0.1.schema.json",
             "../spec/requirements/requirements-catalog.schema.json",
             "../spec/requirements/requirements-tracking.schema.json",
         ):
