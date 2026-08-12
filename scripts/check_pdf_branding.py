@@ -128,6 +128,42 @@ def validate_report(path: Path, brand: dict) -> tuple[int, set[str]]:
     return len(reader.pages), fonts
 
 
+def validate_brand_document(entry: dict, brand: dict) -> int:
+    path = ROOT / entry["path"]
+    if not path.is_file():
+        raise SystemExit(f"Missing brand document: {path}")
+    actual = sha256(path)
+    if actual != entry["sha256"]:
+        raise SystemExit(f"Brand document changed: {path} ({actual})")
+
+    reader = PdfReader(str(path))
+    metadata = reader.metadata or {}
+    if str(metadata.get("/Title", "")) != entry["title"]:
+        raise SystemExit(f"{path}: unexpected /Title")
+    if (
+        str(metadata.get("/Author", "")) != entry["author"]
+        or entry["author"] != brand["author"]
+    ):
+        raise SystemExit(f"{path}: unexpected /Author")
+    if f"brand-{brand['version']}" not in str(metadata.get("/Keywords", "")):
+        raise SystemExit(f"{path}: missing brand version in /Keywords")
+    if str(reader.trailer["/Root"].get("/Lang", "")) != "fr-FR":
+        raise SystemExit(f"{path}: unexpected document language")
+
+    for number, page in enumerate(reader.pages, start=1):
+        size = (float(page.mediabox.width), float(page.mediabox.height))
+        if not (close_size(size, A4_PORTRAIT) or close_size(size, A4_LANDSCAPE)):
+            raise SystemExit(f"{path}: page {number} is not A4: {size}")
+
+    cover_text = reader.pages[0].extract_text() or ""
+    if brand["baseline"] not in cover_text:
+        raise SystemExit(f"{path}: cover lacks the MORPHOIA baseline")
+    cover_resources = reader.pages[0].get("/Resources") or {}
+    if not (cover_resources.get("/XObject") or {}):
+        raise SystemExit(f"{path}: cover lacks the MORPHOIA visual identity")
+    return len(reader.pages)
+
+
 def main() -> None:
     data = json.loads(MANIFEST.read_text(encoding="utf-8"))
     brand = data["brand"]
@@ -145,9 +181,11 @@ def main() -> None:
         if actual != brand[digest_key]:
             raise SystemExit(f"Official brand asset changed: {asset} ({actual})")
 
+    brand_documents = data.get("brand_documents", [])
     declared = [entry["path"] for entry in data["reports"]]
+    declared.extend(entry["path"] for entry in brand_documents)
     if len(declared) != len(set(declared)):
-        raise SystemExit("Duplicate report path in reports.json")
+        raise SystemExit("Duplicate PDF path in reports.json")
     tracked = tracked_pdfs()
     if sorted(declared) != tracked:
         missing = sorted(set(tracked) - set(declared))
@@ -164,6 +202,13 @@ def main() -> None:
         print(
             f"Branded {entry['path']}: {pages} pages, author={brand['author']!r}, "
             f"fonts={','.join(sorted(fonts))}"
+        )
+
+    for entry in brand_documents:
+        pages = validate_brand_document(entry, brand)
+        print(
+            f"Reference {entry['path']}: {pages} pages, author={entry['author']!r}, "
+            f"sha256={entry['sha256']}"
         )
 
 

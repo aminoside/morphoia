@@ -34,6 +34,12 @@ All notable changes to MORPHOIA are documented in this file.
   explicitly `NOT_RUN` or `BLOCKED` where the required runtime or validated
   specification is unavailable.
 
+### Ajouté
+
+- publication de la charte graphique MORPHOIA version 1.0, du kit vectoriel complet et des
+  déclinaisons SVG/PNG officielles dans `assets/brand/` ;
+- contrôle d'intégrité dédié aux documents graphiques de référence suivis par Git.
+
 ### Modifié
 
 - application de l'identité visuelle officielle MORPHOIA aux rapports PDF des phases 1 et 2 ;

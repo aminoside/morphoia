@@ -11,6 +11,14 @@
     "wordmark": "assets/brand/morphoia-typographie.svg",
     "wordmark_sha256": "abc0d796aa4fc7314acce12828282b644f1a896269243a8bb7a5396fef2433c4"
   },
+  "brand_documents": [
+    {
+      "path": "assets/brand/MORPHOIA_charte_graphique_v1.0.pdf",
+      "sha256": "23a67711bcb03ebe025dc7c0401de4e6d3abd22d149652704b48b52499dd8f18",
+      "title": "MORPHOIA — Charte graphique, version 1.0",
+      "author": "Olivier Ami"
+    }
+  ],
   "reports": [
     {
       "path": "docs/phase1/MORPHOIA_phase1_etat_art_faisabilite.pdf",

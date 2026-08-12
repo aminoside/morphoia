@@ -82,6 +82,32 @@ research tool and makes no clinical, diagnostic, or medical-device claim.
 - [Changelog](CHANGELOG.md)
 
 ## Architecture under study
+- [Spécification de la façade textuelle](docs/phase2/language-specification.md)
+- [Grammaire EBNF](docs/phase2/grammar.ebnf)
+- [SDK et API](docs/phase2/sdk-api.md)
+- [Validation et conformité](docs/phase2/validation-conformance.md)
+- [Interopérabilité CAO](docs/phase2/interoperability.md)
+- [IA et GPU](docs/phase2/ai-gpu.md)
+- [Roadmap et gouvernance](docs/phase2/roadmap-governance.md)
+- [Coûts et risques](docs/phase2/costs-risks.md)
+
+### Identité visuelle
+
+- [Charte graphique officielle, version 1.0](assets/brand/MORPHOIA_charte_graphique_v1.0.pdf)
+- [Kit logo vectoriel téléchargeable](assets/brand/morphoia-logo-vectoriel.zip)
+- [Masters, déclinaisons et règles d'usage](assets/brand/README.md)
+
+### Accès rapide
+
+- [Guide utilisateur](docs/phase2/user-guide.md)
+- [Guide développeur](docs/phase2/developer-guide.md)
+- [Tutoriels et FAQ](docs/phase2/tutorials-faq.md)
+- [Catalogue des opérations](docs/phase2/operation-catalog.md)
+- [Références](docs/phase2/references.md)
+- [Contribuer](CONTRIBUTING.md)
+- [Historique des versions](CHANGELOG.md)
+
+## Architecture étudiée
 
 ```text
 Multimodal sources and evidence
