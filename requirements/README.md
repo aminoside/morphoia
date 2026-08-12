@@ -23,6 +23,12 @@ distribution, so `reuse-build-e0.lock` separately freezes Poetry Core 2.4.1;
 CI installs that build backend first and then builds REUSE with build isolation
 disabled. Both installation steps remain hash-locked.
 
+The requirements jobs do not assume that a GitHub-hosted image contains
+Poppler. Catalogue replay consumes the hash-verified layout-text derivative in
+`spec/requirements/`. The separate `--extract-pdf` provenance check was run
+locally with `pdftotext 24.02.0` / `poppler-utils 24.02.0-1ubuntu9.9`; that
+system package is not installed or treated as a Python lock dependency in CI.
+
 Regeneration is a reviewed supply-chain change. Resolve in an isolated
 environment, record exact download URLs and SHA-256 values, validate package
 licenses and vulnerabilities, then run the affected workflow before merging.

@@ -12,8 +12,8 @@
     "visibility": "public",
     "default_branch": "main",
     "integration_branch": "engine",
-    "publication_status": "NOT_RUN",
-    "publication_note": "The authenticated app publication path is available; the local gate is green but this exact tree has not yet been published or checked remotely"
+    "publication_status": "PASS",
+    "publication_note": "The authenticated app published the first checkpoint and verified its exact tree; hosted checks executed and failed on the missing-pdftotext replay dependency, so the corrective tree remains pending"
   },
   "git": {
     "branch": "engine-p0-bootstrap",
@@ -21,8 +21,8 @@
     "base_parent": "fcee715a2d99517f00aacf7d8ce2797658194f83",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": null,
-    "note": "No SHA of the commit containing this file is embedded; Git, remote refs, tags, and pull requests are authoritative"
+    "published_commit_sha": "95ba898d1dc3a1a35c15343b59f832808d850396",
+    "note": "This is the previous remotely verified checkpoint, not the SHA of the commit containing this file; Git, remote refs, tags, and pull requests are authoritative"
   },
   "tasks": {
     "completed": [
@@ -36,20 +36,21 @@
       "governance_security_and_e9_memory",
       "native_cpp20_c11_abi_shared_bootstrap",
       "cmake_3_20_install_and_external_consumer",
-      "unified_python_40_test_suite",
+      "unified_python_50_test_suite",
       "immutable_pdf_baseline_and_generated_report_policy_separation",
       "asan_ubsan_fail_fast_smoke",
       "deterministic_cyclonedx_source_sbom",
-      "reuse_159_file_license_metadata_lint",
+      "reuse_161_file_license_metadata_lint",
       "bounded_secret_signature_scan",
-      "versioned_e0_gate_report"
+      "versioned_e0_gate_report",
+      "authenticated_checkpoint_publication_and_remote_tree_verification",
+      "first_hosted_check_execution_and_failure_capture"
     ],
     "in_progress": [
-      "authenticated_checkpoint_publication_and_hosted_checks"
+      "retained_layout_ci_correction_and_hosted_reverification"
     ],
     "remaining": [
-      "lot_pull_request_to_engine",
-      "remote_sha_and_ci_verification",
+      "corrective_remote_sha_and_ci_verification",
       "engine_integration_after_green_checks"
     ]
   },
@@ -66,6 +67,7 @@
     "python": "3.12.13",
     "cmake_validation": "hash-locked CMake 3.20.5",
     "reuse_validation": "hash-locked REUSE 6.2.0 with Poetry Core 2.4.1 build backend",
+    "pdf_text_validation": "pdftotext 24.02.0 from poppler-utils 24.02.0-1ubuntu9.9 executed locally; hosted runner did not provide pdftotext",
     "network": "restricted allowlisted egress; authenticated repository connector available; unrestricted public egress not probed",
     "github_hosted_state": "no initial Engine branch, tag, or release; unrelated draft PR 3 preserved; existing report workflow and green default-branch run observed",
     "github_quotas": "NOT_RUN: Actions, artifact, LFS, storage, and API quota limits were not exposed by the connector",
@@ -90,17 +92,17 @@
     "paths": [
       {
         "path": "cpp",
-        "sha256": "83353667308b966afdf4ff95497ff9c02c47239aa70e6fbe1d3749036b5e768e",
+        "sha256": "df1cbdb8185db9568cd4f07075e76d053e8d64c0d84257aa23b3c08e04d7d863",
         "status": "PASS"
       },
       {
         "path": "spec",
-        "sha256": "9dc5a0e5208e69191a1d35cf74d2288e099cf3d2fa2012548e2c2776f80f520a",
+        "sha256": "8cd36cbd2228f3d1d76b3f9df5d77d6e254ca69e83a528a91338714b53e89b0a",
         "status": "PASS"
       },
       {
         "path": "docs/engine",
-        "sha256": "c81d8c1d2cc148de0f9d527dc5a69ec9082c59c0dac2588bad2604408f6d5644",
+        "sha256": "238f20542b0e9028621979103f41e0dc15292ba9bbc5a70baedbef4c96fc1724",
         "status": "PASS"
       }
     ],
@@ -115,7 +117,7 @@
     {
       "command": "CMake 3.20.5 configure/build/CTest/install plus external C find_package consumer",
       "result": "PASS",
-      "summary": "Two native tests and one installed-package consumer test executed and passed"
+      "summary": "Two native tests and one installed-package consumer test executed and passed; a future 0.1 compatibility request was rejected"
     },
     {
       "command": "./scripts/run-engine-sanitizers.sh",
@@ -125,7 +127,7 @@
     {
       "command": "PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v",
       "result": "PASS",
-      "summary": "40 legacy, schema, requirements, immutable-PDF separation, checkpoint, artifact-manifest, native-consumer inventory, and SBOM tests passed on Python 3.12.13"
+      "summary": "50 legacy, schema, duplicate-key, requirements, retained-layout, anti-alias and atomic-write, immutable-PDF separation, checkpoint, artifact provenance and lock fail-closed, native-consumer inventory, and SBOM tests passed on Python 3.12.13"
     },
     {
       "command": "PATH=<hash-locked-report-tools>:$PATH PYTHONPATH=src make check",
@@ -135,7 +137,22 @@
     {
       "command": "python scripts/extract_engine_requirements.py --check",
       "result": "PASS",
-      "summary": "320 exact records, distributions, source fragments, hashes, schemas, derived fields, and fail-closed tracking invariants passed"
+      "summary": "The PDF, retained layout, 320 exact records, distributions, source fragments, hashes, schemas, derived fields, and fail-closed tracking invariants passed without Poppler"
+    },
+    {
+      "command": "python scripts/extract_engine_requirements.py --check --extract-pdf",
+      "result": "PASS",
+      "summary": "pdftotext 24.02.0 output from poppler-utils 24.02.0-1ubuntu9.9 matched the retained layout after the one documented terminal-LF normalization"
+    },
+    {
+      "command": "GitHub Actions run 31578405786",
+      "result": "FAIL",
+      "summary": "Native GCC, source hygiene, and REUSE jobs passed; Python 3.12 and 3.13 requirements jobs failed because pdftotext was absent on the hosted runner"
+    },
+    {
+      "command": "GitHub Actions run 31578405812",
+      "result": "FAIL",
+      "summary": "Report validation reached the unified suite and failed on the same missing-pdftotext regeneration path"
     },
     {
       "command": "python scripts/generate_engine_sbom.py --check",
@@ -168,7 +185,7 @@
       "id": "E0-PYTHON-UNIFIED",
       "profile": "core-cpu",
       "status": "PASS",
-      "count": 40
+      "count": 50
     },
     {
       "id": "E0-REQ-EXACT-SCHEMA",
@@ -204,7 +221,7 @@
       "id": "E0-REUSE",
       "profile": "license-metadata",
       "status": "PASS",
-      "count": 159
+      "count": 161
     },
     {
       "id": "E0-VULNERABILITY-SCAN",
@@ -213,16 +230,34 @@
       "reason": "No pinned vulnerability scanner was executed in E0"
     },
     {
+      "id": "E0-HOSTED-PYTHON-312",
+      "profile": "core-cpu-python-3.12",
+      "status": "FAIL",
+      "reason": "Run 31578405786 executed and failed at requirements regeneration because pdftotext was absent; corrective retained-layout replay awaits execution"
+    },
+    {
       "id": "E0-HOSTED-PYTHON-313",
       "profile": "core-cpu-python-3.13",
-      "status": "NOT_RUN",
-      "reason": "Compatible wheel hashes were resolved; real execution awaits hosted CI"
+      "status": "FAIL",
+      "reason": "Run 31578405786 executed on Python 3.13.14 and failed at the same missing-pdftotext path; this is not a compatibility PASS"
+    },
+    {
+      "id": "E0-HOSTED-REPORT",
+      "profile": "report-validation",
+      "status": "FAIL",
+      "reason": "Run 31578405812 executed and failed in the unified requirements regeneration test because pdftotext was absent"
     },
     {
       "id": "E0-GITHUB-QUOTAS",
       "profile": "hosted-resources",
       "status": "NOT_RUN",
       "reason": "Actions, artifact, LFS, storage, and API quota limits were not exposed by the connector; no paid resource is assumed"
+    },
+    {
+      "id": "E0-BRANCH-PROTECTION",
+      "profile": "governance",
+      "status": "FAIL",
+      "reason": "Protection and ruleset inspection executed and found no protection on engine; PR plus checks is a compensating control only"
     },
     {
       "id": "E0-SALOME",
@@ -262,12 +297,16 @@
     {
       "path": "docs/engine/baselines/morphoia-logo-vectoriel.zip",
       "sha256": "d9957fb70c18f2cdea37b7a036e3ddab6b05492d1a3ea978f5ea9f33313c00c5"
+    },
+    {
+      "path": "spec/requirements/Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt",
+      "sha256": "de8444574a59e1520222062587bc6c55f7184cf0e384d7d499f5ea24ad653175"
     }
   ],
   "outputs": [
     {
       "uri": "repo:spec/requirements/requirements.yaml",
-      "sha256": "84e0e1ba8878a657eb6a5c3bcfdf5b52658ace81a52ecac26b42117268300c91",
+      "sha256": "0fa8953f164018e76caaa8a9690a033f8c6f6c495d118957bbc791afa3787cbe",
       "status": "PASS",
       "note": "Immutable exact extraction and Draft 2020-12 validation passed"
     },
@@ -279,24 +318,27 @@
     },
     {
       "uri": "repo:docs/engine/evidence/E0_GATE_REPORT.md",
-      "sha256": "67fa2ceacf92819d3e8608d8bf83f8ef17429dac7fb950841fdee5435e70de7f",
+      "sha256": "de6df3d085b768941f2d9485d7a27b9dd125de713d08109582d9fd6e5eab5c5b",
       "status": "PASS",
       "note": "Versioned compact gate report records environment, commands, evidence truth, and optional-profile limits"
     },
     {
       "uri": "repo:artifacts/manifest.json",
-      "sha256": "a242bc270b1cd8046fed08ab148ac2320084ab429d2f5d6f4dbd80a015fb0b73",
+      "sha256": "d8108a05d5180fa9a13274822cf4b17ab2f8b7f1ca69a3e341db92428e7160e7",
       "status": "PASS",
       "note": "Artifact manifest resolves exact paths, sizes, hashes, provenance, and per-artifact licensing"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e0-source-native.cdx.json",
-      "sha256": "080a9428da7fd8ec5f3e326f43b77c3dbee9a1e192ed092079045e60950af014",
+      "sha256": "62fd5d0a332598582838501f6cbb30f67b387681a7be47a9674371dd8acaf137",
       "status": "PASS",
       "note": "Deterministic CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
     }
   ],
-  "job_ids": [],
+  "job_ids": [
+    "github-actions:31578405786",
+    "github-actions:31578405812"
+  ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
     "Pull requests plus checks compensate operationally for absent branch protection without claiming protected-branch compliance",
@@ -309,13 +351,21 @@
     "Local CLI publication is unavailable; the authenticated app path is used",
     "SALOME, GPU, container, HPC, and domain runtimes are absent and remain NOT_RUN",
     "Vulnerability analysis and LeakSanitizer were not executed",
-    "GitHub Actions, artifact, LFS, storage, and API quotas were not exposed and remain NOT_RUN"
+    "GitHub Actions, artifact, LFS, storage, and API quotas were not exposed and remain NOT_RUN",
+    "The first hosted checkpoint exposed an undeclared pdftotext dependency; its Python 3.12, Python 3.13, and report jobs remain FAIL until the retained-layout correction passes",
+    "Legacy Phase 1/2 guides and documents remain French and require a bounded translation lot before full public-language-policy compliance"
   ],
   "external_dependencies": [
     {
-      "name": "authenticated GitHub app publication and hosted checks",
-      "status": "NOT_RUN",
-      "reason": "The exact locally validated tree has not yet been published; publication is the next idempotent action"
+      "name": "authenticated GitHub app publication",
+      "status": "PASS",
+      "reason": "The first checkpoint and exact remote tree were published and verified"
+    },
+    {
+      "name": "hosted corrective checks",
+      "status": "FAIL",
+      "blocking_scope": "E0 lot integration into engine only",
+      "reason": "The first runs failed on missing pdftotext; the retained-layout correction has not yet been published or executed remotely"
     },
     {
       "name": "validated Morphoia MVX specification",
@@ -323,5 +373,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Publish this exact validated tree to origin/engine-p0-bootstrap, verify the remote commit and hosted checks, then integrate by a lot pull request into engine only"
+  "next_action": "Validate and publish the retained-layout correction to origin/engine-p0-bootstrap, verify its remote SHA and rerun PR 4 checks, then integrate into engine only after every required check passes"
 }

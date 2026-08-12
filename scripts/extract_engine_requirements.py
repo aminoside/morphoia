@@ -3,11 +3,12 @@
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 """Extract and validate the immutable Morphoia Engine requirements catalogue.
 
-The source PDF is authoritative. This tool delegates layout-preserving text
-extraction to pdftotext, then accepts only rows matching the published table
-grammar. Immutable baseline records and mutable project tracking deliberately
-live in different files: regeneration may replace the former, but it never
-rewrites an existing tracking overlay.
+The source PDF is authoritative. Normal validation consumes a hash-pinned,
+layout-preserving text artifact and therefore does not require Poppler. The
+explicit ``--extract-pdf`` audit compares a fresh ``pdftotext -layout`` result
+with that artifact without rewriting it. Immutable baseline records and
+mutable project tracking deliberately live in different files: regeneration
+may replace the former, but it never rewrites an existing tracking overlay.
 """
 
 from __future__ import annotations
@@ -15,6 +16,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -25,6 +27,7 @@ from typing import Any, Iterable
 
 SOURCE_PDF_SHA256 = "40cdb3288e7b1a38a557d1459147aed7ac1d5646aaa5d6ab09a287abc9b22263"
 EXTRACTION_SHA256 = "e31699cb803edb1b86d01b04a230fd71418a5865965313bac376758f3e0f1a10"
+LAYOUT_ARTIFACT_SHA256 = "de8444574a59e1520222062587bc6c55f7184cf0e384d7d499f5ea24ad653175"
 RECORDS_SHA256 = "5e65c204e35ba98453669095ede587b2573d3a6f35d7841d16d26104794131ba"
 # Digest of every immutable record field, including source coordinates,
 # quality flags, derived fields, and per-record hashes. This is intentionally
@@ -39,6 +42,11 @@ SOURCE_PDF_PATH = (
     "docs/engine/baselines/"
     "Morphoia_Engine_Cahier_des_charges_technique_v0.1.pdf"
 )
+LAYOUT_ARTIFACT_PATH = (
+    "spec/requirements/"
+    "Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt"
+)
+LAYOUT_NORMALIZATION = "remove_one_lf_after_terminal_form_feed"
 STATUS_VOCABULARY = ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]
 
 ROW_RE = re.compile(
@@ -147,6 +155,9 @@ BASELINE_METADATA = {
     "date": "2026-08-06",
     "language": "fr",
     "source_pdf_sha256": SOURCE_PDF_SHA256,
+    "layout_artifact": LAYOUT_ARTIFACT_PATH,
+    "layout_artifact_sha256": LAYOUT_ARTIFACT_SHA256,
+    "layout_normalization": LAYOUT_NORMALIZATION,
     "layout_extraction_sha256": EXTRACTION_SHA256,
     "records_sha256": RECORDS_SHA256,
     "immutable_records_sha256": IMMUTABLE_RECORDS_SHA256,
@@ -177,6 +188,30 @@ def strict_equal(left: Any, right: Any) -> bool:
         return False
 
 
+def paths_alias(left: Path, right: Path) -> bool:
+    """Reject lexical, symbolic-link, and hard-link aliases fail-closed."""
+    if left.resolve() == right.resolve():
+        return True
+    if not left.exists() or not right.exists():
+        return False
+    try:
+        return os.path.samefile(left, right)
+    except OSError as error:
+        raise ValueError(
+            f"cannot establish path identity for {left} and {right}: {error}"
+        ) from error
+
+
+def validate_distinct_paths(paths: dict[str, Path]) -> None:
+    entries = list(paths.items())
+    for index, (left_name, left_path) in enumerate(entries):
+        for right_name, right_path in entries[index + 1 :]:
+            if paths_alias(left_path, right_path):
+                raise ValueError(
+                    f"{left_name} must not alias {right_name}: {left_path}"
+                )
+
+
 def extract_text(pdf: Path) -> bytes:
     with tempfile.TemporaryDirectory(prefix="morphoia-requirements-") as directory:
         target = Path(directory) / "requirements.txt"
@@ -188,11 +223,55 @@ def extract_text(pdf: Path) -> bytes:
                 stderr=subprocess.PIPE,
             )
         except FileNotFoundError as error:
-            raise RuntimeError("pdftotext is required to regenerate the catalogue") from error
+            raise RuntimeError("pdftotext is required only for --extract-pdf") from error
         except subprocess.CalledProcessError as error:
             detail = error.stderr.decode("utf-8", errors="replace").strip()
             raise RuntimeError(f"pdftotext failed: {detail}") from error
         return target.read_bytes()
+
+
+def normalize_layout_artifact(stored: bytes) -> bytes:
+    """Remove only the repository's documented terminal LF wrapper.
+
+    ``pdftotext`` ends this PDF with a form-feed byte. The versioned text file
+    has one additional LF so it remains a conventional text file. No other
+    whitespace or newline normalization is permitted.
+    """
+    if not stored.endswith(b"\f\n"):
+        raise ValueError(
+            "layout artifact must end with form-feed followed by its single storage LF"
+        )
+    normalized = stored[:-1]
+    actual = sha256_bytes(normalized)
+    if actual != EXTRACTION_SHA256:
+        raise ValueError(
+            "normalized layout extraction digest mismatch: "
+            f"expected {EXTRACTION_SHA256}, got {actual}"
+        )
+    return normalized
+
+
+def load_layout_artifact(path: Path) -> bytes:
+    stored = path.read_bytes()
+    actual = sha256_bytes(stored)
+    if actual != LAYOUT_ARTIFACT_SHA256:
+        raise ValueError(
+            "layout artifact storage digest mismatch: "
+            f"expected {LAYOUT_ARTIFACT_SHA256}, got {actual}"
+        )
+    return normalize_layout_artifact(stored)
+
+
+def compare_pdf_extraction(pdf: Path, versioned_layout: bytes) -> None:
+    extracted = extract_text(pdf)
+    actual = sha256_bytes(extracted)
+    if actual != EXTRACTION_SHA256:
+        raise ValueError(
+            "fresh PDF layout extraction digest mismatch: "
+            f"expected {EXTRACTION_SHA256}, got {actual}"
+        )
+    if extracted != versioned_layout:
+        raise ValueError("fresh PDF layout extraction differs from versioned layout artifact")
 
 
 def phase_details(raw: str) -> dict[str, Any]:
@@ -781,8 +860,17 @@ def load_json(path: Path) -> Any:
     def reject_nonstandard_number(value: str) -> None:
         raise ValueError(f"non-standard JSON numeric constant: {value}")
 
+    def reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        value: dict[str, Any] = {}
+        for key, item in pairs:
+            if key in value:
+                raise ValueError(f"duplicate JSON key in {path}: {key}")
+            value[key] = item
+        return value
+
     return json.loads(
         path.read_text(encoding="utf-8"),
+        object_pairs_hook=reject_duplicate_keys,
         parse_constant=reject_nonstandard_number,
     )
 
@@ -798,9 +886,31 @@ def load_and_validate_tracking(path: Path, records: list[dict[str, Any]]) -> Non
 def write_json_atomic(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     rendered = json.dumps(value, ensure_ascii=False, indent=2) + "\n"
-    temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(rendered, encoding="utf-8")
-    temporary.replace(path)
+    output_mode = (
+        path.stat().st_mode & 0o777
+        if path.is_file() and not path.is_symlink()
+        else 0o644
+    )
+    descriptor, temporary_name = tempfile.mkstemp(
+        dir=path.parent,
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        text=True,
+    )
+    temporary = Path(temporary_name)
+    try:
+        os.fchmod(descriptor, output_mode)
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
+            descriptor = -1
+            stream.write(rendered)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    except BaseException:
+        if descriptor >= 0:
+            os.close(descriptor)
+        temporary.unlink(missing_ok=True)
+        raise
 
 
 def validate_schema_files(paths: Iterable[Path]) -> None:
@@ -817,6 +927,12 @@ def validate_schema_files(paths: Iterable[Path]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pdf", type=Path, default=Path(SOURCE_PDF_PATH))
+    parser.add_argument(
+        "--layout-text",
+        type=Path,
+        default=Path(LAYOUT_ARTIFACT_PATH),
+        help="hash-pinned layout text used for normal validation and regeneration",
+    )
     parser.add_argument(
         "--output",
         type=Path,
@@ -838,50 +954,74 @@ def main() -> int:
         default=Path("spec/requirements/requirements-tracking.schema.json"),
     )
     parser.add_argument("--check", action="store_true")
+    parser.add_argument(
+        "--extract-pdf",
+        action="store_true",
+        help="run pdftotext and compare it with the versioned layout without rewriting",
+    )
     args = parser.parse_args()
 
-    if args.output.resolve() == args.tracking_output.resolve():
-        raise ValueError("immutable catalogue and tracking overlay paths must differ")
+    validate_distinct_paths(
+        {
+            "baseline PDF": args.pdf,
+            "layout artifact": args.layout_text,
+            "catalogue schema": args.catalog_schema,
+            "tracking schema": args.tracking_schema,
+            "immutable catalogue output": args.output,
+            "tracking overlay output": args.tracking_output,
+        }
+    )
 
     validate_schema_files([args.catalog_schema, args.tracking_schema])
     pdf_bytes = args.pdf.read_bytes()
     actual_pdf_sha = sha256_bytes(pdf_bytes)
     if actual_pdf_sha != SOURCE_PDF_SHA256:
         raise ValueError(f"baseline PDF digest mismatch: {actual_pdf_sha}")
+    text = load_layout_artifact(args.layout_text)
+    extracted_records = parse_records(text)
+    validate_records(extracted_records)
+    if args.extract_pdf:
+        compare_pdf_extraction(args.pdf, text)
     if args.check:
-        records = load_and_validate_catalogue(args.output)
-        load_and_validate_tracking(args.tracking_output, records)
+        catalogue_records = load_and_validate_catalogue(args.output)
+        if not strict_equal(catalogue_records, extracted_records):
+            raise ValueError(
+                "catalogue records differ from the hash-pinned versioned layout extraction"
+            )
+        load_and_validate_tracking(args.tracking_output, catalogue_records)
+        extraction_audit = (
+            "; fresh pdftotext extraction matched the versioned layout"
+            if args.extract_pdf
+            else ""
+        )
         print(
-            "PASS: immutable catalogue and preserved tracking overlay contain "
-            "the exact 320-record baseline"
+            "PASS: PDF, versioned layout, immutable catalogue, and preserved "
+            "tracking overlay contain the exact 320-record baseline"
+            f"{extraction_audit}"
         )
         return 0
 
-    text = extract_text(args.pdf)
-    actual_extraction_sha = sha256_bytes(text)
-    if actual_extraction_sha != EXTRACTION_SHA256:
-        raise ValueError(
-            "layout extraction digest mismatch; check the Poppler version before accepting drift: "
-            f"{actual_extraction_sha}"
-        )
-    records = parse_records(text)
-    validate_records(records)
-
     if args.tracking_output.exists():
         original_tracking = args.tracking_output.read_bytes()
-        load_and_validate_tracking(args.tracking_output, records)
+        load_and_validate_tracking(args.tracking_output, extracted_records)
         tracking_result = "preserved existing tracking overlay byte-for-byte"
     else:
         original_tracking = None
-        write_json_atomic(args.tracking_output, tracking_catalogue(records))
+        write_json_atomic(args.tracking_output, tracking_catalogue(extracted_records))
         tracking_result = "created initial fail-closed tracking overlay"
 
-    write_json_atomic(args.output, catalogue(records))
+    write_json_atomic(args.output, catalogue(extracted_records))
     if original_tracking is not None and args.tracking_output.read_bytes() != original_tracking:
         raise RuntimeError("tracking overlay changed during immutable catalogue regeneration")
+    extraction_audit = (
+        "; fresh pdftotext extraction matched the versioned layout"
+        if args.extract_pdf
+        else ""
+    )
     print(
-        f"PASS: extracted {len(records)} immutable requirements to {args.output}; "
-        f"{tracking_result}"
+        f"PASS: parsed {len(extracted_records)} immutable requirements from the "
+        f"versioned layout to {args.output}; "
+        f"{tracking_result}{extraction_audit}"
     )
     return 0
 

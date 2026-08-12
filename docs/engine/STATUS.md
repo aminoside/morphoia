@@ -14,26 +14,28 @@ Base: `fcee715a2d99517f00aacf7d8ce2797658194f83`
 |---|---|---|
 | Repository identity | PASS | Public `Aminoside/morphoia`; default `main`; canonical remote `origin` verified during E0. |
 | User work preservation | PASS | Pre-existing worktrees with unique MVX commits were observed and left untouched. |
-| Bootstrap lot branch | PASS | `origin/engine-p0-bootstrap` exists at the base commit. |
-| Integration branch | PASS | `engine` was created from the verified default-branch base only after the native CPU smoke passed; lot integration remains pending PR checks. |
-| Branch protection | NOT_RUN | No protection or ruleset was observed; PR plus checks is the compensating workflow, not proof of protection. |
-| Authenticated publication | NOT_RUN | The authenticated app path is available and will be used after the local gate; `gh` is absent and local CLI push is unauthenticated. |
+| Bootstrap lot branch | PASS | `origin/engine-p0-bootstrap` is published; the latest remotely verified checkpoint before the CI correction is `95ba898d1dc3a1a35c15343b59f832808d850396`. |
+| Integration branch | PASS | `engine` was created from the verified default-branch base only after the native CPU smoke passed; PR #4 targets it and remains unmerged. |
+| Branch protection | FAIL | Protection/ruleset inspection executed and found none; PR plus checks is the compensating workflow, not proof of protection. |
+| Authenticated publication | PASS | The authenticated app published the checkpoint and exact remote tree; `gh` remains absent and local CLI push remains unauthenticated. |
+| Hosted checkpoint checks | FAIL | Runs `31578405786` and `31578405812` executed on the published tree and exposed the runner's missing `pdftotext`; native, hygiene, and REUSE jobs passed, while requirements 3.12/3.13 and report replay failed. The hash-verified retained-layout correction is in progress. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
 | Network capability | PASS | Restricted allowlisted egress and authenticated connector access were observed; unrestricted public egress was not probed or claimed. |
 | Technical specification baseline | PASS | Expected SHA-256 recorded; 37 pages. Immutable repository copy is handled by the baseline lot. |
 | Architecture baseline | PASS | Expected SHA-256 recorded; 39 pages. Immutable repository copy is handled by the baseline lot. |
 | Official logo archive | PASS | Supplied archive matches the expected SHA-256. |
-| Requirements catalogue integrity | PASS | Eight mutation/regeneration tests and the exact validator cover 320 requirements; immutable catalogue and fail-closed living tracking are separate. |
+| Requirements catalogue integrity | PASS | The exact validator covers 320 requirements; immutable catalogue and fail-closed living tracking are separate. A retained, hash-verified layout derivative supports deterministic replay without an implicit host package. |
 | Requirements JSON Schema validation | PASS | Draft 2020-12 schemas and instances passed with hash-locked `jsonschema` 4.25.1 on Python 3.12. |
-| Unified Python tests | PASS | 40 tests executed with `PYTHONPATH=src` and the hash-locked E0 dependencies. |
+| Unified Python tests | PASS | 50 tests executed with `PYTHONPATH=src` and the hash-locked E0 dependencies. |
 | Existing CLI smoke | PASS | Help/smoke invocation executed successfully. |
 | Native direct-compiler bootstrap | PASS | Two clean temporary GCC/G++ 13 shared-library builds passed C ABI/C++ runtime tests and an exact five-symbol export allow-list. |
 | CMake/CTest minimum path | PASS | Hash-locked CMake 3.20.5 configured, built and ran two CTests; install plus external C `find_package` consumer also passed. |
 | Sanitizers | PASS | Fail-fast ASan and UBSan smoke passed; LSan remains `NOT_RUN` and is not included in this claim. |
 | Durable evidence/SBOM | PASS | Checkpoint/manifest validators and mutation tests pass; deterministic CycloneDX source/declaration inventory is hash-addressed. Vulnerability analysis remains `NOT_RUN`. |
-| License metadata | PASS | Hash-locked REUSE 6.2.0 lint resolves copyright and license metadata for 159/159 files; dependency vulnerability analysis remains `NOT_RUN`. |
+| License metadata | PASS | Hash-locked REUSE 6.2.0 lint resolves copyright and license metadata for 161/161 files; dependency vulnerability analysis remains `NOT_RUN`. |
 | Secret signature scan | PASS | Bounded fail-closed scan covered tracked and untracked text; binary baselines were separately hash/type/archive inspected. This is not a full secret/PII audit. |
+| Public language policy | FAIL | Engine code/governance material and contribution guidance are English, but the legacy Phase 1/2 README and developer guides remain French; R-021 records the bounded migration gap. |
 | SALOME 9.16 | NOT_RUN | Runtime absent. |
 | CUDA/HIP/SYCL execution | NOT_RUN | No compatible GPU/runtime/device observed. |
 | Containers/Slurm/EuroHPC | NOT_RUN | Tools and external access absent. |
@@ -56,13 +58,15 @@ The local E0 core-CPU acceptance set is satisfied: repository and work
 preservation, baselines, 320-requirement extraction/tracking, two native
 bootstraps, CMake 3.20 minimum path, external consumer, unified Python/schema
 suite, ASan/UBSan, durable evidence, source SBOM, REUSE and bounded scans pass.
-The retained local gate report is `evidence/E0_GATE_REPORT.md`. E0
-remains `IN_PROGRESS` only until the checkpoint is published, its remote SHA is
-verified and lot-to-`engine` checks pass. Optional runtimes remain `NOT_RUN`.
+The retained local gate report is `evidence/E0_GATE_REPORT.md`. E0 remains
+`IN_PROGRESS`: the first checkpoint and PR were published, but hosted
+requirements/report checks failed because `pdftotext` was absent. The
+corrective tree must pass locally and on the hosted 3.12/3.13/report jobs before
+PR #4 can enter `engine`. Optional runtimes remain `NOT_RUN`.
 
 ## Next action
 
-Publish the validated checkpoint on `engine-p0-bootstrap`, verify its remote
-SHA and hosted checks, then integrate it to `engine` by PR without merging
-`engine` into the default branch. Begin E1 and the protocol-only E2 work once
-that integration is green.
+Finish and locally validate the retained-layout replay correction, publish it
+on `engine-p0-bootstrap`, verify the remote SHA and rerun PR #4 checks, then
+integrate into `engine` only when every required check is green. Begin E1 and
+the protocol-only E2 work after that integration.

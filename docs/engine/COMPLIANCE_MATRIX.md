@@ -15,8 +15,9 @@ does not replace per-requirement links and does not assert G1-G5 completion.
 | Canonical remote verified | E0 audit | remote URL and permission inspection | `checkpoint.json` | PASS |
 | User changes and worktrees preserved | E0 audit | worktree and ref inspection | `RISKS.md` R-012 | PASS |
 | Bootstrap work isolated from default branch | E0 Git | branch/upstream inspection | `engine-p0-bootstrap` | PASS |
-| Protected integration branch | Governance | ruleset/protection inspection | no protection observed | NOT_RUN |
-| Authenticated checkpoint publication | Publication | app publication and remote SHA test | authenticated app path available; execution pending local gate | NOT_RUN |
+| Protected integration branch | Governance | ruleset/protection inspection | inspection executed; no protection observed | FAIL |
+| Authenticated checkpoint publication | Publication | app publication and remote tree verification | checkpoint `95ba898d1dc3a1a35c15343b59f832808d850396` and PR #4 published | PASS |
+| Hosted corrective checks | Publication | GitHub Actions runs `31578405786`, `31578405812` | first runs exposed missing `pdftotext`; retained-layout correction awaits rerun | FAIL |
 | Initial branches/tags/PR/releases/workflows audit | Hosted-state audit | connector inspection | no Engine refs/releases; unrelated PR #3 preserved; existing report workflow observed | PASS |
 | GitHub Actions/artifact/LFS/API quotas | Capability | quota inspection | connector did not expose limits; no paid capacity assumed | NOT_RUN |
 | Network capability | Capability | environment policy and connector probe | restricted allowlist plus authenticated repository connector | PASS |
@@ -33,14 +34,15 @@ does not replace per-requirement links and does not assert G1-G5 completion.
 | Existing CLI smoke | Existing prototype | CLI help/smoke | successful invocation | PASS |
 | Native C++20 direct-compiler bootstrap | Engine core | `./scripts/bootstrap-engine.sh` fallback | ABI and core smoke executed with GCC/G++ 13 | PASS |
 | Native CMake/CTest bootstrap | Engine core | CMake 3.20.5 configure/build/test | two CTests, install and external C consumer | PASS |
-| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 40 tests | PASS |
+| Unified test discovery | Bootstrap | `PYTHONPATH=src <locked-python> -m unittest discover -s tests -v` | 50 tests | PASS |
 | Immutable normative PDFs excluded from report branding | Baselines/reporting | tracked-report manifest test plus full `make check` | two Engine baseline PDFs remain hash-identical and outside generated-report policy | PASS |
 | Second clean bootstrap | Reproducibility | two isolated direct GCC/G++ builds/tests | both executions passed | PASS |
 | ASan/UBSan smoke | Security | fail-fast sanitizer script | two native executables | PASS |
 | LeakSanitizer | Security | leak detection | deliberately disabled; environment limitation retained | NOT_RUN |
 | Secret/sensitive-data scan of E0 diff | Security | bounded fail-closed text signature scan plus binary/hash inspection | no supported signature; not a full PII audit | PASS |
 | E0 SBOM | Supply chain | deterministic CycloneDX generator/check | source, artifacts and hashed locks inventoried; vulnerability analysis NOT_RUN | PASS |
-| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 159/159 files resolved; component vulnerability analysis NOT_RUN | PASS |
+| Repository license metadata | Supply chain | hash-locked REUSE 6.2.0 lint | 161/161 files resolved; component vulnerability analysis NOT_RUN | PASS |
+| Public English language policy | Documentation | repository-language inspection | root README and contribution guide are English; legacy Phase 1/2 guides/documents remain French under R-021 | FAIL |
 | SALOME 9.16 headless | Optional SALOME | real runtime probe | runtime absent | NOT_RUN |
 | CUDA, HIP, and SYCL execution | Optional compute | real hardware execution | hardware/runtime absent | NOT_RUN |
 | Container and Slurm execution | Optional HPC | real runtime execution | tools absent | NOT_RUN |
@@ -48,14 +50,16 @@ does not replace per-requirement links and does not assert G1-G5 completion.
 
 ## Evidence interpretation
 
-`NOT_RUN` for branch protection means the required protected-branch condition
-was not present/verified; compensating PR discipline is documented separately.
+`FAIL` for branch protection means inspection executed and the required
+condition was absent; compensating PR discipline is documented separately.
 A mock, static generator, compiled object, or alternative backend cannot upgrade
 an unavailable optional profile to `PASS`.
 
 ## E0 disposition
 
-The local mandatory E0/core-CPU checks pass. Publication, remote SHA equality
-and hosted branch/PR checks remain `NOT_RUN`; the gate stays operationally open
-until those steps succeed. Full per-requirement test/evidence mapping is a
-living E1+ task and no G1-G5 contractual gate is claimed.
+The local mandatory E0/core-CPU checks pass and the first checkpoint was
+published with remote tree equality. Its hosted Python/report checks executed
+and failed on an implicit `pdftotext` dependency. The gate stays operationally
+open until the retained-layout correction is published and every corrective
+check passes. Full per-requirement test/evidence mapping is a living E1+ task
+and no G1-G5 contractual gate is claimed.

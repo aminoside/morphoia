@@ -143,28 +143,30 @@ def parse_locks(root: Path) -> dict[tuple[str, str], dict[str, set[str]]]:
     for relative in LOCK_FILES:
         path = safe_root_file(root, relative)
         current: tuple[str, str] | None = None
-        expecting_hash = False
+        declaration_has_hash = False
         for number, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             line = raw_line.strip()
             if not line or line.startswith("#"):
                 continue
             package_match = PACKAGE_RE.fullmatch(line)
             if package_match:
-                if expecting_hash and current is not None and not packages[current]["hashes"]:
+                if current is not None and not declaration_has_hash:
                     raise ValueError(
                         f"locked package has no SHA-256 digest before {relative}:{number}"
                     )
                 current = (normalize_package_name(package_match.group(1)), package_match.group(2))
                 entry = packages.setdefault(current, {"hashes": set(), "locks": set()})
                 entry["locks"].add(relative)
-                expecting_hash = True
+                declaration_has_hash = False
                 continue
             hash_match = HASH_RE.fullmatch(line)
             if hash_match and current is not None:
                 packages[current]["hashes"].add(hash_match.group(1))
-                expecting_hash = False
+                declaration_has_hash = True
                 continue
             raise ValueError(f"unsupported lock syntax at {relative}:{number}: {raw_line!r}")
+        if current is not None and not declaration_has_hash:
+            raise ValueError(f"locked package has no SHA-256 digest at end of {relative}")
     for (name, version), values in packages.items():
         if not values["hashes"]:
             raise ValueError(f"locked package has no SHA-256 digest: {name}=={version}")
@@ -190,6 +192,7 @@ def validate_manifest(root: Path, manifest: dict[str, Any]) -> list[dict[str, An
         raise ValueError("artifact manifest artifacts must be an array")
     selected: list[dict[str, Any]] = []
     identifiers: set[str] = set()
+    sources: dict[str, str] = {}
     for index, artifact in enumerate(artifacts):
         if not isinstance(artifact, dict):
             raise ValueError(f"artifact {index} must be an object")
@@ -197,6 +200,13 @@ def validate_manifest(root: Path, manifest: dict[str, Any]) -> list[dict[str, An
         if not isinstance(identifier, str) or not identifier or identifier in identifiers:
             raise ValueError(f"artifact {index} has a missing or duplicate id")
         identifiers.add(identifier)
+        source_identifier = artifact.get("source_artifact_id")
+        if source_identifier is not None:
+            if not isinstance(source_identifier, str) or not source_identifier:
+                raise ValueError(
+                    f"artifact {identifier} has an invalid source_artifact_id"
+                )
+            sources[identifier] = source_identifier
         if identifier == SELF_ARTIFACT_ID:
             continue
         relative = artifact.get("path")
@@ -214,6 +224,19 @@ def validate_manifest(root: Path, manifest: dict[str, Any]) -> list[dict[str, An
         if sha256_file(path) != digest or path.stat().st_size != size:
             raise ValueError(f"artifact {identifier} digest or size does not match {relative}")
         selected.append(artifact)
+    for identifier, source_identifier in sources.items():
+        if source_identifier not in identifiers:
+            raise ValueError(
+                f"artifact {identifier} references missing source {source_identifier}"
+            )
+    for identifier in identifiers:
+        visited: set[str] = set()
+        cursor = identifier
+        while cursor in sources:
+            if cursor in visited:
+                raise ValueError(f"artifact provenance graph contains a cycle at {cursor}")
+            visited.add(cursor)
+            cursor = sources[cursor]
     return selected
 
 

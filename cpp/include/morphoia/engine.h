@@ -159,8 +159,11 @@ MORPHOIA_ENGINE_API morphoia_status_t MORPHOIA_ENGINE_CALL morphoia_context_crea
     morphoia_diagnostic_t* diagnostic) MORPHOIA_ENGINE_NOEXCEPT;
 
 /*
- * Atomically consumes `*context`: a non-NULL handle is cleared before any
- * destructor/deallocator runs and must never be reused, even on error.
+ * Immediately consumes `*context`: a non-NULL handle is cleared before any
+ * destructor/deallocator runs and must never be reused, even on error. This
+ * E0 bootstrap API does not synchronize concurrent access; the caller MUST
+ * serialize destruction with all other operations on the handle and MUST NOT
+ * destroy copied aliases.
  */
 MORPHOIA_ENGINE_API morphoia_status_t MORPHOIA_ENGINE_CALL morphoia_context_destroy(
     morphoia_context_t** context,

@@ -29,6 +29,7 @@ evidence; absence of a failure is not evidence of compatibility.
 | R-018 | Dependency/action supply chain is compromised | Medium | Critical | Pin versions/hashes and Actions SHAs; minimal permissions; SBOM and vulnerability scan | Open |
 | R-019 | Reproducibility claim exceeds one observed environment | High | High | Two clean builds; publish exact environment; keep ARM64/other OS as `NOT_RUN` | Open |
 | R-020 | Research software is mistaken for a clinical product | Medium | Critical | Prominent research-only limitation; no diagnostic/medical-device claims | Controlled |
+| R-021 | Legacy Phase 1/2 guides and documents remain French while the Engine public-language policy requires American English | High | Medium | Preserve their meaning, record the gap, and translate/version them in a bounded documentation lot before claiming full language-policy compliance | Open |
 
 ## Escalation triggers
 

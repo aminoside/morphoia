@@ -122,6 +122,7 @@ SPDX-License-Identifier = "OFL-1.1"
 path = [
   "docs/engine/baselines/Morphoia_Engine_Architecture_Reference_v0.2.pdf",
   "docs/engine/baselines/Morphoia_Engine_Cahier_des_charges_technique_v0.1.pdf",
+  "spec/requirements/Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt",
   "spec/requirements/requirements.yaml",
 ]
 precedence = "aggregate"

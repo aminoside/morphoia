@@ -45,8 +45,8 @@ secrets or identifiable patient data from public systems.
 | Silent scientific loss | authoritative representation retained; explicit repair/loss/provenance records | policy and legacy prototype inspection only; Engine IR path `NOT_RUN` |
 | CAS substitution | rehash bytes and validate media/schema/size before consumption | architecture control only; Engine CAS `NOT_RUN` |
 | Malicious plugin/model/dump | never auto-execute untrusted Python, SHAPER dumps, plugins, or serialized model code; isolate workers | policy only, plugin runtime `NOT_RUN` |
-| CI credential theft | immutable Action SHAs, least privilege, no checkout credential retained, hash-locked wheels | workflow inspection `PASS`; hosted execution pending |
-| Supply-chain substitution | exact versions and archive hashes, license inventory, SBOM, vulnerability scan | lock verification/SBOM planned at E0; vulnerability scanners `NOT_RUN` |
+| CI credential theft | immutable Action SHAs, least privilege, no checkout credential retained, hash-locked wheels | workflow inspection `PASS`; hosted runs executed, with native/hygiene/REUSE `PASS` and requirements/report `FAIL` on missing `pdftotext` rather than credentials |
+| Supply-chain substitution | exact versions and archive hashes, license inventory, SBOM, vulnerability scan | hash-locked installs, REUSE, and deterministic SBOM `PASS`; vulnerability scanners `NOT_RUN` |
 | Secret or personal-data disclosure | synthetic/licensed fixtures only; scan source/logs/pixels/private tags and redact diagnostics | bounded text signature scan at E0; DICOM/pixel inspection `NOT_RUN` |
 | Optional-backend overclaim | five evidence states with hardware/runtime/version provenance | evidence vocabulary and policy `PASS`; optional runtimes `NOT_RUN` |
 

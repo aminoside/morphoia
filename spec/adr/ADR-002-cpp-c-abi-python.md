@@ -29,9 +29,11 @@ while maintaining Python 3.12 compatibility.
 
 ## Evidence and constraints
 
-This is a baseline architecture decision. E0 native ABI execution remains
-`NOT_RUN` until the concurrent core lot is integrated; acceptance is not ABI
-stability evidence.
+This is a baseline architecture decision. E0 executed the shared C facade,
+direct and CMake native tests, installed-package C consumer, exact export
+allow-list, and ASan/UBSan smoke successfully. Those bounded E0 results are
+`PASS`, while lot integration remains pending and they are not evidence that
+the ABI is frozen or generally stable.
 
 ## Consequences and risks
 

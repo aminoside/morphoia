@@ -1,52 +1,59 @@
-# Contribuer à MORPHOIA
+# Contributing to MORPHOIA
 
-MORPHOIA est un dépôt public dirigé par Olivier Ami et distribué sous la licence MIT publiée
-dans `LICENSE`.
+MORPHOIA is a public research repository led by Olivier Ami. Licensing is
+file- and component-specific: legacy prototype code remains MIT; new original
+Engine code is Apache-2.0 OR MIT; new original Engine documentation is CC BY
+4.0; baselines, fonts, and brand assets retain their recorded terms. Review
+`REUSE.toml`, `NOTICE`, and `DEPENDENCIES.md` before contributing or
+redistributing content.
 
-## Règles de contribution
+## Contribution rules
 
-1. Ouvrir une issue décrivant le besoin, les standards concernés et les critères de validation.
-2. Créer une branche dédiée ; ne pas pousser directement sur `main`.
-3. Conserver les références bibliographiques et la provenance des données.
-4. Ajouter ou mettre à jour les tests associés à toute modification de code.
-5. Signaler explicitement les pertes de sémantique, ambiguïtés et dépendances propriétaires.
-6. Ne jamais inclure de données industrielles confidentielles, de secrets ou de credentials.
-7. Faire relire toute modification normative, géométrique ou brevet par un expert du domaine concerné.
-8. Ajouter une ADR pour toute décision architecturale structurante.
-9. Ajouter un CJR avant tout nouveau composant qui duplique ou remplace une solution existante.
-10. Distinguer dans les documents et API ce qui est implémenté, spécifié, expérimental ou planifié.
+1. Open an issue describing the need, affected standards, and acceptance criteria.
+2. Work on a dedicated branch; do not push directly to the default branch.
+3. Preserve bibliographic references and data provenance.
+4. Add or update tests for every code change.
+5. Report semantic losses, ambiguities, repairs, and proprietary dependencies explicitly.
+6. Never include confidential industrial data, patient data, secrets, or credentials.
+7. Obtain domain review for normative, geometry, patent, or licensing changes.
+8. Add an ADR for every structural architecture decision.
+9. Add a component justification before duplicating or replacing an existing solution.
+10. Distinguish implemented, specified, experimental, and planned behavior.
+11. Sign every commit under the [Developer Certificate of Origin](DCO.md) with `git commit --signoff`; never sign as another person.
 
-## Documents PDF et identité MORPHOIA
+## PDF documents and MORPHOIA identity
 
-Tout PDF ajouté au dépôt doit respecter la charte graphique MORPHOIA version 1.0 et conserver
-`Olivier Ami` comme auteur du document. Les contributeurs restent crédités par leurs commits et,
-si nécessaire, dans une section de contributions.
+Every new repository PDF must follow MORPHOIA visual identity version 1.0
+and retain `Olivier Ami` as the document author. Contributors remain credited
+through their commits and, when appropriate, a contributions section.
 
-Les nouveaux PDF doivent :
+New PDFs must:
 
-1. utiliser les masters officiels de `assets/brand/` sans les modifier ni les rasteriser ;
-2. employer le thème partagé `reporting/morphoia_brand.py` ;
-3. incorporer Aldrich et Barlow, sans police de substitution ;
-4. être déclarés dans `reports.json` avec leur générateur et leur validateur ;
-5. être reconstruits et vérifiés par `make check` avant toute pull request.
+1. use the official masters in `assets/brand/` without modifying or rasterizing them;
+2. use the shared `reporting/morphoia_brand.py` theme;
+3. embed Aldrich and Barlow without font substitution;
+4. be declared in `reports.json` with their generator and validator;
+5. be rebuilt and verified by `make check` before a pull request.
 
-La CI refuse automatiquement un PDF suivi par Git qui n'est pas déclaré ou conforme.
+CI rejects any tracked PDF that is undeclared or nonconforming.
 
-Exception : les deux PDF normatifs immuables explicitement enregistrés sous
-`docs/engine/baselines/` sont des entrées de preuve hashées, pas des rapports
-générés. Ils ne sont ni reconstruits, ni rebrandés, ni ajoutés à
-`reports.json`; la CI vérifie leur liste exacte et leurs empreintes séparément.
-Tout autre PDF, y compris dans ce répertoire, reste soumis au manifeste des
-rapports ou fait échouer le contrôle.
+Exception: the two immutable normative PDFs explicitly registered under
+`docs/engine/baselines/` are hash-addressed evidence inputs, not generated
+reports. They are not rebuilt, rebranded, or added to `reports.json`; CI checks
+their exact allow-list and digests separately. Every other PDF, including one
+placed in that directory, must be in the report manifest or the check fails.
 
-## Convention d'auteur
+## Authorship
 
-Olivier Ami reste l'auteur et l'initiateur du projet MORPHOIA. Les contributeurs conservent l'attribution de leurs commits et contributions spécifiques.
+Olivier Ami remains the author and initiator of MORPHOIA. Contributors retain
+attribution for their commits and specific contributions.
 
-## Phase 1 et candidat Phase 2
+## Phase 1 and the Phase 2 candidate
 
-La Phase 1 interdit de concevoir prématurément un nouveau langage. Toute proposition d'architecture ou de représentation doit être reliée à l'étude de faisabilité, aux standards existants et à une lacune démontrée.
+Phase 1 forbids prematurely designing a new language. Every representation or
+architecture proposal must connect to the feasibility study, existing
+standards, and a demonstrated gap.
 
-La façade textuelle et l'IR de Phase 2 sont expérimentales. Aucune contribution ne peut les
-qualifier de standard stable avant exécution P1/P2 sur deux backends, conformité publique et
-bénéfice industriel mesuré.
+The Phase 2 textual facade and IR are experimental. No contribution may call
+them a stable standard before P1/P2 execution on two independent backends,
+public conformance, and measured industrial benefit.

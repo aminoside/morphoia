@@ -11,6 +11,13 @@ documents:
 - `requirements-tracking.yaml` is the living requirement-to-component,
   work-package, issue, test, evidence, dependency, gate, and status overlay.
 
+The adjacent
+`Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt` file is the
+versioned, layout-preserving extraction used to make catalogue replay
+independent of the host operating-system image. It is a derivative of the
+immutable PDF, not a new normative source. The repository verifies both its
+stored SHA-256 and the normalized raw extraction SHA-256 before parsing it.
+
 Both files use JSON syntax, a strict subset of YAML 1.2. The corresponding
 JSON Schema 2020-12 contracts are
 `requirements-catalog.schema.json` and
@@ -52,7 +59,14 @@ Run:
 ```bash
 python3 scripts/extract_engine_requirements.py
 python3 scripts/extract_engine_requirements.py --check
+python3 scripts/extract_engine_requirements.py --check --extract-pdf
 ```
+
+The first two commands replay the versioned extraction without requiring
+Poppler. The third command is the explicit provenance check: it requires
+`pdftotext`, extracts the immutable PDF again, and proves byte equality with
+the retained layout text before checking the catalogue. It was executed during
+E0 with `pdftotext 24.02.0` from `poppler-utils 24.02.0-1ubuntu9.9`.
 
 Regeneration is fail-closed on the PDF, layout extraction, compact records,
 and full immutable-record digests. It creates a fail-closed tracking overlay
@@ -61,5 +75,6 @@ and preserved byte-for-byte. An invalid overlay blocks regeneration before the
 immutable catalogue is written; live traceability is never silently repaired,
 reset, or discarded.
 
-A changed Poppler extraction must be investigated through change control; it
-must never silently rewrite either source-of-truth file.
+A changed Poppler extraction or retained-layout digest must be investigated
+through change control; it must never silently rewrite the baseline,
+catalogue, layout derivative, or living tracking file.

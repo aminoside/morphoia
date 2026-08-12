@@ -44,15 +44,17 @@ validated specification is received.
 - Repository identity: public `Aminoside/morphoia`; default branch `main` at
   `fcee715a2d99517f00aacf7d8ce2797658194f83`.
 - `origin` was validated as the canonical fetch/push URL. The remote `engine`
-  branch did not exist initially. `origin/engine-p0-bootstrap` exists at the
-  base commit.
+  branch did not exist initially and was created at the verified base.
+  `origin/engine-p0-bootstrap` is published; PR #4 targets `engine` and remains
+  unmerged.
 - The authenticated GitHub app identity `aminoside` was observed with
   administrative and push capability. No branch protection/ruleset was found.
   This is a governance gap, so lot-to-`engine` integration must use PR review
   and required checks as a compensating discipline.
 - The `gh` executable is absent and a local command-line push is unauthenticated.
-  The authenticated app publication path is available and will be exercised
-  after the local gate; publication has not yet been run.
+  The authenticated app publication path successfully published and verified
+  the checkpoint tree; commit `95ba898d1dc3a1a35c15343b59f832808d850396`
+  is the remote authority before the current corrective commit.
 - Initial hosted-state audit found no `engine`/`engine-p*` branch, tag, or
   release; one unrelated draft PR #3 (`agent/add-official-brand-assets` to
   `main`) was preserved; the only observed workflow was the existing report
@@ -71,13 +73,19 @@ validated specification is received.
   EuroHPC access, OCCT, VTK, ITK, PDAL, MED, Kokkos, PETSc, and other domain
   libraries were not observed.
 - Existing Python baseline: 14 legacy tests and the CLI smoke `PASS`. With the
-  hash-locked E0 dependencies, the combined 40-test Python/schema/evidence
+  hash-locked E0 dependencies, the combined 50-test Python/schema/evidence
   suite also passes on Python 3.12. Native direct and CMake 3.20.5 minimum paths,
   install/consumer, and fail-fast ASan/UBSan smoke pass. LSan remains `NOT_RUN`.
+- Hosted runs `31578405786` and `31578405812` executed the first checkpoint.
+  Native GCC, source hygiene, and REUSE jobs passed. Python 3.12, Python 3.13,
+  and report replay failed because the hosted image has no `pdftotext`. This is
+  an executed `FAIL`, not a skip. The correction retains and hashes the exact
+  E0 layout extraction so ordinary offline replay needs no implicit system
+  package; explicit `--extract-pdf` remains the provenance audit.
 
 ## Milestones
 
-### E0 — audit, capability, and resumable bootstrap (publication pending)
+### E0 — audit, capability, and resumable bootstrap (hosted correction pending)
 
 Deliverables:
 
@@ -115,10 +123,12 @@ bash scripts/scan-secrets.sh
 git diff --check
 ```
 
-All listed local commands pass after the final checkpoint reconciliation; the
+All listed local commands passed for the first published checkpoint; the
 compact report is retained in `docs/engine/evidence/E0_GATE_REPORT.md`. The
-requirements lock was also resolved with Python 3.13 wheel/hash compatibility;
-hosted 3.13 execution remains pending CI. Source SBOM generation is independent
+requirements lock was also resolved with Python 3.13 wheel/hash compatibility.
+Hosted 3.13 then executed but failed solely at the missing-Poppler regeneration
+test; the retained-layout correction must be replayed before its status can
+become PASS. Source SBOM generation is independent
 of the executing Python/compiler patch level. Vulnerability analysis, LSan and
 the unavailable optional profiles remain `NOT_RUN`.
 
@@ -231,7 +241,8 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Publish the locally green checkpoint to `engine-p0-bootstrap`, verify the remote
-SHA and hosted checks, then integrate by PR into `engine`. Start E1 and the
-protocol-only E2 lot after green integration; never merge `engine` into the
-default branch without separate owner instruction.
+Validate and publish the deterministic retained-layout correction to
+`engine-p0-bootstrap`, verify its remote SHA, rerun all PR #4 checks, and
+integrate by PR into `engine` only when green. Start E1 and the protocol-only E2
+lot after that integration; never merge `engine` into the default branch
+without separate owner instruction.

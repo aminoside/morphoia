@@ -1223,11 +1223,41 @@
       "type": "file"
     },
     {
+      "bom-ref": "urn:morphoia:artifact:baseline-technical-spec-v0.1-layout",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "de8444574a59e1520222062587bc6c55f7184cf0e384d7d499f5ea24ad653175"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "LicenseRef-Morphoia-Baseline"
+        }
+      ],
+      "name": "spec/requirements/Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "baseline-technical-spec-v0.1-layout"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "validated_layout_text_derivative"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
       "bom-ref": "urn:morphoia:artifact:e0-gate-report-core-cpu",
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "67fa2ceacf92819d3e8608d8bf83f8ef17429dac7fb950841fdee5435e70de7f"
+          "content": "de6df3d085b768941f2d9485d7a27b9dd125de713d08109582d9fd6e5eab5c5b"
         }
       ],
       "licenses": [
@@ -1257,7 +1287,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "84e0e1ba8878a657eb6a5c3bcfdf5b52658ace81a52ecac26b42117268300c91"
+          "content": "0fa8953f164018e76caaa8a9690a033f8c6f6c495d118957bbc791afa3787cbe"
         }
       ],
       "licenses": [
@@ -1667,7 +1697,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "5e88bd162020e2e9748b1b884e85d89a2d10d1d7bc77df277b28bbb4797809f8"
+          "content": "a4207d90d1a4dffc18cd7e2596bdb7149839756fcca2347a6bfc0683e2fc538e"
         }
       ],
       "licenses": [
@@ -1777,7 +1807,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "bc6ce65dd380e9dbe6c6fb8e230202c8ad9c5a0d7ecb1ace8919f3f7ad57d067"
+          "content": "b0126a669a42347cc0a0f90c599dd78aac1fc8ae64b51a6d99fc48386e4bd202"
         }
       ],
       "licenses": [
@@ -1947,6 +1977,28 @@
         }
       ],
       "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:native-source:tests%2Fnative%2Fincompatible_consumer%2FCMakeLists.txt",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "95a181ce7e87d639abab28ae413f7d3fdd5758b17b22da49e658b0fa8daa5a40"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/incompatible_consumer/CMakeLists.txt",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "native-source"
+        }
+      ],
+      "type": "file"
     }
   ],
   "dependencies": [
@@ -2049,6 +2101,10 @@
     {
       "dependsOn": [],
       "ref": "urn:morphoia:artifact:baseline-technical-spec-v0.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:artifact:baseline-technical-spec-v0.1-layout"
     },
     {
       "dependsOn": [],
@@ -2173,6 +2229,10 @@
     {
       "dependsOn": [],
       "ref": "urn:morphoia:native-source:tests%2Fnative%2Fcore_smoke.cpp"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:native-source:tests%2Fnative%2Fincompatible_consumer%2FCMakeLists.txt"
     }
   ],
   "metadata": {
@@ -2213,7 +2273,7 @@
       "version": "0.0.1"
     }
   },
-  "serialNumber": "urn:uuid:ae7adcbf-a6e1-589a-8fa4-205e71f57138",
+  "serialNumber": "urn:uuid:2da2540c-4018-59c4-b5ae-6df6931ef3d0",
   "specVersion": "1.5",
   "version": 1
 }

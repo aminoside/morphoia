@@ -7,6 +7,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -21,6 +22,12 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "extract_engine_requirements.py"
 CATALOGUE = ROOT / "spec" / "requirements" / "requirements.yaml"
 TRACKING = ROOT / "spec" / "requirements" / "requirements-tracking.yaml"
+LAYOUT = (
+    ROOT
+    / "spec"
+    / "requirements"
+    / "Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt"
+)
 PDF_BRANDING_SCRIPT = ROOT / "scripts" / "check_pdf_branding.py"
 PDF = (
     ROOT
@@ -57,6 +64,9 @@ class EngineRequirementsTests(unittest.TestCase):
         self,
         catalogue: Path = CATALOGUE,
         tracking: Path = TRACKING,
+        layout: Path = LAYOUT,
+        *extra_arguments: str,
+        env: dict[str, str] | None = None,
     ) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [
@@ -67,11 +77,15 @@ class EngineRequirementsTests(unittest.TestCase):
                 str(catalogue),
                 "--tracking-output",
                 str(tracking),
+                "--layout-text",
+                str(layout),
+                *extra_arguments,
             ],
             cwd=ROOT,
             check=False,
             capture_output=True,
             text=True,
+            env=env,
         )
 
     def assert_mutation_rejected(
@@ -149,6 +163,144 @@ class EngineRequirementsTests(unittest.TestCase):
     def test_catalogue_and_tracking_are_exact(self) -> None:
         completed = self.run_check()
         self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertIn("PDF, versioned layout, immutable catalogue", completed.stdout)
+
+    def test_layout_artifact_hash_and_normalization(self) -> None:
+        stored = LAYOUT.read_bytes()
+        self.assertEqual(
+            hashlib.sha256(stored).hexdigest(),
+            "de8444574a59e1520222062587bc6c55f7184cf0e384d7d499f5ea24ad653175",
+        )
+        self.assertTrue(stored.endswith(b"\f\n"))
+        normalized = stored[:-1]
+        self.assertEqual(
+            hashlib.sha256(normalized).hexdigest(),
+            "e31699cb803edb1b86d01b04a230fd71418a5865965313bac376758f3e0f1a10",
+        )
+
+    def test_missing_layout_artifact_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="morphoia-layout-missing-") as directory:
+            missing = Path(directory) / "missing.layout.txt"
+            completed = self.run_check(layout=missing)
+            self.assertNotEqual(completed.returncode, 0, completed.stdout)
+            self.assertIn("FAIL:", completed.stderr)
+
+    def test_mutated_layout_artifact_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="morphoia-layout-mutated-") as directory:
+            mutated = Path(directory) / "mutated.layout.txt"
+            mutated.write_bytes(LAYOUT.read_bytes() + b"unexpected")
+            completed = self.run_check(layout=mutated)
+            self.assertNotEqual(completed.returncode, 0, completed.stdout)
+            self.assertIn("layout artifact storage digest mismatch", completed.stderr)
+
+    def test_default_regeneration_does_not_invoke_pdftotext(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="morphoia-layout-no-poppler-") as directory:
+            directory_path = Path(directory)
+            catalogue_path = directory_path / "requirements.yaml"
+            tracking_path = directory_path / "requirements-tracking.yaml"
+            empty_path = directory_path / "empty-path"
+            empty_path.mkdir()
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--pdf",
+                    str(PDF),
+                    "--layout-text",
+                    str(LAYOUT),
+                    "--output",
+                    str(catalogue_path),
+                    "--tracking-output",
+                    str(tracking_path),
+                ],
+                cwd=ROOT,
+                check=False,
+                capture_output=True,
+                text=True,
+                env={"PATH": str(empty_path)},
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            self.assertEqual(catalogue_path.read_bytes(), CATALOGUE.read_bytes())
+            self.assertEqual(tracking_path.read_bytes(), TRACKING.read_bytes())
+
+    def test_extract_pdf_option_fails_closed_when_pdftotext_is_unavailable(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="morphoia-layout-extract-") as directory:
+            empty_path = Path(directory) / "empty-path"
+            empty_path.mkdir()
+            completed = self.run_check(
+                CATALOGUE,
+                TRACKING,
+                LAYOUT,
+                "--extract-pdf",
+                env={"PATH": str(empty_path)},
+            )
+            self.assertNotEqual(completed.returncode, 0, completed.stdout)
+            self.assertIn("pdftotext is required only for --extract-pdf", completed.stderr)
+
+    def test_output_hardlink_to_input_is_rejected_without_rewrite(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="morphoia-layout-alias-") as directory:
+            directory_path = Path(directory)
+            pdf = directory_path / "baseline.pdf"
+            output = directory_path / "requirements.yaml"
+            tracking = directory_path / "requirements-tracking.yaml"
+            shutil.copyfile(PDF, pdf)
+            os.link(pdf, output)
+            shutil.copyfile(TRACKING, tracking)
+            before = pdf.read_bytes()
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--pdf",
+                    str(pdf),
+                    "--layout-text",
+                    str(LAYOUT),
+                    "--output",
+                    str(output),
+                    "--tracking-output",
+                    str(tracking),
+                ],
+                cwd=ROOT,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(completed.returncode, 0, completed.stdout)
+            self.assertIn("baseline PDF must not alias immutable catalogue output", completed.stderr)
+            self.assertEqual(pdf.read_bytes(), before)
+            self.assertEqual(output.read_bytes(), before)
+
+    def test_predictable_temporary_symlink_is_never_followed(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="morphoia-layout-temp-symlink-") as directory:
+            directory_path = Path(directory)
+            catalogue = directory_path / "requirements.yaml"
+            tracking = directory_path / "requirements-tracking.yaml"
+            protected = directory_path / "protected.txt"
+            predictable = catalogue.with_suffix(catalogue.suffix + ".tmp")
+            protected.write_text("must remain unchanged\n", encoding="utf-8")
+            predictable.symlink_to(protected)
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--pdf",
+                    str(PDF),
+                    "--layout-text",
+                    str(LAYOUT),
+                    "--output",
+                    str(catalogue),
+                    "--tracking-output",
+                    str(tracking),
+                ],
+                cwd=ROOT,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            self.assertEqual(protected.read_text(encoding="utf-8"), "must remain unchanged\n")
+            self.assertTrue(predictable.is_symlink())
+            self.assertEqual(catalogue.read_bytes(), CATALOGUE.read_bytes())
 
     def test_immutable_catalogue_is_separate_from_tracking(self) -> None:
         catalogue = read_json(CATALOGUE)
@@ -162,6 +314,15 @@ class EngineRequirementsTests(unittest.TestCase):
         self.assertEqual(
             catalogue["baseline"]["immutable_records_sha256"],
             "b846a2f284ad0510b43ca6fdba8ad4fae7d1b40daf2f77305c8153e6a9de4072",
+        )
+        self.assertEqual(
+            catalogue["baseline"]["layout_artifact"],
+            "spec/requirements/"
+            "Morphoia_Engine_Cahier_des_charges_technique_v0.1.layout.txt",
+        )
+        self.assertEqual(
+            catalogue["baseline"]["layout_artifact_sha256"],
+            "de8444574a59e1520222062587bc6c55f7184cf0e384d7d499f5ea24ad653175",
         )
 
     def test_tracking_starts_fail_closed(self) -> None:
@@ -257,6 +418,53 @@ class EngineRequirementsTests(unittest.TestCase):
         for label, mutation in mutations.items():
             with self.subTest(label=label):
                 self.assert_mutation_rejected(mutate_tracking=mutation)
+
+    def test_duplicate_json_keys_are_rejected_in_all_requirement_inputs(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="morphoia-requirements-duplicates-") as directory:
+            root = Path(directory)
+            duplicate_catalogue = root / "requirements.yaml"
+            duplicate_tracking = root / "requirements-tracking.yaml"
+            duplicate_schema = root / "requirements-catalog.schema.json"
+            duplicate_catalogue.write_text(
+                CATALOGUE.read_text(encoding="utf-8").replace(
+                    '  "schema_version": "1.1.0",',
+                    '  "schema_version": "1.1.0",\n  "schema_version": "1.1.0",',
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            duplicate_tracking.write_text(
+                TRACKING.read_text(encoding="utf-8").replace(
+                    '  "schema_version": "1.0.0",',
+                    '  "schema_version": "1.0.0",\n  "schema_version": "1.0.0",',
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            catalogue_schema = ROOT / "spec" / "requirements" / "requirements-catalog.schema.json"
+            duplicate_schema.write_text(
+                catalogue_schema.read_text(encoding="utf-8").replace(
+                    '  "title":',
+                    '  "$schema": "https://json-schema.org/draft/2020-12/schema",\n  "title":',
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            cases = {
+                "catalogue": self.run_check(catalogue=duplicate_catalogue),
+                "tracking": self.run_check(tracking=duplicate_tracking),
+                "schema": self.run_check(
+                    CATALOGUE,
+                    TRACKING,
+                    LAYOUT,
+                    "--catalog-schema",
+                    str(duplicate_schema),
+                ),
+            }
+            for label, completed in cases.items():
+                with self.subTest(label=label):
+                    self.assertNotEqual(completed.returncode, 0, completed.stdout)
+                    self.assertIn("duplicate JSON key", completed.stderr)
 
     def test_regeneration_preserves_valid_tracking_byte_for_byte(self) -> None:
         with tempfile.TemporaryDirectory(prefix="morphoia-requirements-regen-") as directory:

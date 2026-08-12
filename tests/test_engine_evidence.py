@@ -228,6 +228,7 @@ class EngineSbomTests(unittest.TestCase):
         selected = set(sbom_module.collect_source_files(ROOT))
         self.assertIn("tests/native/consumer/CMakeLists.txt", selected)
         self.assertIn("tests/native/consumer/main.c", selected)
+        self.assertIn("tests/native/incompatible_consumer/CMakeLists.txt", selected)
 
     def test_stale_manifest_hash_is_rejected(self) -> None:
         manifest = read_json(MANIFEST)
@@ -237,6 +238,30 @@ class EngineSbomTests(unittest.TestCase):
             path.write_text(json.dumps(manifest), encoding="utf-8")
             with self.assertRaises(ValueError):
                 sbom_module.build_bom(ROOT, path)
+
+    def test_manifest_provenance_rejects_self_dangling_and_cycles(self) -> None:
+        base = read_json(MANIFEST)
+        mutations = {
+            "self": lambda values: next(
+                item for item in values if item["id"] == "baseline-technical-spec-v0.1-layout"
+            ).__setitem__("source_artifact_id", "baseline-technical-spec-v0.1-layout"),
+            "dangling": lambda values: next(
+                item for item in values if item["id"] == "requirements-catalog-v0.1"
+            ).__setitem__("source_artifact_id", "missing-source"),
+            "cycle": lambda values: next(
+                item for item in values if item["id"] == "baseline-technical-spec-v0.1"
+            ).__setitem__("source_artifact_id", "requirements-catalog-v0.1"),
+        }
+        for label, mutation in mutations.items():
+            with self.subTest(label=label), tempfile.TemporaryDirectory(
+                prefix="morphoia-manifest-provenance-"
+            ) as directory:
+                manifest = copy.deepcopy(base)
+                mutation(manifest["artifacts"])
+                path = Path(directory) / "manifest.json"
+                path.write_text(json.dumps(manifest), encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    sbom_module.build_bom(ROOT, path)
 
     def test_lock_parser_rejects_package_without_its_own_hash(self) -> None:
         with tempfile.TemporaryDirectory(prefix="morphoia-lock-parser-") as directory:
@@ -251,6 +276,29 @@ class EngineSbomTests(unittest.TestCase):
             )
             with self.assertRaises(ValueError):
                 sbom_module.parse_locks(root)
+
+    def test_lock_parser_rejects_unhashed_duplicate_declaration(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="morphoia-lock-duplicate-") as directory:
+            root = Path(directory)
+            first = root / "requirements" / "first.lock"
+            second = root / "requirements" / "second.lock"
+            first.parent.mkdir(parents=True)
+            first.write_text(
+                "same-package==1.0 \\\n"
+                "    --hash=sha256:" + "a" * 64 + "\n",
+                encoding="utf-8",
+            )
+            second.write_text("same-package==1.0 \\\n", encoding="utf-8")
+            original = sbom_module.LOCK_FILES
+            sbom_module.LOCK_FILES = (
+                "requirements/first.lock",
+                "requirements/second.lock",
+            )
+            try:
+                with self.assertRaisesRegex(ValueError, "no SHA-256 digest at end"):
+                    sbom_module.parse_locks(root)
+            finally:
+                sbom_module.LOCK_FILES = original
 
 
 if __name__ == "__main__":
