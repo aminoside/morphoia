@@ -11,6 +11,7 @@ Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
 E1/E2 durable-state base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
 Published E2 source checkpoint: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
+Corrective E2 source checkpoint: `e3ec245569bff40533b86789e61b1a78c15915f6`
 
 ## Objective
 
@@ -104,6 +105,12 @@ validated specification is received.
   68 passed, and the sole failure was the stale checkpoint `spec` tree digest.
   This history remains `FAIL`; it is not reclassified because the protocol
   assertions themselves passed.
+- Corrective source `e3ec245569bff40533b86789e61b1a78c15915f6` then passed
+  Engine run `31589424865`: Python 3.12 job `94090702646`, hygiene job
+  `94090702698`, native job `94090702707`, REUSE job `94090702764`, and Python
+  3.13 job `94090702766`. Report run `31589424850`, job `94090702397`, also
+  passed. This new execution proves the durable correction; it does not rewrite
+  either historical failed workflow.
 
 ## Milestones
 
@@ -199,9 +206,9 @@ Bounded protocol checkpoint results:
   one hashed lock, and declared licenses. Strict evidence JSON and confined
   descriptor-relative output reject duplicate keys, symlink/alias escapes, and
   collisions; vulnerability analysis remains `NOT_RUN`;
-- the published hosted checkpoint is `FAIL` because of its stale durable digest;
-  corrective hosted Python 3.12/3.13, native, hygiene, REUSE, and report runs
-  remain `NOT_RUN` until the reconciliation commit is published;
+- the first published hosted checkpoint remains `FAIL` because of its stale
+  durable digest; corrective source `e3ec245` passed hosted Python 3.12/3.13,
+  native, hygiene, REUSE, and report execution;
 - real SALOME 9.16, SHAPER/GEOM, SMESH/MED, MEDCoupling, fidelity comparison,
   startup/overhead, and a real greater-than-2-GiB transfer remain `NOT_RUN`.
 
@@ -303,8 +310,8 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Publish the reconciled E2 durable-state correction to
-`engine-p0-salome-protocol`, verify every required hosted job, and integrate
-PR #6 into `engine` only after they pass. Continue the bounded E1 lot
-independently. Keep real SALOME 9.16 execution `NOT_RUN`; never merge `engine`
-into the default branch without separate owner instruction.
+Publish this hosted-evidence follow-up to `engine-p0-salome-protocol`, verify
+every required hosted job on the follow-up, and integrate PR #6 into `engine`
+only after they pass. Continue the bounded E1 lot independently. Keep real
+SALOME 9.16 execution `NOT_RUN`; never merge `engine` into the default branch
+without separate owner instruction.

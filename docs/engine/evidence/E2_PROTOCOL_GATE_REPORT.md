@@ -7,6 +7,7 @@ Operational phase: E2 protocol-only work in parallel with E1
 Lot branch: `engine-p0-salome-protocol`
 Base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
 Published source commit: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
+Corrective source commit: `e3ec245569bff40533b86789e61b1a78c15915f6`
 Declared profile: `e2-salome-protocol-contract`
 
 ## Disposition
@@ -25,9 +26,10 @@ two Python jobs and report job on the single stale `spec` tree digest in
 retained below as executed `FAIL` evidence; they are not replaced by the later
 local correction.
 
-The corrective durable-state commit and its hosted checks are not yet
-published or executed. Consequently this checkpoint is not approved for
-integration into `engine`, and the real E2 SALOME sub-gate remains `NOT_RUN`.
+The corrective durable-state source `e3ec245` is published and its Engine and
+report workflows passed. The present hosted-evidence follow-up still requires
+its own publication and required checks before PR #6 is integrated into
+`engine`. The real E2 SALOME sub-gate remains `NOT_RUN`.
 
 ## Contract artifacts
 
@@ -61,6 +63,21 @@ No hosted failure indicates a protocol assertion failure. This classification
 does not turn the overall workflows into `PASS`; the three affected jobs and
 both workflows remain recorded as `FAIL`.
 
+## Corrective hosted execution on `e3ec245`
+
+| Workflow/job | Result | Exact observation |
+|---|---|---|
+| Engine run `31589424865` | PASS | Overall workflow passed on corrective source `e3ec245569bff40533b86789e61b1a78c15915f6`. |
+| Python 3.12 job `94090702646` | PASS | Required Python 3.12 job completed successfully. |
+| Hygiene job `94090702698` | PASS | Required source-hygiene job completed successfully. |
+| Native job `94090702707` | PASS | Required native GCC/C++20 job completed successfully. |
+| REUSE job `94090702764` | PASS | Required repository-license job completed successfully. |
+| Python 3.13 job `94090702766` | PASS | Required Python 3.13 job completed successfully. |
+| Report run `31589424850`, job `94090702397` | PASS | Required report workflow completed successfully. |
+
+This corrective execution is separate from the immutable failed execution on
+`aec106f`; both records remain visible with their observed statuses.
+
 ## Local execution before durable reconciliation
 
 | Command | Result | Boundary |
@@ -91,8 +108,8 @@ the durable checkpoint once the complete validation set passes.
 | Tracked/untracked whitespace checks | PASS | No whitespace defect. |
 
 These local results correct the durable-state defect but do not rewrite the
-hosted history. The corrective hosted jobs remain `NOT_RUN` until the new
-checkpoint is published.
+hosted history. Corrective source `e3ec245` subsequently passed the hosted jobs
+listed above.
 
 ## Evidence and supply-chain separation
 
@@ -119,8 +136,8 @@ execution scope as `contract-only`, and the SALOME runtime as `NOT_RUN`.
 |---|---|---|
 | E2 JSON/schema contract | PASS | Six operations, strict bounded JSON, immutable artifact references, and negative mutations executed locally. |
 | Explicit fake lifecycle | PASS | Dispatch and idempotency executed; every response remains visibly fake and makes no artifact/runtime claim. |
-| Published hosted checkpoint | FAIL | Engine and report workflows failed on the stale durable `spec` digest; corrective hosted execution is pending. |
-| Corrective hosted checkpoint | NOT_RUN | The durable correction has not yet been published. |
+| Published hosted checkpoint | FAIL | Engine and report workflows on `aec106f` failed on the stale durable `spec` digest; this immutable execution history is retained. |
+| Corrective hosted checkpoint | PASS | Engine run `31589424865` and report run `31589424850` passed on `e3ec245`. |
 | SALOME 9.16 `ProbeCapabilities` | NOT_RUN | Runtime absent. Fake capability shape is not detected-runtime evidence. |
 | SHAPER/GEOM/SMESH/MED/MEDCoupling | NOT_RUN | No real SALOME runtime or domain library execution. |
 | Greater-than-2-GiB transfer | NOT_RUN | A 3 GiB integer appears only in a small schema vector; no payload was created or transferred. |
@@ -131,7 +148,7 @@ execution scope as `contract-only`, and the SALOME runtime as `NOT_RUN`.
 
 ## Next idempotent action
 
-Publish the reconciled E2 durable-state commit to
-`engine-p0-salome-protocol`, verify new Python 3.12/3.13, native, hygiene,
-REUSE, and report jobs, and integrate PR #6 into `engine` only if every required
-hosted check passes. Never promote the fake agent to real SALOME evidence.
+Publish this hosted-evidence follow-up to `engine-p0-salome-protocol`, verify
+new Python 3.12/3.13, native, hygiene, REUSE, and report jobs, and integrate PR
+#6 into `engine` only if every required hosted check passes. Never promote the
+fake agent to real SALOME evidence.

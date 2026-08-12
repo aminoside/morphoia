@@ -77,7 +77,7 @@ an unavailable optional profile to `PASS`.
 | Closed E0 evidence preservation | Supply chain | exact byte-hash assertions | E0 manifest `df017341…`; E0 SBOM `30db23e7…` | PASS |
 | E2 vulnerability analysis | Supply chain security | vulnerability scanner | inventory is not a vulnerability scan | NOT_RUN |
 | Published E2 hosted checkpoint | Publication | Engine run `31585426276`; report run `31585425822` | 69 tests ran, 68 passed, sole stale `spec` digest failure | FAIL |
-| Corrective E2 hosted checkpoint | Publication | Python 3.12/3.13, native, hygiene, REUSE, report | reconciliation not yet published | NOT_RUN |
+| Corrective E2 hosted checkpoint | Publication | Engine run `31589424865`; report run `31589424850` | source `e3ec245`: Python 3.12 `94090702646`, hygiene `94090702698`, native `94090702707`, REUSE `94090702764`, Python 3.13 `94090702766`, report `94090702397` | PASS |
 | Real SALOME 9.16 capability probe | E2/G1 optional backend | real isolated runtime | runtime absent | NOT_RUN |
 | SHAPER/GEOM, SMESH/MED, MEDCoupling, fidelity and overhead | E2/G1 optional backend | real isolated runtime | no execution | NOT_RUN |
 
@@ -94,5 +94,6 @@ E0/core-CPU is `PASS` and integrated. Corrective source SHA
 then passed all five jobs. Branch protection and R-021 remain `FAIL`. Full
 per-requirement test/evidence mapping outside the nine-item E2 profile is a
 living E1+ task and no G1-G5 gate is claimed. The E2 contract profile passes
-locally, while its published hosted checkpoint remains `FAIL` pending a
-corrective hosted run; real SALOME remains `NOT_RUN`.
+locally. Its first published hosted checkpoint remains `FAIL`, while corrective
+source `e3ec245` passed Engine run `31589424865` and report run `31589424850`;
+real SALOME remains `NOT_RUN`.

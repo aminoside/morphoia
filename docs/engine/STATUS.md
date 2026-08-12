@@ -9,6 +9,7 @@ Branch: `engine-p0-salome-protocol`
 E0 integration commit: `7715a7f7897a3058473732915e372b9835317d17`
 E0 durable-state parent: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
 Published E2 source checkpoint: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
+Corrective E2 source checkpoint: `e3ec245569bff40533b86789e61b1a78c15915f6`
 
 ## Results
 
@@ -25,7 +26,7 @@ Published E2 source checkpoint: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
 | Published E2 hosted checkpoint | FAIL | Engine run `31585426276` and report run `31585425822` failed on source `aec106f`; all 69 tests ran and 68 passed, with the sole failure being the stale checkpoint `spec` digest. Native, hygiene, and REUSE jobs passed. |
 | E2 protocol contract | PASS | Nineteen local tests execute the versioned six-operation JSON/URI/hash contract, strict bounded transport, and explicitly named `FakeSalomeAgent`; this is contract evidence only. |
 | E2 evidence profile | PASS | A separate 14-artifact manifest and deterministic CycloneDX 1.5 SBOM preserve the closed E0 manifest/SBOM byte-for-byte and fail closed on path, symlink/alias, hash, size, license, exact graph/provenance, source digest, exact test mapping, duplicate-key schema, lock, and truth-status mutations. Vulnerability analysis remains `NOT_RUN`. |
-| Corrective E2 hosted checkpoint | NOT_RUN | The durable digest/evidence correction has not yet been published or executed by GitHub Actions. |
+| Corrective E2 hosted checkpoint | PASS | On corrective source `e3ec245`, Engine run `31589424865` passed Python 3.12 job `94090702646`, hygiene job `94090702698`, native job `94090702707`, REUSE job `94090702764`, and Python 3.13 job `94090702766`; report run `31589424850`, job `94090702397`, passed. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
 | Network capability | PASS | Restricted allowlisted egress and authenticated connector access were observed; unrestricted public egress was not probed or claimed. |
@@ -84,8 +85,9 @@ Local protocol, schema, evidence, manifest, SBOM, E0-immutability, and mutation
 tests pass after durable reconciliation. The first hosted source checkpoint
 remains `FAIL`, because its Python 3.12, Python 3.13, and report jobs each found
 the same stale `spec` tree digest after otherwise running all 69 tests. The
-corrective hosted execution remains `NOT_RUN` until the reconciled commit is
-published. The exact run/job record is retained in
+corrective source `e3ec245` then passed all five Engine jobs in run
+`31589424865` and report job `94090702397` in run `31589424850`. The historical
+failures remain `FAIL`; the exact run/job record is retained in
 `evidence/E2_PROTOCOL_GATE_REPORT.md`.
 
 No SALOME 9.16 process was started. The fake always declares
@@ -97,7 +99,7 @@ E2 or G1/P0.
 
 ## Next action
 
-Publish the reconciled E2 durable-state commit to
-`engine-p0-salome-protocol`, verify Python 3.12/3.13, native, hygiene, REUSE,
-and report jobs, and integrate PR #6 into `engine` only after the required
-checks pass. Continue E1 independently; real SALOME 9.16 remains `NOT_RUN`.
+Publish this hosted-evidence follow-up to `engine-p0-salome-protocol`, verify
+its required Python 3.12/3.13, native, hygiene, REUSE, and report jobs, and
+integrate PR #6 into `engine` only after those checks pass. Continue E1
+independently; real SALOME 9.16 remains `NOT_RUN`.

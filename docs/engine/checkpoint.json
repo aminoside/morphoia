@@ -12,8 +12,8 @@
     "visibility": "public",
     "default_branch": "main",
     "integration_branch": "engine",
-    "publication_status": "FAIL",
-    "publication_note": "Published E2 source aec106f on PR 6 exists, but Engine run 31585426276 and report run 31585425822 failed on the sole stale checkpoint spec digest; the reconciled correction and its hosted checks are NOT_RUN"
+    "publication_status": "PASS",
+    "publication_note": "Corrective E2 source e3ec245 on PR 6 passed Engine run 31589424865 and report run 31589424850; the earlier aec106f Engine run 31585426276 and report run 31585425822 remain immutable FAIL history"
   },
   "git": {
     "branch": "engine-p0-salome-protocol",
@@ -21,8 +21,8 @@
     "base_parent": "cdddaa47ba54742652819d798e1c6f9c0bd9ce6e",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "aec106f79e277b3cd3c6dabafe1107280f039aa9",
-    "note": "Published E2 source aec106f has tree 8a23bbaa581fd52ad8e3b60519bdc5e322d720ce and parent cdddaa47ba54742652819d798e1c6f9c0bd9ce6e; this file deliberately does not predict the SHA of the later correction commit that will contain it"
+    "published_commit_sha": "e3ec245569bff40533b86789e61b1a78c15915f6",
+    "note": "Published corrective E2 source e3ec245 has tree 4842c042ad26704f355ad3f554b96a2761f05ba9 and parent aec106f79e277b3cd3c6dabafe1107280f039aa9; this file deliberately does not predict the SHA of the hosted-evidence follow-up commit that will contain it"
   },
   "tasks": {
     "completed": [
@@ -48,11 +48,12 @@
       "retained_layout_ci_correction_and_hosted_reverification",
       "e0_durable_evidence_integrated_in_pr4",
       "engine_integration_after_green_checks",
-      "engine_push_post_merge_verification"
+      "engine_push_post_merge_verification",
+      "e2_protocol_contract_hosted_correction"
     ],
     "in_progress": [
       "e1_canonical_json_cas_replay",
-      "e2_protocol_contract_hosted_correction"
+      "e2_protocol_contract_hosted_evidence_followup"
     ],
     "remaining": [
       "e1_remaining_core_foundations",
@@ -108,7 +109,7 @@
       },
       {
         "path": "docs/engine",
-        "sha256": "61faf174d21a015f57fa796481ac2db3560a48fc179d08ca2462a20646a375c0",
+        "sha256": "691e68eeeb244d50b9b88a2c9bc9b1d69900c3b06d8b8874cfe60764cb556af7",
         "status": "PASS"
       }
     ],
@@ -254,6 +255,16 @@
       "command": "bash scripts/scan-secrets.sh and tracked/untracked whitespace checks",
       "result": "PASS",
       "summary": "Bounded signature scan and whitespace validation passed; the secret scan is not a complete PII or security audit"
+    },
+    {
+      "command": "GitHub Actions Engine run 31589424865 on corrective E2 source SHA e3ec245569bff40533b86789e61b1a78c15915f6",
+      "result": "PASS",
+      "summary": "Python 3.12 job 94090702646, hygiene job 94090702698, native job 94090702707, REUSE job 94090702764, and Python 3.13 job 94090702766 completed successfully"
+    },
+    {
+      "command": "GitHub Actions report run 31589424850, job 94090702397, on corrective E2 source SHA e3ec245569bff40533b86789e61b1a78c15915f6",
+      "result": "PASS",
+      "summary": "The required report workflow completed successfully"
     }
   ],
   "tests": [
@@ -454,10 +465,40 @@
       "status": "PASS"
     },
     {
-      "id": "E2-CORRECTIVE-HOSTED",
+      "id": "E2-CORRECTIVE-HOSTED-PYTHON-312",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS"
+    },
+    {
+      "id": "E2-CORRECTIVE-HOSTED-PYTHON-313",
+      "profile": "core-cpu-python-3.13",
+      "status": "PASS"
+    },
+    {
+      "id": "E2-CORRECTIVE-HOSTED-NATIVE",
+      "profile": "core-cpu-native-gcc-cxx20",
+      "status": "PASS"
+    },
+    {
+      "id": "E2-CORRECTIVE-HOSTED-HYGIENE",
+      "profile": "source-hygiene",
+      "status": "PASS"
+    },
+    {
+      "id": "E2-CORRECTIVE-HOSTED-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "E2-CORRECTIVE-HOSTED-REPORT",
+      "profile": "report-validation",
+      "status": "PASS"
+    },
+    {
+      "id": "E2-HOSTED-EVIDENCE-FOLLOWUP",
       "profile": "publication-required-checks",
       "status": "NOT_RUN",
-      "reason": "The reconciled durable-state commit has not yet been published"
+      "reason": "This hosted-evidence follow-up is not yet published"
     },
     {
       "id": "E2-SALOME-REAL",
@@ -542,19 +583,19 @@
     },
     {
       "uri": "repo:docs/engine/evidence/E2_PROTOCOL_GATE_REPORT.md",
-      "sha256": "86824a9d4186e772c313fc2c58cd77d1621f3e1deeba7216b7167b6d1b19c001",
+      "sha256": "9633134d4fb783953d5516f80294b638b0f9d73766c7ea168d44b3fcadc6586a",
       "status": "PASS",
-      "note": "Verified report artifact preserves the published hosted FAIL history and real SALOME NOT_RUN boundary"
+      "note": "Verified report artifact preserves the historical hosted FAIL, corrective hosted PASS, and real SALOME NOT_RUN boundary"
     },
     {
       "uri": "repo:artifacts/manifests/engine-e2-salome-protocol.json",
-      "sha256": "0e5d4ef45c52a7777cf755a61713bbf7f2c94e7602eaa79f6de773bd3388a13c",
+      "sha256": "5a052c53e54eb325c5b0029908e8430aaa5ec20d9c4ae28966dd5a92bdb0c55d",
       "status": "PASS",
       "note": "Separate fail-closed 14-artifact E2 profile; closed E0 manifest bytes remain unchanged"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e2-salome-protocol.cdx.json",
-      "sha256": "60dedfdbd0b37a3376bbb947d34875d751971760ece38b5807de36ec184ee247",
+      "sha256": "4ec2d5988ec2773d765bbd66451562b97f355ac093d062d5177887e2dabada15",
       "status": "PASS",
       "note": "Deterministic CycloneDX 1.5 contract inventory; packages are excluded and vulnerability analysis is NOT_RUN"
     }
@@ -583,7 +624,15 @@
     "github-actions:job:94078032322",
     "github-actions:job:94078032333",
     "github-actions:31585425822",
-    "github-actions:job:94078030193"
+    "github-actions:job:94078030193",
+    "github-actions:31589424865",
+    "github-actions:job:94090702646",
+    "github-actions:job:94090702698",
+    "github-actions:job:94090702707",
+    "github-actions:job:94090702764",
+    "github-actions:job:94090702766",
+    "github-actions:31589424850",
+    "github-actions:job:94090702397"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -604,7 +653,7 @@
     "The first hosted checkpoint exposed an undeclared pdftotext dependency; the retained-layout correction subsequently passed hosted Python 3.12, Python 3.13, native, hygiene, REUSE, and report execution",
     "Legacy Phase 1/2 guides and documents remain French and require a bounded translation lot before full public-language-policy compliance",
     "Published E2 Engine run 31585426276 and report run 31585425822 remain FAIL because their sole stale checkpoint spec digest failure is immutable execution history",
-    "Corrective E2 hosted checks are NOT_RUN until the reconciled durable-state commit is published",
+    "Corrective E2 source e3ec245 passed Engine run 31589424865 and report run 31589424850; this does not rewrite the earlier failed execution",
     "The 3 GiB schema vector is metadata only; a real greater-than-2-GiB transfer remains NOT_RUN"
   ],
   "external_dependencies": [
@@ -631,9 +680,14 @@
     },
     {
       "name": "E2 corrective hosted checks",
+      "status": "PASS",
+      "reason": "Engine run 31589424865 and report run 31589424850 passed on corrective source e3ec245569bff40533b86789e61b1a78c15915f6"
+    },
+    {
+      "name": "E2 hosted-evidence follow-up checks",
       "status": "NOT_RUN",
       "blocking_scope": "Integration of PR 6 into engine only",
-      "reason": "The reconciled durable-state commit has not yet been published"
+      "reason": "This durable hosted-evidence follow-up is not yet published"
     },
     {
       "name": "SALOME 9.16 runtime",
@@ -647,5 +701,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Publish the reconciled E2 durable-state commit to engine-p0-salome-protocol, verify Python 3.12 and 3.13, native, hygiene, REUSE, and report jobs, and integrate PR 6 into engine only after every required check passes; keep real SALOME NOT_RUN"
+  "next_action": "Publish this hosted-evidence follow-up to engine-p0-salome-protocol, verify Python 3.12 and 3.13, native, hygiene, REUSE, and report jobs on the follow-up, and integrate PR 6 into engine only after every required check passes; keep real SALOME NOT_RUN"
 }
