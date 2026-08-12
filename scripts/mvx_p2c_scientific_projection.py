@@ -31,7 +31,7 @@ PRIVATE_ROOT = PROJECT_ROOT / "tmp"
 RUNNER_PATH = PROJECT_ROOT / "scripts" / "mvx_p2c_exact_intersections.py"
 DEFAULT_PREREGISTRATION = (
     PROJECT_ROOT
-    / "docs/mvx/validation/p2c/preregistration/pilot3-2026-08-06-v2/preregistration.json"
+    / "docs/mvx/validation/p2c/preregistration/pilot3-2026-08-06-v2.1.0/preregistration.json"
 )
 DEFAULT_CONTEXTS = DEFAULT_PREREGISTRATION.with_name("projection-contexts.json")
 
@@ -42,6 +42,10 @@ COMPARISON_SCHEMA_VERSION = "1.0.0"
 CONTINUITY_SCHEMA = "MVX-P2C-PRIVATE-CAMPAIGN-CONTINUITY"
 CONTINUITY_SCHEMA_VERSION = "1.0.0"
 CAMPAIGN_ID = "P2C-PILOT3-2026-08-06"
+CAMPAIGN_VERSION = "2.1.0"
+COMPROMISED_V2_SIGNER_PUBLIC_KEY = (
+    "c060c44469a0b0be1732943056a7c10b53d2efd77f362c166957f8d180ec429c"
+)
 V1_ROOT = "f45509de33b10e7a877d264c6b99079f7fffe56b9ce30795f5916e1971222722"
 V1_RUNNER_SHA256 = "adb7fe9aef50f4473a5220788004ecebaec9bfd5d81be478b14132f774534f02"
 NUMERIC_MODEL = "IEEE754_BINARY64_EXACT_RATIONAL_LIFT"
@@ -52,9 +56,9 @@ MAX_JSON_BYTES = 16 * 1024 * 1024
 # versioned.  This closes validation over every nested clause, including ones
 # that do not otherwise influence projection arithmetic.
 FROZEN_PREREGISTRATION_VALUE_SHA256 = (
-    "0acc341eb42caa429e95fd451cd3332998d19abfc4d2e984b049f6e9979db02f"
+    "87b7363030d555f582f094f306c4b7ccd163a610cf2b03efa3b4c349f4e039a5"
 )
-FROZEN_CONTEXT_SET_VALUE_SHA256 = "76e88343dda0d70b5d267c276c84c06d91033f6ee678d8643ff9985f2b93311a"
+FROZEN_CONTEXT_SET_VALUE_SHA256 = "7453bd9c955c83a936b622a88bad1c7452beae9f0e1ef987f761431cc85ef92c"
 
 SCIENTIFIC_FIELDS = (
     "numeric_model",
@@ -467,7 +471,7 @@ def validate_preregistration(value: Mapping[str, Any]) -> dict[str, Any]:
     campaign = document["campaign"]
     if campaign != {
         "campaign_id": CAMPAIGN_ID,
-        "campaign_version": "2.0.0",
+        "campaign_version": CAMPAIGN_VERSION,
         "status": "FROZEN_BEFORE_EXECUTION",
         "predecessor_campaign_version": "v1",
         "predecessor_disposition": "UNANCHORED_DIAGNOSTIC",
@@ -476,7 +480,7 @@ def validate_preregistration(value: Mapping[str, Any]) -> dict[str, Any]:
         raise ProjectionError("campaign identity or status is invalid")
     versions = document["version_domains"]
     expected_v2 = {
-        "campaign_version": "2.0.0",
+        "campaign_version": CAMPAIGN_VERSION,
         "algorithm_id": "mvx-p2c-exact-binary64-triangle-contact",
         "algorithm_version": "0.3.0",
         "result_schema": "MVX-P2C-EXACT-TRIANGLE-CONTACT",
@@ -808,6 +812,8 @@ def validate_continuity_manifest(
         or document.get("v1_terminal_evidence_root_sha256") != V1_ROOT
     ):
         raise ProjectionError("private continuity manifest identity is invalid")
+    if document["persistent_signer_public_key_ed25519_hex"] == COMPROMISED_V2_SIGNER_PUBLIC_KEY:
+        raise ProjectionError("private continuity manifest uses the aborted v2.0 signer")
     slots = document.get("slots")
     if not isinstance(slots, list) or len(slots) != 4:
         raise ProjectionError("private continuity manifest must contain four slots")
@@ -1345,7 +1351,7 @@ def validate_projection(value: Mapping[str, Any]) -> dict[str, Any]:
     slot_id = campaign.get("slot_id")
     if (
         campaign.get("campaign_id") != CAMPAIGN_ID
-        or campaign.get("campaign_version") not in {"v1", "2.0.0"}
+        or campaign.get("campaign_version") not in {"v1", CAMPAIGN_VERSION}
         or slot_id not in contexts
         or (campaign.get("comparison_slot"), campaign.get("profile_id")) != contexts[slot_id][:2]
     ):
@@ -1437,9 +1443,9 @@ def compare_projections(left: Mapping[str, Any], right: Mapping[str, Any]) -> di
     if first["campaign"]["comparison_slot"] != second["campaign"]["comparison_slot"]:
         raise ProjectionError("projections do not address the same comparison slot")
     versions = {first["campaign"]["campaign_version"], second["campaign"]["campaign_version"]}
-    if versions == {"v1", "2.0.0"}:
+    if versions == {"v1", CAMPAIGN_VERSION}:
         comparison_kind = "HISTORICAL_V1_TO_V2"
-    elif versions == {"2.0.0"}:
+    elif versions == {CAMPAIGN_VERSION}:
         comparison_kind = "V2_REPEATABILITY"
     else:
         raise ProjectionError("comparison requires v1-to-v2 or v2 repeatability evidence")

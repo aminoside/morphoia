@@ -52,6 +52,10 @@ CONTINUITY_SCHEMA = "MVX-P2C-PRIVATE-CAMPAIGN-CONTINUITY"
 SIGNATURE_SCHEMA = "MVX-P2C-V2-DETACHED-CONTINUITY-SIGNATURE"
 SCHEMA_VERSION = "1.0.0"
 CAMPAIGN_ID = "P2C-PILOT3-2026-08-06"
+CAMPAIGN_VERSION = "2.1.0"
+COMPROMISED_V2_SIGNER_PUBLIC_KEY = (
+    "c060c44469a0b0be1732943056a7c10b53d2efd77f362c166957f8d180ec429c"
+)
 V1_ROOT = "f45509de33b10e7a877d264c6b99079f7fffe56b9ce30795f5916e1971222722"
 V1_RUNNER_SHA256 = "adb7fe9aef50f4473a5220788004ecebaec9bfd5d81be478b14132f774534f02"
 
@@ -1086,7 +1090,7 @@ def _validate_disposition_and_preregistration(bindings: Mapping[str, Any]) -> No
     if (
         not isinstance(campaign, dict)
         or campaign.get("campaign_id") != CAMPAIGN_ID
-        or campaign.get("campaign_version") != "2.0.0"
+        or campaign.get("campaign_version") != CAMPAIGN_VERSION
         or campaign.get("status") != "FROZEN_BEFORE_EXECUTION"
         or not isinstance(scope, dict)
         or scope.get("unique_p2a_parent_count") != 3
@@ -1128,6 +1132,8 @@ def _signer_public_key(manifest: Any) -> str:
     if not isinstance(manifest, dict) or set(manifest) != expected_fields:
         raise ContinuityError("SIGNER_MANIFEST_CONTRACT")
     public = _require_sha256(manifest.get("public_key_ed25519_hex"), "SIGNER_PUBLIC_KEY")
+    if public == COMPROMISED_V2_SIGNER_PUBLIC_KEY:
+        raise ContinuityError("SIGNER_PUBLIC_KEY_COMPROMISED")
     signature = manifest.get("challenge_signature_hex")
     challenge = manifest.get("challenge_hex")
     created_at = manifest.get("created_at")

@@ -25,7 +25,7 @@ SPEC.loader.exec_module(projection)
 
 PREREGISTRATION_PATH = (
     Path(__file__).resolve().parents[2]
-    / "docs/mvx/validation/p2c/preregistration/pilot3-2026-08-06-v2/preregistration.json"
+    / "docs/mvx/validation/p2c/preregistration/pilot3-2026-08-06-v2.1.0/preregistration.json"
 )
 CONTEXTS_PATH = PREREGISTRATION_PATH.with_name("projection-contexts.json")
 
@@ -377,7 +377,7 @@ class ScientificProjectionTests(unittest.TestCase):
         projected, _, _ = self.factory.project("v2", 0, polygon_scientific(2_000_000))
         projection.validate_projection(projected)
         self.assertEqual(projected["scientific_payload"]["contact"]["kind"], "POLYGON")
-        self.assertEqual(projected["campaign"]["campaign_version"], "2.0.0")
+        self.assertEqual(projected["campaign"]["campaign_version"], projection.CAMPAIGN_VERSION)
 
     def test_slot_name_cannot_reassign_a_plan_to_another_parent(self) -> None:
         plan = self.factory.plan("v2", 0)

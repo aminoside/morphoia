@@ -352,7 +352,7 @@ class ContinuityFixture:
         preregistration = {
             "campaign": {
                 "campaign_id": continuity.CAMPAIGN_ID,
-                "campaign_version": "2.0.0",
+                "campaign_version": continuity.CAMPAIGN_VERSION,
                 "status": "FROZEN_BEFORE_EXECUTION",
             },
             "limits_common": {
@@ -718,6 +718,20 @@ class P2cV2ContinuityTests(unittest.TestCase):
             continuity._validate_final_continuity(
                 mismatched_signer, preregistration, self.fixture.public_key
             )
+
+        compromised_manifest = copy.deepcopy(
+            json.loads(
+                (
+                    self.fixture.repository / self.fixture.binding_paths["signer_manifest"]
+                ).read_bytes()
+            )
+        )
+        compromised_manifest["public_key_ed25519_hex"] = continuity.COMPROMISED_V2_SIGNER_PUBLIC_KEY
+        compromised_manifest["signer_id"] = (
+            f"mvx-p2c-owner-{continuity.COMPROMISED_V2_SIGNER_PUBLIC_KEY[:16]}"
+        )
+        with self.assertRaisesRegex(continuity.ContinuityError, "SIGNER_PUBLIC_KEY_COMPROMISED"):
+            continuity._signer_public_key(compromised_manifest)
         authentication = json.loads(authentication_path.read_bytes())["authentication"]
         self.assertEqual(
             authentication["context"]["prefreeze_bundle_raw_bytes_sha256"],

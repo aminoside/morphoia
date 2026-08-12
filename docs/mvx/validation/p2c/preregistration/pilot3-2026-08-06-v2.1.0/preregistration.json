@@ -1,0 +1,273 @@
+{
+  "schema": "morphoia.mvx.p2c.campaign-preregistration",
+  "schema_version": "1.0.0",
+  "campaign": {
+    "campaign_id": "P2C-PILOT3-2026-08-06",
+    "campaign_version": "2.1.0",
+    "status": "FROZEN_BEFORE_EXECUTION",
+    "predecessor_campaign_version": "v1",
+    "predecessor_disposition": "UNANCHORED_DIAGNOSTIC",
+    "relationship_to_p0": "POST_P0_NON_NORMATIVE_DIAGNOSTIC"
+  },
+  "version_domains": {
+    "campaign_version": "2.1.0",
+    "algorithm_id": "mvx-p2c-exact-binary64-triangle-contact",
+    "algorithm_version": "0.3.0",
+    "result_schema": "MVX-P2C-EXACT-TRIANGLE-CONTACT",
+    "result_schema_version": "0.3.0",
+    "materializer_id": "mvx-p2c-p2a-canonical-scene-materializer",
+    "materializer_version": "0.2.0",
+    "drive_checkpoint_schema": "MORPHOIA-MVX-DRIVE-CHECKPOINT",
+    "drive_checkpoint_schema_version": "2.3.0",
+    "independence_rule": "CAMPAIGN_ALGORITHM_RESULT_SCHEMA_MATERIALIZER_AND_DRIVE_CHECKPOINT_VERSIONS_ARE_DISTINCT_IDENTIFIERS"
+  },
+  "historical_v1": {
+    "campaign_version": "v1",
+    "algorithm_id": "mvx-p2c-exact-binary64-triangle-contact",
+    "algorithm_version": "0.2.0",
+    "result_schema": "MVX-P2C-EXACT-TRIANGLE-CONTACT",
+    "result_schema_version": "0.2.0",
+    "materializer_id": "mvx-p2c-p2a-canonical-scene-materializer",
+    "materializer_version": "0.1.0",
+    "runner_sha256": "adb7fe9aef50f4473a5220788004ecebaec9bfd5d81be478b14132f774534f02",
+    "vertex_index_policy": "COORDINATE_EQUAL_VERTEX_INSTANCES_WELDED"
+  },
+  "protocol": {
+    "id": "MORPHOIA-MVX-FEASIBILITY-V1",
+    "version": "1.0.2-p0",
+    "root_sha256": "a600436d8a51ee3c26a6070ead19829cc3568a257493a5c639c35e5a35b8a9e7",
+    "gate_credit": "NONE",
+    "solid_status_V_allowed": false
+  },
+  "private_parent_scope": {
+    "unique_p2a_parent_count": 3,
+    "execution_count": 4,
+    "same_parent_multiset_as_v1_required": true,
+    "private_continuity_manifest_schema": "MVX-P2C-PRIVATE-CAMPAIGN-CONTINUITY",
+    "private_continuity_manifest_schema_version": "1.0.0",
+    "v1_terminal_evidence_root_algorithm": "SHA256_CANONICAL_SORTED_PLAN_RESULT_TERMINAL_ROWS_V1",
+    "v1_terminal_evidence_root_sha256": "f45509de33b10e7a877d264c6b99079f7fffe56b9ce30795f5916e1971222722",
+    "private_continuity_manifest_required_before_execution": true,
+    "private_continuity_manifest_must_bind": [
+      "v1_execution_plan_sha256",
+      "v1_source_sha256",
+      "v1_p2a_execution_plan_sha256",
+      "v1_p2a_terminal_checkpoint_sha256",
+      "v1_p2a_work_id",
+      "v1_work_id",
+      "v2_parent_alias",
+      "v2_execution_slot",
+      "v2_execution_plan_sha256",
+      "v2_source_sha256",
+      "v2_p2a_execution_plan_sha256",
+      "v2_p2a_terminal_checkpoint_sha256",
+      "v2_p2a_work_id",
+      "v2_work_id",
+      "persistent_signer_public_key_ed25519_hex",
+      "preregistration_value_sha256"
+    ],
+    "public_source_identity_count": 0,
+    "public_source_hash_count": 0,
+    "public_p2a_work_id_count": 0,
+    "identity_publication": "FORBIDDEN"
+  },
+  "limits_common": {
+    "max_input_bytes": 536870912,
+    "max_vertices": 2000000,
+    "max_triangles": 1000000,
+    "max_coordinate_bits": 2048,
+    "max_runtime_seconds": 120
+  },
+  "execution_slots": [
+    {
+      "slot_id": "P2C-V2-01",
+      "comparison_slot": "PARENT_A_DEFAULT",
+      "private_parent_alias": "PARENT_A",
+      "profile_id": "DEFAULT_2M",
+      "max_candidate_pairs": 2000000
+    },
+    {
+      "slot_id": "P2C-V2-02",
+      "comparison_slot": "PARENT_B_DEFAULT",
+      "private_parent_alias": "PARENT_B",
+      "profile_id": "DEFAULT_2M",
+      "max_candidate_pairs": 2000000
+    },
+    {
+      "slot_id": "P2C-V2-03",
+      "comparison_slot": "PARENT_C_DEFAULT",
+      "private_parent_alias": "PARENT_C",
+      "profile_id": "DEFAULT_2M",
+      "max_candidate_pairs": 2000000
+    },
+    {
+      "slot_id": "P2C-V2-04",
+      "comparison_slot": "PARENT_B_EXPANDED",
+      "private_parent_alias": "PARENT_B",
+      "profile_id": "EXPANDED_10M",
+      "max_candidate_pairs": 10000000,
+      "parent_rule": "SAME_PRIVATE_PARENT_AS_THE_V1_DEFAULT_EXECUTION_THAT_REACHED_MAX_CANDIDATE_PAIRS"
+    }
+  ],
+  "materialization_contract": {
+    "input": "P2A_MATERIALIZED_VERTEX_INSTANCES_AND_TRIANGLE_INDICES",
+    "vertex_index_policy": "PRESERVE_P2A_VERTEX_INSTANCE_INDICES_EXACTLY",
+    "triangle_index_policy": "PRESERVE_P2A_TRIANGLE_INDICES_AND_ORDER_EXACTLY",
+    "coordinate_equal_vertex_merge": "FORBIDDEN",
+    "vertex_reorder": "FORBIDDEN",
+    "triangle_reorder": "FORBIDDEN",
+    "index_remap": "FORBIDDEN",
+    "repair": "FORBIDDEN",
+    "negative_zero_value_normalization": "ALLOWED_WITHOUT_INDEX_CHANGE",
+    "required_count_checks": [
+      "v2_mesh_vertex_count_equals_p2a_input_vertex_instances",
+      "v2_mesh_triangle_count_equals_p2a_triangles_materialised"
+    ]
+  },
+  "preexecution_freeze": {
+    "required": true,
+    "must_precede_first_child_execution": true,
+    "public_github_commit_required_before_plan_creation": true,
+    "private_drive_copy_is_not_publication": true,
+    "required_bindings": [
+      "git_commit_sha1",
+      "git_tree_sha1",
+      "runner_sha256",
+      "tests_sha256",
+      "runtime_sha256",
+      "persistent_signer_public_key_ed25519_hex",
+      "private_continuity_manifest_sha256",
+      "campaign_preregistration_sha256"
+    ],
+    "change_after_freeze": "REQUIRES_NEW_CAMPAIGN_VERSION_AND_NEW_WORK_IDS"
+  },
+  "authority": {
+    "model": "OWNER_CONTROLLED_PERSISTENT_SIGNER",
+    "persistence": "REQUIRED_BEFORE_PLAN_CREATION_AND_THROUGH_CLEAN_RESTORE",
+    "owner_controlled": true,
+    "independent_scientific_witness": false,
+    "worm_store": false,
+    "encryption_key": false,
+    "g1_custodian": false,
+    "solid_verifier": false,
+    "public_key_bound_into_each_work_id": true,
+    "private_key_in_repository": false,
+    "private_key_in_result_bundle": false,
+    "key_loss_or_rotation": "INVALIDATES_REUSE_AND_REQUIRES_A_NEW_CAMPAIGN_VERSION"
+  },
+  "work_identity": {
+    "all_v2_work_ids_must_differ_from_v1": true,
+    "direct_plan_fields_hashed_into_work_id": [
+      "algorithm_id",
+      "algorithm_version",
+      "authority_policy",
+      "code_sha256",
+      "environment",
+      "external_anchor_public_key_hex",
+      "input_binding",
+      "limits",
+      "max_input_bytes",
+      "schema",
+      "schema_version",
+      "source_sha256",
+      "source_size_bytes"
+    ],
+    "input_binding_includes": [
+      "materializer_id",
+      "materializer_version",
+      "materializer_code_sha256",
+      "private_p2a_parent_bindings",
+      "materialized_mesh_sha256"
+    ],
+    "campaign_freeze_bindings_not_direct_work_id_fields": [
+      "campaign_id",
+      "campaign_version",
+      "campaign_preregistration_sha256",
+      "private_continuity_manifest_sha256",
+      "result_schema_version",
+      "vertex_index_policy"
+    ],
+    "indirect_code_binding": "RESULT_SCHEMA_AND_VERTEX_INDEX_POLICY_ARE_IMPLEMENTED_BY_THE_RUNNER_BOUND_AS_CODE_SHA256",
+    "campaign_binding_location": "PRIVATE_PREEXECUTION_FREEZE_AND_CONTINUITY_MANIFEST",
+    "v1_result_or_checkpoint_reuse": "FORBIDDEN"
+  },
+  "scientific_projection": {
+    "schema": "morphoia.mvx.p2c.scientific-projection",
+    "schema_version": "1.0.0",
+    "scientific_payload_fields": [
+      "numeric_model",
+      "limits",
+      "mesh",
+      "broadphase",
+      "contact",
+      "diagnostic",
+      "error_code",
+      "status"
+    ],
+    "excluded_envelope_fields": [
+      "authorization",
+      "authority_claim",
+      "campaign_checkpoint",
+      "checkpoint_hashes",
+      "execution_plan",
+      "external_anchor",
+      "file_modes",
+      "paths",
+      "plan_sha256",
+      "public_keys",
+      "readback_receipt",
+      "result_sha256",
+      "signatures",
+      "source_sha256",
+      "source_size_bytes",
+      "storage_locators",
+      "timestamps",
+      "work_id"
+    ],
+    "comparison_unit": "comparison_slot",
+    "projection_visibility": "PRIVATE_PER_SLOT",
+    "public_output": "AGGREGATE_COUNTS_CHANGE_CLASSES_AND_PROJECTION_COMMITMENT_ONLY",
+    "v2_repeatability_rule": "SCIENTIFIC_PAYLOAD_MUST_BE_BYTE_IDENTICAL_AFTER_CANONICAL_JSON_PROJECTION",
+    "v1_v2_rule": "REPORT_FIELD_LEVEL_DIFFERENCES_WITHOUT_REQUIRING_EQUALITY_BECAUSE_THE_MATERIALIZER_INDEX_POLICY_CHANGED",
+    "contact_precedence": "A_NEW_EXACT_DISALLOWED_CONTACT_SUPERSEDES_A_NEGATIVE_CANDIDATE_DIAGNOSTIC_FOR_THAT_PARENT"
+  },
+  "clean_restore": {
+    "required_before_campaign_completion": true,
+    "new_workspace_required": true,
+    "original_run_directory_access": "FORBIDDEN",
+    "original_signer_private_key_access_during_reuse": "FORBIDDEN",
+    "must_restore_and_verify": [
+      "source_archive_or_exact_source_binding",
+      "execution_plans",
+      "attempt_authority_claims",
+      "attempt_results",
+      "checkpoint_chains",
+      "required_file_modes",
+      "empty_authority_secret_directories",
+      "drive_checkpoint",
+      "drive_completed_marker",
+      "drive_latest_pointer",
+      "signed_external_anchor",
+      "signed_anchor_readback_receipt"
+    ],
+    "required_terminal_action": "SKIP_ANCHORED",
+    "geometry_recomputation_count": 0,
+    "failure_effect": "CAMPAIGN_REMAINS_INCOMPLETE_AND_RESULTS_ARE_NOT_REUSABLE"
+  },
+  "outcome_boundary": {
+    "expected_status_counts": null,
+    "expected_contact_count": null,
+    "expected_free_candidate_count": null,
+    "solid_certification_count": 0,
+    "solid_status_V_emitted_count": 0,
+    "gate_credit": "NONE",
+    "independent_solid_verifier_required_after_p2c": true
+  },
+  "publication": {
+    "preregistration_is_public": true,
+    "private_parent_mapping_is_public": false,
+    "per_slot_scientific_projection_is_public": false,
+    "result_publication_requires_completed_execution": true,
+    "no_result_is_claimed_by_this_document": true
+  }
+}
