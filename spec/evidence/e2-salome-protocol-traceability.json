@@ -1,0 +1,130 @@
+{
+  "$schema": "./e2-salome-protocol-traceability.schema.json",
+  "schema_version": "1.0.0",
+  "profile": "e2-salome-protocol-contract",
+  "source_commit": "aec106f79e277b3cd3c6dabafe1107280f039aa9",
+  "real_salome_status": "NOT_RUN",
+  "entries": [
+    {
+      "requirement_id": "MOR-ARC-002",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_protocol_package_has_no_forbidden_salome_runtime_imports"
+      ],
+      "evidence": [
+        "tests/test_salome_protocol.py",
+        "docs/engine/evidence/E2_PROTOCOL_GATE_REPORT.md"
+      ],
+      "reason": "The E2 Python package import graph contains no SALOME, KERNEL, CORBA, SALOMEDS, Qt, PyQt, or omniORB dependency; no real runtime was executed."
+    },
+    {
+      "requirement_id": "MOR-ARC-007",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_artifact_references_are_hash_size_uri_metadata_only",
+        "test_control_plane_rejects_inline_payload_fields_and_unbounded_strings"
+      ],
+      "evidence": [
+        "schemas/morphoia-salome-protocol-0.1.schema.json",
+        "tests/test_salome_protocol.py"
+      ],
+      "reason": "The versioned control schema accepts bounded metadata, statuses, URI/hash/size references, and diagnostics while rejecting conventional inline payload fields."
+    },
+    {
+      "requirement_id": "MOR-SAL-010",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_large_artifact_reference_is_not_transfer_evidence"
+      ],
+      "evidence": [
+        "schemas/morphoia-salome-protocol-0.1.schema.json",
+        "tests/test_salome_protocol.py"
+      ],
+      "reason": "A 3 GiB size is represented only as small URI/hash/size control metadata. No greater-than-2-GiB artifact was created or transferred, so real transfer evidence remains NOT_RUN."
+    },
+    {
+      "requirement_id": "MOR-SAL-015",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_all_six_request_and_fake_response_contracts_validate"
+      ],
+      "evidence": [
+        "schemas/morphoia-salome-protocol-0.1.schema.json",
+        "tests/test_salome_protocol.py"
+      ],
+      "reason": "The contract exposes ProbeCapabilities, Submit, Observe, Cancel, Publish, and Health with closed discriminated request and response bodies."
+    },
+    {
+      "requirement_id": "MOR-SAL-016",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_fake_capabilities_are_truthful_about_not_running_salome",
+        "test_schema_rejects_a_fake_agent_that_claims_real_capability"
+      ],
+      "evidence": [
+        "schemas/morphoia-salome-protocol-0.1.schema.json",
+        "tests/test_salome_protocol.py"
+      ],
+      "reason": "The capability response shape includes versions, modules, MED formats, OSS meshers, limits, and licenses. The fake reports null or empty detections and NOT_RUN; real detection remains NOT_RUN."
+    },
+    {
+      "requirement_id": "MOR-SAL-017",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_artifact_references_are_hash_size_uri_metadata_only",
+        "test_submit_and_cancel_are_idempotent_in_the_fake_contract_lifecycle"
+      ],
+      "evidence": [
+        "schemas/morphoia-salome-protocol-0.1.schema.json",
+        "tests/test_salome_protocol.py"
+      ],
+      "reason": "Submit requires an operation, bounded parameters, input artifact references, explicit budgets, expected outputs, and an idempotency key."
+    },
+    {
+      "requirement_id": "MOR-SAL-018",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_attempt_state_and_terminality_cannot_contradict_each_other",
+        "test_submit_and_cancel_are_idempotent_in_the_fake_contract_lifecycle"
+      ],
+      "evidence": [
+        "schemas/morphoia-salome-protocol-0.1.schema.json",
+        "tests/test_salome_protocol.py"
+      ],
+      "reason": "Observe and Cancel model state, progress, logs, timeout, terminality, and idempotent cancellation in the contract-only fake lifecycle."
+    },
+    {
+      "requirement_id": "MOR-SAL-019",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_fake_publish_never_claims_a_salome_artifact"
+      ],
+      "evidence": [
+        "schemas/morphoia-salome-protocol-0.1.schema.json",
+        "tests/test_salome_protocol.py"
+      ],
+      "reason": "Publish models immutable STEP/XAO/MED/HDF references, units, losses, and metrics. The fake always returns no artifacts and an explicit loss; real publication remains NOT_RUN."
+    },
+    {
+      "requirement_id": "MOR-SAL-020",
+      "contract_status": "PASS",
+      "real_salome_status": "NOT_RUN",
+      "test_ids": [
+        "test_attempt_state_and_terminality_cannot_contradict_each_other"
+      ],
+      "evidence": [
+        "schemas/morphoia-salome-protocol-0.1.schema.json",
+        "tests/test_salome_protocol.py"
+      ],
+      "reason": "Every fake lifecycle response records an environment, structured logs, attempt sequence, state, and terminality. This is contract evidence only; real attempt evidence remains NOT_RUN."
+    }
+  ]
+}

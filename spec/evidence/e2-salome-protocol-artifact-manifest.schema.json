@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/e2-salome-protocol-artifact-manifest-1.0.schema.json",
+  "title": "Morphoia Engine E2 SALOME protocol artifact manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "project",
+    "profile",
+    "generated_at",
+    "manifest_document_license",
+    "hash_algorithm",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project": {
+      "const": "Morphoia Engine"
+    },
+    "profile": {
+      "const": "e2-salome-protocol-contract"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "manifest_document_license": {
+      "const": "CC-BY-4.0"
+    },
+    "hash_algorithm": {
+      "const": "sha256"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "NOT_RUN",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "path",
+        "media_type",
+        "size_bytes",
+        "sha256",
+        "license_expression",
+        "provenance",
+        "verification_status",
+        "vulnerability_analysis_status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]*$",
+          "maxLength": 128
+        },
+        "kind": {
+          "enum": [
+            "architecture-decision-record",
+            "contract-implementation",
+            "contract-test",
+            "cyclonedx-sbom",
+            "evidence-test",
+            "evidence-generator",
+            "evidence-schema",
+            "gate-report",
+            "protocol-schema",
+            "schema-test",
+            "traceability"
+          ]
+        },
+        "path": {
+          "enum": [
+            "artifacts/sbom/engine-e2-salome-protocol.cdx.json",
+            "docs/engine/evidence/E2_PROTOCOL_GATE_REPORT.md",
+            "schemas/morphoia-salome-protocol-0.1.schema.json",
+            "scripts/generate_engine_e2_sbom.py",
+            "spec/adr/ADR-019-salome-control-protocol-v0.1.md",
+            "spec/evidence/e2-salome-protocol-artifact-manifest.schema.json",
+            "spec/evidence/e2-salome-protocol-traceability.json",
+            "spec/evidence/e2-salome-protocol-traceability.schema.json",
+            "src/morphoia/salome_protocol/__init__.py",
+            "src/morphoia/salome_protocol/contract.py",
+            "src/morphoia/salome_protocol/fake_agent.py",
+            "tests/test_e2_evidence.py",
+            "tests/test_salome_protocol.py",
+            "tests/test_schemas.py"
+          ]
+        },
+        "media_type": {
+          "enum": [
+            "application/json",
+            "application/schema+json",
+            "application/vnd.cyclonedx+json",
+            "text/markdown",
+            "text/x-python"
+          ]
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "license_expression": {
+          "enum": [
+            "Apache-2.0 OR MIT",
+            "CC-BY-4.0",
+            "MIT"
+          ]
+        },
+        "source_artifact_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]*$",
+          "maxLength": 128
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "verification_status": {
+          "const": "PASS"
+        },
+        "vulnerability_analysis_status": {
+          "const": "NOT_RUN"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -3,10 +3,12 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 As of: 2026-08-12
-Phase: E1 — core foundations; E2 protocol-only in parallel
+Phase: E2 — SALOME protocol contract, in parallel with E1 core foundations
 Overall state: `IN_PROGRESS`
-Branch: `engine`
+Branch: `engine-p0-salome-protocol`
 E0 integration commit: `7715a7f7897a3058473732915e372b9835317d17`
+E0 durable-state parent: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
+Published E2 source checkpoint: `aec106f79e277b3cd3c6dabafe1107280f039aa9`
 
 ## Results
 
@@ -20,6 +22,10 @@ E0 integration commit: `7715a7f7897a3058473732915e372b9835317d17`
 | Authenticated publication | PASS | The authenticated app published the checkpoint and exact remote tree; `gh` remains absent and local CLI push remains unauthenticated. |
 | Hosted corrective checks | PASS | On corrective source SHA `8b41fa8435e5812b5bd10ae92e35878d9803e0bc`, Engine run `31581879387` passed Python 3.12, Python 3.13, source hygiene, native GCC/C++20, and REUSE; report run `31581879373` passed. Earlier runs `31578405786` and `31578405812` remain recorded as the failures that exposed the implicit `pdftotext` dependency. |
 | Hosted integration checks | PASS | Engine push run `31582827407` passed on merge SHA `7715a7f7897a3058473732915e372b9835317d17`: native `94069646681`, Python 3.13 `94069646723`, hygiene `94069646761`, Python 3.12 `94069646822`, and REUSE `94069646871`. |
+| Published E2 hosted checkpoint | FAIL | Engine run `31585426276` and report run `31585425822` failed on source `aec106f`; all 69 tests ran and 68 passed, with the sole failure being the stale checkpoint `spec` digest. Native, hygiene, and REUSE jobs passed. |
+| E2 protocol contract | PASS | Nineteen local tests execute the versioned six-operation JSON/URI/hash contract, strict bounded transport, and explicitly named `FakeSalomeAgent`; this is contract evidence only. |
+| E2 evidence profile | PASS | A separate 14-artifact manifest and deterministic CycloneDX 1.5 SBOM preserve the closed E0 manifest/SBOM byte-for-byte and fail closed on path, symlink/alias, hash, size, license, exact graph/provenance, source digest, exact test mapping, duplicate-key schema, lock, and truth-status mutations. Vulnerability analysis remains `NOT_RUN`. |
+| Corrective E2 hosted checkpoint | NOT_RUN | The durable digest/evidence correction has not yet been published or executed by GitHub Actions. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
 | Network capability | PASS | Restricted allowlisted egress and authenticated connector access were observed; unrestricted public egress was not probed or claimed. |
@@ -66,9 +72,32 @@ integrated into `engine`: PR #4 produced merge
 Branch protection and the R-021 public-language control remain `FAIL`; optional
 runtimes remain `NOT_RUN`.
 
+## E2 protocol-only checkpoint
+
+The bounded protocol source at `aec106f` defines `ProbeCapabilities`, `Submit`,
+`Observe`, `Cancel`, `Publish`, and `Health`, carrying only bounded JSON and
+URI/size/SHA-256 metadata across the process boundary. `encode_control_json`
+is deterministic control transport only: it is not RFC 8785, not Morphoia IR
+canonicalization, and not suitable for signatures or content identity.
+
+Local protocol, schema, evidence, manifest, SBOM, E0-immutability, and mutation
+tests pass after durable reconciliation. The first hosted source checkpoint
+remains `FAIL`, because its Python 3.12, Python 3.13, and report jobs each found
+the same stale `spec` tree digest after otherwise running all 69 tests. The
+corrective hosted execution remains `NOT_RUN` until the reconciled commit is
+published. The exact run/job record is retained in
+`evidence/E2_PROTOCOL_GATE_REPORT.md`.
+
+No SALOME 9.16 process was started. The fake always declares
+`agent_kind=fake`, `simulation=true`, an unavailable backend, and real SALOME
+status `NOT_RUN`. SHAPER/GEOM, SMESH, MED/MEDCoupling, groups/fields, a real
+greater-than-2-GiB transfer, differential fidelity, startup, and overhead all
+remain `NOT_RUN`; this checkpoint does not satisfy the real SALOME portion of
+E2 or G1/P0.
+
 ## Next action
 
-Start the bounded E1 canonical-JSON/CAS/replay lot from merge
-`7715a7f7897a3058473732915e372b9835317d17`, while developing only the E2
-protocol and contract tests that do not require SALOME. Real SALOME 9.16
-execution remains `NOT_RUN`.
+Publish the reconciled E2 durable-state commit to
+`engine-p0-salome-protocol`, verify Python 3.12/3.13, native, hygiene, REUSE,
+and report jobs, and integrate PR #6 into `engine` only after the required
+checks pass. Continue E1 independently; real SALOME 9.16 remains `NOT_RUN`.

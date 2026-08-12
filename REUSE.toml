@@ -11,6 +11,7 @@ path = [
   "scripts/bootstrap-engine.sh",
   "scripts/extract_engine_requirements.py",
   "scripts/generate_engine_sbom.py",
+  "scripts/generate_engine_e2_sbom.py",
   "scripts/run-engine-sanitizers.sh",
   "scripts/scan-secrets.sh",
   "scripts/validate_engine_checkpoint.py",
@@ -18,9 +19,12 @@ path = [
   "spec/requirements/requirements-tracking.schema.json",
   "spec/evidence/artifact-manifest.schema.json",
   "spec/evidence/checkpoint.schema.json",
+  "spec/evidence/e2-salome-protocol-artifact-manifest.schema.json",
+  "spec/evidence/e2-salome-protocol-traceability.schema.json",
   "tests/native/**",
   "tests/test_engine_evidence.py",
   "tests/test_engine_requirements.py",
+  "tests/test_e2_evidence.py",
   "tests/test_salome_protocol.py",
 ]
 precedence = "aggregate"
@@ -38,7 +42,9 @@ path = [
   "SECURITY.md",
   "SUPPORT.md",
   "artifacts/manifest.json",
+  "artifacts/manifests/engine-e2-salome-protocol.json",
   "artifacts/sbom/engine-e0-source-native.cdx.json",
+  "artifacts/sbom/engine-e2-salome-protocol.cdx.json",
   "docs/engine/*.md",
   "docs/engine/RESOURCE_BUDGET.yaml",
   "docs/engine/checkpoint.json",
@@ -47,6 +53,7 @@ path = [
   "spec/adr/**",
   "spec/requirements/README.md",
   "spec/requirements/requirements-tracking.yaml",
+  "spec/evidence/e2-salome-protocol-traceability.json",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Olivier Ami"

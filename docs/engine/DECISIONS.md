@@ -8,7 +8,7 @@ This register is an index. Normative rationale, consequences, and review
 triggers are recorded in `spec/adr/`. An ADR cannot weaken a MUST in the
 technical specification.
 
-| ADR | Decision | Baseline status | E0 status |
+| ADR | Decision | Baseline status | Current status |
 |---|---|---|---|
 | [ADR-001](../../spec/adr/ADR-001-federated-platform.md) | Federated platform, not a monolithic engine | Accepted | Accepted |
 | [ADR-002](../../spec/adr/ADR-002-cpp-c-abi-python.md) | C++20 internals, public C ABI, Python user API | Accepted | Accepted |
@@ -27,6 +27,7 @@ technical specification.
 | [ADR-015](../../spec/adr/ADR-015-p0-p1-monorepo.md) | Permissive monorepo for P0-P1 foundation | Proposed by specification | Proposed |
 | [ADR-016](../../spec/adr/ADR-016-independent-mvx-gate.md) | MVX gate independent from functional foundation | Proposed by specification | Proposed |
 | [ADR-017](../../spec/adr/ADR-017-component-versioning.md) | Separate prototype, Engine, ABI and release versions | N/A | Accepted |
+| [ADR-019](../../spec/adr/ADR-019-salome-control-protocol-v0.1.md) | Versioned bounded SALOME control protocol; explicitly fake agent is contract evidence only | N/A | Accepted for E2 contract profile |
 
 ## E0 operational decisions
 
@@ -39,3 +40,23 @@ technical specification.
 - Do not touch the existing worktrees containing unique MVX commits.
 - Enforce the unexpanded resource limits in `RESOURCE_BUDGET.yaml`.
 - Treat missing tools/runtimes as `NOT_RUN`, not product failure or success.
+
+## E2 protocol operational decisions
+
+- Keep the control plane to bounded deterministic JSON plus URI, byte size, and
+  SHA-256 references. The encoder is not RFC 8785, canonical IR, a signing
+  format, or a content identifier.
+- Name the only test implementation `FakeSalomeAgent` and require every
+  response to expose `agent_kind=fake`, `simulation=true`, backend unavailable,
+  and real SALOME status `NOT_RUN`.
+- Treat the 3 GiB schema vector as metadata-shape evidence only; it is not proof
+  that a greater-than-2-GiB payload was created, transferred, or consumed.
+- Preserve the closed E0 artifact manifest and E0 SBOM byte-for-byte. Later
+  evidence belongs to a profile-specific E2 manifest and CycloneDX inventory,
+  generated and checked from exact path, provenance, source-edge, published
+  source-digest, requirement/test, lock, and license maps. The published source
+  SHA is an implementation base; later evidence components are not attributed
+  to that commit.
+- Retain hosted Engine run `31585426276` and report run `31585425822` as
+  `FAIL`. Their sole stale-digest failure motivates the durable correction but
+  is not erased by later local success.
