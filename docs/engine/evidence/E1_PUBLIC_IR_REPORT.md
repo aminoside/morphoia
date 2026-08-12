@@ -57,7 +57,9 @@ Exact commands and truth-valued results are retained in
 | Installed-wheel smoke | `PASS` | Origin, validation, replay, and migration from an isolated install |
 | Distribution build reproducibility | `NOT_RUN` | setuptools 83.0.0 and wheel 0.47.0 are hash-locked; byte-identical wheels were not compared |
 | Python 3.12 | `PASS` | CPython 3.12.13 |
-| Python 3.13 | `NOT_RUN` | Hosted matrix is configured but was not executed in this local gate |
+| Python 3.13 | `PASS` | Corrective push exact-head job 94168834734 and PR merge-ref job 94168845586 passed the complete public-IR test, lot, hash-locked wheel, pip-check, and installed-wheel profile |
+| Corrective hosted Engine matrices | `PASS` | Exact-head push run 31613015834 checked out `c7e21acd30bf3ad2d1e0218ab2a224693c2f626c`; PR run 31613019683 checked out merge ref `6279cdeb074b579aaa03961d679d0420fff5ada3`, merging that head into base `12656708ccc3031670c4b3efd43996e46fa27998`; both passed all five jobs |
+| Corrective hosted report | `PASS` | PR report run 31613019691, job 94168845239, passed for the same merge-ref context; it is not recorded as an exact-head checkout |
 | E0, frozen E1, and E2 evidence validators | `PASS` | Exact validators rerun without mutating frozen bytes |
 | Ruff, requirements replay, REUSE, secret signatures, whitespace | `PASS` | Executed on the frozen working tree |
 | Deterministic public-IR manifest and SBOM | `PASS` | Closed allowlist, exact hashes, provenance DAG, SBOM self hash, and 22/22 evidence tests verified |
@@ -71,7 +73,7 @@ of a future remote commit.
 ## Requirement truth boundary
 
 The profile-specific traceability file maps exactly 49 requirements.
-Thirty-two bounded claims are `PASS`; 17 broader requirements remain
+Thirty-three bounded claims are `PASS`; 16 broader requirements remain
 `NOT_RUN`. The global `spec/requirements/requirements-tracking.yaml` file is
 kept byte-exact at its E0 all-`NOT_RUN` baseline because frozen E0 evidence and
 tests consume that byte identity. Making the global overlay safely evolvable
@@ -92,10 +94,12 @@ sub-claim never promotes its broader MUST:
   `NOT_RUN` respectively for incomplete per-family thread-safety
   documentation, absent progress/complete terminal state, absent accepted
   idempotency key, and incomplete package/API/protocol SemVer proof.
-- `MOR-DEV-003`, `MOR-DEV-010`, `MOR-DEV-011`, `MOR-DEV-012`, and
-  `MOR-DEV-014` remain `NOT_RUN` for Python 3.13, complete native ownership
-  inspection, static typing, a hash-concretized system toolchain image, and
-  final committed public-tree policy evidence.
+- `MOR-DEV-003` is `PASS` for the declared Linux x86-64 profile: the
+  corrective exact-head push and PR merge-ref matrices passed the same complete
+  public-IR path on Python 3.12 and Python 3.13. `MOR-DEV-010`, `MOR-DEV-011`,
+  `MOR-DEV-012`, and `MOR-DEV-014` remain `NOT_RUN` for complete native ownership inspection,
+  static typing, a hash-concretized system toolchain image, and final committed
+  public-tree policy evidence.
 - Only the frozen and rerun `MOR-CAS-001`, `MOR-CAS-003`, `MOR-CAS-004`, and
   `MOR-CAS-008` claims are promoted. `MOR-CAS-006`, `MOR-CAS-010`, and
   `MOR-CAS-012` remain `NOT_RUN` for missing distinct cache/backend roles,
@@ -129,6 +133,12 @@ remains `NOT_RUN`; REUSE metadata success is not a dependency license audit.
 The installed-wheel command uses hash-locked Python build dependencies. It is
 still a functional smoke rather than a reproducible-build proof because two
 independent wheel archives were not compared byte-for-byte.
+
+The earlier `5ee8cebc` push and PR Engine runs remain `FAIL` because their
+Python jobs failed at the wheel smoke after all preceding steps passed. The
+corrective `c7e21acd` executions are separate `PASS` evidence; they do not
+rewrite that historical failure. PR #8 integration and an evidence-follow-up
+exact-head hosted run remain `NOT_RUN`.
 
 ## Reproduction
 

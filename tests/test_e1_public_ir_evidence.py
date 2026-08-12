@@ -284,8 +284,8 @@ class PublicIrEvidenceTests(unittest.TestCase):
             entry["requirement_id"]: entry["status"] for entry in traceability["entries"]
         }
         self.assertEqual(list(statuses), list(public_ir_evidence.TRACEABILITY_ORDER))
-        self.assertEqual(list(statuses.values()).count("PASS"), 32)
-        self.assertEqual(list(statuses.values()).count("NOT_RUN"), 17)
+        self.assertEqual(list(statuses.values()).count("PASS"), 33)
+        self.assertEqual(list(statuses.values()).count("NOT_RUN"), 16)
         conservative_not_run = {
             "MOR-IR-003",
             "MOR-IR-005",
@@ -295,7 +295,6 @@ class PublicIrEvidenceTests(unittest.TestCase):
             "MOR-API-011",
             "MOR-API-012",
             "MOR-API-014",
-            "MOR-DEV-003",
             "MOR-DEV-010",
             "MOR-DEV-011",
             "MOR-DEV-012",

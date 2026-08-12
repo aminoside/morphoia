@@ -48,9 +48,10 @@ completion.
 | Public-IR entry checkpoint hosted validation | E1 public IR | PR #8 exact-head workflows | Engine `31596165398` passed five jobs; report `31596165378`, job `94112106640`, passed on `a69d35b5` | PASS |
 | Public Engine IR 0.1 local implementation | E1 public IR | schema, native/Python/CLI, semantic validation, and migration | bounded Linux x86-64/CPython 3.12 profile passed; ADR-020 remains proposed pending publication/integration | PASS |
 | Public Engine IR 20-graph replay | E1 public IR | canonical input/golden corpus replay | 20/20 graphs passed native/Python byte and digest agreement, two workspaces, and checkpoint resume | PASS |
-| Public-IR evidence profile | E1 public IR | exact manifest/SBOM/traceability and mutation tests | 32 bounded PASS, 17 broader NOT_RUN, 123 artifacts, 140 CycloneDX components, 22/22 evidence tests | PASS |
+| Public-IR evidence profile | E1 public IR | exact manifest/SBOM/traceability and mutation tests | 33 bounded PASS, 16 broader NOT_RUN, 123 artifacts, 140 CycloneDX components, 22/22 evidence tests | PASS |
 | Public-IR first implementation hosted attempt | Publication | exact `5ee8cebc` workflows | report passed; Engine native/hygiene/REUSE and Python 3.12/3.13 tests passed, but both Python jobs failed at the wheel smoke because setuptools was absent | FAIL |
-| Public-IR final publication and hosted checks | Publication | corrective exact commit, PR #8, report, review and integration | correction and exact-head replay pending | NOT_RUN |
+| Public-IR corrective hosted checks | Publication | push exact-head `c7e21acd` plus PR merge-ref associated with that head | push Engine `31613015834`, PR Engine `31613019683`, and PR report `31613019691` passed; both Python 3.12/3.13 paths included full tests, IR lot, hash-locked wheel and pip check | PASS |
+| Public-IR evidence follow-up and integration | Publication | follow-up exact-head workflows, PR #8 review, merge and post-merge checks | evidence follow-up is not published or integrated | NOT_RUN |
 | Legacy prototype bytes at public-IR entry | E1 public IR | SHA-256 inspection of five declared files | exact hashes recorded in ADR-020 and `STATUS.md`; files are non-authoritative for Engine identity | PASS |
 | Immutable normative PDFs excluded from report branding | Baselines/reporting | tracked-report manifest test plus full `make check` | two Engine baseline PDFs remain hash-identical and outside generated-report policy | PASS |
 | Second clean bootstrap | Reproducibility | two isolated direct GCC/G++ builds/tests | both executions passed | PASS |
@@ -87,7 +88,7 @@ an unavailable optional profile to `PASS`.
 | Reverse-DNS-only extensions | MOR-API-018 | unknown core field, round-trip, and invalid extension-key mutations | executed positive and negative tests | PASS |
 | C ABI limited to capability and canonicalization additions | MOR-DEV-002, MOR-API-001, MOR-API-002 | exact seven-symbol export list, sized/versioned structs, installed C consumer | two clean build/install/consumer executions plus hostile ABI tests | PASS |
 | Reference Python requires the native library on 3.12 | MOR-DEV-003, MOR-API-004, MOR-API-005 | loader-path, absent-library, allocator/lifetime, and no-fallback tests | CPython 3.12.13 passed | PASS |
-| Reference Python 3.13 target | MOR-DEV-003 | hosted matrix execution | configured but not locally executed | NOT_RUN |
+| Reference Python 3.13 target and 3.12 compatibility | MOR-DEV-003 | corrective hosted matrices on Ubuntu 24.04 x86-64 | push exact-head jobs Python 3.13 `94168834734` and 3.12 `94168834760` passed; PR merge-ref jobs Python 3.13 `94168845586` and 3.12 `94168845582` passed the same complete public-IR profile | PASS |
 | Explicit legacy migration with provenance and losses | MOR-API-015, MOR-IR-012, MOR-SCP-004 | migration golden and mutation tests | input bytes preserved, four declared losses, native sealing and semantic validation passed | PASS |
 | Legacy prototype remains byte-exact and non-authoritative | Component-version boundary | SHA-256 inspection at lot entry | all five hashes in ADR-020 and `STATUS.md` match | PASS |
 | MVX codec, reconstruction, thresholds, or semantics | MVX change-control boundary | scope inspection | explicitly outside this bounded lot; no MVX capability claimed | NOT_APPLICABLE |

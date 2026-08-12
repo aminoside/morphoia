@@ -221,10 +221,11 @@ versioned contract; the legacy Python `canonical_json` and `semantic_hash`
 functions preserve a pre-Engine, non-JCS identity domain and remain explicitly
 non-authoritative. The local public-IR contract and 20-graph replay pass, and
 the implementation checkpoint is published. Its first hosted Python 3.13 job
-passed the tests and lot but failed the wheel smoke; corrective exact-head
-Python 3.13, review, integration, and post-merge evidence remain required
-before the current lot can close. E1 also retains later foundations outside
-this bounded lot.
+passed the tests and lot but failed the wheel smoke. Corrective `c7e21acd`
+push and PR matrices subsequently passed the complete Python 3.12 and 3.13
+profiles. Evidence-follow-up checks, review, integration, and post-merge
+evidence remain required before the current lot can close. E1 also retains
+later foundations outside this bounded lot.
 
 The first hosted execution of source commit
 `bbf84cb806d95701daa2887e71d90a819c4a4c83` is retained as a failed source
@@ -319,11 +320,13 @@ build/install/consumer executions; ASan/UBSan; locked Python 3.12; REUSE
 299/299; bounded secret scan; and deterministic evidence. The owned lot ran
 60/60 tests, the evidence profile ran 22/22 mutation tests, and the complete
 suite runs 184 tests after checkpoint reconciliation. The first hosted Python
-3.13 execution remains `FAIL` at its wheel step; corrective exact-head
-workflows, review, integration into `engine`, and post-merge verification
-remain `NOT_RUN` until the correction is published. The lot excludes domain
-importers, remote CAS/GC/chunk resume, a greater-than-2-GiB execution, real
-SALOME, GPU/HPC backends, and all MVX semantics.
+3.13 execution remains `FAIL` at its wheel step. Corrective SHA `c7e21acd`
+passed the push Engine matrix and the PR Engine/report workflows associated
+with that head on Python 3.12 and 3.13. Only the evidence-follow-up hosted
+checks, review, integration into `engine`, and post-merge verification remain
+`NOT_RUN`. The lot excludes domain importers, remote CAS/GC/chunk resume, a
+greater-than-2-GiB execution, real SALOME, GPU/HPC backends, and all MVX
+semantics.
 
 The first implementation publication at `5ee8cebc` produced a successful
 report run `31609319695`, job `94156289420`. Push Engine run `31609314553`
@@ -335,14 +338,29 @@ from a separate hash-locked E1 wheel-build profile; the closed Engine test lock
 and frozen E1/E2 evidence stay unchanged. Byte-for-byte wheel reproducibility
 remains `NOT_RUN`.
 
-The closed public-IR evidence profile contains 123 hash-verified artifacts and
-a 140-component CycloneDX inventory. Its 49 requirement mappings classify 32
-bounded claims `PASS` and retain 17 broader claims as `NOT_RUN`, including
-complete object identity, resolvable payloads, full UCUM, MVX typing, Python
-3.13, reproducible distribution construction, external CAS, and the full G1
-corpus. The 79-file synthetic corpus contains 20 inputs, 20 LF-free goldens,
-20 replay recipes, 13 invalid cases plus indexes and migration fixtures; no
-referenced payload bytes are distributed.
+The separated-lock correction is published at
+`c7e21acd30bf3ad2d1e0218ab2a224693c2f626c`. Exact push Engine run
+`31613015834` passed REUSE `94168834520`, native `94168834710`, Python 3.13
+`94168834734`, Python 3.12 `94168834760`, and hygiene `94168834784`. PR Engine
+run `31613019683`, associated with head `c7e21acd` and executed through the PR
+merge ref `6279cdeb074b579aaa03961d679d0420fff5ada3` into base
+`12656708ccc3031670c4b3efd43996e46fa27998`, passed REUSE `94168845428`, native `94168845526`, hygiene
+`94168845531`, Python 3.12 `94168845582`, and Python 3.13 `94168845586`.
+Associated PR report run `31613019691`, job `94168845239`, passed. Each Python
+matrix job executed the full tests, 60-test public-IR lot, 20-graph replay,
+hash-locked wheel path, pip check, and installed-wheel smoke. This promotes
+only `MOR-DEV-003`; it does not satisfy reproducible distribution construction,
+dependency security/license audits, integration, or any optional backend.
+
+The evidence-follow-up public-IR profile contains 123 hash-verified artifacts
+and a 140-component CycloneDX inventory. Its 49 requirement mappings classify
+33 bounded claims `PASS` and retain 16 broader claims as `NOT_RUN`, including
+complete object identity, resolvable payloads, full UCUM, MVX typing,
+reproducible distribution construction, external CAS, and the full G1 corpus.
+The corrective hosted matrix promotes only `MOR-DEV-003`. The 79-file synthetic
+corpus contains 20 inputs, 20 LF-free goldens, 20 replay recipes, 13 invalid
+cases plus indexes and migration fixtures; no referenced payload bytes are
+distributed.
 
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
@@ -481,12 +499,12 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Publish the reviewed local public-IR checkpoint on
-`engine-p0-public-ir-replay`, update draft PR #8, and require exact-head native,
-Python 3.12/3.13, hygiene, REUSE, and report workflows. Inspect review threads
-and integrate PR #8 only into `engine` after every required result passes, then
-verify the exact merge-SHA checks. Keep real SALOME 9.16, GPU backends, the real
-greater-than-2-GiB transfer, future CAS capabilities, vulnerability analysis,
-and MVX criteria `NOT_RUN` or `BLOCKED` until each named test or prerequisite
-exists; never merge `engine` into the default branch without separate owner
-instruction.
+Publish the evidence follow-up on `engine-p0-public-ir-replay`, update draft
+PR #8, and require exact-head native, Python 3.12/3.13, hygiene, REUSE, and
+report workflows for those evidence bytes. Inspect review threads and
+integrate PR #8 only into `engine` after every required result passes, then
+verify the exact merge-SHA checks. Keep real SALOME 9.16, GPU backends, the
+real greater-than-2-GiB transfer, future CAS capabilities, vulnerability
+analysis, and MVX criteria `NOT_RUN` or `BLOCKED` until each named test or
+prerequisite exists; never merge `engine` into the default branch without
+separate owner instruction.

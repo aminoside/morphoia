@@ -12,8 +12,8 @@
     "visibility": "public",
     "default_branch": "main",
     "integration_branch": "engine",
-    "publication_status": "FAIL",
-    "publication_note": "Implementation commit 5ee8cebc3d4f6bd78856c3e13147f69d45f61cf6 is published on engine-p0-public-ir-replay with parent c475288961d40bb16c4cc10a333034a247acb451 and tree 726a7262567dd6c016ad3ae24cb0a59530041d88. Report run 31609319695 passed, but branch-push Engine run 31609314553 and PR Engine run 31609319697 each failed only at the installed-wheel smoke after native, hygiene, REUSE, full Python tests, and the public-IR lot passed. The separated hash-locked wheel-build correction is local and remains unpublished; its exact corrective hosted checks are NOT_RUN"
+    "publication_status": "PASS",
+    "publication_note": "Corrective commit c7e21acd30bf3ad2d1e0218ab2a224693c2f626c is published on engine-p0-public-ir-replay with parent 5ee8cebc3d4f6bd78856c3e13147f69d45f61cf6 and tree ad50c1b68f34756b56b0f1089a527947be090273. Exact-head push Engine run 31613015834 passed all five jobs. PR Engine run 31613019683 and report run 31613019691 passed on merge ref 6279cdeb074b579aaa03961d679d0420fff5ada3, merging that head into base 12656708ccc3031670c4b3efd43996e46fa27998. The earlier 5ee8cebc Engine runs retain their installed-wheel-only FAIL; this evidence follow-up remains unpublished and NOT_RUN for hosted checks, review, integration, and post-merge verification"
   },
   "git": {
     "branch": "engine-p0-public-ir-replay",
@@ -21,8 +21,8 @@
     "base_parent": "12656708ccc3031670c4b3efd43996e46fa27998",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "5ee8cebc3d4f6bd78856c3e13147f69d45f61cf6",
-    "note": "The work branch starts from exact engine merge 12656708. Published implementation 5ee8cebc has parent c475288961d40bb16c4cc10a333034a247acb451 and exact tree 726a7262567dd6c016ad3ae24cb0a59530041d88; its first Engine workflows failed only at the wheel smoke. The separated wheel-build lock correction is prospective and has no published commit SHA"
+    "published_commit_sha": "c7e21acd30bf3ad2d1e0218ab2a224693c2f626c",
+    "note": "The work branch starts from exact engine merge 12656708. Published corrective commit c7e21acd has parent 5ee8cebc3d4f6bd78856c3e13147f69d45f61cf6 and exact tree ad50c1b68f34756b56b0f1089a527947be090273; its exact-head push checks and associated PR merge-ref checks passed. Published implementation 5ee8cebc retains its historical wheel-only FAIL. The current evidence follow-up is prospective and has no published commit SHA"
   },
   "tasks": {
     "completed": [
@@ -77,7 +77,9 @@
       "e1_public_ir_local_gate_and_adversarial_review",
       "e1_public_ir_implementation_publication",
       "e1_public_ir_first_hosted_failure_capture",
-      "e1_public_ir_wheel_lock_corrective_local_validation"
+      "e1_public_ir_wheel_lock_corrective_local_validation",
+      "e1_public_ir_wheel_lock_corrective_publication",
+      "e1_public_ir_corrective_hosted_verification"
     ],
     "in_progress": [
       "e1_public_ir_publication_hosted_review_and_engine_integration"
@@ -130,16 +132,16 @@
       },
       {
         "path": "spec",
-        "sha256": "281fd88a267cd860639140a198b117efab9eb14a743a17173aa26d148b8aa7c8",
+        "sha256": "f0b262d4503a16eda1e319a7c8ca2c7f2b3ff9395b0cdcab4ce61afc02c60243",
         "status": "PASS"
       },
       {
         "path": "docs/engine",
-        "sha256": "055f588b3c9c6511e3c8d07b63ee0999858cf10d91c4a2196ec677a6bee2072c",
+        "sha256": "09772fb62eab85b8cd2afababf9c68481f72f0fdeb17ccdb4c0000e88890e3fe",
         "status": "PASS"
       }
     ],
-    "note": "Digests represent the reviewed local separated-wheel-lock corrective checkpoint; checkpoint.json itself is excluded to avoid self-reference. Closed E0 and E1 native outputs remain byte-frozen, E2 remains a separate closed profile, published implementation 5ee8cebc retains its first hosted wheel-only FAIL, and exact hosted validation of the local correction remains NOT_RUN."
+    "note": "Digests represent the hosted-evidence follow-up after corrective commit c7e21acd passed exact-head push and associated PR merge-ref workflows; checkpoint.json itself is excluded to avoid self-reference. Closed E0 and E1 native outputs remain byte-frozen, E2 remains a separate closed profile, and published implementation 5ee8cebc retains its first hosted wheel-only FAIL. The current evidence bytes, review, integration, and post-merge verification remain NOT_RUN."
   },
   "commands": [
     {
@@ -468,9 +470,9 @@
       "summary": "After restoring the frozen engine-ci.lock, packaging 26.3, setuptools 83.0.0, and wheel 0.47.0 were installed from the separate wheel-build-e1.lock with --require-hashes; pip check and the isolated origin, validation, replay, and migration smoke passed. Byte-for-byte wheel reproducibility and dependency vulnerability/license analysis remain NOT_RUN"
     },
     {
-      "command": "python scripts/generate_engine_e1_public_ir_sbom.py --check and <hash-locked-python> -m unittest -v tests.test_e1_public_ir_evidence",
+      "command": "python scripts/generate_engine_e1_public_ir_sbom.py --check and <hash-locked-python> -m unittest -v tests.test_e1_public_ir_evidence after the hosted-evidence follow-up reseal",
       "result": "PASS",
-      "summary": "The separated-lock profile contains 123 artifacts, 140 CycloneDX components, 32 PASS and 17 NOT_RUN traceability entries, and all 22 evidence/mutation tests passed"
+      "summary": "The hosted-evidence follow-up profile contains 123 artifacts, 140 CycloneDX components, 33 PASS and 16 NOT_RUN traceability entries, and all 22 evidence/mutation tests passed"
     },
     {
       "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v on the reviewed public-IR checkpoint",
@@ -478,19 +480,34 @@
       "summary": "All 184 tests executed: 183 passed and only test_committed_checkpoint failed because the expected cpp, spec, docs/engine, and four public-IR output digests were intentionally stale before this reseal"
     },
     {
-      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v after the separated-wheel-lock checkpoint reseal",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests after the hosted-evidence follow-up checkpoint reseal",
       "result": "PASS",
-      "summary": "All 184 of 184 tests passed on CPython 3.12.13 in 36.556 seconds, including the committed-checkpoint validator"
+      "summary": "All 184 of 184 tests passed again on CPython 3.12.13, including the committed-checkpoint validator and frozen E0, E1 native, E2, and public-IR evidence tests"
     },
     {
-      "command": "<hash-locked-python> -m reuse lint, Ruff on changed Python, bash scripts/scan-secrets.sh, and git diff --check",
+      "command": "REUSE 6.2.0 lint, Ruff 0.16.1 on changed Python, bash scripts/scan-secrets.sh, and git diff --check after the hosted-evidence follow-up reseal",
       "result": "PASS",
       "summary": "REUSE 6.2.0 resolved 299 of 299 files; the bounded post-correction license-metadata validation passed while dependency license and vulnerability analyses remained NOT_RUN"
     },
     {
-      "command": "Exact-head GitHub Actions Engine and report workflows for the separated wheel-build-e1.lock correction",
+      "command": "GitHub Actions exact-head push Engine run 31613015834 on corrective commit c7e21acd30bf3ad2d1e0218ab2a224693c2f626c",
+      "result": "PASS",
+      "summary": "REUSE job 94168834520, native job 94168834710, Python 3.13 job 94168834734, Python 3.12 job 94168834760, and hygiene job 94168834784 passed; both Python jobs executed the full tests, public-IR lot, hash-locked wheel installation, pip check, and installed-wheel smoke"
+    },
+    {
+      "command": "GitHub Actions PR Engine run 31613019683 on merge ref 6279cdeb074b579aaa03961d679d0420fff5ada3, merging corrective head c7e21acd30bf3ad2d1e0218ab2a224693c2f626c into base 12656708ccc3031670c4b3efd43996e46fa27998",
+      "result": "PASS",
+      "summary": "REUSE job 94168845428, native job 94168845526, hygiene job 94168845531, Python 3.12 job 94168845582, and Python 3.13 job 94168845586 passed the PR merge-ref context; this is not recorded as an exact-head checkout"
+    },
+    {
+      "command": "GitHub Actions PR report run 31613019691, job 94168845239, for merge ref 6279cdeb074b579aaa03961d679d0420fff5ada3",
+      "result": "PASS",
+      "summary": "The report workflow associated with corrective head c7e21acd30bf3ad2d1e0218ab2a224693c2f626c and base 12656708ccc3031670c4b3efd43996e46fa27998 passed"
+    },
+    {
+      "command": "Publish this hosted-evidence follow-up and run exact-head Engine/report workflows for its resulting commit",
       "result": "NOT_RUN",
-      "summary": "The corrective bytes are local and unpublished; no PASS is inferred from the successful local hash-locked install, pip check, or wheel smoke"
+      "summary": "The current report, traceability, manifest, SBOM, and checkpoint bytes are local and unpublished; no hosted PASS, review, integration, or post-merge result is inferred"
     }
   ],
   "tests": [
@@ -1029,7 +1046,7 @@
       "profile": "core-cpu-python-3.13",
       "status": "FAIL",
       "count": 184,
-      "reason": "Published branch-push job 94156271612 and PR job 94156290163 passed all Python tests and the public-IR lot, then failed only at the installed-wheel smoke; the separated lock correction is not yet hosted"
+      "reason": "Historical published 5ee8cebc branch-push job 94156271612 and PR job 94156290163 passed all Python tests and the public-IR lot, then failed only at the installed-wheel smoke; corrective c7e21acd results are recorded separately and do not rewrite this FAIL"
     },
     {
       "id": "E1-PUBLIC-IR-HOSTED",
@@ -1046,14 +1063,32 @@
     {
       "id": "E1-PUBLIC-IR-CORRECTIVE-HOSTED",
       "profile": "publication-required-checks",
+      "status": "PASS",
+      "count": 3
+    },
+    {
+      "id": "E1-PUBLIC-IR-CORRECTIVE-PYTHON-312",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS",
+      "count": 2
+    },
+    {
+      "id": "E1-PUBLIC-IR-CORRECTIVE-PYTHON-313",
+      "profile": "core-cpu-python-3.13",
+      "status": "PASS",
+      "count": 2
+    },
+    {
+      "id": "E1-PUBLIC-IR-EVIDENCE-FOLLOWUP-HOSTED",
+      "profile": "publication-required-checks",
       "status": "NOT_RUN",
-      "reason": "The separated wheel-build lock correction is local and unpublished; exact corrective Python 3.12, Python 3.13, native, hygiene, REUSE, and report workflows have not run"
+      "reason": "The current hosted-evidence follow-up bytes are local and unpublished; their exact-head Engine/report checks have not run"
     },
     {
       "id": "E1-PUBLIC-IR-INTEGRATION",
       "profile": "engine-integration",
       "status": "NOT_RUN",
-      "reason": "PR 8 must not be integrated into engine before exact-head checks and review pass"
+      "reason": "PR 8 review, integration into engine, and post-merge checks remain NOT_RUN; corrective c7 checks passed but the evidence follow-up must be published and checked first"
     },
     {
       "id": "E2-SALOME-REAL",
@@ -1212,25 +1247,25 @@
     },
     {
       "uri": "repo:spec/evidence/e1-public-ir-traceability.json",
-      "sha256": "5e41cf8ec378e840111814fb3f9b7597802faa526e6fc8d3c775889b4d703517",
+      "sha256": "9fc6256dbeeecda740452996f0d8d859c397662cb068e3ffb035a27c0c81f177",
       "status": "PASS",
-      "note": "Separate exact 49-requirement public-IR mapping records 32 bounded PASS and 17 broader NOT_RUN results without mutating the closed E0 overlay"
+      "note": "Separate exact 49-requirement public-IR mapping records 33 bounded PASS and 16 broader NOT_RUN results without mutating the closed E0 overlay; only MOR-DEV-003 was promoted by corrective hosted Python 3.12 and 3.13 execution"
     },
     {
       "uri": "repo:docs/engine/evidence/E1_PUBLIC_IR_REPORT.md",
-      "sha256": "eeb775186cad59884d3161e5ec4724cc622fc011fbe3414b18b78e6313dd2456",
+      "sha256": "7d31bc7837c5546b16e29fb2b9d9dc1c2544ae1429c0fe0084b1a9f008269f9b",
       "status": "PASS",
-      "note": "Bounded local report records 20-graph contract/replay evidence and preserves publication, Python 3.13, vulnerability, large-artifact, SALOME, GPU/HPC, and MVX boundaries"
+      "note": "Bounded report records 20-graph contract/replay and corrective hosted Python 3.12/3.13 evidence while preserving the historical 5ee8cebc FAIL and reproducibility, vulnerability, large-artifact, SALOME, GPU/HPC, integration, and MVX boundaries"
     },
     {
       "uri": "repo:artifacts/manifests/engine-e1-public-ir.json",
-      "sha256": "522dd6ea4225106fd5736d60b26956a7b1edf6c59108fdd0b0e65a98484eea1e",
+      "sha256": "9b3adb4be9521e4ebad8149d12946f9b8d544ed7114651ac62e94891134c3b23",
       "status": "PASS",
       "note": "Closed 123-artifact public-IR manifest verifies exact paths, sizes, hashes, licenses, provenance, frozen E1 evidence, and SBOM self-reference"
     },
     {
       "uri": "repo:artifacts/sbom/engine-e1-public-ir.cdx.json",
-      "sha256": "9392b120bb47d90a6fba2aa34ea0572a16331e58c5c2da3db5d7aa5ea4f58680",
+      "sha256": "c0d5b13f5ea95227f0672c32134ceae518548b8be7423304d47d7a7b1f3aa80e",
       "status": "PASS",
       "note": "Deterministic 140-component CycloneDX public-IR inventory includes both exact lock files; vulnerability and dependency-license analyses remain NOT_RUN"
     }
@@ -1345,7 +1380,21 @@
     "github-actions:job:94156290062",
     "github-actions:job:94156290227",
     "github-actions:job:94156290126",
-    "github-actions:job:94156290163"
+    "github-actions:job:94156290163",
+    "github-actions:31613015834",
+    "github-actions:job:94168834520",
+    "github-actions:job:94168834710",
+    "github-actions:job:94168834734",
+    "github-actions:job:94168834760",
+    "github-actions:job:94168834784",
+    "github-actions:31613019683",
+    "github-actions:job:94168845428",
+    "github-actions:job:94168845526",
+    "github-actions:job:94168845531",
+    "github-actions:job:94168845582",
+    "github-actions:job:94168845586",
+    "github-actions:31613019691",
+    "github-actions:job:94168845239"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -1363,7 +1412,8 @@
     "Public Engine IR identity is SHA-256 over morphoia.canonical-json.profile1 bytes; lowercase UUIDv7 identifies logical entities and morphoia-cas SHA-256 URIs identify immutable payload bytes",
     "No public C IR object model or MVX semantics are introduced in the bounded public-IR lot",
     "The public-IR lot extends the C export allowlist from five to exactly seven symbols for capability query and Profile 1 canonicalization while preserving opaque handles and explicit caller-owned buffers",
-    "The closed E0 requirements-tracking overlay remains byte-exact; the public-IR lot records 32 bounded PASS and 17 broader NOT_RUN results in its separate fail-closed traceability profile pending explicit overlay change control"
+    "The closed E0 requirements-tracking overlay remains byte-exact; the public-IR lot records 33 bounded PASS and 16 broader NOT_RUN results in its separate fail-closed traceability profile pending explicit overlay change control",
+    "Corrective exact-head push and associated PR merge-ref matrices on Python 3.12 and Python 3.13 promote only MOR-DEV-003; reproducible distribution construction, dependency audits, review, integration, optional backends, and broader requirements retain their prior truth status"
   ],
   "deviations": [
     "No branch protection or ruleset was observed",
@@ -1379,7 +1429,7 @@
     "Corrective E2 source e3ec245 passed Engine run 31589424865 and report run 31589424850; this does not rewrite the earlier failed execution",
     "The 3 GiB schema vector is metadata only; a real greater-than-2-GiB transfer remains NOT_RUN",
     "Published public-IR implementation 5ee8cebc passed its report workflow and all native, hygiene, REUSE, full Python test, and public-IR lot steps, but both Engine runs failed only at the installed-wheel smoke; this historical FAIL is retained",
-    "The wheel-build correction restores the byte-frozen engine-ci.lock and introduces a separate hash-locked wheel-build-e1.lock for packaging 26.3, setuptools 83.0.0, and wheel 0.47.0; local install, pip check, and wheel smoke passed, but byte-identical wheel comparison and exact corrective hosted workflows remain NOT_RUN",
+    "The wheel-build correction restores the byte-frozen engine-ci.lock and introduces a separate hash-locked wheel-build-e1.lock for packaging 26.3, setuptools 83.0.0, and wheel 0.47.0; local and corrective hosted install, pip check, and wheel smoke passed, but byte-identical wheel comparison and dependency audits remain NOT_RUN",
     "Dependency vulnerability and license analysis, integration, post-merge validation, and LeakSanitizer remain NOT_RUN"
   ],
   "external_dependencies": [
@@ -1458,7 +1508,7 @@
     {
       "name": "public IR implementation publication and hosted checks",
       "status": "FAIL",
-      "blocking_scope": "Corrective hosted Engine checks and PR 8 integration into engine only",
+      "blocking_scope": "Historical 5ee8cebc execution only; corrective c7e21acd evidence is tracked separately",
       "reason": "Implementation 5ee8cebc with parent c475288 and tree 726a726 is published; report run 31609319695 passed, while branch-push Engine run 31609314553 and PR Engine run 31609319697 failed only at the installed-wheel smoke after all earlier required steps passed"
     },
     {
@@ -1468,9 +1518,14 @@
     },
     {
       "name": "public IR corrective hosted checks",
+      "status": "PASS",
+      "reason": "Exact-head corrective commit c7e21acd passed push Engine run 31613015834. PR merge ref 6279cdeb, merging that head into base 12656708, passed Engine run 31613019683 and report run 31613019691; both Python 3.12 and 3.13 matrices included full tests, the public-IR lot, hash-locked wheel installation, pip check, and installed-wheel smoke"
+    },
+    {
+      "name": "public IR hosted-evidence follow-up checks and integration",
       "status": "NOT_RUN",
-      "blocking_scope": "Exact corrective Python 3.12, Python 3.13, native, hygiene, REUSE, report, and PR 8 integration checks only",
-      "reason": "The separated wheel-build lock correction is local and unpublished; no hosted PASS is inferred"
+      "blocking_scope": "Current evidence bytes, PR 8 review, engine integration, and post-merge verification only",
+      "reason": "The report, traceability, manifest, SBOM, and checkpoint follow-up is local and unpublished; no exact-head hosted, review, integration, or post-merge PASS is inferred"
     },
     {
       "name": "SALOME 9.16 runtime",
@@ -1484,5 +1539,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Publish the separated wheel-build lock correction on engine-p0-public-ir-replay, require exact-head native, Python 3.12 and 3.13, hygiene, REUSE, and report workflows, inspect reviews, integrate only into engine if green, and verify the exact merge SHA while real SALOME, GPU, greater-than-2-GiB, vulnerability, and MVX criteria remain NOT_RUN or BLOCKED"
+  "next_action": "Publish this hosted-evidence follow-up on engine-p0-public-ir-replay, require exact-head native, Python 3.12 and 3.13, hygiene, REUSE, and report workflows for its resulting commit, inspect PR 8 reviews, integrate only into engine if green, and verify the exact merge SHA while real SALOME, GPU, greater-than-2-GiB, vulnerability, and MVX criteria remain NOT_RUN or BLOCKED"
 }

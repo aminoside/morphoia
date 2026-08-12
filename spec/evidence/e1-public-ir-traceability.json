@@ -7,7 +7,7 @@
     "os": "Ubuntu 24.04.3 LTS; Linux 6.18.35",
     "architecture": "x86_64",
     "compiler": "GCC and G++ 13.3.0; CMake 3.20.5",
-    "python": "CPython 3.12.13 executed; Python 3.13 NOT_RUN",
+    "python": "CPython 3.12.13 executed locally; hosted CPython 3.12 and 3.13 corrective profiles executed and passed on Ubuntu 24.04 x86-64",
     "commands": [
       {
         "id": "public-ir-lot",
@@ -58,10 +58,22 @@
         "result": "Deterministic generator check and 22/22 evidence, schema, truth-boundary, mutation, confinement, and atomic-publication tests passed."
       },
       {
+        "id": "corrective-hosted-engine",
+        "command": "GitHub Actions exact-head push Engine run 31613015834 on c7e21acd30bf3ad2d1e0218ab2a224693c2f626c and PR Engine run 31613019683 on merge ref 6279cdeb074b579aaa03961d679d0420fff5ada3, merging that head into base 12656708ccc3031670c4b3efd43996e46fa27998",
+        "status": "PASS",
+        "result": "Both Engine matrices passed REUSE, native GCC/C++20, hygiene, Python 3.12, and Python 3.13; each Python job executed the full tests, public-IR lot, hash-locked wheel installation, pip check, and installed-wheel smoke."
+      },
+      {
+        "id": "corrective-hosted-report",
+        "command": "GitHub Actions PR report run 31613019691, job 94168845239, for merge ref 6279cdeb074b579aaa03961d679d0420fff5ada3, merging head c7e21acd30bf3ad2d1e0218ab2a224693c2f626c into base 12656708ccc3031670c4b3efd43996e46fa27998",
+        "status": "PASS",
+        "result": "The PR merge-ref report workflow passed; this is not recorded as an exact-head checkout."
+      },
+      {
         "id": "python-3-13",
         "command": "Hosted engine CI requirements matrix with Python 3.13",
-        "status": "NOT_RUN",
-        "result": "The hosted Python 3.13 job was configured but not executed in this local gate."
+        "status": "PASS",
+        "result": "Corrective push job 94168834734 and PR job 94168845586 passed the exact Python 3.13 full-test, public-IR lot, hash-locked wheel-build, pip-check, and installed-wheel profile."
       },
       {
         "id": "vulnerability-analysis",
@@ -608,7 +620,7 @@
     {
       "requirement_id": "MOR-DEV-003",
       "claim": "The reference distribution targets Python 3.13 and remains compatible with Python 3.12 during P0-P1.",
-      "status": "NOT_RUN",
+      "status": "PASS",
       "test_ids": [
         "test_explicit_library_negotiates_exact_capability",
         "test_validate_json_and_human_output_are_stable"
@@ -620,8 +632,8 @@
         "tests/test_engine_ir_cli.py",
         "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
       ],
-      "reason": "The published Python 3.13 jobs passed all 184 tests and the public-IR lot, then failed at the wheel smoke because setuptools was absent. The separated-lock correction has not yet been executed on hosted Python 3.13.",
-      "blocking_scope": "corrective-python-3.13-wheel-smoke-not-executed"
+      "reason": "The exact-head corrective push matrix and the PR merge-ref matrix associated with the same head/base pair passed the complete public-IR profile on Ubuntu 24.04 x86-64 with Python 3.12 and Python 3.13, including full tests, the public-IR lot, hash-locked wheel construction, pip check, and installed-wheel smoke.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
     },
     {
       "requirement_id": "MOR-DEV-005",
