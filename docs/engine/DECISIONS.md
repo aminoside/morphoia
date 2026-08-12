@@ -29,7 +29,7 @@ technical specification.
 | [ADR-017](../../spec/adr/ADR-017-component-versioning.md) | Separate prototype, Engine, ABI and release versions | N/A | Accepted |
 | [ADR-018](../../spec/adr/ADR-018-canonical-json-profile-posix-cas.md) | Constrained canonical JSON and atomic Linux/POSIX CAS | Bounded E1 lot | Accepted |
 | [ADR-019](../../spec/adr/ADR-019-salome-control-protocol-v0.1.md) | Versioned bounded SALOME control protocol; explicitly fake agent is contract evidence only | N/A | Accepted for E2 contract profile |
-| [ADR-020](../../spec/adr/ADR-020-public-engine-ir-v0.1.md) | Distinct public Engine IR manifest 0.1 identity domain; preserve the legacy prototype | Bounded E1 public-IR lot | Proposed |
+| [ADR-020](../../spec/adr/ADR-020-public-engine-ir-v0.1.md) | Distinct public Engine IR manifest 0.1 identity domain; preserve the legacy prototype | Bounded E1 public-IR lot | Accepted |
 
 ## E0 operational decisions
 
@@ -85,3 +85,7 @@ technical specification.
   versioned C ABI. Do not add a public C IR object model.
 - Preserve the legacy prototype byte-exact and label it non-authoritative for
   Engine identity. Any migration is explicit and records provenance and loss.
+- Accept ADR-020 only for the bounded Linux x86-64 core-CPU profile after PR #8
+  integrated evidence head `74b8ddb` into `engine` at `9c845f9`, whose exact
+  tree passed post-merge Engine run `31615797169`. This acceptance does not
+  promote E1, G1/P0, optional backends, dependency audits, or MVX criteria.

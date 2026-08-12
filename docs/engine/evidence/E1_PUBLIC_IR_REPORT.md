@@ -11,7 +11,7 @@ Status: `PASS` for the bounded core-CPU profile; unresolved requirements remain 
 ## Scope
 
 This report covers the distinct public Morphoia Engine IR manifest 0.1.0
-identity domain proposed by ADR-020. The executed profile includes strict
+identity domain accepted by ADR-020. The executed profile includes strict
 lexical, JSON Schema Draft 2020-12, and semantic validation; the native
 Canonical JSON Profile 1 C ABI; the required-native Python binding; explicit
 legacy migration; deterministic replay; and a small synthetic 20-graph
@@ -60,6 +60,9 @@ Exact commands and truth-valued results are retained in
 | Python 3.13 | `PASS` | Corrective push exact-head job 94168834734 and PR merge-ref job 94168845586 passed the complete public-IR test, lot, hash-locked wheel, pip-check, and installed-wheel profile |
 | Corrective hosted Engine matrices | `PASS` | Exact-head push run 31613015834 checked out `c7e21acd30bf3ad2d1e0218ab2a224693c2f626c`; PR run 31613019683 checked out merge ref `6279cdeb074b579aaa03961d679d0420fff5ada3`, merging that head into base `12656708ccc3031670c4b3efd43996e46fa27998`; both passed all five jobs |
 | Corrective hosted report | `PASS` | PR report run 31613019691, job 94168845239, passed for the same merge-ref context; it is not recorded as an exact-head checkout |
+| Final evidence-head hosted checks | `PASS` | Exact-head push Engine run 31615539072 passed Python 3.12 94177289278, REUSE 94177289283, native 94177289284, Python 3.13 94177289377, and hygiene 94177289508; PR Engine run 31615542865 passed Python 3.12 94177302576, native 94177302606, hygiene 94177302631, Python 3.13 94177302636, and REUSE 94177302725; PR report run 31615542750, job 94177301425, passed |
+| PR #8 integration | `PASS` | Evidence head `74b8ddb60ddd8257166b4547c1222a17f47884c6` was integrated only into `engine` at merge `9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`, tree `ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0`, with parents `12656708ccc3031670c4b3efd43996e46fa27998` and `74b8ddb60ddd8257166b4547c1222a17f47884c6` |
+| Exact-merge hosted Engine matrix | `PASS` | Run 31615797169 passed hygiene 94178151865, REUSE 94178151884, Python 3.13 94178151890, Python 3.12 94178151961, and native 94178151978; `main` remained at `66b26f2f6dbccac6a132c8ebc72652e37fcf27b9` |
 | E0, frozen E1, and E2 evidence validators | `PASS` | Exact validators rerun without mutating frozen bytes |
 | Ruff, requirements replay, REUSE, secret signatures, whitespace | `PASS` | Executed on the frozen working tree |
 | Deterministic public-IR manifest and SBOM | `PASS` | Closed allowlist, exact hashes, provenance DAG, SBOM self hash, and 22/22 evidence tests verified |
@@ -137,8 +140,11 @@ independent wheel archives were not compared byte-for-byte.
 The earlier `5ee8cebc` push and PR Engine runs remain `FAIL` because their
 Python jobs failed at the wheel smoke after all preceding steps passed. The
 corrective `c7e21acd` executions are separate `PASS` evidence; they do not
-rewrite that historical failure. PR #8 integration and an evidence-follow-up
-exact-head hosted run remain `NOT_RUN`.
+rewrite that historical failure. PR #8 subsequently integrated the final
+evidence head, and its exact-merge Engine run passed. ADR-020 is therefore
+`Accepted` for this bounded profile. This does not prove branch protection or
+an unobserved review-approval count, and it does not promote any of the
+remaining `NOT_RUN`, `BLOCKED`, or `NOT_APPLICABLE` boundaries.
 
 ## Reproduction
 

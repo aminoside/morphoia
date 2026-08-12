@@ -76,6 +76,18 @@
         "result": "Corrective push job 94168834734 and PR job 94168845586 passed the exact Python 3.13 full-test, public-IR lot, hash-locked wheel-build, pip-check, and installed-wheel profile."
       },
       {
+        "id": "final-evidence-head-hosted",
+        "command": "GitHub Actions exact-head push Engine run 31615539072 and PR Engine run 31615542865 for evidence head 74b8ddb60ddd8257166b4547c1222a17f47884c6; PR report run 31615542750 also evaluated that PR head",
+        "status": "PASS",
+        "result": "Push jobs Python 3.12 94177289278, REUSE 94177289283, native 94177289284, Python 3.13 94177289377, and hygiene 94177289508 passed. PR jobs Python 3.12 94177302576, native 94177302606, hygiene 94177302631, Python 3.13 94177302636, and REUSE 94177302725 passed. PR report job 94177301425 passed."
+      },
+      {
+        "id": "public-ir-integration-postmerge",
+        "command": "PR #8 integrated evidence head 74b8ddb60ddd8257166b4547c1222a17f47884c6 into engine at merge 9c845f9ea4586a65f25985a4d1f92ebdf407a2f4, tree ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0, parents 12656708ccc3031670c4b3efd43996e46fa27998 and 74b8ddb60ddd8257166b4547c1222a17f47884c6; GitHub Actions exact-merge Engine run 31615797169 executed the integrated tree",
+        "status": "PASS",
+        "result": "Hygiene job 94178151865, REUSE job 94178151884, Python 3.13 job 94178151890, Python 3.12 job 94178151961, and native job 94178151978 passed. The merge tree equals the evidence-head tree, and main remained at 66b26f2f6dbccac6a132c8ebc72652e37fcf27b9."
+      },
+      {
         "id": "vulnerability-analysis",
         "command": "Component vulnerability analysis for the bounded public-IR distribution",
         "status": "NOT_RUN",

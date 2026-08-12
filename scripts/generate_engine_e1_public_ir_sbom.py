@@ -37,6 +37,47 @@ SELF_ARTIFACT_ID = "sbom-engine-e1-public-ir"
 MAX_SAFE_INTEGER = 9_007_199_254_740_991
 MAX_INPUT_BYTES = 64 * 1024 * 1024
 STATUS_VALUES = {"PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"}
+EXECUTION_COMMAND_IDS = (
+    "public-ir-lot",
+    "direct-bootstrap",
+    "sanitizers",
+    "clean-cmake-builds",
+    "wheel-smoke",
+    "frozen-evidence",
+    "hygiene",
+    "evidence-profile",
+    "corrective-hosted-engine",
+    "corrective-hosted-report",
+    "python-3-13",
+    "final-evidence-head-hosted",
+    "public-ir-integration-postmerge",
+    "vulnerability-analysis",
+)
+INTEGRATION_COMMAND = (
+    "PR #8 integrated evidence head 74b8ddb60ddd8257166b4547c1222a17f47884c6 "
+    "into engine at merge 9c845f9ea4586a65f25985a4d1f92ebdf407a2f4, tree "
+    "ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0, parents "
+    "12656708ccc3031670c4b3efd43996e46fa27998 and "
+    "74b8ddb60ddd8257166b4547c1222a17f47884c6; GitHub Actions exact-merge "
+    "Engine run 31615797169 executed the integrated tree"
+)
+FINAL_EVIDENCE_HEAD_COMMAND = (
+    "GitHub Actions exact-head push Engine run 31615539072 and PR Engine run "
+    "31615542865 for evidence head 74b8ddb60ddd8257166b4547c1222a17f47884c6; "
+    "PR report run 31615542750 also evaluated that PR head"
+)
+FINAL_EVIDENCE_HEAD_RESULT = (
+    "Push jobs Python 3.12 94177289278, REUSE 94177289283, native 94177289284, "
+    "Python 3.13 94177289377, and hygiene 94177289508 passed. PR jobs Python "
+    "3.12 94177302576, native 94177302606, hygiene 94177302631, Python 3.13 "
+    "94177302636, and REUSE 94177302725 passed. PR report job 94177301425 passed."
+)
+INTEGRATION_RESULT = (
+    "Hygiene job 94178151865, REUSE job 94178151884, Python 3.13 job "
+    "94178151890, Python 3.12 job 94178151961, and native job 94178151978 "
+    "passed. The merge tree equals the evidence-head tree, and main remained "
+    "at 66b26f2f6dbccac6a132c8ebc72652e37fcf27b9."
+)
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 IDENTIFIER_RE = re.compile(r"^[a-z0-9][a-z0-9.-]{0,127}$")
 REQUIREMENT_RE = re.compile(r"^MOR-[A-Z]+-[0-9]{3}$")
@@ -190,7 +231,7 @@ PUBLIC_IR_OWNED_SPECS: dict[str, ArtifactSpec] = {
     "spec/adr/ADR-020-public-engine-ir-v0.1.md": ArtifactSpec(
         "adr-020-public-engine-ir", "architecture-decision-record", "text/markdown",
         "CC-BY-4.0", None,
-        "Proposed public Engine IR 0.1 identity-domain decision.",
+        "Accepted public Engine IR 0.1 identity-domain decision with exact integration evidence.",
     ),
     "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json": ArtifactSpec(
         "engine-ir-manifest-schema-0.1.0", "ir-schema", "application/schema+json",
@@ -1493,6 +1534,24 @@ def validate_traceability(root: Path, value: dict[str, Any]) -> None:
             raise ValueError(f"missing execution command for {command['id']}")
         if not isinstance(command["result"], str) or not command["result"]:
             raise ValueError(f"missing execution result for {command['id']}")
+    if tuple(command["id"] for command in commands) != EXECUTION_COMMAND_IDS:
+        raise ValueError("public-IR execution command order and allowlist are not exact")
+    final_head_command = commands[EXECUTION_COMMAND_IDS.index("final-evidence-head-hosted")]
+    if final_head_command != {
+        "id": "final-evidence-head-hosted",
+        "command": FINAL_EVIDENCE_HEAD_COMMAND,
+        "status": "PASS",
+        "result": FINAL_EVIDENCE_HEAD_RESULT,
+    }:
+        raise ValueError("public-IR final evidence-head hosted evidence is not exact")
+    integration_command = commands[EXECUTION_COMMAND_IDS.index("public-ir-integration-postmerge")]
+    if integration_command != {
+        "id": "public-ir-integration-postmerge",
+        "command": INTEGRATION_COMMAND,
+        "status": "PASS",
+        "result": INTEGRATION_RESULT,
+    }:
+        raise ValueError("public-IR integration and post-merge evidence is not exact")
 
     if set(TRACEABILITY_TESTS) != TRACEABILITY_REQUIREMENTS:
         raise ValueError("public-IR traceability test allowlist is incomplete")
