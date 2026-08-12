@@ -1,8 +1,23 @@
 # Changelog
 
-Toutes les modifications notables de MORPHOIA seront documentées ici.
+All notable changes to MORPHOIA are documented in this file.
 
-## [Non publié]
+## [Unreleased]
+
+### Morphoia Engine public IR 0.1 (pending integration)
+
+- added a distinct, versioned Engine IR manifest and replay identity domain
+  without reinterpreting the legacy prototype schema or serializers;
+- verified a bounded core-CPU lot for strict manifest validation, native
+  canonicalization, Python and CLI replay, explicit migration, and exactly 20
+  small synthetic IR graphs with frozen canonical vectors;
+- added an exact requirement-to-test mapping, a closed artifact manifest, and
+  a deterministic CycloneDX inventory with mutation-tested confinement and
+  atomic publication;
+- kept Python 3.13, distribution reproducibility, vulnerability analysis,
+  remote CAS, greater-than-2-GiB artifacts, real SALOME, GPU backends, full
+  corpus conformance, and MVX explicitly `NOT_RUN` until their named evidence
+  is executed.
 
 ### Morphoia Engine E0 bootstrap
 

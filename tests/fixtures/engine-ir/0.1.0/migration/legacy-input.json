@@ -1,0 +1,38 @@
+{
+  "format": "morphoia.canonical-construction-graph",
+  "format_version": "0.1",
+  "source_language": "morphoia/0.1",
+  "namespace": "synthetic",
+  "imports": [
+    {
+      "source": "urn:morphoia:fixture:dependency"
+    }
+  ],
+  "models": [
+    {
+      "id": "legacy-model",
+      "name": "Legacy synthetic model",
+      "attributes": {},
+      "dependency_order": [
+        "length"
+      ],
+      "declarations": [
+        {
+          "id": "legacy-node",
+          "kind": "parameter",
+          "name": "length",
+          "value": {
+            "kind": "literal",
+            "value": 1.25,
+            "numeric_encoding": "decimal",
+            "unit": "mm"
+          }
+        }
+      ]
+    }
+  ],
+  "execution_contract": {
+    "authority": "legacy"
+  },
+  "semantic_sha256": "f19471e5f68d0b585a7f99f599b3ea5350597d13fca2404cccdf5aedcf7dee9a"
+}

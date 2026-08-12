@@ -1,0 +1,238 @@
+{
+  "format": "morphoia.engine.ir-manifest",
+  "format_version": "0.1.0",
+  "media_type": "application/vnd.morphoia.ir-manifest.v0+json",
+  "canonical_profile": "morphoia.canonical-json.profile1",
+  "identity": {
+    "algorithm": "sha256",
+    "digest": "a599bc8e5be4892159bde04fcf45e25dce955e29f49faeaf98dae273976cb6b4",
+    "scope": "content"
+  },
+  "content": {
+    "logical_id": "018f0000-0000-7000-8000-0000000002bc",
+    "revision": 1,
+    "parents": [],
+    "units": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000002bd",
+        "ucum_code": "mm",
+        "dimension": {
+          "length": 1,
+          "mass": 0,
+          "time": 0,
+          "current": 0,
+          "temperature": 0,
+          "amount": 0,
+          "luminous_intensity": 0
+        },
+        "si_factor": {
+          "coefficient": 1,
+          "scale": -3
+        }
+      }
+    ],
+    "frames": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000002be",
+        "dimension": 3,
+        "origin": [
+          {
+            "coefficient": 0,
+            "scale": 0
+          },
+          {
+            "coefficient": 0,
+            "scale": 0
+          },
+          {
+            "coefficient": 0,
+            "scale": 0
+          }
+        ],
+        "axes": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "handedness": "right",
+        "matrix_order": "row-major",
+        "unit_id": "018f0000-0000-7000-8000-0000000002bd"
+      }
+    ],
+    "transforms": [],
+    "source": {
+      "uri": "urn:morphoia:fixture:graph-07",
+      "license_expression": "CC-BY-4.0",
+      "rights_holder": "Morphoia synthetic fixtures",
+      "created_at": "2026-08-12T12:00:00Z",
+      "source_tool": {
+        "name": "morphoia-fixture-generator",
+        "version": "0.1.0"
+      },
+      "artifact": {
+        "uri": "morphoia-cas://sha256/4a81437dc8650b7bd98859d7fe5c797b03cf8aabfbcd5b94b8d21bc4ef993491",
+        "sha256": "4a81437dc8650b7bd98859d7fe5c797b03cf8aabfbcd5b94b8d21bc4ef993491",
+        "size_bytes": 72,
+        "media_type": "model/step"
+      }
+    },
+    "product": {
+      "assemblies": [
+        {
+          "id": "018f0000-0000-7000-8000-0000000002bf",
+          "name": "Synthetic graph 07"
+        }
+      ],
+      "instances": [],
+      "names": [
+        {
+          "subject_id": "018f0000-0000-7000-8000-0000000002bf",
+          "value": "Synthetic graph 07"
+        }
+      ],
+      "colors": [
+        {
+          "subject_id": "018f0000-0000-7000-8000-0000000002bf",
+          "rgba": [
+            109,
+            223,
+            245,
+            255
+          ]
+        }
+      ],
+      "layers": [
+        {
+          "subject_id": "018f0000-0000-7000-8000-0000000002bf",
+          "name": "fixture"
+        }
+      ],
+      "properties": [
+        {
+          "subject_id": "018f0000-0000-7000-8000-0000000002bf",
+          "name": "synthetic",
+          "value": true
+        }
+      ]
+    },
+    "representations": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000002c0",
+        "kind": "brep",
+        "authority": "source",
+        "frame_id": "018f0000-0000-7000-8000-0000000002be",
+        "unit_id": "018f0000-0000-7000-8000-0000000002bd",
+        "payload": {
+          "uri": "morphoia-cas://sha256/821cd3f96c6f0473b954fa07fadb81aa5f01e1212826d208cefe27a4f9190c75",
+          "sha256": "821cd3f96c6f0473b954fa07fadb81aa5f01e1212826d208cefe27a4f9190c75",
+          "size_bytes": 80,
+          "media_type": "model/step"
+        },
+        "derived_from": [],
+        "ai_output": false,
+        "topology_identity": {
+          "stable": true
+        }
+      },
+      {
+        "id": "018f0000-0000-7000-8000-0000000002c2",
+        "kind": "scene",
+        "authority": "derived",
+        "frame_id": "018f0000-0000-7000-8000-0000000002be",
+        "unit_id": "018f0000-0000-7000-8000-0000000002bd",
+        "payload": {
+          "uri": "morphoia-cas://sha256/f9c875681b800645607782bb3e09c5032dce9b6c5a4f821867ce84d36cefc01e",
+          "sha256": "f9c875681b800645607782bb3e09c5032dce9b6c5a4f821867ce84d36cefc01e",
+          "size_bytes": 73,
+          "media_type": "application/octet-stream"
+        },
+        "derived_from": [
+          "018f0000-0000-7000-8000-0000000002c0"
+        ],
+        "ai_output": false,
+        "topology_identity": {
+          "stable": true
+        }
+      }
+    ],
+    "provenance": [
+      {
+        "id": "018f0000-0000-7000-8000-0000000002c1",
+        "activity": "synthetic-source",
+        "tool": {
+          "name": "morphoia-fixture-generator",
+          "version": "0.1.0",
+          "commit": "synthetic"
+        },
+        "parameters": {
+          "fixture": true
+        },
+        "parents": [],
+        "environment": {
+          "profile": "core-cpu-synthetic",
+          "os": "platform-independent"
+        },
+        "seeds": [
+          705
+        ],
+        "started_at": "2026-08-12T12:00:00Z",
+        "ended_at": "2026-08-12T12:00:01Z",
+        "inputs": [],
+        "outputs": [
+          "018f0000-0000-7000-8000-0000000002c0"
+        ]
+      },
+      {
+        "id": "018f0000-0000-7000-8000-0000000002c3",
+        "activity": "synthetic-derivation",
+        "tool": {
+          "name": "morphoia-fixture-generator",
+          "version": "0.1.0",
+          "commit": "synthetic"
+        },
+        "parameters": {
+          "fixture": true
+        },
+        "parents": [
+          "018f0000-0000-7000-8000-0000000002c1"
+        ],
+        "environment": {
+          "profile": "core-cpu-synthetic",
+          "os": "platform-independent"
+        },
+        "seeds": [
+          707
+        ],
+        "started_at": "2026-08-12T12:00:01Z",
+        "ended_at": "2026-08-12T12:00:02Z",
+        "inputs": [
+          "018f0000-0000-7000-8000-0000000002c0"
+        ],
+        "outputs": [
+          "018f0000-0000-7000-8000-0000000002c2"
+        ]
+      }
+    ],
+    "tolerances": [],
+    "fidelity_events": [],
+    "repairs": [],
+    "losses": [],
+    "security": {
+      "classification": "public",
+      "sensitivity": "none",
+      "access_policy": "redistributable synthetic fixture",
+      "signature": {
+        "status": "unsigned",
+        "algorithm": null,
+        "value": null
+      },
+      "trust_level": "fixture"
+    }
+  }
+}

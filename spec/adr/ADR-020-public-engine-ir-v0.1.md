@@ -82,6 +82,16 @@ Every accepted document passes three distinct stages in this order:
 A failure at any stage is a structured rejection. Repair, coercion, identifier
 replacement, unit conversion, or loss insertion is never implicit.
 
+For this initial contract, revision lineage is linear: revision 1 has no
+parent, while every later revision has one parent for the same logical UUID at
+the immediately preceding revision. Provenance parents are the exact immediate
+producers of event inputs, including causal timestamp ordering. Transforms are
+unique per frame pair and must be invertible affine homogeneous matrices after
+interpreting their declared storage order. Neither a verified signature nor a
+verified trust level may be self-attested by a manifest.
+Source license expressions follow the bounded, single-line SPDX 2.3 Annex D
+syntax; registry membership and license compatibility remain separate audits.
+
 ### Extensions and capability negotiation
 
 The core schema is closed. An explicitly declared extension member may contain

@@ -1,0 +1,870 @@
+{
+  "$schema": "./e1-public-ir-traceability.schema.json",
+  "schema_version": "1.0.0",
+  "profile": "e1-public-ir-core-cpu",
+  "source_base_commit": "c475288961d40bb16c4cc10a333034a247acb451",
+  "execution_environment": {
+    "os": "Ubuntu 24.04.3 LTS; Linux 6.18.35",
+    "architecture": "x86_64",
+    "compiler": "GCC and G++ 13.3.0; CMake 3.20.5",
+    "python": "CPython 3.12.13 executed; Python 3.13 NOT_RUN",
+    "commands": [
+      {
+        "id": "public-ir-lot",
+        "command": "MORPHOIA_ENGINE_LIBRARY=$PWD/build/engine-cpu-debug/libmorphoia_engine.so PYTHON=/tmp/morphoia-e1-evidence-venv/bin/python bash scripts/validate-engine-ir-lot.sh",
+        "status": "PASS",
+        "result": "20/20 corpus entries and 60/60 unittest cases passed in 32.615 seconds."
+      },
+      {
+        "id": "direct-bootstrap",
+        "command": "MORPHOIA_BOOTSTRAP_FORCE_FALLBACK=1 bash scripts/bootstrap-engine.sh",
+        "status": "PASS",
+        "result": "C ABI, canonical JSON, core, SHA-256, POSIX CAS, and 20-graph native replay passed."
+      },
+      {
+        "id": "sanitizers",
+        "command": "bash scripts/run-engine-sanitizers.sh",
+        "status": "PASS",
+        "result": "AddressSanitizer and UndefinedBehaviorSanitizer passed; LeakSanitizer remained NOT_RUN."
+      },
+      {
+        "id": "clean-cmake-builds",
+        "command": "For each of two fresh local clones with the frozen working-tree lot applied: cmake -S . -B build/clean -G 'Unix Makefiles' -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Debug -DMORPHOIA_WARNINGS_AS_ERRORS=ON; cmake --build; cmake --install; ctest; build and ctest tests/native/consumer",
+        "status": "PASS",
+        "result": "Both independent clones built and installed; native CTest 7/7 and installed consumer 1/1 passed in each clone."
+      },
+      {
+        "id": "wheel-smoke",
+        "command": "MORPHOIA_ENGINE_LIBRARY=$PWD/build/engine-cpu-debug/libmorphoia_engine.so MORPHOIA_WHEEL_BUILD_PYTHON=python3 MORPHOIA_WHEEL_RUNTIME_VENV_TEMPLATE=/tmp/morphoia-e1-evidence-venv bash scripts/validate-engine-wheel.sh",
+        "status": "PASS",
+        "result": "Isolated installed-wheel origin, validate, replay, and migration passed with observed setuptools 83.0.0 and wheel 0.47.0; distribution reproducibility NOT_RUN."
+      },
+      {
+        "id": "frozen-evidence",
+        "command": "python scripts/extract_engine_requirements.py --check && python scripts/validate_engine_e0_evidence.py && python scripts/validate_engine_e1_native_evidence.py && python scripts/generate_engine_e2_sbom.py --check",
+        "status": "PASS",
+        "result": "The 320-record baseline and frozen E0/E1/E2 evidence profiles passed exact validation."
+      },
+      {
+        "id": "hygiene",
+        "command": "ruff check <public-IR Python surfaces> && bash scripts/scan-secrets.sh && python -m reuse lint && git diff --check",
+        "status": "PASS",
+        "result": "Ruff, supported credential signatures, REUSE metadata, and whitespace checks passed on the frozen working tree."
+      },
+      {
+        "id": "evidence-profile",
+        "command": "python scripts/generate_engine_e1_public_ir_sbom.py --check && python -m unittest -v tests.test_e1_public_ir_evidence",
+        "status": "PASS",
+        "result": "Deterministic generator check and 21/21 evidence, schema, truth-boundary, mutation, confinement, and atomic-publication tests passed."
+      },
+      {
+        "id": "python-3-13",
+        "command": "Hosted engine CI requirements matrix with Python 3.13",
+        "status": "NOT_RUN",
+        "result": "The hosted Python 3.13 job was configured but not executed in this local gate."
+      },
+      {
+        "id": "vulnerability-analysis",
+        "command": "Component vulnerability analysis for the bounded public-IR distribution",
+        "status": "NOT_RUN",
+        "result": "CycloneDX inventory generation is not a vulnerability assessment."
+      }
+    ]
+  },
+  "entries": [
+    {
+      "requirement_id": "MOR-IR-001",
+      "claim": "The normative public Engine IR manifest uses JSON Schema Draft 2020-12.",
+      "status": "PASS",
+      "test_ids": [
+        "test_schema_identifiers_constants_and_integer_domain_are_frozen"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-002",
+      "claim": "The signable form uses the published and tested Morphoia Canonical JSON Profile 1.",
+      "status": "PASS",
+      "test_ids": [
+        "native.canonical_json_c_api",
+        "test_profile1_two_pass_bytes_and_digest_agree",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "cpp/include/morphoia/engine.h",
+        "tests/native/canonical_json_c_api_test.c",
+        "tests/native/ir_replay_test.cpp",
+        "tests/test_engine_ir_native.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-003",
+      "claim": "Each public Engine IR object distinguishes a logical identity, revision, and content digest.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_identity_is_only_verified_against_native_result",
+        "test_linear_revision_and_nonnegative_tolerance_are_explicit",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "tests/test_engine_ir_replay.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The 20 synthetic manifests verify the identity/revision/content-digest envelope, but they do not establish the universal all-object claim.",
+      "blocking_scope": "universal-object-coverage-not-executed"
+    },
+    {
+      "requirement_id": "MOR-IR-004",
+      "claim": "Public Engine IR logical identities use lowercase UUIDv7 text as defined by RFC 9562.",
+      "status": "PASS",
+      "test_ids": [
+        "test_committed_invalid_fixtures_are_rejected_by_declared_stage",
+        "test_exactly_twenty_synthetic_inputs_have_indexed_hashes_and_lf_free_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "tests/fixtures/engine-ir/0.1.0/DATA_CARD.md"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-005",
+      "claim": "Each binary reference carries a SHA-256 digest, byte size, media type, and resolvable URI.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_digest_uri_ids_and_references_are_consistent",
+        "test_resolver_rejects_mismatch_before_returning_bytes"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "tests/test_engine_ir_replay.py",
+        "docs/engine/IR_MANIFEST_0_1.md"
+      ],
+      "reason": "Schema and local resolver tests verify digest, size, media type, URI consistency, and mismatch rejection, but the referenced synthetic payload bytes are absent and all references were not resolved.",
+      "blocking_scope": "referenced-payload-bytes-and-complete-resolution-not-executed"
+    },
+    {
+      "requirement_id": "MOR-IR-006",
+      "claim": "Units use an unambiguous UCUM-compatible notation with a verifiable factor to SI.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_dimensions_transforms_and_timestamps_are_explicit"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "docs/engine/IR_MANIFEST_0_1.md"
+      ],
+      "reason": "The contract checks positive exact SI factors and unit references, but no complete UCUM code-to-dimension-and-factor semantic verifier was executed.",
+      "blocking_scope": "complete-UCUM-code-dimension-factor-verifier-not-implemented"
+    },
+    {
+      "requirement_id": "MOR-IR-007",
+      "claim": "Each frame declares dimension, origin, axes, handedness, matrix order, and unit.",
+      "status": "PASS",
+      "test_ids": [
+        "test_dimensions_transforms_and_timestamps_are_explicit",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-008",
+      "claim": "Frame transforms are preserved explicitly and are never applied silently.",
+      "status": "PASS",
+      "test_ids": [
+        "test_dimensions_transforms_and_timestamps_are_explicit"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "docs/engine/IR_MANIFEST_0_1.md"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-009",
+      "claim": "The source block carries URI, license, author or holder, date, source tool, and byte digest.",
+      "status": "PASS",
+      "test_ids": [
+        "test_spdx_expression_and_invalid_signature_evidence_rules",
+        "test_dimensions_transforms_and_timestamps_are_explicit",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-010",
+      "claim": "The product block preserves available assemblies, instances, names, colors, layers, and properties.",
+      "status": "PASS",
+      "test_ids": [
+        "test_provenance_and_product_cycles_are_rejected",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-011",
+      "claim": "B-Rep, mesh, points, voxels, volumes, fields, scenes, tensors, and future opaque MVX representations remain separately typed.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_closed_schema_rejects_unknown_core_inline_payload_and_unsafe_integer",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "docs/engine/IR_MANIFEST_0_1.md"
+      ],
+      "reason": "The contract separately types the listed non-MVX representations and an opaque boundary, but no owner-validated MVX type or specification exists.",
+      "blocking_scope": "owner-validated-MVX-type-and-contract-absent"
+    },
+    {
+      "requirement_id": "MOR-IR-012",
+      "claim": "Provenance is an acyclic DAG carrying tool, version, commit, parameters, parents, environment, seeds, and timestamps.",
+      "status": "PASS",
+      "test_ids": [
+        "test_authority_derivation_ai_and_provenance_invariants",
+        "test_provenance_inputs_define_exact_acyclic_time_ordered_parents",
+        "test_provenance_and_product_cycles_are_rejected"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-013",
+      "claim": "Each fidelity event carries property, before and after values, metric, threshold, severity, and decision.",
+      "status": "PASS",
+      "test_ids": [
+        "test_schema_identifiers_constants_and_integer_domain_are_frozen",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "tests/fixtures/engine-ir/0.1.0/inputs/graph-10-fidelity-loss.json"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-014",
+      "claim": "The security block declares classification, sensitivity, access policy, signature, and trust level.",
+      "status": "PASS",
+      "test_ids": [
+        "test_spdx_expression_and_invalid_signature_evidence_rules",
+        "test_verified_signature_self_claim_is_rejected_without_crypto_result"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "docs/engine/IR_MANIFEST_0_1.md"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-015",
+      "claim": "Massive arrays and binary payload bytes are not embedded in the JSON manifest.",
+      "status": "PASS",
+      "test_ids": [
+        "test_closed_schema_rejects_unknown_core_inline_payload_and_unsafe_integer",
+        "test_committed_invalid_fixtures_are_rejected_by_declared_stage"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-016",
+      "claim": "An unstable topological identifier carries its matching strategy and confidence.",
+      "status": "PASS",
+      "test_ids": [
+        "test_schema_identifiers_constants_and_integer_domain_are_frozen",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/fixtures/engine-ir/0.1.0/inputs/graph-13-topology-unstable.json",
+        "tests/test_engine_ir_contract.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-017",
+      "claim": "An AI output creates a reviewable branch and never directly replaces a geometry authority.",
+      "status": "PASS",
+      "test_ids": [
+        "test_authority_derivation_ai_and_provenance_invariants",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/fixtures/engine-ir/0.1.0/inputs/graph-09-ai-candidate.json",
+        "tests/test_engine_ir_contract.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-IR-018",
+      "claim": "The schemas provide valid, invalid, boundary, and migration fixtures and tests.",
+      "status": "PASS",
+      "test_ids": [
+        "test_loader_accepts_native_depth_boundary_and_rejects_one_more_container",
+        "test_committed_invalid_fixtures_are_rejected_by_declared_stage",
+        "test_explicit_migration_matches_golden_and_preserves_input_bytes",
+        "test_public_migration_natively_seals_and_keeps_legacy_bytes"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "schemas/morphoia-engine-ir-replay-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "tests/test_engine_ir_migration.py",
+        "tests/test_engine_ir_replay.py",
+        "tests/fixtures/engine-ir/0.1.0/DATA_CARD.md"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-002",
+      "claim": "Each extensible C structure begins with struct_size and abi_version.",
+      "status": "PASS",
+      "test_ids": [
+        "native.abi_c_smoke",
+        "native.canonical_json_c_api"
+      ],
+      "evidence": [
+        "cpp/include/morphoia/engine.h",
+        "tests/native/canonical_json_c_api_test.c"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-003",
+      "claim": "C ABI strings are UTF-8 views with explicit lengths and no implicit termination assumption.",
+      "status": "PASS",
+      "test_ids": [
+        "native.canonical_json_c_api",
+        "test_explicit_length_diagnostic_decoder_preserves_utf8_and_nul"
+      ],
+      "evidence": [
+        "cpp/include/morphoia/engine.h",
+        "tests/native/canonical_json_c_api_test.c",
+        "tests/test_engine_ir_native.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-006",
+      "claim": "Thread-safety behavior is documented for every public API family in this profile.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_wrapper_serializes_context_lifetime_across_threads"
+      ],
+      "evidence": [
+        "cpp/include/morphoia/engine.h",
+        "src/morphoia/_engine_native.py",
+        "tests/test_engine_ir_native.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The native wrapper concurrency behavior was executed, but thread-safety is not documented and reviewed for every public API family.",
+      "blocking_scope": "per-family-thread-safety-documentation-and-review-not-executed"
+    },
+    {
+      "requirement_id": "MOR-API-007",
+      "claim": "Errors expose a stable code, severity, context, cause, affected elements, and recommendation.",
+      "status": "PASS",
+      "test_ids": [
+        "native.canonical_json_c_api",
+        "test_native_invalid_json_exposes_structured_diagnostic"
+      ],
+      "evidence": [
+        "cpp/include/morphoia/engine.h",
+        "tests/native/canonical_json_c_api_test.c",
+        "tests/test_engine_ir_native.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-008",
+      "claim": "The module exposes capability negotiation and its effective versions.",
+      "status": "PASS",
+      "test_ids": [
+        "native.canonical_json_c_api",
+        "test_explicit_library_negotiates_exact_capability"
+      ],
+      "evidence": [
+        "cpp/include/morphoia/engine.h",
+        "tests/native/canonical_json_c_api_test.c",
+        "tests/test_engine_ir_native.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-009",
+      "claim": "The Python API provides context managers and deterministic resource release.",
+      "status": "PASS",
+      "test_ids": [
+        "test_context_manager_closes_deterministically"
+      ],
+      "evidence": [
+        "src/morphoia/_engine_native.py",
+        "tests/test_engine_ir_native.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-010",
+      "claim": "The CLI provides human output, machine-readable JSON, and stable exit codes.",
+      "status": "PASS",
+      "test_ids": [
+        "test_validate_json_and_human_output_are_stable",
+        "test_invalid_manifest_and_missing_native_library_return_one"
+      ],
+      "evidence": [
+        "src/morphoia/cli.py",
+        "tests/test_engine_ir_cli.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-011",
+      "claim": "Long operations expose progress, timeout, cancellation, and terminal state.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_timeout_and_cancellation_are_bounded"
+      ],
+      "evidence": [
+        "src/morphoia/engine_ir.py",
+        "tests/test_engine_ir_replay.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "Timeout and cancellation were executed, but the bounded replay API does not expose progress and a complete terminal-state protocol for a long operation.",
+      "blocking_scope": "long-operation-progress-and-terminal-state-not-implemented"
+    },
+    {
+      "requirement_id": "MOR-API-012",
+      "claim": "Replayable requests accept an idempotency key.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_operation_key_tracks_python_and_native_implementation",
+        "test_replay_executes_then_resumes_exact_checkpoint"
+      ],
+      "evidence": [
+        "src/morphoia/engine_ir.py",
+        "tests/test_engine_ir_replay.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "Replay derives a deterministic internal operation key, but replayable requests do not accept a caller-provided idempotency key.",
+      "blocking_scope": "idempotency-key-contract-not-implemented"
+    },
+    {
+      "requirement_id": "MOR-API-013",
+      "claim": "Dates use UTC RFC 3339 and durations use explicit units.",
+      "status": "PASS",
+      "test_ids": [
+        "test_dimensions_transforms_and_timestamps_are_explicit",
+        "test_timeout_and_cancellation_are_bounded"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "src/morphoia/engine_ir.py",
+        "tests/test_engine_ir_contract.py",
+        "tests/test_engine_ir_replay.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-014",
+      "claim": "Packages, APIs, and protocols follow SemVer.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_schema_identifiers_constants_and_integer_domain_are_frozen",
+        "test_explicit_library_negotiates_exact_capability"
+      ],
+      "evidence": [
+        "pyproject.toml",
+        "cpp/include/morphoia/engine.h",
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The schema, ABI, and protocol versions are explicit, but the Python package is 0.2.0.dev0 and a complete package/API/protocol SemVer policy was not verified.",
+      "blocking_scope": "package-version-is-not-a-final-SemVer-release"
+    },
+    {
+      "requirement_id": "MOR-API-015",
+      "claim": "Incompatible schema changes include a migration tool and before-and-after fixtures.",
+      "status": "PASS",
+      "test_ids": [
+        "test_explicit_migration_matches_golden_and_preserves_input_bytes",
+        "test_public_migration_natively_seals_and_keeps_legacy_bytes"
+      ],
+      "evidence": [
+        "src/morphoia/engine_ir_migration.py",
+        "tests/test_engine_ir_migration.py",
+        "tests/test_engine_ir_replay.py",
+        "tests/fixtures/engine-ir/0.1.0/migration/legacy-input.json",
+        "tests/fixtures/engine-ir/0.1.0/migration/expected-content.json"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-API-018",
+      "claim": "Unknown namespaced extensions are preserved by a round trip that does not invalidate them.",
+      "status": "PASS",
+      "test_ids": [
+        "test_extension_namespace_preserves_internal_core_homonyms"
+      ],
+      "evidence": [
+        "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+        "tests/test_engine_ir_contract.py",
+        "tests/fixtures/engine-ir/0.1.0/inputs/graph-19-reverse-dns-extension.json"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-DEV-001",
+      "claim": "The native core uses C++20.",
+      "status": "PASS",
+      "test_ids": [
+        "native.canonical_json",
+        "native.ir_replay"
+      ],
+      "evidence": [
+        "CMakeLists.txt",
+        "cpp/src/engine.cpp",
+        "tests/native/ir_replay_test.cpp",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-DEV-002",
+      "claim": "The public binary contract uses a versioned C11 ABI.",
+      "status": "PASS",
+      "test_ids": [
+        "native.abi_c_smoke",
+        "native.canonical_json_c_api",
+        "installed.c_consumer"
+      ],
+      "evidence": [
+        "CMakeLists.txt",
+        "cpp/include/morphoia/engine.h",
+        "cmake/morphoia_engine.map",
+        "tests/native/consumer/CMakeLists.txt",
+        "tests/native/consumer/main.c"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-DEV-003",
+      "claim": "The reference distribution targets Python 3.13 and remains compatible with Python 3.12 during P0-P1.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_explicit_library_negotiates_exact_capability",
+        "test_validate_json_and_human_output_are_stable"
+      ],
+      "evidence": [
+        "pyproject.toml",
+        ".github/workflows/engine-ci.yml",
+        "tests/test_engine_ir_native.py",
+        "tests/test_engine_ir_cli.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The complete local lot passed on CPython 3.12.13, but the configured hosted Python 3.13 matrix was not executed.",
+      "blocking_scope": "python-3.13-profile-not-executed"
+    },
+    {
+      "requirement_id": "MOR-DEV-005",
+      "claim": "The native build uses CMake and versioned CMake Presets.",
+      "status": "PASS",
+      "test_ids": [
+        "native.abi_c_smoke",
+        "native.ir_replay",
+        "installed.c_consumer"
+      ],
+      "evidence": [
+        "CMakeLists.txt",
+        "tests/native/consumer/CMakeLists.txt",
+        ".github/workflows/engine-ci.yml",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-DEV-008",
+      "claim": "New compiler warnings in Morphoia code fail Tier 1 CI.",
+      "status": "PASS",
+      "test_ids": [
+        "native.canonical_json_c_api",
+        "native.ir_replay"
+      ],
+      "evidence": [
+        "CMakeLists.txt",
+        ".github/workflows/engine-ci.yml",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-DEV-009",
+      "claim": "C++ exceptions never cross the C ABI.",
+      "status": "PASS",
+      "test_ids": [
+        "native.core_smoke",
+        "native.canonical_json_c_api"
+      ],
+      "evidence": [
+        "cpp/src/engine.cpp",
+        "tests/native/canonical_json_c_api_test.c",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-DEV-010",
+      "claim": "Owned memory follows RAII and new code has no owning raw pointers.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "native.core_smoke"
+      ],
+      "evidence": [
+        "cpp/src/engine.cpp",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "Native tests exercised allocator and exception paths, but a complete ownership/RAII inspection of all new native code was not executed.",
+      "blocking_scope": "complete-owned-memory-inspection-not-executed"
+    },
+    {
+      "requirement_id": "MOR-DEV-011",
+      "claim": "Python code is formatted, linted, typed, and tested automatically.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_committed_invalid_fixtures_are_rejected_by_declared_stage",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens"
+      ],
+      "evidence": [
+        ".github/workflows/engine-ci.yml",
+        "tests/test_engine_ir_contract.py",
+        "tests/test_engine_ir_replay.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "Ruff and the Python tests passed, but no static type checker such as mypy or pyright was executed.",
+      "blocking_scope": "static-type-checker-not-executed"
+    },
+    {
+      "requirement_id": "MOR-DEV-012",
+      "claim": "Dependencies are locked or concretized with versions, options, and hashes.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_committed_outputs_are_deterministic_and_cli_verified"
+      ],
+      "evidence": [
+        "pyproject.toml",
+        "artifacts/sbom/engine-e1-public-ir.cdx.json",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The runtime/test dependencies are hash-locked, but pyproject.toml declares mutable setuptools>=77 for the build backend; the wheel smoke is not a reproducible distribution build.",
+      "blocking_scope": "distribution-build-backend-is-not-hash-locked"
+    },
+    {
+      "requirement_id": "MOR-DEV-014",
+      "claim": "Secrets, patient data, and large binaries are never committed to the public repository.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_fixture_tree_is_exactly_79_cc_by_files_with_13_invalid_cases"
+      ],
+      "evidence": [
+        "tests/fixtures/engine-ir/0.1.0/DATA_CARD.md",
+        "scripts/generate_engine_e1_public_ir_sbom.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The supported secret-signature scan, synthetic data card, and bounded artifact inventory passed, but the final committed public tree and global large-binary policy were not yet observed.",
+      "blocking_scope": "final-committed-public-tree-policy-check-not-executed"
+    },
+    {
+      "requirement_id": "MOR-CAS-001",
+      "claim": "The CAS uses SHA-256 as its published identity.",
+      "status": "PASS",
+      "test_ids": [
+        "native.sha256",
+        "native.posix_cas",
+        "native.ir_replay"
+      ],
+      "evidence": [
+        "scripts/validate_engine_e1_native_evidence.py",
+        "docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
+        "artifacts/e1/manifest.json",
+        "tests/native/ir_replay_test.cpp"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-CAS-003",
+      "claim": "A block is published atomically only after its size and hash are verified.",
+      "status": "PASS",
+      "test_ids": [
+        "native.posix_cas",
+        "test_checkpoint_no_clobber_handles_identical_and_different_writers"
+      ],
+      "evidence": [
+        "scripts/validate_engine_e1_native_evidence.py",
+        "docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
+        "artifacts/e1/manifest.json",
+        "tests/test_engine_ir_replay.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-CAS-004",
+      "claim": "CAS reads and writes operate in streaming mode.",
+      "status": "PASS",
+      "test_ids": [
+        "native.posix_cas"
+      ],
+      "evidence": [
+        "scripts/validate_engine_e1_native_evidence.py",
+        "docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
+        "artifacts/e1/manifest.json"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-CAS-006",
+      "claim": "A local cache and at least one POSIX or remote object backend share the same identities.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "native.ir_replay"
+      ],
+      "evidence": [
+        "tests/native/ir_replay_test.cpp",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "Native replay used two verified POSIX CAS roots with equal identities, but it did not execute distinct local-cache and backend roles.",
+      "blocking_scope": "distinct-local-cache-and-backend-roles-not-executed"
+    },
+    {
+      "requirement_id": "MOR-CAS-008",
+      "claim": "Transfer corruption is detected before data is exposed to a consumer.",
+      "status": "PASS",
+      "test_ids": [
+        "native.posix_cas",
+        "test_resolver_rejects_mismatch_before_returning_bytes"
+      ],
+      "evidence": [
+        "scripts/validate_engine_e1_native_evidence.py",
+        "docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
+        "artifacts/e1/manifest.json",
+        "tests/test_engine_ir_replay.py"
+      ],
+      "reason": "The exact mapped tests were executed on the declared Linux x86-64 core-CPU environment and passed this bounded public-IR contract claim.",
+      "blocking_scope": "none-public-ir-core-cpu-profile"
+    },
+    {
+      "requirement_id": "MOR-CAS-010",
+      "claim": "External URIs are resolved through an adapter and never treated as arbitrary unvalidated paths.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_resolver_rejects_symlink_components_final_alias_and_hardlink"
+      ],
+      "evidence": [
+        "src/morphoia/engine_ir.py",
+        "tests/test_engine_ir_replay.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "The local resolver rejects traversal and filesystem aliases, but no external-URI adapter was implemented or executed.",
+      "blocking_scope": "external-URI-resolver-adapter-not-implemented"
+    },
+    {
+      "requirement_id": "MOR-CAS-012",
+      "claim": "Each transformation creates a new block and provenance node without modifying its input in place.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_explicit_migration_matches_golden_and_preserves_input_bytes",
+        "test_public_migration_natively_seals_and_keeps_legacy_bytes"
+      ],
+      "evidence": [
+        "src/morphoia/engine_ir_migration.py",
+        "tests/test_engine_ir_migration.py",
+        "tests/test_engine_ir_replay.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "Migration preserves input bytes and creates newly sealed content, but no new transformed CAS block plus persisted provenance node was written and verified.",
+      "blocking_scope": "new-transformed-CAS-block-and-provenance-write-not-executed"
+    },
+    {
+      "requirement_id": "MOR-QA-013",
+      "claim": "The minimum corpus includes 20 IR graphs, 20 STEP files, 20 SMESH meshes, 10 MED files, and three artifacts larger than 2 GiB.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "native.ir_replay",
+        "test_all_twenty_native_content_bytes_and_digests_match_goldens",
+        "test_exactly_twenty_synthetic_inputs_have_indexed_hashes_and_lf_free_goldens"
+      ],
+      "evidence": [
+        "tests/fixtures/engine-ir/0.1.0/DATA_CARD.md",
+        "tests/fixtures/engine-ir/0.1.0/index.json",
+        "tests/native/ir_replay_test.cpp",
+        "tests/test_engine_ir_contract.py",
+        "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md"
+      ],
+      "reason": "Exactly 20 IR graphs passed, but the required 20 STEP, 20 SMESH, 10 MED, and three greater-than-2-GiB corpus segments were not executed.",
+      "blocking_scope": "STEP-SMESH-MED-and-three-greater-than-2-GiB-segments-not-executed"
+    }
+  ]
+}

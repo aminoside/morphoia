@@ -1,0 +1,496 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/ir-manifest/0.1.0",
+  "title": "Morphoia Engine IR manifest 0.1.0",
+  "description": "Closed public Engine IR envelope. Large payloads are immutable CAS references; this schema defines no MVX semantics.",
+  "type": "object",
+  "required": [
+    "format",
+    "format_version",
+    "media_type",
+    "canonical_profile",
+    "identity",
+    "content"
+  ],
+  "properties": {
+    "format": {"const": "morphoia.engine.ir-manifest"},
+    "format_version": {"const": "0.1.0"},
+    "media_type": {"const": "application/vnd.morphoia.ir-manifest.v0+json"},
+    "canonical_profile": {"const": "morphoia.canonical-json.profile1"},
+    "identity": {"$ref": "#/$defs/contentIdentity"},
+    "content": {"$ref": "#/$defs/content"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "safeInteger": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "nonNegativeSafeInteger": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "positiveSafeInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "uuidv7": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "mediaType": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$",
+      "maxLength": 127
+    },
+    "exactDecimal": {
+      "type": "object",
+      "required": ["coefficient", "scale"],
+      "properties": {
+        "coefficient": {"$ref": "#/$defs/safeInteger"},
+        "scale": {"type": "integer", "minimum": -18, "maximum": 18}
+      },
+      "additionalProperties": false
+    },
+    "contentIdentity": {
+      "type": "object",
+      "required": ["algorithm", "digest", "scope"],
+      "properties": {
+        "algorithm": {"const": "sha256"},
+        "digest": {"$ref": "#/$defs/sha256"},
+        "scope": {"const": "content"}
+      },
+      "additionalProperties": false
+    },
+    "binaryReference": {
+      "type": "object",
+      "required": ["uri", "sha256", "size_bytes", "media_type"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "pattern": "^morphoia-cas://sha256/[0-9a-f]{64}$",
+          "maxLength": 96
+        },
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"$ref": "#/$defs/nonNegativeSafeInteger"},
+        "media_type": {"$ref": "#/$defs/mediaType"}
+      },
+      "additionalProperties": false
+    },
+    "jsonValue": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "boolean"},
+        {"type": "string", "maxLength": 4096},
+        {"$ref": "#/$defs/safeInteger"},
+        {
+          "type": "array",
+          "maxItems": 256,
+          "items": {"$ref": "#/$defs/jsonValue"}
+        },
+        {
+          "type": "object",
+          "maxProperties": 128,
+          "additionalProperties": {"$ref": "#/$defs/jsonValue"}
+        }
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "maxProperties": 32,
+      "propertyNames": {
+        "pattern": "^(?:[a-z][a-z0-9]*(?:-[a-z0-9]+)*\\.)+[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+      },
+      "additionalProperties": {"$ref": "#/$defs/jsonValue"}
+    },
+    "dimensionVector": {
+      "type": "object",
+      "required": ["length", "mass", "time", "current", "temperature", "amount", "luminous_intensity"],
+      "properties": {
+        "length": {"type": "integer", "minimum": -12, "maximum": 12},
+        "mass": {"type": "integer", "minimum": -12, "maximum": 12},
+        "time": {"type": "integer", "minimum": -12, "maximum": 12},
+        "current": {"type": "integer", "minimum": -12, "maximum": 12},
+        "temperature": {"type": "integer", "minimum": -12, "maximum": 12},
+        "amount": {"type": "integer", "minimum": -12, "maximum": 12},
+        "luminous_intensity": {"type": "integer", "minimum": -12, "maximum": 12}
+      },
+      "additionalProperties": false
+    },
+    "unit": {
+      "type": "object",
+      "required": ["id", "ucum_code", "dimension", "si_factor"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "ucum_code": {"type": "string", "pattern": "^[A-Za-z0-9%/.{}*+-]{1,32}$"},
+        "dimension": {"$ref": "#/$defs/dimensionVector"},
+        "si_factor": {"$ref": "#/$defs/exactDecimal"}
+      },
+      "additionalProperties": false
+    },
+    "frame": {
+      "type": "object",
+      "required": ["id", "dimension", "origin", "axes", "handedness", "matrix_order", "unit_id"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "dimension": {"enum": [2, 3]},
+        "origin": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": {"$ref": "#/$defs/exactDecimal"}
+        },
+        "axes": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 9,
+          "items": {"type": "integer", "minimum": -1, "maximum": 1}
+        },
+        "handedness": {"enum": ["right", "left"]},
+        "matrix_order": {"enum": ["row-major", "column-major"]},
+        "unit_id": {"$ref": "#/$defs/uuidv7"}
+      },
+      "additionalProperties": false
+    },
+    "transform": {
+      "type": "object",
+      "required": ["id", "from_frame", "to_frame", "matrix", "matrix_order", "application"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "from_frame": {"$ref": "#/$defs/uuidv7"},
+        "to_frame": {"$ref": "#/$defs/uuidv7"},
+        "matrix": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 16,
+          "items": {"$ref": "#/$defs/exactDecimal"}
+        },
+        "matrix_order": {"enum": ["row-major", "column-major"]},
+        "application": {"const": "declared-not-applied"}
+      },
+      "additionalProperties": false
+    },
+    "sourceTool": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 128},
+        "version": {"type": "string", "minLength": 1, "maxLength": 128}
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": ["uri", "license_expression", "rights_holder", "created_at", "source_tool", "artifact"],
+      "properties": {
+        "uri": {"type": "string", "pattern": "^(?:https://|urn:)[^\\s]{1,2040}$"},
+        "license_expression": {"type": "string", "minLength": 1, "maxLength": 256},
+        "rights_holder": {"type": "string", "minLength": 1, "maxLength": 256},
+        "created_at": {"type": "string", "format": "date-time"},
+        "source_tool": {"$ref": "#/$defs/sourceTool"},
+        "artifact": {"$ref": "#/$defs/binaryReference"}
+      },
+      "additionalProperties": false
+    },
+    "assembly": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "name": {"type": "string", "minLength": 1, "maxLength": 256},
+        "parent_id": {"$ref": "#/$defs/uuidv7"}
+      },
+      "additionalProperties": false
+    },
+    "instance": {
+      "type": "object",
+      "required": ["id", "assembly_id", "name"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "assembly_id": {"$ref": "#/$defs/uuidv7"},
+        "name": {"type": "string", "minLength": 1, "maxLength": 256},
+        "parent_instance_id": {"$ref": "#/$defs/uuidv7"},
+        "transform_id": {"$ref": "#/$defs/uuidv7"}
+      },
+      "additionalProperties": false
+    },
+    "nameRecord": {
+      "type": "object",
+      "required": ["subject_id", "value"],
+      "properties": {
+        "subject_id": {"$ref": "#/$defs/uuidv7"},
+        "value": {"type": "string", "minLength": 1, "maxLength": 256}
+      },
+      "additionalProperties": false
+    },
+    "colorRecord": {
+      "type": "object",
+      "required": ["subject_id", "rgba"],
+      "properties": {
+        "subject_id": {"$ref": "#/$defs/uuidv7"},
+        "rgba": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {"type": "integer", "minimum": 0, "maximum": 255}
+        }
+      },
+      "additionalProperties": false
+    },
+    "layerRecord": {
+      "type": "object",
+      "required": ["subject_id", "name"],
+      "properties": {
+        "subject_id": {"$ref": "#/$defs/uuidv7"},
+        "name": {"type": "string", "minLength": 1, "maxLength": 256}
+      },
+      "additionalProperties": false
+    },
+    "propertyRecord": {
+      "type": "object",
+      "required": ["subject_id", "name", "value"],
+      "properties": {
+        "subject_id": {"$ref": "#/$defs/uuidv7"},
+        "name": {"type": "string", "minLength": 1, "maxLength": 256},
+        "value": {"$ref": "#/$defs/jsonValue"}
+      },
+      "additionalProperties": false
+    },
+    "product": {
+      "type": "object",
+      "required": ["assemblies", "instances", "names", "colors", "layers", "properties"],
+      "properties": {
+        "assemblies": {"type": "array", "maxItems": 1024, "items": {"$ref": "#/$defs/assembly"}},
+        "instances": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/instance"}},
+        "names": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/nameRecord"}},
+        "colors": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/colorRecord"}},
+        "layers": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/layerRecord"}},
+        "properties": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/propertyRecord"}}
+      },
+      "additionalProperties": false
+    },
+    "topologyIdentity": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["stable"],
+          "properties": {"stable": {"const": true}},
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["stable", "matching_strategy", "confidence_basis_points"],
+          "properties": {
+            "stable": {"const": false},
+            "matching_strategy": {"type": "string", "minLength": 1, "maxLength": 256},
+            "confidence_basis_points": {"type": "integer", "minimum": 0, "maximum": 10000}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "representation": {
+      "type": "object",
+      "required": ["id", "kind", "authority", "frame_id", "unit_id", "payload", "derived_from", "ai_output"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "kind": {"enum": ["brep", "mesh", "points", "voxels", "volume", "field", "scene", "tensor", "opaque"]},
+        "authority": {"enum": ["source", "derived", "candidate"]},
+        "frame_id": {"$ref": "#/$defs/uuidv7"},
+        "unit_id": {"$ref": "#/$defs/uuidv7"},
+        "payload": {"$ref": "#/$defs/binaryReference"},
+        "derived_from": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/uuidv7"}
+        },
+        "ai_output": {"type": "boolean"},
+        "topology_identity": {"$ref": "#/$defs/topologyIdentity"}
+      },
+      "additionalProperties": false
+    },
+    "provenanceTool": {
+      "type": "object",
+      "required": ["name", "version", "commit"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 128},
+        "version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "commit": {"type": "string", "minLength": 1, "maxLength": 128}
+      },
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "required": ["profile", "os"],
+      "properties": {
+        "profile": {"type": "string", "minLength": 1, "maxLength": 128},
+        "os": {"type": "string", "minLength": 1, "maxLength": 128},
+        "architecture": {"type": "string", "minLength": 1, "maxLength": 64},
+        "dependencies": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {"type": "string", "minLength": 1, "maxLength": 256}
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenanceEvent": {
+      "type": "object",
+      "required": ["id", "activity", "tool", "parameters", "parents", "environment", "seeds", "started_at", "ended_at", "inputs", "outputs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "activity": {"type": "string", "minLength": 1, "maxLength": 128},
+        "tool": {"$ref": "#/$defs/provenanceTool"},
+        "parameters": {
+          "type": "object",
+          "maxProperties": 128,
+          "additionalProperties": {"$ref": "#/$defs/jsonValue"}
+        },
+        "parents": {"type": "array", "maxItems": 64, "uniqueItems": true, "items": {"$ref": "#/$defs/uuidv7"}},
+        "environment": {"$ref": "#/$defs/environment"},
+        "seeds": {"type": "array", "maxItems": 64, "items": {"$ref": "#/$defs/safeInteger"}},
+        "started_at": {"type": "string", "format": "date-time"},
+        "ended_at": {"type": "string", "format": "date-time"},
+        "inputs": {"type": "array", "maxItems": 256, "uniqueItems": true, "items": {"$ref": "#/$defs/uuidv7"}},
+        "outputs": {"type": "array", "minItems": 1, "maxItems": 256, "uniqueItems": true, "items": {"$ref": "#/$defs/uuidv7"}}
+      },
+      "additionalProperties": false
+    },
+    "fidelityEvent": {
+      "type": "object",
+      "required": ["id", "subject_id", "property", "before", "after", "metric", "threshold", "severity", "decision"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "subject_id": {"$ref": "#/$defs/uuidv7"},
+        "property": {"type": "string", "minLength": 1, "maxLength": 256},
+        "before": {"type": "string", "maxLength": 1024},
+        "after": {"type": "string", "maxLength": 1024},
+        "metric": {"type": "string", "minLength": 1, "maxLength": 128},
+        "threshold": {"$ref": "#/$defs/exactDecimal"},
+        "severity": {"enum": ["info", "warning", "error", "fatal"]},
+        "decision": {"enum": ["accepted", "accepted-with-loss", "rejected"]}
+      },
+      "additionalProperties": false
+    },
+    "repair": {
+      "type": "object",
+      "required": ["id", "subject_id", "action", "before", "after", "reversible", "decision"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "subject_id": {"$ref": "#/$defs/uuidv7"},
+        "action": {"type": "string", "minLength": 1, "maxLength": 256},
+        "before": {"type": "string", "maxLength": 1024},
+        "after": {"type": "string", "maxLength": 1024},
+        "reversible": {"type": "boolean"},
+        "decision": {"enum": ["accepted", "accepted-with-loss", "rejected"]}
+      },
+      "additionalProperties": false
+    },
+    "loss": {
+      "type": "object",
+      "required": ["id", "subject_id", "category", "property", "before", "after", "severity", "decision", "description"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "subject_id": {"$ref": "#/$defs/uuidv7"},
+        "category": {"enum": ["geometry", "topology", "parametric-history", "constraint", "pmi", "material", "assembly", "provenance", "identity", "behavior", "units", "frames", "metadata"]},
+        "property": {"type": "string", "minLength": 1, "maxLength": 256},
+        "before": {"type": "string", "maxLength": 1024},
+        "after": {"type": "string", "maxLength": 1024},
+        "severity": {"enum": ["info", "warning", "error", "fatal"]},
+        "decision": {"enum": ["retain-source", "accept", "reject", "human-review"]},
+        "description": {"type": "string", "minLength": 1, "maxLength": 2048}
+      },
+      "additionalProperties": false
+    },
+    "signature": {
+      "type": "object",
+      "required": ["status", "algorithm", "value"],
+      "properties": {
+        "status": {"enum": ["unsigned", "verified", "invalid"]},
+        "algorithm": {"type": ["string", "null"], "maxLength": 128},
+        "value": {"type": ["string", "null"], "maxLength": 8192}
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "unsigned"}}, "required": ["status"]},
+          "then": {"properties": {"algorithm": {"const": null}, "value": {"const": null}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "verified"}}, "required": ["status"]},
+          "then": {"properties": {"algorithm": {"type": "string", "minLength": 1}, "value": {"type": "string", "minLength": 1}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "invalid"}}, "required": ["status"]},
+          "then": {"properties": {"algorithm": {"type": "string", "minLength": 1}, "value": {"type": "string", "minLength": 1}}}
+        }
+      ]
+    },
+    "security": {
+      "type": "object",
+      "required": ["classification", "sensitivity", "access_policy", "signature", "trust_level"],
+      "properties": {
+        "classification": {"enum": ["public", "internal", "restricted"]},
+        "sensitivity": {"enum": ["none", "low", "moderate", "high"]},
+        "access_policy": {"type": "string", "minLength": 1, "maxLength": 512},
+        "signature": {"$ref": "#/$defs/signature"},
+        "trust_level": {"enum": ["fixture", "untrusted", "reviewed", "verified"]}
+      },
+      "additionalProperties": false
+    },
+    "tolerance": {
+      "type": "object",
+      "required": ["id", "subject_id", "kind", "amount", "unit_id", "source"],
+      "properties": {
+        "id": {"$ref": "#/$defs/uuidv7"},
+        "subject_id": {"$ref": "#/$defs/uuidv7"},
+        "kind": {"enum": ["linear", "angular", "relative", "statistical"]},
+        "amount": {"$ref": "#/$defs/exactDecimal"},
+        "unit_id": {"$ref": "#/$defs/uuidv7"},
+        "source": {"enum": ["declared", "measured", "assumed"]}
+      },
+      "additionalProperties": false
+    },
+    "parentRevision": {
+      "type": "object",
+      "required": ["logical_id", "revision", "content_sha256"],
+      "properties": {
+        "logical_id": {"$ref": "#/$defs/uuidv7"},
+        "revision": {"$ref": "#/$defs/positiveSafeInteger"},
+        "content_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "content": {
+      "type": "object",
+      "required": ["logical_id", "revision", "parents", "units", "frames", "transforms", "source", "product", "representations", "provenance", "tolerances", "fidelity_events", "repairs", "losses", "security"],
+      "properties": {
+        "logical_id": {"$ref": "#/$defs/uuidv7"},
+        "revision": {"$ref": "#/$defs/positiveSafeInteger"},
+        "parents": {"type": "array", "maxItems": 64, "uniqueItems": true, "items": {"$ref": "#/$defs/parentRevision"}},
+        "units": {"type": "array", "minItems": 1, "maxItems": 128, "items": {"$ref": "#/$defs/unit"}},
+        "frames": {"type": "array", "minItems": 1, "maxItems": 128, "items": {"$ref": "#/$defs/frame"}},
+        "transforms": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/transform"}},
+        "source": {"$ref": "#/$defs/source"},
+        "product": {"$ref": "#/$defs/product"},
+        "representations": {"type": "array", "minItems": 1, "maxItems": 1024, "items": {"$ref": "#/$defs/representation"}},
+        "provenance": {"type": "array", "minItems": 1, "maxItems": 4096, "items": {"$ref": "#/$defs/provenanceEvent"}},
+        "tolerances": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/tolerance"}},
+        "fidelity_events": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/fidelityEvent"}},
+        "repairs": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/repair"}},
+        "losses": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/loss"}},
+        "security": {"$ref": "#/$defs/security"},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

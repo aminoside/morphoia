@@ -12,8 +12,8 @@
     "visibility": "public",
     "default_branch": "main",
     "integration_branch": "engine",
-    "publication_status": "PASS",
-    "publication_note": "Public-IR entry checkpoint a69d35b5e2c971ff44153eb902f62dd8e3c89fea is published on engine-p0-public-ir-replay; PR 8 targets engine only, Engine run 31596165398 and report run 31596165378 passed on the exact SHA"
+    "publication_status": "NOT_RUN",
+    "publication_note": "Entry checkpoint c475288961d40bb16c4cc10a333034a247acb451 is published on engine-p0-public-ir-replay and its entry workflows passed; the prospective public-IR implementation bytes are not yet committed or pushed, so their exact-head hosted checks and integration remain NOT_RUN"
   },
   "git": {
     "branch": "engine-p0-public-ir-replay",
@@ -21,8 +21,8 @@
     "base_parent": "12656708ccc3031670c4b3efd43996e46fa27998",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "a69d35b5e2c971ff44153eb902f62dd8e3c89fea",
-    "note": "The work branch starts from exact engine merge 12656708; entry checkpoint a69d35b5 has tree ce7f7a6e and passed its exact-head Engine and report workflows"
+    "published_commit_sha": "c475288961d40bb16c4cc10a333034a247acb451",
+    "note": "The work branch starts from exact engine merge 12656708; current published head c475288 records green entry evidence. The reviewed local public-IR implementation is prospective and has no published commit SHA yet"
   },
   "tasks": {
     "completed": [
@@ -70,12 +70,14 @@
       "e1_native_evidence_byte_freeze",
       "e1_public_ir_entry_checkpoint",
       "e1_public_ir_entry_checkpoint_publication",
-      "e1_public_ir_entry_hosted_verification"
-    ],
-    "in_progress": [
+      "e1_public_ir_entry_hosted_verification",
       "e1_public_ir_track_a_schema_contract_corpus",
       "e1_public_ir_track_b_native_abi_python_cli_replay",
-      "e1_public_ir_track_c_traceability_sbom_evidence"
+      "e1_public_ir_track_c_traceability_sbom_evidence",
+      "e1_public_ir_local_gate_and_adversarial_review"
+    ],
+    "in_progress": [
+      "e1_public_ir_publication_hosted_review_and_engine_integration"
     ],
     "remaining": [
       "e1_remaining_core_foundations",
@@ -120,21 +122,21 @@
     "paths": [
       {
         "path": "cpp",
-        "sha256": "9571b44d03541a91d8aa955a743039c029bf37c292791b8c9a517c4246d87220",
+        "sha256": "ca67e853caf100875e4caa1d6ab3f884a614fb14b08fe79062786804b4eae8d9",
         "status": "PASS"
       },
       {
         "path": "spec",
-        "sha256": "439953618d6853649e703ff261e5687ef20218feed9740ef4baa0de09182c10f",
+        "sha256": "8e7cf598108eacf1b9862e7fad247cd28f289fe4034404eea1982dca4270cf91",
         "status": "PASS"
       },
       {
         "path": "docs/engine",
-        "sha256": "b58e11627c02310a373cd8e8af4b01309ad9a7320d8a5f8d1e823d41a22ba3f2",
+        "sha256": "ef766587e381adae3e0880a1102bcd88bea5fa4a613612d74cb0e739c23bc590",
         "status": "PASS"
       }
     ],
-    "note": "Digests represent the public-IR lot entry after E1 and E2 integration; checkpoint.json itself is excluded to avoid self-reference. Closed E0 and E1 native outputs are byte-frozen, E2 remains a separate closed profile, and ADR-020 is proposed without executable public-IR evidence."
+    "note": "Digests represent the reviewed local public-IR checkpoint; checkpoint.json itself is excluded to avoid self-reference. Closed E0 and E1 native outputs remain byte-frozen, E2 remains a separate closed profile, and the public-IR profile records local execution without claiming publication or integration."
   },
   "commands": [
     {
@@ -421,6 +423,41 @@
       "command": "GitHub Actions Engine run 31596165398 and report run 31596165378 on public-IR entry checkpoint a69d35b5e2c971ff44153eb902f62dd8e3c89fea",
       "result": "PASS",
       "summary": "Native job 94112106988, REUSE job 94112107004, Python 3.12 job 94112107035, hygiene job 94112107044, Python 3.13 job 94112107066, and report job 94112106640 completed successfully"
+    },
+    {
+      "command": "MORPHOIA_ENGINE_LIBRARY=$PWD/build/engine-cpu-debug/libmorphoia_engine.so PYTHON=<hash-locked-python-3.12> bash scripts/validate-engine-ir-lot.sh",
+      "result": "PASS",
+      "summary": "The exact 20-entry corpus and 60 contract, migration, native-binding, replay, CLI, hostile-input, resume, cancellation, and concurrency tests passed"
+    },
+    {
+      "command": "MORPHOIA_BOOTSTRAP_FORCE_FALLBACK=1 bash scripts/bootstrap-engine.sh and bash scripts/run-engine-sanitizers.sh",
+      "result": "PASS",
+      "summary": "Direct C ABI, Profile 1, core, SHA-256, POSIX CAS, native replay, exact seven-symbol export, ASan, and UBSan tests passed; LSan remained NOT_RUN"
+    },
+    {
+      "command": "Two fresh local clones with the reviewed lot applied: CMake 3.20.5 strict Debug configure/build/install, CTest, and installed C consumer",
+      "result": "PASS",
+      "summary": "Each clone passed native CTest 7 of 7 and installed consumer 1 of 1; the installed shared libraries were byte-identical"
+    },
+    {
+      "command": "MORPHOIA_ENGINE_LIBRARY=$PWD/build/engine-cpu-debug/libmorphoia_engine.so bash scripts/validate-engine-wheel.sh",
+      "result": "PASS",
+      "summary": "An isolated wheel imported the package and three schemas from its venv and passed validation, replay, and migration; setuptools 83.0.0 and wheel 0.47.0 were observed but build reproducibility remained NOT_RUN"
+    },
+    {
+      "command": "python scripts/generate_engine_e1_public_ir_sbom.py --check and <hash-locked-python> -m unittest -v tests.test_e1_public_ir_evidence",
+      "result": "PASS",
+      "summary": "The deterministic 123-artifact manifest, 136-component SBOM, 32 PASS and 17 NOT_RUN traceability map, and 21 evidence/mutation tests passed"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v on the reviewed public-IR checkpoint",
+      "result": "PASS",
+      "summary": "183 of 183 tests passed on CPython 3.12.13 after checkpoint reconciliation; hosted Python 3.13 remained NOT_RUN"
+    },
+    {
+      "command": "<hash-locked-python> -m reuse lint, Ruff on changed Python, bash scripts/scan-secrets.sh, and git diff --check",
+      "result": "PASS",
+      "summary": "REUSE 6.2.0 resolved 298 of 298 files; Ruff, bounded credential signatures, and whitespace checks passed; vulnerability analysis remained NOT_RUN"
     }
   ],
   "tests": [
@@ -855,14 +892,56 @@
     {
       "id": "E1-PUBLIC-IR-IMPLEMENTATION",
       "profile": "core-cpu-public-ir",
-      "status": "NOT_RUN",
-      "reason": "ADR-020 is proposed; the schema, ABI additions, native-required Python API, CLI, and semantic validator are not implemented at this checkpoint"
+      "status": "PASS",
+      "count": 60
     },
     {
       "id": "E1-PUBLIC-IR-20-GRAPH-REPLAY",
       "profile": "core-cpu-public-ir-replay",
+      "status": "PASS",
+      "count": 20
+    },
+    {
+      "id": "E1-PUBLIC-IR-EVIDENCE",
+      "profile": "e1-public-ir-core-cpu",
+      "status": "PASS",
+      "count": 21
+    },
+    {
+      "id": "E1-PUBLIC-IR-FULL-LOCAL",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS",
+      "count": 183
+    },
+    {
+      "id": "E1-PUBLIC-IR-NATIVE-CMAKE",
+      "profile": "core-cpu-native-cmake-3.20.5",
+      "status": "PASS",
+      "count": 16
+    },
+    {
+      "id": "E1-PUBLIC-IR-REUSE",
+      "profile": "license-metadata",
+      "status": "PASS",
+      "count": 298
+    },
+    {
+      "id": "E1-PUBLIC-IR-PYTHON-313",
+      "profile": "core-cpu-python-3.13",
       "status": "NOT_RUN",
-      "reason": "The bounded 20-graph input and golden corpus has not yet been implemented or executed"
+      "reason": "The hosted Python 3.13 matrix is configured but the prospective implementation checkpoint is not yet published"
+    },
+    {
+      "id": "E1-PUBLIC-IR-HOSTED",
+      "profile": "publication-required-checks",
+      "status": "NOT_RUN",
+      "reason": "The prospective implementation checkpoint is not yet committed or pushed; exact-head Engine and report workflows have not run"
+    },
+    {
+      "id": "E1-PUBLIC-IR-INTEGRATION",
+      "profile": "engine-integration",
+      "status": "NOT_RUN",
+      "reason": "PR 8 must not be integrated into engine before exact-head checks and review pass"
     },
     {
       "id": "E2-SALOME-REAL",
@@ -926,6 +1005,18 @@
     {
       "path": "schemas/morphoia-loss-register-0.1.schema.json",
       "sha256": "4d1a19eea8b7b64dcf3b559e42ba5833380e9701528e92771ec4ea8deb153329"
+    },
+    {
+      "path": "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+      "sha256": "4392d659b5f90b305ee9a29953240c95adfd3174d2006ca44c6c7b9305fb4250"
+    },
+    {
+      "path": "schemas/morphoia-engine-ir-replay-0.1.0.schema.json",
+      "sha256": "53ff72e72d07b87a2453bee750c8553e7445e98845effcd4a47287465aba45c5"
+    },
+    {
+      "path": "tests/fixtures/engine-ir/0.1.0/index.json",
+      "sha256": "39a9e4f2381993f88d8ccbea9d66b402b44ab30cdd4e7b16f486334bd1630ad2"
     }
   ],
   "outputs": [
@@ -939,7 +1030,7 @@
       "uri": "repo:spec/requirements/requirements-tracking.yaml",
       "sha256": "7af677456e74f0fece87dbbae7db3637892ab1c24271dcc4603df2633e57dec4",
       "status": "PASS",
-      "note": "Living fail-closed traceability overlay and schema validation passed"
+      "note": "Closed E0 tracking overlay remains byte-exact; later executed profiles use separate traceability documents pending explicit tracking change control"
     },
     {
       "uri": "repo:docs/engine/evidence/E0_GATE_REPORT.md",
@@ -1006,6 +1097,30 @@
       "sha256": "4fa388d66db998127161c373a54a937eb55099706ec935a9f05fc0013b77431f",
       "status": "PASS",
       "note": "Deterministic CycloneDX 1.5 contract inventory; packages are excluded and vulnerability analysis is NOT_RUN"
+    },
+    {
+      "uri": "repo:spec/evidence/e1-public-ir-traceability.json",
+      "sha256": "3613492cce804d4716ef37caf47bd8cd7e1d215fe288559e2e4f70a555733fc4",
+      "status": "PASS",
+      "note": "Separate exact 49-requirement public-IR mapping records 32 bounded PASS and 17 broader NOT_RUN results without mutating the closed E0 overlay"
+    },
+    {
+      "uri": "repo:docs/engine/evidence/E1_PUBLIC_IR_REPORT.md",
+      "sha256": "0b57b9b6c792c600ebac39dc996d3e9425c9f1eb940623cd1cebab4bdef7dce1",
+      "status": "PASS",
+      "note": "Bounded local report records 20-graph contract/replay evidence and preserves publication, Python 3.13, vulnerability, large-artifact, SALOME, GPU/HPC, and MVX boundaries"
+    },
+    {
+      "uri": "repo:artifacts/manifests/engine-e1-public-ir.json",
+      "sha256": "c1f51416ea8028d059eccdbae7c86bc200d6b54aedb404db32bc22aa2f0fe1e1",
+      "status": "PASS",
+      "note": "Closed 123-artifact public-IR manifest verifies exact paths, sizes, hashes, licenses, provenance, frozen E1 evidence, and SBOM self-reference"
+    },
+    {
+      "uri": "repo:artifacts/sbom/engine-e1-public-ir.cdx.json",
+      "sha256": "274f71a7b5ffc6d61bc6ca905c2071caf07145290d45979d75758d508b53a1d0",
+      "status": "PASS",
+      "note": "Deterministic 136-component CycloneDX public-IR inventory; vulnerability and dependency-license analyses remain NOT_RUN"
     }
   ],
   "job_ids": [
@@ -1120,7 +1235,9 @@
     "The completed E1 native evidence profile is byte-frozen and later phases validate it without replaying evolving source globs",
     "ADR-020 proposes a distinct public Engine IR manifest 0.1 identity domain while preserving the legacy prototype byte-exact and non-authoritative",
     "Public Engine IR identity is SHA-256 over morphoia.canonical-json.profile1 bytes; lowercase UUIDv7 identifies logical entities and morphoia-cas SHA-256 URIs identify immutable payload bytes",
-    "No public C IR object model or MVX semantics are introduced in the bounded public-IR lot"
+    "No public C IR object model or MVX semantics are introduced in the bounded public-IR lot",
+    "The public-IR lot extends the C export allowlist from five to exactly seven symbols for capability query and Profile 1 canonicalization while preserving opaque handles and explicit caller-owned buffers",
+    "The closed E0 requirements-tracking overlay remains byte-exact; the public-IR lot records 32 bounded PASS and 17 broader NOT_RUN results in its separate fail-closed traceability profile pending explicit overlay change control"
   ],
   "deviations": [
     "No branch protection or ruleset was observed",
@@ -1134,7 +1251,9 @@
     "E1 evidence head 4db5c743 passed all five Engine jobs; no report workflow run was observed for that exact SHA, the cause is not asserted, and no report PASS is inferred",
     "Published E2 Engine run 31585426276 and report run 31585425822 remain FAIL because their sole stale checkpoint spec digest failure is immutable execution history",
     "Corrective E2 source e3ec245 passed Engine run 31589424865 and report run 31589424850; this does not rewrite the earlier failed execution",
-    "The 3 GiB schema vector is metadata only; a real greater-than-2-GiB transfer remains NOT_RUN"
+    "The 3 GiB schema vector is metadata only; a real greater-than-2-GiB transfer remains NOT_RUN",
+    "The installed-wheel functional smoke observed setuptools 83.0.0 and wheel 0.47.0, but pyproject.toml retains mutable setuptools>=77, so reproducible distribution construction remains NOT_RUN",
+    "The public-IR local gate passed on CPython 3.12.13; Python 3.13, exact-head hosted workflows, integration, post-merge validation, vulnerability analysis, and LeakSanitizer remain NOT_RUN"
   ],
   "external_dependencies": [
     {
@@ -1210,6 +1329,12 @@
       "reason": "Checkpoint a69d35b5 is published on engine-p0-public-ir-replay; PR 8 targets engine only, Engine run 31596165398 and report run 31596165378 passed on the exact SHA"
     },
     {
+      "name": "public IR implementation publication and hosted checks",
+      "status": "NOT_RUN",
+      "blocking_scope": "Publication and integration of the reviewed public-IR implementation on PR 8 only",
+      "reason": "The prospective implementation checkpoint is not yet committed or pushed; exact-head Engine and report workflows, review, PR 8 integration into engine, and post-merge checks have not run"
+    },
+    {
       "name": "SALOME 9.16 runtime",
       "status": "NOT_RUN",
       "blocking_scope": "E2 real ProbeCapabilities, SHAPER/GEOM, SMESH/MED, MEDCoupling, and large-artifact execution only",
@@ -1221,5 +1346,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Implement the declared non-overlapping public-IR Tracks A, B, and C, integrate and review their outputs, then execute the complete local and hosted public-IR gate on PR 8 while real SALOME, GPU, greater-than-2-GiB, and MVX criteria remain NOT_RUN or BLOCKED"
+  "next_action": "Publish the reviewed signed public-IR checkpoint on engine-p0-public-ir-replay, update draft PR 8, require exact-head native, Python 3.12 and 3.13, hygiene, REUSE, and report workflows, inspect reviews, integrate only into engine if green, and verify the exact merge SHA while real SALOME, GPU, greater-than-2-GiB, vulnerability, and MVX criteria remain NOT_RUN or BLOCKED"
 }

@@ -3,11 +3,18 @@
 
 #include "morphoia/engine.h"
 
+#include "core/canonical_json.hpp"
+#include "core/sha256.hpp"
+
 #include <algorithm>
+#include <array>
 #include <cstdlib>
-#include <cstring>
 #include <cstdint>
+#include <cstring>
+#include <limits>
 #include <new>
+#include <string>
+#include <string_view>
 
 #ifndef MORPHOIA_ENGINE_VERSION_MAJOR
 #  define MORPHOIA_ENGINE_VERSION_MAJOR 0
@@ -129,6 +136,194 @@ morphoia_status_t internal_exception(
 
 constexpr morphoia_string_view_t string_view(const char* const value, const size_t size) noexcept {
   return {value, size};
+}
+
+template <std::size_t Size>
+constexpr morphoia_string_view_t literal_view(const char (&value)[Size]) noexcept {
+  return string_view(value, Size - 1U);
+}
+
+bool view_equals(
+    const morphoia_string_view_t value,
+    const char* const expected,
+    const std::size_t expected_size) noexcept {
+  return value.size == expected_size &&
+         (expected_size == 0U ||
+          (value.data != nullptr && std::memcmp(value.data, expected, expected_size) == 0));
+}
+
+bool ranges_overlap(
+    const void* const first,
+    const std::size_t first_size,
+    const void* const second,
+    const std::size_t second_size) noexcept {
+  if (first == nullptr || second == nullptr || first_size == 0U || second_size == 0U) {
+    return false;
+  }
+  const auto first_begin = reinterpret_cast<std::uintptr_t>(first);
+  const auto second_begin = reinterpret_cast<std::uintptr_t>(second);
+  const auto maximum = std::numeric_limits<std::uintptr_t>::max();
+  const auto first_end =
+      first_size > maximum - first_begin ? maximum : first_begin + first_size;
+  const auto second_end =
+      second_size > maximum - second_begin ? maximum : second_begin + second_size;
+  return first_begin < second_end && second_begin < first_end;
+}
+
+struct StorageRange {
+  const void* data;
+  std::size_t size;
+};
+
+template <std::size_t Count>
+bool any_storage_overlap(const std::array<StorageRange, Count>& ranges) noexcept {
+  for (std::size_t left = 0U; left < ranges.size(); ++left) {
+    for (std::size_t right = left + 1U; right < ranges.size(); ++right) {
+      if (ranges_overlap(
+              ranges[left].data,
+              ranges[left].size,
+              ranges[right].data,
+              ranges[right].size)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+bool valid_utf8_identifier(const morphoia_string_view_t value) noexcept {
+  if (value.data == nullptr || value.size == 0U || value.size > 255U) {
+    return false;
+  }
+  std::size_t offset = 0U;
+  while (offset < value.size) {
+    const auto first = static_cast<std::uint8_t>(value.data[offset]);
+    if (first == 0U) {
+      return false;
+    }
+    if (first < 0x80U) {
+      ++offset;
+      continue;
+    }
+    std::size_t width = 0U;
+    std::uint32_t scalar = 0U;
+    if (first >= 0xc2U && first <= 0xdfU) {
+      width = 2U;
+      scalar = first & 0x1fU;
+    } else if (first >= 0xe0U && first <= 0xefU) {
+      width = 3U;
+      scalar = first & 0x0fU;
+    } else if (first >= 0xf0U && first <= 0xf4U) {
+      width = 4U;
+      scalar = first & 0x07U;
+    } else {
+      return false;
+    }
+    if (offset + width > value.size) {
+      return false;
+    }
+    for (std::size_t index = 1U; index < width; ++index) {
+      const auto continuation = static_cast<std::uint8_t>(value.data[offset + index]);
+      if ((continuation & 0xc0U) != 0x80U) {
+        return false;
+      }
+      scalar = (scalar << 6U) | (continuation & 0x3fU);
+    }
+    const bool overlong = (width == 2U && scalar < 0x80U) ||
+                          (width == 3U && scalar < 0x800U) ||
+                          (width == 4U && scalar < 0x10000U);
+    if (overlong || scalar > 0x10ffffU || (scalar >= 0xd800U && scalar <= 0xdfffU)) {
+      return false;
+    }
+    offset += width;
+  }
+  return true;
+}
+
+struct CanonicalLimits {
+  morphoia::core::CanonicalJsonLimits parser;
+};
+
+morphoia_status_t read_canonical_limits(
+    const morphoia_canonical_json_options_t* const options,
+    CanonicalLimits& limits,
+    morphoia_diagnostic_t* const diagnostic) noexcept {
+  std::uint64_t maximum_input_bytes =
+      MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_INPUT_BYTES;
+  std::uint64_t maximum_string_bytes =
+      MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_STRING_BYTES;
+  std::uint64_t maximum_values = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_VALUES;
+  std::uint64_t maximum_depth = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_DEPTH;
+  if (options != nullptr) {
+    if (options->struct_size < MORPHOIA_CANONICAL_JSON_OPTIONS_V1_SIZE) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_STRUCT_TOO_SMALL,
+          {
+              "canonical options structure is too small",
+              "canonical JSON Profile 1",
+              "struct_size is below the required ABI-v1 prefix",
+              "options.struct_size",
+              "initialize struct_size with sizeof(morphoia_canonical_json_options_t)",
+          });
+    }
+    if (options->abi_version != MORPHOIA_ENGINE_ABI_VERSION) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_UNSUPPORTED_ABI,
+          {
+              "canonical options ABI is unsupported",
+              "canonical JSON Profile 1",
+              "abi_version does not match the engine ABI",
+              "options.abi_version",
+              "use the negotiated engine ABI version",
+          });
+    }
+    if (options->flags != MORPHOIA_CANONICAL_JSON_FLAG_NONE) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_UNSUPPORTED_OPTION,
+          {
+              "canonical option flags are unsupported",
+              "canonical JSON Profile 1",
+              "an unknown flag bit is set",
+              "options.flags",
+              "clear unsupported flag bits",
+          });
+    }
+    maximum_input_bytes = options->maximum_input_bytes;
+    maximum_string_bytes = options->maximum_string_bytes;
+    maximum_values = options->maximum_values;
+    maximum_depth = options->maximum_depth;
+  }
+
+  constexpr auto size_maximum = std::numeric_limits<std::size_t>::max();
+  if (maximum_input_bytes == 0U || maximum_string_bytes == 0U || maximum_values == 0U ||
+      maximum_depth == 0U || maximum_input_bytes > size_maximum ||
+      maximum_string_bytes > size_maximum || maximum_values > size_maximum ||
+      maximum_depth > size_maximum) {
+    return fail(
+        diagnostic,
+        MORPHOIA_STATUS_RESOURCE_LIMIT,
+        {
+            "canonical limits are zero or exceed this platform",
+            "canonical JSON Profile 1",
+            "every limit must be representable as a positive size_t",
+            "options limits",
+            "use positive limits within the platform addressable range",
+        });
+  }
+  limits.parser.maximum_input_bytes = static_cast<std::size_t>(maximum_input_bytes);
+  limits.parser.maximum_string_bytes = static_cast<std::size_t>(maximum_string_bytes);
+  limits.parser.maximum_values = static_cast<std::size_t>(maximum_values);
+  limits.parser.maximum_depth = static_cast<std::size_t>(maximum_depth);
+  return MORPHOIA_STATUS_OK;
+}
+
+bool json_error_is_resource_limit(const morphoia::core::JsonErrorCode code) noexcept {
+  using morphoia::core::JsonErrorCode;
+  return code == JsonErrorCode::input_too_large || code == JsonErrorCode::depth_limit ||
+         code == JsonErrorCode::value_limit || code == JsonErrorCode::string_limit;
 }
 
 } // namespace
@@ -405,6 +600,260 @@ extern "C" morphoia_status_t MORPHOIA_ENGINE_CALL morphoia_context_get_abi_versi
   }
 }
 
+extern "C" morphoia_status_t MORPHOIA_ENGINE_CALL morphoia_context_query_capability(
+    const morphoia_context_t* const context,
+    const morphoia_string_view_t capability,
+    morphoia_capability_info_t* const info,
+    morphoia_diagnostic_t* const diagnostic) noexcept {
+  try {
+    const StorageRange capability_storage{capability.data, capability.size};
+    const StorageRange info_storage{info, MORPHOIA_CAPABILITY_INFO_V1_SIZE};
+    const StorageRange diagnostic_storage{diagnostic, MORPHOIA_DIAGNOSTIC_V1_SIZE};
+    if (ranges_overlap(
+            diagnostic_storage.data,
+            diagnostic_storage.size,
+            capability_storage.data,
+            capability_storage.size) ||
+        ranges_overlap(
+            diagnostic_storage.data,
+            diagnostic_storage.size,
+            info_storage.data,
+            info_storage.size)) {
+      return MORPHOIA_STATUS_INVALID_ARGUMENT;
+    }
+    if (ranges_overlap(
+            capability_storage.data,
+            capability_storage.size,
+            info_storage.data,
+            info_storage.size)) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "capability query storage overlaps",
+              "capability query",
+              "capability and info ABI-v1 storage must be disjoint",
+              "capability or info",
+              "provide non-overlapping caller-owned storage",
+          });
+    }
+    if (context == nullptr || info == nullptr) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "context and capability output are required",
+              "capability query",
+              "a required pointer is null",
+              "context or info",
+              "provide both required pointers",
+          });
+    }
+    if (!valid_utf8_identifier(capability)) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "capability name is not a valid UTF-8 identifier",
+              "capability query",
+              "the name is empty, too long, malformed UTF-8, or contains NUL",
+              "capability",
+              "provide a nonempty shortest-form UTF-8 name without embedded NUL",
+          });
+    }
+    if (info->struct_size < MORPHOIA_CAPABILITY_INFO_V1_SIZE) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_STRUCT_TOO_SMALL,
+          {
+              "capability output structure is too small",
+              "capability query",
+              "struct_size is below the required ABI-v1 prefix",
+              "info.struct_size",
+              "initialize struct_size with sizeof(morphoia_capability_info_t)",
+          });
+    }
+    if (info->abi_version != MORPHOIA_ENGINE_ABI_VERSION) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_UNSUPPORTED_ABI,
+          {
+              "capability output ABI is unsupported",
+              "capability query",
+              "abi_version does not match the engine ABI",
+              "info.abi_version",
+              "use the negotiated engine ABI version",
+          });
+    }
+
+    static constexpr char capability_name[] = MORPHOIA_CAPABILITY_ENGINE_IR_MANIFEST;
+    static constexpr char format_identifier[] = "morphoia.engine.ir-manifest";
+    static constexpr char format_version[] = MORPHOIA_ENGINE_IR_FORMAT_VERSION;
+    static constexpr char media_type[] = MORPHOIA_ENGINE_IR_MEDIA_TYPE;
+    static constexpr char canonical_profile[] = MORPHOIA_CANONICAL_JSON_PROFILE1;
+    static constexpr char extension_keys[] = "";
+
+    morphoia_capability_info_t result{};
+    result.struct_size = MORPHOIA_CAPABILITY_INFO_V1_SIZE;
+    result.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
+    result.supported = view_equals(
+                           capability, capability_name, sizeof(capability_name) - 1U)
+                           ? 1U
+                           : 0U;
+    if (result.supported != 0U) {
+      result.capability_name = literal_view(capability_name);
+      result.format_identifier = literal_view(format_identifier);
+      result.format_version = literal_view(format_version);
+      result.media_type = literal_view(media_type);
+      result.canonical_profile = literal_view(canonical_profile);
+      result.extension_keys = literal_view(extension_keys);
+      result.maximum_input_bytes = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_INPUT_BYTES;
+      result.maximum_string_bytes = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_STRING_BYTES;
+      result.maximum_values = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_VALUES;
+      result.maximum_depth = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_DEPTH;
+    }
+    std::memcpy(info, &result, MORPHOIA_CAPABILITY_INFO_V1_SIZE);
+    set_diagnostic(diagnostic, MORPHOIA_STATUS_OK, {"", "capability query", "", "", ""});
+    return MORPHOIA_STATUS_OK;
+  } catch (...) {
+    return internal_exception(diagnostic, "capability query", "capability or info");
+  }
+}
+
+extern "C" morphoia_status_t MORPHOIA_ENGINE_CALL morphoia_canonical_json_profile1(
+    const morphoia_context_t* const context,
+    const morphoia_string_view_t input,
+    const morphoia_canonical_json_options_t* const options,
+    char* const output,
+    const size_t output_capacity,
+    size_t* const required_size,
+    uint8_t sha256[MORPHOIA_SHA256_DIGEST_SIZE],
+    morphoia_diagnostic_t* const diagnostic) noexcept {
+  try {
+    const std::array<StorageRange, 5> result_storage{{
+        {input.data, input.size},
+        {output, output_capacity},
+        {required_size, sizeof(*required_size)},
+        {sha256, MORPHOIA_SHA256_DIGEST_SIZE},
+        {options, MORPHOIA_CANONICAL_JSON_OPTIONS_V1_SIZE},
+    }};
+    const StorageRange diagnostic_storage{diagnostic, MORPHOIA_DIAGNOSTIC_V1_SIZE};
+    for (const StorageRange storage : result_storage) {
+      if (ranges_overlap(
+              diagnostic_storage.data,
+              diagnostic_storage.size,
+              storage.data,
+              storage.size)) {
+        return MORPHOIA_STATUS_INVALID_ARGUMENT;
+      }
+    }
+    if (any_storage_overlap(result_storage)) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "canonicalization storage overlaps",
+              "canonical JSON Profile 1",
+              "input, output, result, digest, and options storage must be disjoint",
+              "input, output, required_size, sha256, or options",
+              "provide non-overlapping caller-owned storage",
+          });
+    }
+    if (context == nullptr || required_size == nullptr || sha256 == nullptr) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "context, required size, and SHA-256 output are required",
+              "canonical JSON Profile 1",
+              "a required pointer is null",
+              "context, required_size, or sha256",
+              "provide every required pointer",
+          });
+    }
+    if ((input.data == nullptr && input.size != 0U) ||
+        (output == nullptr && output_capacity != 0U)) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "an explicit-length buffer has a null pointer with nonzero size",
+              "canonical JSON Profile 1",
+              "the input or output view is invalid",
+              "input or output",
+              "provide readable/writable bytes or a zero-length null buffer",
+          });
+    }
+    CanonicalLimits limits{};
+    const morphoia_status_t limit_status = read_canonical_limits(options, limits, diagnostic);
+    if (limit_status != MORPHOIA_STATUS_OK) {
+      return limit_status;
+    }
+
+    const char* const input_data = input.data == nullptr ? "" : input.data;
+    const auto result = morphoia::core::canonicalize_json(
+        std::string_view(input_data, input.size), limits.parser);
+    if (!result) {
+      const morphoia_status_t status = json_error_is_resource_limit(result.error.code)
+                                           ? MORPHOIA_STATUS_RESOURCE_LIMIT
+                                           : MORPHOIA_STATUS_INVALID_JSON;
+      const std::string context_text =
+          "canonical JSON Profile 1 byte " + std::to_string(result.error.offset) + " (" +
+          std::string(morphoia::core::json_error_name(result.error.code)) + ")";
+      return fail(
+          diagnostic,
+          status,
+          {
+              status == MORPHOIA_STATUS_RESOURCE_LIMIT
+                  ? "JSON input exceeded a configured resource limit"
+                  : "JSON input is invalid for Morphoia Canonical JSON Profile 1",
+              context_text.c_str(),
+              result.error.message.c_str(),
+              "input",
+              "correct the input or explicitly select suitable bounded limits",
+          });
+    }
+
+    const auto digest = morphoia::core::Sha256::hash(result.canonical);
+    if (output_capacity < result.canonical.size()) {
+      *required_size = result.canonical.size();
+      std::memcpy(sha256, digest.bytes.data(), digest.bytes.size());
+      set_diagnostic(
+          diagnostic,
+          MORPHOIA_STATUS_BUFFER_TOO_SMALL,
+          {
+              "canonical output buffer is too small",
+              "canonical JSON Profile 1",
+              "measurement or insufficient caller-owned storage",
+              "output",
+              "allocate required_size bytes and retry with the same input and options",
+          });
+      return MORPHOIA_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (!result.canonical.empty()) {
+      std::memcpy(output, result.canonical.data(), result.canonical.size());
+    }
+    *required_size = result.canonical.size();
+    std::memcpy(sha256, digest.bytes.data(), digest.bytes.size());
+    set_diagnostic(
+        diagnostic, MORPHOIA_STATUS_OK, {"", "canonical JSON Profile 1", "", "", ""});
+    return MORPHOIA_STATUS_OK;
+  } catch (const std::bad_alloc&) {
+    return fail(
+        diagnostic,
+        MORPHOIA_STATUS_ALLOCATION_FAILED,
+        {
+            "canonicalization allocation failed",
+            "canonical JSON Profile 1",
+            "bounded parser storage could not be allocated",
+            "parser or canonical output",
+            "release memory or lower the configured resource limits",
+        });
+  } catch (...) {
+    return internal_exception(diagnostic, "canonical JSON Profile 1", "input or output");
+  }
+}
+
 extern "C" morphoia_string_view_t MORPHOIA_ENGINE_CALL morphoia_status_name(
     const morphoia_status_t status) noexcept {
   switch (status) {
@@ -434,6 +883,18 @@ extern "C" morphoia_string_view_t MORPHOIA_ENGINE_CALL morphoia_status_name(
     }
     case MORPHOIA_STATUS_UNSUPPORTED_OPTION: {
       static constexpr char value[] = "MORPHOIA_STATUS_UNSUPPORTED_OPTION";
+      return string_view(value, sizeof(value) - 1U);
+    }
+    case MORPHOIA_STATUS_BUFFER_TOO_SMALL: {
+      static constexpr char value[] = "MORPHOIA_STATUS_BUFFER_TOO_SMALL";
+      return string_view(value, sizeof(value) - 1U);
+    }
+    case MORPHOIA_STATUS_INVALID_JSON: {
+      static constexpr char value[] = "MORPHOIA_STATUS_INVALID_JSON";
+      return string_view(value, sizeof(value) - 1U);
+    }
+    case MORPHOIA_STATUS_RESOURCE_LIMIT: {
+      static constexpr char value[] = "MORPHOIA_STATUS_RESOURCE_LIMIT";
       return string_view(value, sizeof(value) - 1U);
     }
     default: {

@@ -105,10 +105,26 @@ jobs:
           --require-hashes --only-binary=:all:
           -r requirements/engine-ci.lock
 
+      - name: Build the public IR native library in this isolated job
+        run: |
+          cmake --preset ci-gcc
+          cmake --build --preset ci-gcc --parallel 2
+
       - name: Run Python tests
         env:
           PYTHONPATH: src
         run: python -m unittest discover -s tests -v
+
+      - name: Validate the complete public IR 0.1 lot with the native library
+        env:
+          PYTHONPATH: src
+          MORPHOIA_ENGINE_LIBRARY: ${{ github.workspace }}/build/ci-gcc/libmorphoia_engine.so.0.0.1
+        run: bash scripts/validate-engine-ir-lot.sh
+
+      - name: Smoke-test an isolated installed wheel
+        env:
+          MORPHOIA_ENGINE_LIBRARY: ${{ github.workspace }}/build/ci-gcc/libmorphoia_engine.so.0.0.1
+        run: bash scripts/validate-engine-wheel.sh
 
       - name: Validate durable checkpoint and phase-scoped SBOMs
         run: |
@@ -116,6 +132,7 @@ jobs:
           python scripts/validate_engine_e0_evidence.py
           python scripts/validate_engine_e1_native_evidence.py
           python scripts/generate_engine_e2_sbom.py --check
+          python scripts/generate_engine_e1_public_ir_sbom.py --check
 
   hygiene:
     name: Source hygiene

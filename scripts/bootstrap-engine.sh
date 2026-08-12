@@ -40,8 +40,12 @@ internal_include_arg=(-I"${repo_dir}/cpp/src")
 
 echo "bootstrap-engine: using direct compiler fallback"
 "${cxx}" -std=c++20 "${common_warnings[@]}" "${include_arg[@]}" \
+  "${internal_include_arg[@]}" \
   -DMORPHOIA_ENGINE_SHARED -DMORPHOIA_ENGINE_EXPORTS -fPIC -fvisibility=hidden \
-  -fvisibility-inlines-hidden -shared "${repo_dir}/cpp/src/engine.cpp" \
+  -fvisibility-inlines-hidden -shared \
+  "${repo_dir}/cpp/src/engine.cpp" \
+  "${repo_dir}/cpp/src/core/canonical_json.cpp" \
+  "${repo_dir}/cpp/src/core/sha256.cpp" \
   -Wl,--version-script,"${repo_dir}/cmake/morphoia_engine.map" \
   -o "${fallback_dir}/libmorphoia_engine.so"
 
@@ -52,6 +56,14 @@ echo "bootstrap-engine: using direct compiler fallback"
   -Wl,-rpath,"${fallback_dir}" \
   -o "${fallback_dir}/abi_c_smoke"
 
+"${cc}" -std=c11 "${common_warnings[@]}" "${include_arg[@]}" \
+  -DMORPHOIA_ENGINE_SHARED \
+  -c "${repo_dir}/tests/native/canonical_json_c_api_test.c" \
+  -o "${fallback_dir}/canonical_json_c_api_test.o"
+"${cxx}" "${fallback_dir}/canonical_json_c_api_test.o" \
+  -L"${fallback_dir}" -lmorphoia_engine -Wl,-rpath,"${fallback_dir}" \
+  -o "${fallback_dir}/canonical_json_c_api_test"
+
 "${cxx}" -std=c++20 "${common_warnings[@]}" "${include_arg[@]}" \
   -DMORPHOIA_ENGINE_SHARED \
   -c "${repo_dir}/tests/native/core_smoke.cpp" -o "${fallback_dir}/core_smoke.o"
@@ -60,9 +72,11 @@ echo "bootstrap-engine: using direct compiler fallback"
   -o "${fallback_dir}/core_smoke"
 
 expected_exports=(
+  morphoia_canonical_json_profile1
   morphoia_context_create
   morphoia_context_destroy
   morphoia_context_get_abi_version
+  morphoia_context_query_capability
   morphoia_engine_get_version
   morphoia_status_name
 )
@@ -80,6 +94,7 @@ if [[ "${actual_exports[*]}" != "${expected_exports[*]}" ]]; then
 fi
 
 "${fallback_dir}/abi_c_smoke"
+"${fallback_dir}/canonical_json_c_api_test"
 "${fallback_dir}/core_smoke"
 
 "${cxx}" -std=c++20 "${common_warnings[@]}" "${internal_include_arg[@]}" \
@@ -104,6 +119,16 @@ if [[ "$(uname -s)" == "Linux" ]]; then
     -pthread \
     -o "${fallback_dir}/posix_cas_test"
   "${fallback_dir}/posix_cas_test"
+
+  "${cxx}" -std=c++20 "${common_warnings[@]}" "${internal_include_arg[@]}" \
+    -DMORPHOIA_TEST_SOURCE_DIR="\"${repo_dir}\"" \
+    "${repo_dir}/cpp/src/core/sha256.cpp" \
+    "${repo_dir}/cpp/src/core/canonical_json.cpp" \
+    "${repo_dir}/cpp/src/core/posix_cas.cpp" \
+    "${repo_dir}/tests/native/ir_replay_test.cpp" \
+    -pthread \
+    -o "${fallback_dir}/ir_replay_test"
+  "${fallback_dir}/ir_replay_test"
 else
   echo "posix_cas_test: NOT_RUN (Linux atomic no-clobber backend only)"
 fi

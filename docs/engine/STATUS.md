@@ -46,8 +46,11 @@ E1/E2 integration and public-IR base:
 | Public-IR lot isolation and entry smoke | PASS | `engine-p0-public-ir-replay` was created from exact integration merge `12656708`; branch inspection was clean and the direct CPU bootstrap passed. This is entry evidence, not public-IR implementation evidence. |
 | Public-IR entry checkpoint local validation | PASS | Frozen E0/E1 evidence, E2 SBOM, checkpoint, 320 requirements, 102/102 Python tests, report replay, native five-test bootstrap, Ruff on new Python, REUSE 194/194, secret scan, and whitespace checks passed. |
 | Public-IR entry checkpoint publication | PASS | Checkpoint `a69d35b5` is published on `engine-p0-public-ir-replay`; PR #8 targets only `engine`. Engine run `31596165398` passed native `94112106988`, REUSE `94112107004`, Python 3.12 `94112107035`, hygiene `94112107044`, and Python 3.13 `94112107066`; report run `31596165378`, job `94112106640`, passed. |
-| Public Engine IR 0.1 design | NOT_RUN | ADR-020 is `Proposed`; schemas, native/Python/CLI contract, and semantic validation have not yet executed. |
-| Public Engine IR 20-graph replay | NOT_RUN | No 20-graph input/golden corpus has yet been executed on this branch. |
+| Public Engine IR 0.1 local contract | PASS | Draft 2020-12 schema validation, bounded SPDX syntax, semantic invariants, native Profile 1 canonicalization, required-native Python, CLI, and explicit migration passed on Linux x86-64/CPython 3.12.13. ADR-020 remains `Proposed` until the lot is published and integrated. |
+| Public Engine IR 20-graph replay | PASS | Exactly 20 synthetic input/golden/replay graphs passed byte-identical native/Python canonicalization, two-workspace execution, and checkpoint resume; the 79-file corpus contains 13 declared invalid cases and no payload bytes. |
+| Public-IR local native/build gate | PASS | The bounded lot passed 60/60 owned tests, exact seven-symbol ABI inspection, direct bootstrap, ASan/UBSan, two fresh CMake 3.20.5 build/install/CTest 7/7 plus consumer 1/1 runs, and an isolated installed-wheel smoke. LSan and reproducible wheel construction remain `NOT_RUN`. |
+| Public-IR local evidence profile | PASS | The separate profile records 32 bounded `PASS` and 17 broader `NOT_RUN` requirements, 123 hash-verified artifacts, a 136-component CycloneDX inventory, 21/21 evidence/mutation tests, and REUSE 298/298. Vulnerability analysis remains `NOT_RUN`; the closed E0 tracking overlay is byte-exact. |
+| Public-IR implementation publication and hosted validation | NOT_RUN | The prospective implementation tree is not yet committed or pushed. PR #8 still points at entry checkpoint `c475288`; exact-head Python 3.13, report, review, integration, and post-merge checks remain required. |
 | Legacy prototype byte preservation | PASS | The five entry hashes in ADR-020 were recomputed and match; those files remain non-authoritative for Engine identity. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
@@ -66,7 +69,7 @@ E1/E2 integration and public-IR base:
 | Sanitizers | PASS | Fail-fast ASan and UBSan smoke passed; LSan remains `NOT_RUN` and is not included in this claim. |
 | E0 durable evidence/SBOM | PASS | The closed E0 generator, manifest, and CycloneDX output remain byte-exact and are checked as an immutable profile. Vulnerability analysis remains `NOT_RUN`. |
 | E1 durable evidence/SBOM correction | PASS | A separate fail-closed three-artifact E1 manifest and CycloneDX native-core profile cover the evolving source; exact truth fields and paths, dirfd-only atomic writes, mutation, license-map, self-hash, path-confinement, E0-freeze, deterministic checks, and hosted corrective workflows pass. Vulnerability analysis remains `NOT_RUN`. |
-| License metadata | PASS | Hash-locked REUSE 6.2.0 lint resolves copyright and license metadata for 191/191 files in the combined worktree; dependency vulnerability analysis remains `NOT_RUN`. |
+| License metadata | PASS | Hash-locked REUSE 6.2.0 lint resolves copyright and license metadata for 298/298 files in the public-IR worktree; dependency vulnerability analysis remains `NOT_RUN`. |
 | Secret signature scan | PASS | Bounded fail-closed scan covered tracked and untracked text; binary baselines were separately hash/type/archive inspected. This is not a full secret/PII audit. |
 | Public language policy | FAIL | Engine code/governance material and contribution guidance are English, but the legacy Phase 1/2 README and developer guides remain French; R-021 records the bounded migration gap. |
 | SALOME 9.16 | NOT_RUN | Runtime absent. |
@@ -112,12 +115,15 @@ The current finite lot is `public-ir-0.1-and-20-graph-replay` on
 `engine-p0-public-ir-replay`. ADR-020 proposes the distinct public Engine IR
 0.1 identity domain, strict lexical/schema/semantic validation order,
 reverse-DNS extensions, and a native C ABI limited to capability query and
-canonicalization. Track A owns schema, contract, migration, and exactly 20
-input/golden graph fixtures. Track B owns the native ABI, required-native Python
-binding, CLI, replay, build, consumer, and sanitizer coverage. Track C owns the
-frozen prior evidence, public-IR traceability, manifest/SBOM, CI, licensing, and
-durable state. The schema, public APIs, and 20-graph replay remain `NOT_RUN`, so
-the lot and E1 remain `IN_PROGRESS`.
+canonicalization. Track A delivered schema, contract, migration, exactly 20
+input/golden/replay graphs, and 13 invalid cases. Track B delivered the
+seven-symbol native ABI, required-native Python binding, CLI, replay,
+build/install consumer, sanitizer, and isolated-wheel coverage. Track C
+delivered a separate fail-closed traceability/manifest/SBOM profile while
+preserving the E0 overlay byte-exact. The bounded local contract and replay
+profile is `PASS`; publication, hosted Python 3.13, PR review, integration into
+`engine`, and post-merge verification remain `NOT_RUN`, so the lot and E1
+remain `IN_PROGRESS`.
 
 The legacy prototype boundary was recomputed at lot entry:
 
@@ -163,7 +169,10 @@ E2 or G1/P0.
 
 ## Next action
 
-Implement Tracks A, B, and C in parallel under their declared file ownership,
-then integrate and execute the complete public-IR gate locally and on PR #8.
-Real SALOME 9.16, GPU backends, public IR replay, and the real
-greater-than-2-GiB transfer remain `NOT_RUN` until their named tests execute.
+Publish the reviewed public-IR implementation as one signed checkpoint on
+`engine-p0-public-ir-replay`, update draft PR #8, and require exact-head native,
+Python 3.12/3.13, hygiene, REUSE, and report workflows. Integrate PR #8 only
+into `engine` after every required check and review is green, then verify the
+exact merge SHA. Real SALOME 9.16, GPU backends, the real greater-than-2-GiB
+transfer, and all MVX-specific criteria remain `NOT_RUN` or `BLOCKED` until
+their named tests and prerequisites exist.

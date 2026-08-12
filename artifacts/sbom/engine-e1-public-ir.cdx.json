@@ -1,0 +1,4803 @@
+{
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "bom-ref": "pkg:pypi/attrs@26.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "attrs",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/attrs@26.1.0",
+      "scope": "excluded",
+      "type": "library",
+      "version": "26.1.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "jsonschema-specifications",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "scope": "excluded",
+      "type": "library",
+      "version": "2025.9.1"
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema@4.25.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3fba0169e345c7175110351d456342c364814cfcf3b964ba4587f22915230a63"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "jsonschema",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema@4.25.1",
+      "scope": "excluded",
+      "type": "library",
+      "version": "4.25.1"
+    },
+    {
+      "bom-ref": "pkg:pypi/referencing@0.37.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "referencing",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/referencing@0.37.0",
+      "scope": "excluded",
+      "type": "library",
+      "version": "0.37.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/rpds-py@2026.6.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "acac386b453c2516111b50985d60ce46e7fadb5ea71ae7b25f4c946935bf27cf"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ecabd69db66de867690f9797f2f8fa27ba501bbc24540cbdbdc649cd15888ba6"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "rpds-py",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/rpds-py@2026.6.3",
+      "scope": "excluded",
+      "type": "library",
+      "version": "2026.6.3"
+    },
+    {
+      "bom-ref": "pkg:pypi/typing-extensions@4.16.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "NOASSERTION"
+          }
+        }
+      ],
+      "name": "typing-extensions",
+      "properties": [
+        {
+          "name": "morphoia:license-review-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:provisioning",
+          "value": "lock-only-not-shipped-by-sbom"
+        },
+        {
+          "name": "morphoia:source-locks",
+          "value": "requirements/engine-ci.lock"
+        }
+      ],
+      "purl": "pkg:pypi/typing-extensions@4.16.0",
+      "scope": "excluded",
+      "type": "library",
+      "version": "4.16.0"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:adr-020-public-engine-ir",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a47a596771bfe1207fbfe9317eee4f8c95db0cdb53615db44fe3f7ccce664e40"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/adr/ADR-020-public-engine-ir-v0.1.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "adr-020-public-engine-ir"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "architecture-decision-record"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:canonical-json-c-api-test",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f6689315b52f024bf2ae54d84ccf6b86fdbe616859de62203839ca06faa29190"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/canonical_json_c_api_test.c",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "canonical-json-c-api-test"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "native-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-artifact-manifest-schema",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d9c946d25ce665d92bd840d2d86de9838e4b3dd040bde67f4444a85a913b9b68"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "spec/evidence/e1-public-ir-artifact-manifest.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e1-public-ir-artifact-manifest-schema"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-schema"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-evidence-generator",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1f9cc737f2302c33d6fda0c2c4d12725b27c9486226d86af9fb95e35395a131f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/generate_engine_e1_public_ir_sbom.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e1-public-ir-evidence-generator"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-generator"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-evidence-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4baf0e45b37e3821ad5fac3b60b549a9306efccf9d7fbfa0e2fe00317bf4f3b2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_e1_public_ir_evidence.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e1-public-ir-evidence-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-report",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0b57b9b6c792c600ebac39dc996d3e9425c9f1eb940623cd1cebab4bdef7dce1"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e1-public-ir-report"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-report"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-traceability",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3613492cce804d4716ef37caf47bd8cd7e1d215fe288559e2e4f70a555733fc4"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/evidence/e1-public-ir-traceability.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e1-public-ir-traceability"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "traceability"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-traceability-schema",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "69b77996d337e952ef42eac9d350c2bc25b7243502a12584d9fd842526da8f37"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "spec/evidence/e1-public-ir-traceability.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "e1-public-ir-traceability-schema"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-schema"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-bootstrap",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0df13a9053962d47b06c49557614429ce9c22f3506f28eb966b5cf647b4d6c0c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/bootstrap-engine.sh",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-bootstrap"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "validation-script"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-c-abi-header",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "da1b21e977c69d6bede3d4dbfde495e1bea01ffc2adda4dff30c37eae792c3b0"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "cpp/include/morphoia/engine.h",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-c-abi-header"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "c-abi"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-c-abi-implementation",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8f7ab080b4e4f6066a14b32c861c38a3d8c5a92c2d241a5f298c9c717ff415c4"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "cpp/src/engine.cpp",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-c-abi-implementation"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "c-abi"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-cmake-build",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c8cca2f8af1026d1eea1ea2c28d19dffa55d8ffdca55e422156cd75c97a68018"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "CMakeLists.txt",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-cmake-build"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "build-contract"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-core-cpu-workflow",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8442400a9a0764244be28f2df3a99e251a47c52161c178e63bd9682df39a1065"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": ".github/workflows/engine-ci.yml",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-core-cpu-workflow"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ci-workflow"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-export-map",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2ada197963769094ee46669a3a626d38110e1a40dfa00015d5c7f4d4e39c896c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "cmake/morphoia_engine.map",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-export-map"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "build-contract"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-cli",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8bf2bf547df5194d1584bfceb67d45125dac049868c26f049d4abbf5f35aaff5"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "src/morphoia/cli.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-cli"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "cli-implementation"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-cli-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b037b1acbff8a67574a80a565ad5154c6136083486245141bf5619c7d32e2d5e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_cli.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-cli-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "python-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-contract",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5f3eed7386b1c08e0177dbf44662a543806feea051efdcf595c2c092c38ccf2f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/engine_ir_contract.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-contract"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "contract-implementation"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-contract-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c7bf7cd4a41efd45d4b6c9722295618e7627b66a89bcbb1374126fa857f3efdd"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_contract.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-contract-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "python-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-data-card",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d8c627aa65a2a1283a93871b4c2670fdc2f9f6d9d88c6cde0d3bbbc4749f3782"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/DATA_CARD.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-corpus-data-card"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "data-card"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-index",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "39a9e4f2381993f88d8ccbea9d66b402b44ab30cdd4e7b16f486334bd1630ad2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/index.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-corpus-index"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "corpus-index"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-validator",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "60936f72a27fe5bdeb78506d1580f7d21928551d9466e4c5c00e084af173617d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/validate_engine_ir_corpus.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-corpus-validator"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "validation-script"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-01-brep-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "093583023baae72965fc67a98be4b59bc7531f87dc22960343cc73c78b725f55"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-01-brep-source.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-01-brep-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-02-points-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6d7abaf907569e81545b1c306f5a8dc69515d25cdfbe1f4416ca5498ee00c68d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-02-points-source.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-02-points-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-03-voxel-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "066e832c338b0be112bb722f656d7972bd03317e94938d80b94c9283f9220e1c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-03-voxel-source.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-03-voxel-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-04-transform",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fea53d08c2288953c6b66b99b190bef0cf497eb640297d9a0de8151b2623ec64"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-04-transform.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-04-transform"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-05-derived-mesh",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2fa985245e26f4033a91054efab014349e8369ce578e3cab01cd233c2b6d85f5"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-05-derived-mesh.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-05-derived-mesh"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-06-field-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "76378c36ee77bf483ce991f5095769d39b9916dcc3cdca9fc94028d6d1ee6aac"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-06-field-derived.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-06-field-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-07-scene-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a599bc8e5be4892159bde04fcf45e25dce955e29f49faeaf98dae273976cb6b4"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-07-scene-derived.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-07-scene-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-08-tensor-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ffddd3324dbef191ee05732a742881a84eff7e637e05f077ddcb8b086e3cfb20"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-08-tensor-derived.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-08-tensor-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-09-ai-candidate",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "06d32edac9f3b9d15dee54dc1280257856a442279bd4eb9a8e5660e09311996d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-09-ai-candidate.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-09-ai-candidate"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-10-fidelity-loss",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6278a5cc05c272d5fc73f13cd627bd3d65f729af8f0b47c8e2c056383880f9b2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-10-fidelity-loss.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-10-fidelity-loss"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-11-assembly",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e29a67b20bf5257abd26393fe205bfbb1ad1411ffb48c2dc3e1bea73111f1b4a"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-11-assembly.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-11-assembly"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-12-instances",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4858985aa91f13367ff9e8980b3c846f302a2f99b6ea30c7557d5aba85cc0b69"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-12-instances.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-12-instances"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-13-topology-unstable",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "91a7cf8cb1c46e6ca28de14ac6813725e297b4ab530d37da4f7f9774e37f97d7"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-13-topology-unstable.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-13-topology-unstable"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-14-tolerance",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "85a2b04da64ef7dbd828b6daa928edc8b785f47791aca132bd156ce9d606c137"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-14-tolerance.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-14-tolerance"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-15-repair",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "44d9fafa239b581cd751eb720b1e73cadc17e8a20e47b7759d0ea90937891577"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-15-repair.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-15-repair"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-16-multiple-units",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1b2d8f0ee5ab9b9c118331cbf68fce47c6d1ad501f00f33c721b879d73f165d2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-16-multiple-units.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-16-multiple-units"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-17-two-frames",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c104cfc9615c4bc8126c40c9b052fd5f309afe2294b9aa91e51bd3df22f446ee"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-17-two-frames.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-17-two-frames"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-18-provenance-chain",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "29cc55b40ef6fd6d3d02b95cc34a0eeea1adc244363eb2fa4b7241ed193a5c16"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-18-provenance-chain.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-18-provenance-chain"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-19-reverse-dns-extension",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ef2ce9bcd4f088748044c428ef8c3f1eb475c238aed124c36edbfba993b3edbd"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-19-reverse-dns-extension.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-19-reverse-dns-extension"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-20-revision-parent",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e2869c264d27c0e6b398d678901e87351ddc67c2b58af80621fa1a0a80285471"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/goldens/graph-20-revision-parent.content.cjson",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-golden-graph-20-revision-parent"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "canonical-golden"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-guide",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0ac76435dc55bee0fd7211f16e05d1f18eb1ae9a50e1b98ecf13826726b7a8fb"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/IR_MANIFEST_0_1.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-guide"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "documentation"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-01-brep-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "860d3bfbcd14e1a611057057e20ac202d69101fb0bb68227874a3c4487745816"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-01-brep-source.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-01-brep-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-02-points-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4b97174c65c373fda0bef116f0a0b6490ea579b4730454b58bbb75cdc0857334"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-02-points-source.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-02-points-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-03-voxel-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "031a1889c94f05e864d609727a193f04ae92af56828aac89acb8d52a8af5a837"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-03-voxel-source.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-03-voxel-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-04-transform",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "86c3d1177be4c10aa7218598a799387ff51b6d64a0a3d22f46d3ba99cfc1b1e2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-04-transform.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-04-transform"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-05-derived-mesh",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "93727dba35a04dc3337b04454928b6a4e132094290d963402128cc48a3208754"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-05-derived-mesh.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-05-derived-mesh"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-06-field-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3bc7861bfb260be3fdbb306576e008d411bdf8308b9f5f6a79e4ca386db88555"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-06-field-derived.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-06-field-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-07-scene-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3f30a8613fff816e00507cadefefb409283289bece44fef27d8a9ef5b73ba959"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-07-scene-derived.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-07-scene-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-08-tensor-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "05ae1b2d76236d1047704687ba77d7250af692d479dc0f8c3f56ed6ab27a6238"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-08-tensor-derived.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-08-tensor-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-09-ai-candidate",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6e9bb8f436debb279931c7d6775a16141f2d4e480d619ac6d9f895110760f415"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-09-ai-candidate.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-09-ai-candidate"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-10-fidelity-loss",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "804b99faf23bb00b62b6766c98390f95fc8d6f382b53e6ddfe20771ac1f70fa8"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-10-fidelity-loss.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-10-fidelity-loss"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-11-assembly",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "23286f1c49079a0f047122659d29103e36215a9d6362c774fb67b207a9ee5577"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-11-assembly.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-11-assembly"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-12-instances",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "df695af27f285ac21c774c2cb144a50d569fd0ed9b70120f6d66a8e0588e0db6"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-12-instances.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-12-instances"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-13-topology-unstable",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "209d290754c21bbc3fea67e39c3ee27256c935be131e79e1172b933fdefd5c2a"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-13-topology-unstable.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-13-topology-unstable"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-14-tolerance",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "da91ec4f0d916a1dbef48df7a4ebc7383a39fcafd3f7dd137dbc835c28d95a51"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-14-tolerance.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-14-tolerance"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-15-repair",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a3a69d85f0824e07d282cf1e7b9ceddef759ec2186e798f9ccc050104fd1049f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-15-repair.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-15-repair"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-16-multiple-units",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3ce7c56b90be04eafe1a5e16ffcb9f749d3927774c2a3ddf64d4e52885d1662b"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-16-multiple-units.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-16-multiple-units"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-17-two-frames",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4d79773e3485625f7f5d7ff0060dd3685cb87305b2e76344826c0ff6d6ee7de2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-17-two-frames.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-17-two-frames"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-18-provenance-chain",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "31164c2ecfb231cd6102ece08c200bc537fb827a3ef8f908cdfd595d06182c56"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-18-provenance-chain.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-18-provenance-chain"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-19-reverse-dns-extension",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "119f55e4cbb241c11caeba4f3b94c5e08f75a324835cb10f2755ce8a27f3d2ec"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-19-reverse-dns-extension.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-19-reverse-dns-extension"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-20-revision-parent",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "79cdc135df2a86af0657ae2ea9930af62dbf15f78f2d5b52bcc13105efb58e43"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/inputs/graph-20-revision-parent.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-input-graph-20-revision-parent"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-duplicate-id",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "781c7579f2a861fd52688a0c5433fb0ffa360ff7e25ef0a2ab8d2bb484c35e5b"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/duplicate-id.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-duplicate-id"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-duplicate-key",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "70f09e61d50f608b090093a666c8f5995ed46fd99d0a96e33169bfa3a616b451"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/duplicate-key.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-duplicate-key"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-fraction",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "35750a490f2a14ea7132b4aac2805ca5abdbccf6263050cdce3f3fb20f71c75d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/fraction.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-fraction"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-index",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "65880585fce56735596d38292d91fdea7655c4fe19f4814c785480a38e92e5f3"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/index.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-index"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-inline-payload",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "12a79a2d3dc8579bfd572f426500950febdcef918db41ef1260b9b08b237dc31"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/inline-payload.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-inline-payload"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-invalid-extension",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9dca5f0825d364dbafaf627a5a538e7e25e22abf5bd71e01ed50a9f800657a5e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/invalid-extension.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-invalid-extension"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-lone-surrogate",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "87bd744f2328dbd7d3fcc4875b37b852b5c0344c8cb81f88a831af826207845c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/lone-surrogate.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-lone-surrogate"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-source-offset-time",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ab74e12e6744b927958604e0e191c5837cd87581b24ca93ac6ecd217c5c6e08f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/source-offset-time.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-source-offset-time"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-unknown-core",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fd03bbe29a27b46edbda1d6d24a75264a99330d29699400ba6a7652e57f5018c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/unknown-core.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-unknown-core"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-unknown-frame-unit",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "22e8643c6054f0ab897a089bf182583ab3b928c72c0a8423db294c6cf385eed3"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/unknown-frame-unit.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-unknown-frame-unit"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-uppercase-uuid",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8accc21359cff36688b22f85bf21d9b9513576601646ff2bd512c13b1d161028"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/uppercase-uuid.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-uppercase-uuid"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-uri-digest-mismatch",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7e8bd56bb2c1f74e48c76ddf35a5abde7355e3f8b2cd5682dd32792da663e61e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/uri-digest-mismatch.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-uri-digest-mismatch"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-verified-self-claim",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3970389db9dcb5913975a544d77c1e9f20808e397fe4a6017bae2a53af01372e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/verified-self-claim.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-verified-self-claim"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-zero-axis",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "81818241f8753afd6b2ca256f2eedc3e880bf1a496eea74dc07cfb3d5b9d5cde"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/invalid/zero-axis.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-invalid-zero-axis"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "invalid-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-lot-runner",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9ba770ee4ff097071a879aec1321164520d0a84a5f6ed695ead049f5e1e5af96"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/validate-engine-ir-lot.sh",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-lot-runner"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "validation-script"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-manifest-schema-0.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4392d659b5f90b305ee9a29953240c95adfd3174d2006ca44c6c7b9305fb4250"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-manifest-schema-0.1.0"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-schema"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "07eb44f2c457ba97f79441c538b40ddfe2e7e4ec0f215dcbb4ab0c6a186d5eb7"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/engine_ir_migration.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-migration"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "migration-implementation"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-expected-content",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1277d5dde39f52a9c11213da8f6514c55f45e14c56b7cfc62e302eb62ca483e2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/migration/expected-content.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-migration-expected-content"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "migration-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-legacy-input",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b9672993c4736ea71baea020795a1f6a8a480ba6026f69a12742e94995fc8692"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/migration/legacy-input.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-migration-legacy-input"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "migration-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-metadata",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5ad7eef51d705ebfa288e87da9cb81659a5e7ea952f43a1c80351c9e2019a2ba"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/migration/metadata.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-migration-metadata"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "migration-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "658c777cb454a715b2d112ac351baeb4a354c1c5cc7b2ffe63576ca204728e67"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_migration.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-migration-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "python-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-native-binding-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1960a0cd64df4f8ece343fa4e1f63629e53e8512a745b70953081e07ab4b8852"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_native.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-native-binding-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "python-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-package-api",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3dc00bd2c3bdba9aed7e5ca6162558fb8f7895a7d3f59e06367b1118f5ebe6d0"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "src/morphoia/__init__.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-package-api"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "python-api"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-python-api",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a094aa670615c7e8a0fb5b02cc782368265d1f8bb42bef838108adbd86927fef"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/engine_ir.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-python-api"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "python-api"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-01-brep-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "60b89933cedab1a27f958002fd5434d91d0bb50b51c3967fb9c6dad4cc734b54"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-01-brep-source.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-01-brep-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-02-points-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "95e59c85e9234bc209025b31b9a87fae9fefe4d57dc04ece2885dc9bc8117b01"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-02-points-source.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-02-points-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-03-voxel-source",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0cfaca8af090ab8b187477992389a089d23d7b4462b321f0fe9ec4794056278c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-03-voxel-source.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-03-voxel-source"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-04-transform",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3e53fad9fc3dc94dd8e2b881eb2f5c69c40a56d9d7bfae0464a0bd077baff6a0"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-04-transform.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-04-transform"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-05-derived-mesh",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1753b267b1f40cc28ad5e15f6442104c747042b46f341a853f61986070da9905"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-05-derived-mesh.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-05-derived-mesh"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-06-field-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a2c5c53187b6eeead871baab4163feb77c1a8501758d9399b62d8c4045fc0f6f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-06-field-derived.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-06-field-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-07-scene-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f7029e65986ba0de28ac60df6041c89ecda0c6b71ba7820c7c4e635b683bc63e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-07-scene-derived.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-07-scene-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-08-tensor-derived",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b4db3294e5865d493f8eb234dc01f0ab19aac9f60a55cfbeeaa460954ec04bba"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-08-tensor-derived.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-08-tensor-derived"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-09-ai-candidate",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "998d8d3cae77acfaea0a97f1a14302cc560a40875785f58530b0ea4d7dbfc470"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-09-ai-candidate.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-09-ai-candidate"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-10-fidelity-loss",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8d5408f760aef2f493b617b72fdf314f7b6fe31127a59e918acdb0c26db98b7a"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-10-fidelity-loss.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-10-fidelity-loss"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-11-assembly",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "29906443d6175aefad395f38be623c1cb8bfb357d26403daa27911a20aa8e79f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-11-assembly.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-11-assembly"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-12-instances",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0e29de89ac08610ed3865244e8fc8381869bf7c31c44299393e139dc7b99f836"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-12-instances.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-12-instances"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-13-topology-unstable",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "676172e44b6bf00633ac61c30fd53199a133262b2f613cab5048bbefeae6705c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-13-topology-unstable.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-13-topology-unstable"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-14-tolerance",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "97f95815707b58b5af57b0c9a3425f048b7d81f56e87c7f6210655666806fc5c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-14-tolerance.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-14-tolerance"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-15-repair",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9d10c7862daaa86aaac7be909cd079bc77cbb52ab0da51d5330a5afb286ff920"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-15-repair.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-15-repair"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-16-multiple-units",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "843547875a6faa029a3d292d6fac591265e7ebed3632445b3fd4fa25144f69d6"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-16-multiple-units.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-16-multiple-units"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-17-two-frames",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4b88f0e2fd4df7fdc1257d54a4d3de41c441ed81b467fb156f4960e1a0f79b26"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-17-two-frames.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-17-two-frames"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-18-provenance-chain",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4c0457d263086e826f63b90ea70b5ea716860e491b5909e3bf3b72c60e2de306"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-18-provenance-chain.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-18-provenance-chain"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-19-reverse-dns-extension",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4a2f3bee39ffbf370a418f4fe791b81ca51e78fc0973e25b9c8eb6710443b4d7"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-19-reverse-dns-extension.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-19-reverse-dns-extension"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-20-revision-parent",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "05401dcc6eb817c64b2cd3e4216770633fca30732d9bf9bf597a69a639fcc372"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/replays/graph-20-revision-parent.replay.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-graph-20-revision-parent"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "replay-fixture"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-schema-0.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "53ff72e72d07b87a2453bee750c8553e7445e98845effcd4a47287465aba45c5"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "schemas/morphoia-engine-ir-replay-0.1.0.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-schema-0.1.0"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "ir-schema"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-tests",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4dba80223a18542a8e3986c644abc48944f2aaa13e25531def685f331c908f7d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_replay.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-replay-tests"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "python-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-wheel-validator",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "228c8b0151e376cd3595cd5a6176400e89310d9916e0f6bc34289caeddf638a2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/validate-engine-wheel.sh",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-ir-wheel-validator"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "validation-script"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-native-binding",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3498e5a04932d9d82ea811bb593876338e33a31f6c5b129183e560b8c49461ca"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/_engine_native.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-native-binding"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "python-binding"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:engine-sanitizer-runner",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5df4d2a48b3e322adb00814d698599e186cf6002c3529f477c6975581fc8d12f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/run-engine-sanitizers.sh",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "engine-sanitizer-runner"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "validation-script"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-manifest",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2fee29f645651dafbeafa5d240e9148cad12334f1eac0045d5c27fb7ddee273b"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "artifacts/e1/manifest.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "frozen-e1-native-manifest"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "artifact-manifest"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-report",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6f98f5c1f6045f2df983471531ed936652266566f04d09d28b834bf64521b964"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "frozen-e1-native-report"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-report"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-sbom",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e098c130a535bb0a0f8d92f89c76015051d9296e3228475bfee5cc1afa214176"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "artifacts/sbom/engine-e1-native-core.cdx.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "frozen-e1-native-sbom"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "cyclonedx-sbom"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-validator",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c410050aa462eaf597ede5d20ebd15a75a359f74dd0fb017dcd6b1cf27c0498e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/validate_engine_e1_native_evidence.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "frozen-e1-native-validator"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "evidence-validator"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:installed-c-consumer",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fa53c874822f824a8dbc8148325728fc198a11fd5672413436db1a20dbb08c2c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/consumer/main.c",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "installed-c-consumer"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "native-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:installed-consumer-build",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5f3e15ec59c294d01aeef3e06c51978b63998795405b461f265ff5d006c653f5"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/consumer/CMakeLists.txt",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "installed-consumer-build"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "build-contract"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:native-ir-replay-test",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "cda644859a41b0dcd916f068a506290804beaaf2e77bb752919f1b6f49250630"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/ir_replay_test.cpp",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "native-ir-replay-test"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "native-test"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:project-changelog",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1cf86aabdcfd81c909cf0c3c9d78dac5c580e5266d1b67816c460e6d3433a2b7"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "CHANGELOG.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "project-changelog"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "release-documentation"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:python-project-metadata",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "14572048e3e382ab21295ff20e30d0f1b7c2d62946b3c9dbe3c27369087d0b1b"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "pyproject.toml",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "python-project-metadata"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "package-metadata"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:requirements-tracking",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7af677456e74f0fece87dbbae7db3637892ab1c24271dcc4603df2633e57dec4"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/requirements/requirements-tracking.yaml",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "requirements-tracking"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "requirements-traceability"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-artifact:reuse-annotations",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ce97f9c75c2bac15414ed51dad9ee5893d1aa4dc8c1e5df6abd25e3b66d2acd1"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "REUSE.toml",
+      "properties": [
+        {
+          "name": "morphoia:artifact:id",
+          "value": "reuse-annotations"
+        },
+        {
+          "name": "morphoia:artifact:kind",
+          "value": "license-metadata"
+        },
+        {
+          "name": "morphoia:evidence:verification-status",
+          "value": "PASS"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-license:LICENSE",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b844215f70ea1e2b8815118e2a787b7337ac9492fd50a9ffbd7cd8bf93b34965"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "LICENSE",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-license:LICENSE-APACHE",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d87584c23e1f28621fb407e3bfd2d2c3303c088e5f2337bad9d4a919a4384067"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0"
+        }
+      ],
+      "name": "LICENSE-APACHE",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-license:LICENSE-MIT",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b844215f70ea1e2b8815118e2a787b7337ac9492fd50a9ffbd7cd8bf93b34965"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "LICENSE-MIT",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-license:LICENSES%2FApache-2.0.txt",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d87584c23e1f28621fb407e3bfd2d2c3303c088e5f2337bad9d4a919a4384067"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0"
+        }
+      ],
+      "name": "LICENSES/Apache-2.0.txt",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-license:LICENSES%2FCC-BY-4.0.txt",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "419896aea50c15d6e40c5b4baf4bd346f78223b9a354c7357ad00262afdc08ec"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "LICENSES/CC-BY-4.0.txt",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-license:LICENSES%2FMIT.txt",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b844215f70ea1e2b8815118e2a787b7337ac9492fd50a9ffbd7cd8bf93b34965"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "LICENSES/MIT.txt",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-license:NOTICE",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1db6af37682adf5473a53066d839ec6ddc600930401097530fa985b81619432f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "NOTICE",
+      "properties": [
+        {
+          "name": "morphoia:role",
+          "value": "license-or-notice-file"
+        }
+      ],
+      "type": "file"
+    },
+    {
+      "bom-ref": "urn:morphoia:e1-public-ir-lock:requirements%2Fengine-ci.lock",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ee1e00b79e51678243beb7dedefb043fa675ed9c4d8c458b2fe576aa7082ade5"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "requirements/engine-ci.lock",
+      "properties": [
+        {
+          "name": "morphoia:profile",
+          "value": "e1-public-ir-core-cpu"
+        },
+        {
+          "name": "morphoia:role",
+          "value": "hashed-test-lock"
+        },
+        {
+          "name": "morphoia:source-base-commit",
+          "value": "c475288961d40bb16c4cc10a333034a247acb451"
+        }
+      ],
+      "type": "file"
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": [
+        "pkg:pypi/attrs@26.1.0",
+        "pkg:pypi/jsonschema-specifications@2025.9.1",
+        "pkg:pypi/jsonschema@4.25.1",
+        "pkg:pypi/referencing@0.37.0",
+        "pkg:pypi/rpds-py@2026.6.3",
+        "pkg:pypi/typing-extensions@4.16.0",
+        "urn:morphoia:e1-public-ir-artifact:adr-020-public-engine-ir",
+        "urn:morphoia:e1-public-ir-artifact:canonical-json-c-api-test",
+        "urn:morphoia:e1-public-ir-artifact:e1-public-ir-artifact-manifest-schema",
+        "urn:morphoia:e1-public-ir-artifact:e1-public-ir-evidence-generator",
+        "urn:morphoia:e1-public-ir-artifact:e1-public-ir-evidence-tests",
+        "urn:morphoia:e1-public-ir-artifact:e1-public-ir-report",
+        "urn:morphoia:e1-public-ir-artifact:e1-public-ir-traceability",
+        "urn:morphoia:e1-public-ir-artifact:e1-public-ir-traceability-schema",
+        "urn:morphoia:e1-public-ir-artifact:engine-bootstrap",
+        "urn:morphoia:e1-public-ir-artifact:engine-c-abi-header",
+        "urn:morphoia:e1-public-ir-artifact:engine-c-abi-implementation",
+        "urn:morphoia:e1-public-ir-artifact:engine-cmake-build",
+        "urn:morphoia:e1-public-ir-artifact:engine-core-cpu-workflow",
+        "urn:morphoia:e1-public-ir-artifact:engine-export-map",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-cli",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-cli-tests",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-contract",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-contract-tests",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-data-card",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-index",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-validator",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-01-brep-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-02-points-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-03-voxel-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-04-transform",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-05-derived-mesh",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-06-field-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-07-scene-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-08-tensor-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-09-ai-candidate",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-10-fidelity-loss",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-11-assembly",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-12-instances",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-13-topology-unstable",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-14-tolerance",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-15-repair",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-16-multiple-units",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-17-two-frames",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-18-provenance-chain",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-19-reverse-dns-extension",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-20-revision-parent",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-guide",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-01-brep-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-02-points-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-03-voxel-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-04-transform",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-05-derived-mesh",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-06-field-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-07-scene-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-08-tensor-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-09-ai-candidate",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-10-fidelity-loss",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-11-assembly",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-12-instances",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-13-topology-unstable",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-14-tolerance",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-15-repair",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-16-multiple-units",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-17-two-frames",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-18-provenance-chain",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-19-reverse-dns-extension",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-20-revision-parent",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-duplicate-id",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-duplicate-key",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-fraction",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-index",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-inline-payload",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-invalid-extension",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-lone-surrogate",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-source-offset-time",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-unknown-core",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-unknown-frame-unit",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-uppercase-uuid",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-uri-digest-mismatch",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-verified-self-claim",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-zero-axis",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-lot-runner",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-manifest-schema-0.1.0",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-migration",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-expected-content",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-legacy-input",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-metadata",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-tests",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-native-binding-tests",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-package-api",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-python-api",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-01-brep-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-02-points-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-03-voxel-source",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-04-transform",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-05-derived-mesh",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-06-field-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-07-scene-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-08-tensor-derived",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-09-ai-candidate",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-10-fidelity-loss",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-11-assembly",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-12-instances",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-13-topology-unstable",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-14-tolerance",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-15-repair",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-16-multiple-units",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-17-two-frames",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-18-provenance-chain",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-19-reverse-dns-extension",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-20-revision-parent",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-schema-0.1.0",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-tests",
+        "urn:morphoia:e1-public-ir-artifact:engine-ir-wheel-validator",
+        "urn:morphoia:e1-public-ir-artifact:engine-native-binding",
+        "urn:morphoia:e1-public-ir-artifact:engine-sanitizer-runner",
+        "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-manifest",
+        "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-report",
+        "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-sbom",
+        "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-validator",
+        "urn:morphoia:e1-public-ir-artifact:installed-c-consumer",
+        "urn:morphoia:e1-public-ir-artifact:installed-consumer-build",
+        "urn:morphoia:e1-public-ir-artifact:native-ir-replay-test",
+        "urn:morphoia:e1-public-ir-artifact:project-changelog",
+        "urn:morphoia:e1-public-ir-artifact:python-project-metadata",
+        "urn:morphoia:e1-public-ir-artifact:requirements-tracking",
+        "urn:morphoia:e1-public-ir-artifact:reuse-annotations",
+        "urn:morphoia:e1-public-ir-license:LICENSE",
+        "urn:morphoia:e1-public-ir-license:LICENSE-APACHE",
+        "urn:morphoia:e1-public-ir-license:LICENSE-MIT",
+        "urn:morphoia:e1-public-ir-license:LICENSES%2FApache-2.0.txt",
+        "urn:morphoia:e1-public-ir-license:LICENSES%2FCC-BY-4.0.txt",
+        "urn:morphoia:e1-public-ir-license:LICENSES%2FMIT.txt",
+        "urn:morphoia:e1-public-ir-license:NOTICE",
+        "urn:morphoia:e1-public-ir-lock:requirements%2Fengine-ci.lock"
+      ],
+      "ref": "pkg:generic/morphoia-engine-e1-public-ir@0.0.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/attrs@26.1.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/jsonschema-specifications@2025.9.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/jsonschema@4.25.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/referencing@0.37.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/rpds-py@2026.6.3"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/typing-extensions@4.16.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:adr-020-public-engine-ir"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:canonical-json-c-api-test"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-artifact-manifest-schema"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-evidence-generator"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-evidence-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-report"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-traceability"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:e1-public-ir-traceability-schema"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-bootstrap"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-c-abi-header"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-c-abi-implementation"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-cmake-build"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-core-cpu-workflow"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-export-map"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-cli"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-cli-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-contract"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-contract-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-data-card"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-index"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-corpus-validator"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-01-brep-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-02-points-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-03-voxel-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-04-transform"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-05-derived-mesh"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-06-field-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-07-scene-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-08-tensor-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-09-ai-candidate"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-10-fidelity-loss"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-11-assembly"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-12-instances"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-13-topology-unstable"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-14-tolerance"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-15-repair"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-16-multiple-units"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-17-two-frames"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-18-provenance-chain"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-19-reverse-dns-extension"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-golden-graph-20-revision-parent"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-guide"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-01-brep-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-02-points-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-03-voxel-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-04-transform"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-05-derived-mesh"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-06-field-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-07-scene-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-08-tensor-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-09-ai-candidate"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-10-fidelity-loss"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-11-assembly"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-12-instances"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-13-topology-unstable"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-14-tolerance"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-15-repair"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-16-multiple-units"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-17-two-frames"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-18-provenance-chain"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-19-reverse-dns-extension"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-input-graph-20-revision-parent"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-duplicate-id"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-duplicate-key"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-fraction"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-index"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-inline-payload"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-invalid-extension"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-lone-surrogate"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-source-offset-time"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-unknown-core"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-unknown-frame-unit"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-uppercase-uuid"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-uri-digest-mismatch"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-verified-self-claim"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-invalid-zero-axis"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-lot-runner"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-manifest-schema-0.1.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-expected-content"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-legacy-input"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-metadata"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-migration-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-native-binding-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-package-api"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-python-api"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-01-brep-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-02-points-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-03-voxel-source"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-04-transform"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-05-derived-mesh"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-06-field-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-07-scene-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-08-tensor-derived"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-09-ai-candidate"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-10-fidelity-loss"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-11-assembly"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-12-instances"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-13-topology-unstable"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-14-tolerance"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-15-repair"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-16-multiple-units"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-17-two-frames"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-18-provenance-chain"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-19-reverse-dns-extension"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-graph-20-revision-parent"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-schema-0.1.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-replay-tests"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-ir-wheel-validator"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-native-binding"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:engine-sanitizer-runner"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-manifest"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-report"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-sbom"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:frozen-e1-native-validator"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:installed-c-consumer"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:installed-consumer-build"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:native-ir-replay-test"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:project-changelog"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:python-project-metadata"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:requirements-tracking"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-artifact:reuse-annotations"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-license:LICENSE"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-license:LICENSE-APACHE"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-license:LICENSE-MIT"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-license:LICENSES%2FApache-2.0.txt"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-license:LICENSES%2FCC-BY-4.0.txt"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-license:LICENSES%2FMIT.txt"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-license:NOTICE"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:e1-public-ir-lock:requirements%2Fengine-ci.lock"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "pkg:generic/morphoia-engine-e1-public-ir@0.0.1",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Aminoside/morphoia"
+        }
+      ],
+      "group": "org.morphoia",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "morphoia-engine-e1-public-ir",
+      "properties": [
+        {
+          "name": "morphoia:profile",
+          "value": "e1-public-ir-core-cpu"
+        },
+        {
+          "name": "morphoia:source-base-commit",
+          "value": "c475288961d40bb16c4cc10a333034a247acb451"
+        },
+        {
+          "name": "morphoia:execution-scope",
+          "value": "core-cpu-public-ir"
+        },
+        {
+          "name": "morphoia:mvx-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:optional-backends-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-note",
+          "value": "Inventory generation is not a vulnerability assessment"
+        }
+      ],
+      "type": "application",
+      "version": "0.0.1"
+    }
+  },
+  "serialNumber": "urn:uuid:70d4df35-8f0e-573c-972f-dcee19d1bb5c",
+  "specVersion": "1.5",
+  "version": 1
+}

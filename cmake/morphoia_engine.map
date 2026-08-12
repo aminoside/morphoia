@@ -6,6 +6,8 @@ MORPHOIA_ENGINE_0.0 {
     morphoia_context_create;
     morphoia_context_destroy;
     morphoia_context_get_abi_version;
+    morphoia_context_query_capability;
+    morphoia_canonical_json_profile1;
     morphoia_engine_get_version;
     morphoia_status_name;
   local:
