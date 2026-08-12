@@ -3,9 +3,9 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 As of: 2026-08-12
-Phase: E1 — public IR 0.1 and 20-graph replay; E2 protocol-only lot integrated
+Phase: E1 — public IR 0.1 integrated; qualified IR inspection pending
 Overall state: `IN_PROGRESS`
-Work branch: `engine-p0-public-ir-replay`
+Work branch: `engine-p0-public-ir-close`
 E0 integration commit: `7715a7f7897a3058473732915e372b9835317d17`
 E2 integration commit: `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`
 E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
@@ -17,6 +17,8 @@ E1 evidence checkpoint: `4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
 E1/E2 reconciliation commit: `5a96abfcb658e26d8e085a25f98b032002719967`
 E1/E2 integration and public-IR base:
 `12656708ccc3031670c4b3efd43996e46fa27998`
+Public-IR integration commit:
+`9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`
 
 ## Results
 
@@ -46,13 +48,16 @@ E1/E2 integration and public-IR base:
 | Public-IR lot isolation and entry smoke | PASS | `engine-p0-public-ir-replay` was created from exact integration merge `12656708`; branch inspection was clean and the direct CPU bootstrap passed. This is entry evidence, not public-IR implementation evidence. |
 | Public-IR entry checkpoint local validation | PASS | Frozen E0/E1 evidence, E2 SBOM, checkpoint, 320 requirements, 102/102 Python tests, report replay, native five-test bootstrap, Ruff on new Python, REUSE 194/194, secret scan, and whitespace checks passed. |
 | Public-IR entry checkpoint publication | PASS | Checkpoint `a69d35b5` is published on `engine-p0-public-ir-replay`; PR #8 targets only `engine`. Engine run `31596165398` passed native `94112106988`, REUSE `94112107004`, Python 3.12 `94112107035`, hygiene `94112107044`, and Python 3.13 `94112107066`; report run `31596165378`, job `94112106640`, passed. |
-| Public Engine IR 0.1 local contract | PASS | Draft 2020-12 schema validation, bounded SPDX syntax, semantic invariants, native Profile 1 canonicalization, required-native Python, CLI, and explicit migration passed on Linux x86-64/CPython 3.12.13. ADR-020 remains `Proposed` until the lot is published and integrated. |
+| Public Engine IR 0.1 bounded contract | PASS | Draft 2020-12 schema validation, bounded SPDX syntax, semantic invariants, native Profile 1 canonicalization, required-native Python, CLI, and explicit migration passed on Linux x86-64/CPython 3.12.13. ADR-020 is `Accepted` for this bounded profile after integration and exact-merge validation. |
 | Public Engine IR 20-graph replay | PASS | Exactly 20 synthetic input/golden/replay graphs passed byte-identical native/Python canonicalization, two-workspace execution, and checkpoint resume; the 79-file corpus contains 13 declared invalid cases and no payload bytes. |
 | Public-IR local native/build gate | PASS | The bounded lot passed 60/60 owned tests, exact seven-symbol ABI inspection, direct bootstrap, ASan/UBSan, two fresh CMake 3.20.5 build/install/CTest 7/7 plus consumer 1/1 runs, and an isolated installed-wheel smoke. LSan and reproducible wheel construction remain `NOT_RUN`. |
 | Public-IR local and hosted evidence profile | PASS | The separate profile records 33 bounded `PASS` and 16 broader `NOT_RUN` requirements, 123 hash-verified artifacts, a 140-component CycloneDX inventory, 22/22 evidence/mutation tests, and REUSE 299/299. Corrective Python 3.12/3.13 hosted execution promotes only `MOR-DEV-003`; vulnerability analysis remains `NOT_RUN` and the closed E0 tracking overlay is byte-exact. |
 | Public-IR first implementation hosted attempt | FAIL | On exact source `5ee8cebc`, report run `31609319695`, job `94156289420`, passed. Push Engine run `31609314553` and PR Engine run `31609319697` passed native, hygiene, REUSE, full Python 3.12/3.13 tests, and the 60-test IR lot, but both Python jobs failed only in the wheel smoke because setuptools was absent from the job environment. The correction uses a separate hash-locked E1 wheel-build profile so the closed Engine test lock and frozen evidence remain unchanged. |
 | Public-IR corrective publication and hosted validation | PASS | Exact corrective SHA `c7e21acd30bf3ad2d1e0218ab2a224693c2f626c` passed push Engine run `31613015834`; PR Engine run `31613019683` and report run `31613019691` associated with that head also passed. Both Engine matrices passed REUSE, native, hygiene, Python 3.12 and Python 3.13, including full tests, the IR lot, hash-locked wheel path and pip check. The historical `5ee8cebc` failures remain `FAIL`. |
-| Public-IR evidence follow-up and integration | NOT_RUN | The follow-up evidence bytes are not yet published; their exact-head checks, PR #8 review, integration into `engine`, and post-merge verification remain required. |
+| Public-IR evidence-head integration | PASS | PR #8 integrated evidence head `74b8ddb60ddd8257166b4547c1222a17f47884c6` into `engine` at merge `9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`, tree `ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0`, with parents `12656708ccc3031670c4b3efd43996e46fa27998` and `74b8ddb60ddd8257166b4547c1222a17f47884c6`; the merge tree equals the evidence-head tree. |
+| Public-IR exact-merge hosted checks | PASS | Engine run `31615797169` passed hygiene `94178151865`, REUSE `94178151884`, Python 3.13 `94178151890`, Python 3.12 `94178151961`, and native `94178151978`. Default branch `main` remained at `66b26f2f6dbccac6a132c8ebc72652e37fcf27b9`. |
+| Public-IR close checkpoint integration | NOT_RUN | This final post-merge state reseal is local on `engine-p0-public-ir-close`; its PR-to-`engine` integration is required before the next bounded lot starts. No recursive post-merge evidence loop is required. |
+| Public-IR independent audit | PASS | The bounded `e1-public-ir-core-cpu` evidence and truth boundaries received an independent audit GO before PR #8 integration. GitHub review, comment, and thread collections were empty; no approval count or review event is claimed. |
 | Legacy prototype byte preservation | PASS | The five entry hashes in ADR-020 were recomputed and match; those files remain non-authoritative for Engine identity. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
 | GitHub quotas and storage limits | NOT_RUN | Connector did not expose Actions, artifact, LFS, or API quotas; no paid resource is assumed or enabled. |
@@ -103,7 +108,7 @@ integrated into `engine`: PR #4 produced merge
 Branch protection and the R-021 public-language control remain `FAIL`; optional
 runtimes remain `NOT_RUN`.
 
-## Active E1 bounded lot
+## E1 bounded-lot transition
 
 The native internal core implements a constrained RFC-8785-compatible
 canonical JSON profile, incremental SHA-256, deterministic CAS URIs, and atomic
@@ -113,8 +118,8 @@ remain recorded above. PR #7 integrated the verified E1 native and E2 protocol
 foundations only into `engine` at `12656708`; exact-merge Engine run
 `31593999716` passed all five jobs.
 
-The current finite lot is `public-ir-0.1-and-20-graph-replay` on
-`engine-p0-public-ir-replay`. ADR-020 proposes the distinct public Engine IR
+The completed finite lot is `public-ir-0.1-and-20-graph-replay`. ADR-020 accepts
+the distinct public Engine IR
 0.1 identity domain, strict lexical/schema/semantic validation order,
 reverse-DNS extensions, and a native C ABI limited to capability query and
 canonicalization. Track A delivered schema, contract, migration, exactly 20
@@ -126,9 +131,19 @@ preserving the E0 overlay byte-exact. The bounded contract and replay profile
 is `PASS`; the implementation is published and its first hosted Python 3.13
 attempt remains `FAIL` only at the wheel smoke. The separate corrective SHA
 `c7e21acd` passed the push and PR Engine matrices on Python 3.12 and 3.13 plus
-the PR report. The evidence follow-up, PR review, integration into `engine`,
-and post-merge verification remain `NOT_RUN`, so the lot and E1 remain
-`IN_PROGRESS`.
+the PR report. Evidence head `74b8ddb` was then integrated only into `engine`
+at `9c845f9`; exact-merge Engine run `31615797169` passed all five jobs. The
+bounded public-IR lot is therefore integrated and ADR-020 is accepted. The
+project remains `IN_PROGRESS`: E1 as a whole, G1/P0, dependency audits,
+optional backends, greater-than-2-GiB execution, and MVX criteria are not
+promoted. Branch protection remains absent, and no unobserved PR approval count
+is claimed.
+
+The next bounded lot is `qualified-ir-inspection-0.1`, currently `PENDING`.
+It must not begin until this final close checkpoint is published and integrated
+into `engine`. Its entry action is an inspection and finite-plan update from
+the resulting exact `engine` commit; this checkpoint does not claim any
+qualified-IR result.
 
 The legacy prototype boundary was recomputed at lot entry:
 
@@ -174,10 +189,11 @@ E2 or G1/P0.
 
 ## Next action
 
-Publish the evidence follow-up on `engine-p0-public-ir-replay`, update draft
-PR #8, and require exact-head native, Python 3.12/3.13, hygiene, REUSE, and
-report workflows for those evidence bytes. Integrate PR #8 only into `engine`
-after every required check and review is green, then verify the exact merge
-SHA. Real SALOME 9.16, GPU backends, the real greater-than-2-GiB transfer, and
+Publish this final close checkpoint from `engine-p0-public-ir-close`, validate
+it through the compensating PR workflow, and integrate it only into `engine`.
+After that integration, start `qualified-ir-inspection-0.1` from the exact
+resulting `engine` commit and first freeze its finite scope and acceptance
+commands. Real SALOME 9.16, GPU backends, the real greater-than-2-GiB transfer,
+dependency vulnerability/license analyses, byte-reproducible wheel proof, and
 all MVX-specific criteria remain `NOT_RUN` or `BLOCKED` until their named tests
 and prerequisites exist.

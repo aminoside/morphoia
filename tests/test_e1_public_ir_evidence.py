@@ -280,6 +280,68 @@ class PublicIrEvidenceTests(unittest.TestCase):
 
     def test_traceability_status_boundary_is_exact_and_conservative(self) -> None:
         traceability = read_json(TRACEABILITY)
+        self.assertEqual(
+            tuple(
+                command["id"]
+                for command in traceability["execution_environment"]["commands"]
+            ),
+            public_ir_evidence.EXECUTION_COMMAND_IDS,
+        )
+        integration = next(
+            command
+            for command in traceability["execution_environment"]["commands"]
+            if command["id"] == "public-ir-integration-postmerge"
+        )
+        self.assertEqual(
+            integration,
+            {
+                "id": "public-ir-integration-postmerge",
+                "command": public_ir_evidence.INTEGRATION_COMMAND,
+                "status": "PASS",
+                "result": public_ir_evidence.INTEGRATION_RESULT,
+            },
+        )
+        final_head = next(
+            command
+            for command in traceability["execution_environment"]["commands"]
+            if command["id"] == "final-evidence-head-hosted"
+        )
+        self.assertEqual(
+            final_head,
+            {
+                "id": "final-evidence-head-hosted",
+                "command": public_ir_evidence.FINAL_EVIDENCE_HEAD_COMMAND,
+                "status": "PASS",
+                "result": public_ir_evidence.FINAL_EVIDENCE_HEAD_RESULT,
+            },
+        )
+        for field in ("command", "result", "status"):
+            with self.subTest(final_head_field=field):
+                mutation = copy.deepcopy(traceability)
+                mutated = next(
+                    command
+                    for command in mutation["execution_environment"]["commands"]
+                    if command["id"] == "final-evidence-head-hosted"
+                )
+                mutated[field] = "NOT_RUN" if field == "status" else "mutated"
+                with self.assertRaisesRegex(ValueError, "final evidence-head"):
+                    public_ir_evidence.validate_traceability(ROOT, mutation)
+        for field in ("command", "result", "status"):
+            with self.subTest(field=field):
+                mutation = copy.deepcopy(traceability)
+                mutated = next(
+                    command
+                    for command in mutation["execution_environment"]["commands"]
+                    if command["id"] == "public-ir-integration-postmerge"
+                )
+                mutated[field] = "NOT_RUN" if field == "status" else "mutated"
+                with self.assertRaisesRegex(ValueError, "integration and post-merge"):
+                    public_ir_evidence.validate_traceability(ROOT, mutation)
+        adr = (ROOT / "spec/adr/ADR-020-public-engine-ir-v0.1.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("- Status: Accepted\n", adr)
+        self.assertIn("9c845f9ea4586a65f25985a4d1f92ebdf407a2f4", adr)
         statuses = {
             entry["requirement_id"]: entry["status"] for entry in traceability["entries"]
         }

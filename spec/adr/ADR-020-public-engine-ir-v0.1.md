@@ -2,8 +2,9 @@
 
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-08-12
+- Accepted: 2026-08-12
 - Extends: [ADR-003](ADR-003-canonical-json-cas.md),
   [ADR-017](ADR-017-component-versioning.md), and
   [ADR-018](ADR-018-canonical-json-profile-posix-cas.md)
@@ -137,12 +138,39 @@ canonical golden bytes and digests. Positive, invalid, migration, mutation,
 native/Python agreement, deterministic replay, resource-bound, and export
 allow-list tests are required.
 
-This ADR remains `Proposed` until those checks execute successfully on the
-declared core-CPU environment, durable evidence is generated, hosted checks
-pass, and the lot is integrated into `engine`. Design review alone is not
-`PASS`. Real SALOME, GPU backends, a greater-than-2-GiB object, remote CAS,
+Acceptance requires those checks to execute successfully on the declared
+core-CPU environment, durable evidence to be generated, hosted checks to pass,
+and the lot to be integrated into `engine`. Design review alone is not `PASS`.
+Real SALOME, GPU backends, a greater-than-2-GiB object, remote CAS,
 domain-format importers, and MVX remain outside this bounded evidence profile
 and retain their existing `NOT_RUN` status.
+
+## Acceptance evidence
+
+The bounded Linux x86-64 core-CPU implementation passed the 60-test public-IR
+lot, all 20 graph replays, 22 evidence and mutation tests, the 184-test full
+suite, native ABI/build/consumer checks, and the declared sanitizer and license
+metadata checks. The final public-IR evidence profile records 123 artifacts,
+140 CycloneDX components, and 49 requirement mappings classified as 33 `PASS`
+and 16 `NOT_RUN`; no broader requirement was promoted for acceptance.
+
+PR #8 integrated evidence head
+`74b8ddb60ddd8257166b4547c1222a17f47884c6` into `engine` at merge
+`9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`. The merge has tree
+`ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0` and parents
+`12656708ccc3031670c4b3efd43996e46fa27998` and
+`74b8ddb60ddd8257166b4547c1222a17f47884c6`; its tree is byte-identical to the
+evidence head. Before integration, exact-head push Engine run `31615539072`,
+PR Engine run `31615542865`, and PR report run `31615542750` all passed for
+`74b8ddb`. Exact-merge Engine run `31615797169` then passed hygiene job
+`94178151865`, REUSE job `94178151884`, Python 3.13 job `94178151890`, Python
+3.12 job `94178151961`, and native job `94178151978`. The default branch
+remained at `66b26f2f6dbccac6a132c8ebc72652e37fcf27b9`.
+
+This evidence satisfies the acceptance conditions for this bounded decision.
+It does not establish branch protection or an unobserved review-approval count,
+does not satisfy E1 as a whole or contractual G1/P0, and does not promote any
+excluded optional profile.
 
 ## Consequences and risks
 

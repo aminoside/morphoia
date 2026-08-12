@@ -5,8 +5,9 @@
 Last updated: 2026-08-12
 Owner: Dr Olivier Ami
 Current operational phase: E1; E1 native and E2 protocol foundations integrated
-Current lot: `public-ir-0.1-and-20-graph-replay`
-Work branch: `engine-p0-public-ir-replay`
+Current lot: final close checkpoint for integrated `public-ir-0.1-and-20-graph-replay`
+Next bounded lot: `qualified-ir-inspection-0.1` (`PENDING` close integration)
+Work branch: `engine-p0-public-ir-close`
 Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
 E1 base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
@@ -19,6 +20,8 @@ E2 integration commit: `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`
 E1 evidence checkpoint: `4db5c7436a8139d227de58d5f5ff7280e8a0f9ea`
 E1/E2 integration commit and current lot base:
 `12656708ccc3031670c4b3efd43996e46fa27998`
+Public-IR integration commit:
+`9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`
 
 ## Objective
 
@@ -145,6 +148,15 @@ validated specification is received.
   native `94112106988`, REUSE `94112107004`, Python 3.12 `94112107035`,
   hygiene `94112107044`, and Python 3.13 `94112107066`; report run
   `31596165378`, job `94112106640`, passed.
+- PR #8 integrated final evidence head
+  `74b8ddb60ddd8257166b4547c1222a17f47884c6` only into `engine` at merge
+  `9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`. The merge has tree
+  `ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0`, exactly equal to the evidence
+  head tree, and parents `12656708ccc3031670c4b3efd43996e46fa27998` and
+  `74b8ddb60ddd8257166b4547c1222a17f47884c6`. Exact-merge Engine run
+  `31615797169` passed hygiene `94178151865`, REUSE `94178151884`, Python 3.13
+  `94178151890`, Python 3.12 `94178151961`, and native `94178151978`. Default
+  branch `main` remained at `66b26f2f6dbccac6a132c8ebc72652e37fcf27b9`.
 
 ## Milestones
 
@@ -208,24 +220,24 @@ Entry: E0 CPU bootstrap is green and integrated into `engine`.
 Exit: all mandatory E1/core-cpu checks `PASS`; optional profiles remain
 explicitly `NOT_RUN` or `BLOCKED`.
 
-Current bounded lot: publish Engine IR manifest/replay contracts 0.1, expose the
-integrated Profile 1 canonicalizer through the versioned C ABI and reference
-Python/CLI surfaces, and execute exactly 20 deterministic graph replays with
-invalid, migration, idempotence, and golden-vector tests. Do not add format
-adapters, GPU work, or MVX semantics to this lot.
+The bounded public-IR lot published Engine IR manifest/replay contracts 0.1,
+exposed the integrated Profile 1 canonicalizer through the versioned C ABI and
+reference Python/CLI surfaces, and executed exactly 20 deterministic graph
+replays with invalid, migration, idempotence, and golden-vector tests. It did
+not add format adapters, GPU work, or MVX semantics.
 
 The integrated internal native sub-lot has a constrained canonical JSON Profile 1,
 incremental SHA-256, and an atomic Linux/POSIX CAS implementation under
 ADR-018. The new public path now exposes that profile through a distinct
 versioned contract; the legacy Python `canonical_json` and `semantic_hash`
 functions preserve a pre-Engine, non-JCS identity domain and remain explicitly
-non-authoritative. The local public-IR contract and 20-graph replay pass, and
-the implementation checkpoint is published. Its first hosted Python 3.13 job
+non-authoritative. The public-IR contract and 20-graph replay pass and are
+integrated into `engine`. Its first hosted Python 3.13 job
 passed the tests and lot but failed the wheel smoke. Corrective `c7e21acd`
 push and PR matrices subsequently passed the complete Python 3.12 and 3.13
-profiles. Evidence-follow-up checks, review, integration, and post-merge
-evidence remain required before the current lot can close. E1 also retains
-later foundations outside this bounded lot.
+profiles. Final evidence head `74b8ddb` was integrated at `9c845f9`, and the
+exact-merge Engine matrix passed. ADR-020 is accepted for the bounded profile.
+E1 remains in progress and retains later foundations outside this lot.
 
 The first hosted execution of source commit
 `bbf84cb806d95701daa2887e71d90a819c4a4c83` is retained as a failed source
@@ -274,10 +286,10 @@ integration of the implemented native and protocol foundations, not E1 itself
 or any unfinished public IR, real SALOME, large-transfer, GPU/HPC, or
 vulnerability criterion.
 
-#### Bounded public Engine IR 0.1 and replay lot
+#### Bounded public Engine IR 0.1 and replay lot (PASS, integrated)
 
-The current lot starts from exact `engine` merge `12656708` on
-`engine-p0-public-ir-replay`. ADR-020 is `Proposed` and defines a new public
+The lot started from exact `engine` merge `12656708` on
+`engine-p0-public-ir-replay`. ADR-020 is `Accepted` for this bounded profile and defines a new public
 identity domain without altering the legacy prototype: schema ID
 `https://morphoia.org/schemas/engine/ir-manifest/0.1.0`, format
 `morphoia.engine.ir-manifest`, version `0.1.0`, media type
@@ -322,9 +334,9 @@ build/install/consumer executions; ASan/UBSan; locked Python 3.12; REUSE
 suite runs 184 tests after checkpoint reconciliation. The first hosted Python
 3.13 execution remains `FAIL` at its wheel step. Corrective SHA `c7e21acd`
 passed the push Engine matrix and the PR Engine/report workflows associated
-with that head on Python 3.12 and 3.13. Only the evidence-follow-up hosted
-checks, review, integration into `engine`, and post-merge verification remain
-`NOT_RUN`. The lot excludes domain importers, remote CAS/GC/chunk resume, a
+with that head on Python 3.12 and 3.13. Final evidence head `74b8ddb` was then
+integrated into `engine` at merge `9c845f9`, and exact-merge Engine run
+`31615797169` passed all five jobs. The lot excludes domain importers, remote CAS/GC/chunk resume, a
 greater-than-2-GiB execution, real SALOME, GPU/HPC backends, and all MVX
 semantics.
 
@@ -361,6 +373,31 @@ The corrective hosted matrix promotes only `MOR-DEV-003`. The 79-file synthetic
 corpus contains 20 inputs, 20 LF-free goldens, 20 replay recipes, 13 invalid
 cases plus indexes and migration fixtures; no referenced payload bytes are
 distributed.
+
+PR #8 integrated evidence head
+`74b8ddb60ddd8257166b4547c1222a17f47884c6` at merge
+`9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`, tree
+`ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0`, with parents
+`12656708ccc3031670c4b3efd43996e46fa27998` and
+`74b8ddb60ddd8257166b4547c1222a17f47884c6`. The merge tree exactly equals the
+evidence-head tree. Post-merge Engine run `31615797169` passed hygiene
+`94178151865`, REUSE `94178151884`, Python 3.13 `94178151890`, Python 3.12
+`94178151961`, and native `94178151978`; `main` remained at
+`66b26f2f6dbccac6a132c8ebc72652e37fcf27b9`. This closes the bounded
+implementation and acceptance conditions only. Branch protection is still
+absent. An independent audit returned GO for `e1-public-ir-core-cpu`; PR #8
+review, comment, and thread collections were empty, so no approval count or
+review event is claimed. E1/G1 plus all
+declared external limitations retain their existing status.
+
+#### Qualified IR inspection 0.1 (PENDING)
+
+`qualified-ir-inspection-0.1` is the next bounded E1 lot, but it must not start
+until this final post-merge close checkpoint is published and integrated into
+`engine`. Its first action is to inspect the exact resulting `engine` tree and
+freeze a finite scope, requirement links, acceptance criteria, and validation
+commands before any implementation. This close checkpoint does not claim a
+qualified-IR capability or pre-approve any requirement promotion.
 
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
@@ -472,9 +509,9 @@ large-artifact evidence, and the specified MVX micro-corpus.
   ADR-018 accepts the bounded internal canonical JSON Profile 1 and Linux/POSIX
   CAS protocol without claiming completion of the public IR or all CAS MUSTs.
   ADR-019 accepts the bounded SALOME control contract and fake-evidence
-  boundary. ADR-020 proposes the distinct public Engine IR 0.1 identity domain;
-  its local 20-graph and cross-language evidence passes, but the ADR remains
-  proposed until the reviewed lot is published and integrated into `engine`.
+  boundary. ADR-020 accepts the distinct public Engine IR 0.1 identity domain
+  for the bounded core-CPU profile after PR #8 integration at `9c845f9` and
+  exact-merge Engine run `31615797169`; this does not complete E1 or G1/P0.
 - E2 evidence uses its own closed manifest and SBOM profile. The immutable E0
   manifest/SBOM are not regenerated to absorb later-phase files.
 - E1 and E2 each use a separate manifest and SBOM profile and are regenerated
@@ -499,12 +536,14 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Publish the evidence follow-up on `engine-p0-public-ir-replay`, update draft
-PR #8, and require exact-head native, Python 3.12/3.13, hygiene, REUSE, and
-report workflows for those evidence bytes. Inspect review threads and
-integrate PR #8 only into `engine` after every required result passes, then
-verify the exact merge-SHA checks. Keep real SALOME 9.16, GPU backends, the
-real greater-than-2-GiB transfer, future CAS capabilities, vulnerability
-analysis, and MVX criteria `NOT_RUN` or `BLOCKED` until each named test or
-prerequisite exists; never merge `engine` into the default branch without
-separate owner instruction.
+Publish this final close checkpoint from `engine-p0-public-ir-close`, validate
+it through the compensating PR workflow, and integrate it only into `engine`.
+No recursive post-merge evidence follow-up is required for the close bytes.
+After integration, start `qualified-ir-inspection-0.1` from the exact resulting
+`engine` commit and first freeze its finite scope, requirement links,
+acceptance criteria, and validation commands. Keep real SALOME 9.16, GPU
+backends, the real greater-than-2-GiB transfer, future CAS capabilities,
+dependency vulnerability/license analysis, byte-reproducible wheel proof, and
+MVX criteria `NOT_RUN` or `BLOCKED` until each named test or prerequisite
+exists; never merge `engine` into the default branch without separate owner
+instruction.

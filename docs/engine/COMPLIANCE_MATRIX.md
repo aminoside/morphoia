@@ -4,7 +4,7 @@
 
 Snapshot: 2026-08-12
 Declared profiles: E0 audit/bootstrap, integrated bounded E1 native core,
-locally executed E1 public IR 0.1 replay, and E2 SALOME protocol contract on Linux
+integrated E1 public IR 0.1 replay, and E2 SALOME protocol contract on Linux
 x86-64 CPU
 
 The complete 320-item catalogue is machine-readable in
@@ -46,12 +46,15 @@ completion.
 | Public-IR lot branch and entry bootstrap | E1 public IR | branch/base inspection plus direct CPU bootstrap | `engine-p0-public-ir-replay` starts from exact merge `12656708`; entry smoke passed | PASS |
 | Public-IR entry checkpoint validation | E1 public IR | frozen-profile validators, full Python/report/native/license/hygiene suites | 102/102 Python tests, native five-test bootstrap, REUSE 194/194, reports, requirements, secret and diff checks passed | PASS |
 | Public-IR entry checkpoint hosted validation | E1 public IR | PR #8 exact-head workflows | Engine `31596165398` passed five jobs; report `31596165378`, job `94112106640`, passed on `a69d35b5` | PASS |
-| Public Engine IR 0.1 local implementation | E1 public IR | schema, native/Python/CLI, semantic validation, and migration | bounded Linux x86-64/CPython 3.12 profile passed; ADR-020 remains proposed pending publication/integration | PASS |
+| Public Engine IR 0.1 bounded implementation | E1 public IR | schema, native/Python/CLI, semantic validation, and migration | bounded Linux x86-64/CPython 3.12 profile passed; ADR-020 is accepted after exact integration evidence | PASS |
 | Public Engine IR 20-graph replay | E1 public IR | canonical input/golden corpus replay | 20/20 graphs passed native/Python byte and digest agreement, two workspaces, and checkpoint resume | PASS |
 | Public-IR evidence profile | E1 public IR | exact manifest/SBOM/traceability and mutation tests | 33 bounded PASS, 16 broader NOT_RUN, 123 artifacts, 140 CycloneDX components, 22/22 evidence tests | PASS |
 | Public-IR first implementation hosted attempt | Publication | exact `5ee8cebc` workflows | report passed; Engine native/hygiene/REUSE and Python 3.12/3.13 tests passed, but both Python jobs failed at the wheel smoke because setuptools was absent | FAIL |
 | Public-IR corrective hosted checks | Publication | push exact-head `c7e21acd` plus PR merge-ref associated with that head | push Engine `31613015834`, PR Engine `31613019683`, and PR report `31613019691` passed; both Python 3.12/3.13 paths included full tests, IR lot, hash-locked wheel and pip check | PASS |
-| Public-IR evidence follow-up and integration | Publication | follow-up exact-head workflows, PR #8 review, merge and post-merge checks | evidence follow-up is not published or integrated | NOT_RUN |
+| Public-IR evidence-head integration | Publication | PR #8 merge inspection | merge `9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`, tree `ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0`, parents `12656708…` + `74b8ddb…`; merge tree equals evidence-head tree | PASS |
+| Public-IR exact-merge hosted checks | Publication | Engine run `31615797169` | hygiene `94178151865`, REUSE `94178151884`, Python 3.13 `94178151890`, Python 3.12 `94178151961`, and native `94178151978` passed; `main` remained `66b26f2…` | PASS |
+| Public-IR close checkpoint integration | Publication | final state reseal and compensating PR workflow | close checkpoint is local and not yet integrated into `engine`; no recursive evidence loop is required | NOT_RUN |
+| Public-IR independent audit | Governance | independent bounded evidence audit plus GitHub review-state inspection | `e1-public-ir-core-cpu` received an audit GO; PR #8 review, comment, and thread collections were empty, so no approval count is claimed | PASS |
 | Legacy prototype bytes at public-IR entry | E1 public IR | SHA-256 inspection of five declared files | exact hashes recorded in ADR-020 and `STATUS.md`; files are non-authoritative for Engine identity | PASS |
 | Immutable normative PDFs excluded from report branding | Baselines/reporting | tracked-report manifest test plus full `make check` | two Engine baseline PDFs remain hash-identical and outside generated-report policy | PASS |
 | Second clean bootstrap | Reproducibility | two isolated direct GCC/G++ builds/tests | both executions passed | PASS |
@@ -77,7 +80,7 @@ an unavailable optional profile to `PASS`.
 
 | Control | Requirement(s) | Test or inspection | Evidence | Status |
 |---|---|---|---|---|
-| Distinct versioned public identity domain | MOR-IR-001, MOR-IR-002 | schema/constant agreement across native, Python, CLI, and docs | Draft 2020-12 and Profile 1 contract tests passed; ADR-020 remains proposed until integration | PASS |
+| Distinct versioned public identity domain | MOR-IR-001, MOR-IR-002 | schema/constant agreement across native, Python, CLI, and docs | Draft 2020-12 and Profile 1 contract tests passed; ADR-020 accepted after PR #8 integration and exact-merge Engine run `31615797169` | PASS |
 | Profile 1 content identity | MOR-IR-002, MOR-CAS-001 | `SHA-256(canonical_profile_1(content))` cross-language golden tests | 20/20 exact native/Python canonical bytes and digests | PASS |
 | Native lexical rejection precedes schema validation | MOR-IR-002, MOR-API-003 | duplicate-key, UTF-8, surrogate, numeric, and resource-limit mutations | native and Python mutation suites passed | PASS |
 | JSON Schema then bounded semantic validation | MOR-IR-001 | structural and graph-invariant positive/negative corpus | schema and bounded graph invariants passed | PASS |
