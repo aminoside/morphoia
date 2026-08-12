@@ -6,10 +6,11 @@ Last updated: 2026-08-12
 Owner: Dr Olivier Ami
 Current operational phase: E1, with E2 protocol-only work in parallel
 Current lot: `canonical-json-cas-replay`
-Work branch: `engine`
+Work branch: `engine-p0-ir-cas`
 Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
-E1/E2 base commit: `7715a7f7897a3058473732915e372b9835317d17`
+E1 base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
+E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
 
 ## Objective
 
@@ -127,7 +128,6 @@ cmake --preset ci-gcc && cmake --build --preset ci-gcc && ctest --preset ci-gcc
 PYTHONPATH=src python3 -m morphoia --help
 PYTHONPATH=src <locked-python> -m unittest discover -s tests -v
 python3 scripts/extract_engine_requirements.py --check
-python3 scripts/generate_engine_sbom.py --check
 python3 scripts/validate_engine_checkpoint.py
 <hash-locked-python> -m reuse lint
 bash scripts/scan-secrets.sh
@@ -167,8 +167,33 @@ incremental SHA-256, and an atomic Linux/POSIX CAS implementation under
 ADR-018. This does not yet satisfy MOR-IR-002 on the public IR path: the legacy
 Python `canonical_json` and `semantic_hash` functions preserve a pre-Engine,
 non-JCS identity domain and are explicitly non-authoritative. The complete IR
-schema, deterministic replay manifests, 20 graph corpus, hosted results, and
-integration evidence remain required before this bounded lot or E1 can close.
+schema, deterministic replay manifests, 20 graph corpus, green hosted results,
+and integration evidence remain required before this bounded lot or E1 can
+close.
+
+The first hosted execution of source commit
+`bbf84cb806d95701daa2887e71d90a819c4a4c83` is retained as a failed source
+attempt. Engine run `31586603633` passed native job `94081774268`, hygiene job
+`94081774344`, and REUSE job `94081774196`, but Python 3.12 job `94081774242`
+and Python 3.13 job `94081774246` failed because the E1 tree was replayed
+through closed-E0 source globs and stale E0 checkpoint digests. Report run
+`31586603592`, job `94081774083`, reproduced the same evidence failures.
+
+Correction uses separate evidence profiles. The E0 generator, manifest, and
+SBOM stay byte-exact and are validated by frozen hashes. A new fail-closed E1
+manifest and CycloneDX profile own evolving E1 native source, exact license
+mapping, and the bounded evidence report. The current validation commands are:
+
+```bash
+python3 scripts/validate_engine_e0_evidence.py
+python3 scripts/generate_engine_e1_sbom.py --check
+python3 scripts/validate_engine_checkpoint.py
+PYTHONPATH=src <locked-python> -m unittest discover -s tests -v
+```
+
+The historical E0 regeneration command remains only in the closed E0 gate report;
+it is not a valid current-tree check. Corrective hosted Engine and report runs
+remain `NOT_RUN` until this durable-state change is published.
 
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
@@ -271,8 +296,8 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Create the bounded E1 canonical-JSON/CAS/replay implementation lot from
-`7715a7f7897a3058473732915e372b9835317d17`, and in parallel implement only the
-E2 protocol/fake-agent contract surface. Keep real SALOME 9.16 execution
-`NOT_RUN`; never merge `engine` into the default branch without separate owner
-instruction.
+Validate and publish the profile-separated E1 evidence correction on
+`engine-p0-ir-cas`, rerun both hosted workflows, and integrate the lot only
+after required checks pass. Keep the parallel E2 worktree isolated and real
+SALOME 9.16 execution `NOT_RUN`; never merge `engine` into the default branch
+without separate owner instruction.

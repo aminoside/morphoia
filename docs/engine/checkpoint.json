@@ -13,16 +13,16 @@
     "default_branch": "main",
     "integration_branch": "engine",
     "publication_status": "PASS",
-    "publication_note": "E0 was integrated through PR 4 at merge 7715a7f7897a3058473732915e372b9835317d17; engine push run 31582827407 passed all five jobs"
+    "publication_note": "E0 was integrated through PR 4 and remains green; E1 native source bbf84cb806d95701daa2887e71d90a819c4a4c83 is published on engine-p0-ir-cas but its first hosted workflow attempt failed on durable-evidence replay"
   },
   "git": {
-    "branch": "engine",
-    "upstream": "origin/engine",
-    "base_parent": "7715a7f7897a3058473732915e372b9835317d17",
+    "branch": "engine-p0-ir-cas",
+    "upstream": "origin/engine-p0-ir-cas",
+    "base_parent": "cdddaa47ba54742652819d798e1c6f9c0bd9ce6e",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "7715a7f7897a3058473732915e372b9835317d17",
-    "note": "This is the remotely verified E0 integration merge and E1 parent, not the SHA of the later durable-state commit containing this file; its tree is 1a2c31b55e284edd521616c3fec7a7f017b883eb and its parents are fcee715a2d99517f00aacf7d8ce2797658194f83 and 66a3526f3ed5dd4263e16fbe333a4da41041f1fb"
+    "published_commit_sha": "bbf84cb806d95701daa2887e71d90a819c4a4c83",
+    "note": "This is the published E1 native source commit whose hosted failure is recorded below, not the SHA of the later durable-state correction containing this file; no integration into engine is claimed"
   },
   "tasks": {
     "completed": [
@@ -48,10 +48,15 @@
       "retained_layout_ci_correction_and_hosted_reverification",
       "e0_durable_evidence_integrated_in_pr4",
       "engine_integration_after_green_checks",
-      "engine_push_post_merge_verification"
+      "engine_push_post_merge_verification",
+      "e1_native_canonical_json_sha256_posix_cas_implementation",
+      "e1_native_adversarial_review",
+      "e1_source_publication",
+      "e1_first_hosted_failure_capture"
     ],
     "in_progress": [
       "e1_canonical_json_cas_replay",
+      "e1_profile_separated_durable_evidence_correction",
       "e2_protocol_only_contract"
     ],
     "remaining": [
@@ -97,21 +102,21 @@
     "paths": [
       {
         "path": "cpp",
-        "sha256": "df1cbdb8185db9568cd4f07075e76d053e8d64c0d84257aa23b3c08e04d7d863",
+        "sha256": "9571b44d03541a91d8aa955a743039c029bf37c292791b8c9a517c4246d87220",
         "status": "PASS"
       },
       {
         "path": "spec",
-        "sha256": "8cd36cbd2228f3d1d76b3f9df5d77d6e254ca69e83a528a91338714b53e89b0a",
+        "sha256": "5ba7faeb17bab30207d4d46a417a7c5f12713148159473049c52f4632d38d836",
         "status": "PASS"
       },
       {
         "path": "docs/engine",
-        "sha256": "fb1af6be65c81055807b220e606e320caf7e303027f2a5a4d11d69ea6b97f5b2",
+        "sha256": "8285f30b5c33127d7ebbe720d36c4014b9c93e19b229d8e4b0876117ba3657e8",
         "status": "PASS"
       }
     ],
-    "note": "Digests are frozen after all E0 files settle; checkpoint.json itself is excluded to avoid self-reference"
+    "note": "Digests describe the current E1 worktree after durable evidence settles; checkpoint.json itself is excluded to avoid self-reference"
   },
   "commands": [
     {
@@ -180,24 +185,59 @@
       "summary": "Native job 94069646681, Python 3.13 job 94069646723, hygiene job 94069646761, Python 3.12 job 94069646822, and REUSE job 94069646871 completed successfully"
     },
     {
-      "command": "python scripts/generate_engine_sbom.py --check",
+      "command": "python scripts/validate_engine_e0_evidence.py",
       "result": "PASS",
-      "summary": "Deterministic CycloneDX 1.5 source and declared-tool inventory matched; vulnerability analysis remained NOT_RUN"
+      "summary": "The closed E0 generator, manifest, and CycloneDX source SBOM matched their immutable byte-level SHA-256 values and self-reference"
+    },
+    {
+      "command": "python scripts/generate_engine_e1_sbom.py --check",
+      "result": "PASS",
+      "summary": "The separate fail-closed E1 native-core manifest and CycloneDX profile matched exact source, evidence, license, size, and self hashes; vulnerability analysis remained NOT_RUN"
     },
     {
       "command": "python scripts/validate_engine_checkpoint.py",
       "result": "PASS",
-      "summary": "The durable checkpoint structure, repository paths, output hashes, and frozen source-tree digests matched"
+      "summary": "The durable checkpoint structure, repository paths, output hashes, and current E1 source-tree digests matched"
     },
     {
       "command": "<hash-locked-python> -m reuse lint",
       "result": "PASS",
-      "summary": "REUSE 6.2.0 resolved copyright and license metadata for every repository file in the E0 tree"
+      "summary": "REUSE 6.2.0 resolved copyright and license metadata for 177 of 177 files in the current E1 worktree"
     },
     {
       "command": "bash scripts/scan-secrets.sh",
       "result": "PASS",
       "summary": "Bounded tracked and untracked text signature scan passed; immutable binary baselines were separately hash/type/archive inspected"
+    },
+    {
+      "command": "MORPHOIA_BOOTSTRAP_FORCE_FALLBACK=1 ./scripts/bootstrap-engine.sh",
+      "result": "PASS",
+      "summary": "The E1 native direct-compiler profile executed five tests and retained the exact five-symbol public C ABI export allow-list"
+    },
+    {
+      "command": "two clean CMake 3.20 Release configure/build/CTest/install/consumer executions plus binary comparison",
+      "result": "PASS",
+      "summary": "Five of five native tests passed in both clean builds, the installed C consumer passed, the incompatible consumer was rejected, and native outputs were byte-identical"
+    },
+    {
+      "command": "./scripts/run-engine-sanitizers.sh",
+      "result": "PASS",
+      "summary": "Five E1 native tests passed under AddressSanitizer and fail-fast UndefinedBehaviorSanitizer; LeakSanitizer remains NOT_RUN"
+    },
+    {
+      "command": "GitHub Actions Engine run 31586603633 on source SHA bbf84cb806d95701daa2887e71d90a819c4a4c83",
+      "result": "FAIL",
+      "summary": "REUSE job 94081774196, native job 94081774268, and hygiene job 94081774344 passed; Python 3.12 job 94081774242 and Python 3.13 job 94081774246 failed on the stale E0 evidence replay"
+    },
+    {
+      "command": "GitHub Actions report run 31586603592 on source SHA bbf84cb806d95701daa2887e71d90a819c4a4c83",
+      "result": "FAIL",
+      "summary": "Report job 94081774083 reproduced the same stale checkpoint and closed-E0 SBOM replay failures"
+    },
+    {
+      "command": "PYTHONPATH=src <hash-locked-python> -m unittest discover -s tests -v",
+      "result": "PASS",
+      "summary": "62 tests passed locally, including 26 durable-evidence tests for exact E0 freezing, exact E1 truth fields and paths, dirfd-only atomic writes, schema and allow-list enforcement, mutation rejection, license truth, path confinement, and self hashes"
     },
     {
       "command": "git diff --check",
@@ -319,6 +359,100 @@
       "status": "PASS"
     },
     {
+      "id": "E1-NATIVE-DIRECT",
+      "profile": "core-cpu-native-internal",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-NATIVE-ASAN-UBSAN",
+      "profile": "core-cpu-native-security",
+      "status": "PASS",
+      "count": 10
+    },
+    {
+      "id": "E1-NATIVE-STRICT-WARNINGS",
+      "profile": "core-cpu-native-internal",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-MOR-CAS-001-003-004-008",
+      "profile": "internal-linux-posix-cas",
+      "status": "PASS",
+      "count": 4,
+      "reason": "Executed native tests prove the bounded internal Linux profile only; whole-E1 integration is not claimed"
+    },
+    {
+      "id": "E1-MOR-IR-002-005-PUBLIC-PATH",
+      "profile": "public-ir",
+      "status": "NOT_RUN",
+      "reason": "Canonical Profile 1 and binary URI inversion are internal and not integrated into the public IR path"
+    },
+    {
+      "id": "E1-CAS-GREATER-THAN-2-GIB",
+      "profile": "core-cpu-large-artifact",
+      "status": "NOT_RUN",
+      "reason": "No resource-approved object larger than 2 GiB was executed"
+    },
+    {
+      "id": "E1-IR-20-GRAPH-REPLAY",
+      "profile": "public-ir-replay",
+      "status": "NOT_RUN",
+      "reason": "The public IR schema, replay manifests, and 20-graph corpus are outside this bounded internal sub-lot"
+    },
+    {
+      "id": "E1-HOSTED-NATIVE-SOURCE",
+      "profile": "core-cpu-native-gcc-cxx20",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-HYGIENE-SOURCE",
+      "profile": "source-hygiene",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-REUSE-SOURCE",
+      "profile": "license-metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "E1-HOSTED-PYTHON-312-SOURCE",
+      "profile": "core-cpu-python-3.12",
+      "status": "FAIL",
+      "reason": "Job 94081774242 executed and failed on stale E0 evidence replay"
+    },
+    {
+      "id": "E1-HOSTED-PYTHON-313-SOURCE",
+      "profile": "core-cpu-python-3.13",
+      "status": "FAIL",
+      "reason": "Job 94081774246 executed and failed on stale E0 evidence replay"
+    },
+    {
+      "id": "E1-HOSTED-REPORT-SOURCE",
+      "profile": "report-validation",
+      "status": "FAIL",
+      "reason": "Job 94081774083 executed and reproduced the stale E0 evidence replay"
+    },
+    {
+      "id": "E1-HOSTED-CORRECTIVE-RERUN",
+      "profile": "hosted-corrective-validation",
+      "status": "NOT_RUN",
+      "reason": "The profile-separated durable correction is not yet published"
+    },
+    {
+      "id": "E1-PYTHON-UNIFIED-LOCAL",
+      "profile": "core-cpu-python-3.12",
+      "status": "PASS",
+      "count": 62
+    },
+    {
+      "id": "E1-REUSE-LOCAL",
+      "profile": "license-metadata",
+      "status": "PASS",
+      "count": 177
+    },
+    {
       "id": "E0-GITHUB-QUOTAS",
       "profile": "hosted-resources",
       "status": "NOT_RUN",
@@ -404,6 +538,24 @@
       "sha256": "30db23e7e3fc1edacce0627386152d0246f909adf0ffbefc7b441926b583414b",
       "status": "PASS",
       "note": "Deterministic CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
+    },
+    {
+      "uri": "repo:docs/engine/evidence/E1_NATIVE_CORE_REPORT.md",
+      "sha256": "25f5d84f600856990e6e8ef177e0b84e61c72fdbb1253c5091f1315de13dc458",
+      "status": "PASS",
+      "note": "Hash-exact bounded E1 native report retains the hosted source FAIL and profile-specific PASS, NOT_RUN, and NOT_APPLICABLE results"
+    },
+    {
+      "uri": "repo:artifacts/e1/manifest.json",
+      "sha256": "a819cf9ed22569de9c4a5c1009a5ddeb375d06a6c9ba2f56fbd11293e89bd983",
+      "status": "PASS",
+      "note": "Fail-closed three-artifact E1 profile manifest with exact paths, sizes, hashes, licenses, provenance, and SBOM self-reference"
+    },
+    {
+      "uri": "repo:artifacts/sbom/engine-e1-native-core.cdx.json",
+      "sha256": "aba88c706a64cd0156537a136749a07ed3b05849ada026281a7fc2f26bfa6f77",
+      "status": "PASS",
+      "note": "Deterministic E1 native-core CycloneDX source and declared-tool inventory; vulnerability analysis is NOT_RUN"
     }
   ],
   "job_ids": [
@@ -422,14 +574,24 @@
     "github-actions:job:94069646723",
     "github-actions:job:94069646761",
     "github-actions:job:94069646822",
-    "github-actions:job:94069646871"
+    "github-actions:job:94069646871",
+    "github-actions:31586603633",
+    "github-actions:job:94081774196",
+    "github-actions:job:94081774268",
+    "github-actions:job:94081774344",
+    "github-actions:job:94081774242",
+    "github-actions:job:94081774246",
+    "github-actions:31586603592",
+    "github-actions:job:94081774083"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
     "Pull requests plus checks compensate operationally for absent branch protection without claiming protected-branch compliance",
     "E9-INDEPENDENT is frozen to eight locally verifiable lots",
     "No MVX semantics are inferred before an owner-validated specification",
-    "Engine 0.0.1, C ABI 1, existing prototype 0.2.0-dev, and future release tags are distinct version domains"
+    "Engine 0.0.1, C ABI 1, existing prototype 0.2.0-dev, and future release tags are distinct version domains",
+    "ADR-018 accepts constrained internal canonical JSON Profile 1 and the verified Linux/POSIX CAS without expanding the five-symbol public ABI",
+    "Closed E0 evidence is byte-frozen; evolving E1 source has a separate fail-closed manifest and CycloneDX profile"
   ],
   "deviations": [
     "No branch protection or ruleset was observed",
@@ -438,7 +600,8 @@
     "Vulnerability analysis and LeakSanitizer were not executed",
     "GitHub Actions, artifact, LFS, storage, and API quotas were not exposed and remain NOT_RUN",
     "The first hosted checkpoint exposed an undeclared pdftotext dependency; the retained-layout correction subsequently passed hosted Python 3.12, Python 3.13, native, hygiene, REUSE, and report execution",
-    "Legacy Phase 1/2 guides and documents remain French and require a bounded translation lot before full public-language-policy compliance"
+    "Legacy Phase 1/2 guides and documents remain French and require a bounded translation lot before full public-language-policy compliance",
+    "The first E1 hosted source attempt passed native, hygiene, and REUSE but failed Python 3.12, Python 3.13, and report validation because closed-E0 source globs and E0 tree digests were replayed against an evolving E1 tree; the executed FAIL history is retained"
   ],
   "external_dependencies": [
     {
@@ -457,6 +620,17 @@
       "reason": "PR 4 merged at 7715a7f7897a3058473732915e372b9835317d17 and engine push run 31582827407 passed all five jobs"
     },
     {
+      "name": "E1 native source publication",
+      "status": "PASS",
+      "reason": "Source commit bbf84cb806d95701daa2887e71d90a819c4a4c83 is published on origin/engine-p0-ir-cas; this does not claim green hosted integration"
+    },
+    {
+      "name": "E1 profile-separated corrective hosted checks",
+      "status": "NOT_RUN",
+      "blocking_scope": "Integration of the bounded E1 lot into engine only",
+      "reason": "The durable evidence correction is local and must be published before Engine and report workflows can be rerun"
+    },
+    {
       "name": "SALOME 9.16 runtime",
       "status": "NOT_RUN",
       "blocking_scope": "E2 real ProbeCapabilities, SHAPER/GEOM, SMESH/MED, MEDCoupling, and large-artifact execution only",
@@ -468,5 +642,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Start the bounded E1 canonical-JSON, CAS, and replay lot from 7715a7f7897a3058473732915e372b9835317d17 while implementing only the E2 protocol and fake-agent contract; keep real SALOME NOT_RUN"
+  "next_action": "Validate and publish the profile-separated E1 evidence correction on engine-p0-ir-cas, rerun Engine and report workflows, and integrate only after required checks pass while leaving the separate E2 worktree untouched"
 }

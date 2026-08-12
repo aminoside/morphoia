@@ -1,0 +1,79 @@
+# E1 native canonical JSON and POSIX CAS evidence
+
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
+Date: 2026-08-12
+Profile: Linux x86-64, GCC/G++ 13.3.0, C++20, core CPU
+Source commit executed by GitHub Actions:
+`bbf84cb806d95701daa2887e71d90a819c4a4c83`
+
+## Result
+
+The bounded internal native implementation of canonical JSON Profile 1,
+incremental SHA-256, and the verified local POSIX CAS passed its native,
+sanitizer, strict-warning, and adversarial tests. It adds no installed API and
+does not change the five-symbol public C ABI.
+
+The hosted source attempt is nevertheless `FAIL`, not `PASS`: later E1 source
+made the closed E0 source-glob SBOM replay differ and also made the E0-era
+checkpoint tree digests stale. These evidence-design failures did not fail the
+native job. The corrective durable-state lot freezes E0 evidence byte for byte
+and gives E1 a separate manifest and SBOM profile. It does not rewrite the
+source-run result below.
+
+## Hosted source results
+
+| Workflow or job | Status | Observation |
+|---|---|---|
+| Engine run `31586603633` | FAIL | Overall source run on `bbf84cb`; two Python evidence jobs failed. |
+| REUSE job `94081774196` | PASS | License metadata validation executed successfully. |
+| Native job `94081774268` | PASS | GCC/C++20 native build, tests, consumer, bootstrap, and sanitizers executed successfully. |
+| Hygiene job `94081774344` | PASS | Secret-signature and whitespace checks executed successfully. |
+| Python 3.12 job `94081774242` | FAIL | Closed-E0 SBOM regeneration and stale durable source digests disagreed with the E1 tree. |
+| Python 3.13 job `94081774246` | FAIL | Same evidence-profile and checkpoint-digest failures as Python 3.12. |
+| Report run `31586603592`, job `94081774083` | FAIL | The unified evidence suite reached and reproduced the same failures. |
+
+No failed job is reclassified as skipped or passed. A later corrective run is
+required before this lot can be integrated.
+
+## Local executed evidence
+
+| Check | Status | Executed result |
+|---|---|---|
+| Forced direct-compiler fallback | PASS | Five native tests passed; exact five-symbol export allow-list preserved. |
+| Two clean CMake 3.20 release builds | PASS | Five of five CTests passed in each build; native binaries were byte-identical. |
+| ASan and fail-fast UBSan | PASS | Five native tests passed under each executed sanitizer configuration. |
+| Strict `-Wconversion`, `-Wsign-conversion`, and `-Wshadow` build | PASS | Native sources compiled and tests passed. |
+| Install and external C consumer | PASS | Supported consumer built and ran; incompatible future-version consumer was rejected. |
+| Adversarial native review | PASS | No remaining native publication blocker after fixes and re-execution. |
+
+The CAS tests include expected size/digest ingestion, directory-descriptor
+confinement, symlink/hardlink rejection, no-clobber concurrent publication,
+existing-object revalidation, private verified read snapshots, mutation during
+delivery, durable directory creation, temporary cleanup, and URI parsing.
+Canonical JSON tests include exact golden bytes, UTF-16 key ordering, duplicate
+decoded keys, malformed UTF-8, lone surrogates, unsafe integers, and resource
+limits.
+
+## Requirement truth for this bounded profile
+
+| Requirement | Status | Scope and limitation |
+|---|---|---|
+| `MOR-CAS-001` | PASS | Executed internal Linux/POSIX profile publishes only SHA-256 identities. |
+| `MOR-CAS-003` | PASS | Size and hash are verified before atomic no-clobber publication. |
+| `MOR-CAS-004` | PASS | Bounded streaming read/write tests executed; verified reads use a private disk snapshot rather than whole-object memory. |
+| `MOR-CAS-008` | PASS | Corruption is rejected before any bytes reach the consumer sink. |
+| `MOR-CAS-002` | NOT_APPLICABLE | Optional BLAKE3 chunking is not implemented; no second public identity exists. |
+| `MOR-IR-002` | NOT_RUN | Profile 1 is internal; the installed/public IR path and legacy Python serializer are not authoritative JCS yet. |
+| `MOR-IR-005` | NOT_RUN | Internal reference construction and inverse URI parsing pass, but no public IR resolver contract is integrated. |
+| `MOR-CAS-005` | NOT_RUN | No resource-approved object larger than 2 GiB was executed. |
+| `MOR-CAS-006` | NOT_RUN | Only one local POSIX backend was executed; shared identity with a second backend is unproved. |
+| `MOR-CAS-007` | NOT_RUN | Pin-aware garbage collection is not implemented. |
+| `MOR-CAS-009` | NOT_RUN | Verified chunk resume and retransmission avoidance are not implemented. |
+| `MOR-CAS-010` | NOT_RUN | No external-URI adapter is implemented; internal CAS URIs are never used as arbitrary paths. |
+| `MOR-CAS-011` | NOT_RUN | Workspace quota, retention, pinning, and purge policy are not implemented. |
+| `MOR-CAS-012` | NOT_RUN | The provenance transform path is not implemented. |
+
+The 20-graph IR corpus, replay manifests, whole E1 gate, integration into
+`engine`, and greater-than-2-GiB execution remain `NOT_RUN`. The bounded lot and
+E1 therefore remain `IN_PROGRESS`.
