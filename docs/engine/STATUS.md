@@ -3,9 +3,9 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 As of: 2026-08-12
-Phase: E1 — public IR 0.1 integrated; qualified IR inspection pending
+Phase: E1 — qualified IR inspection 0.1
 Overall state: `IN_PROGRESS`
-Work branch: `engine-p0-public-ir-close`
+Work branch: `engine-p0-ir-inspection`
 E0 integration commit: `7715a7f7897a3058473732915e372b9835317d17`
 E2 integration commit: `c84dd152a81b80a7e5c39e51f13b811a0f32d05f`
 E1 native source commit: `bbf84cb806d95701daa2887e71d90a819c4a4c83`
@@ -19,6 +19,8 @@ E1/E2 integration and public-IR base:
 `12656708ccc3031670c4b3efd43996e46fa27998`
 Public-IR integration commit:
 `9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`
+Public-IR close integration and current lot base:
+`767b88ab7e89b30ed77f5b30c25372d71fa06402`
 
 ## Results
 
@@ -56,7 +58,16 @@ Public-IR integration commit:
 | Public-IR corrective publication and hosted validation | PASS | Exact corrective SHA `c7e21acd30bf3ad2d1e0218ab2a224693c2f626c` passed push Engine run `31613015834`; PR Engine run `31613019683` and report run `31613019691` associated with that head also passed. Both Engine matrices passed REUSE, native, hygiene, Python 3.12 and Python 3.13, including full tests, the IR lot, hash-locked wheel path and pip check. The historical `5ee8cebc` failures remain `FAIL`. |
 | Public-IR evidence-head integration | PASS | PR #8 integrated evidence head `74b8ddb60ddd8257166b4547c1222a17f47884c6` into `engine` at merge `9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`, tree `ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0`, with parents `12656708ccc3031670c4b3efd43996e46fa27998` and `74b8ddb60ddd8257166b4547c1222a17f47884c6`; the merge tree equals the evidence-head tree. |
 | Public-IR exact-merge hosted checks | PASS | Engine run `31615797169` passed hygiene `94178151865`, REUSE `94178151884`, Python 3.13 `94178151890`, Python 3.12 `94178151961`, and native `94178151978`. Default branch `main` remained at `66b26f2f6dbccac6a132c8ebc72652e37fcf27b9`. |
-| Public-IR close checkpoint integration | NOT_RUN | This final post-merge state reseal is local on `engine-p0-public-ir-close`; its PR-to-`engine` integration is required before the next bounded lot starts. No recursive post-merge evidence loop is required. |
+| Public-IR close checkpoint integration | PASS | PR #9 integrated head `aa309afc` only into `engine` at merge `767b88ab`, tree `ae5dba00`, with parents `9c845f9e` and `aa309afc`; exact-merge Engine run `31618282751` and all five jobs passed, while `main` remained unchanged. |
+| Qualified-IR lot isolation and entry smoke | PASS | `engine-p0-ir-inspection` starts at exact merge `767b88ab`; the worktree was clean, all three immutable baseline hashes matched, and the direct seven-symbol CPU bootstrap passed. This is entry evidence only. |
+| Frozen public-IR historical replay bridge | PASS | The closed profile remains byte-exact at merge `767b88ab`. The offline validator pins its commit/tree/topology, 309 blobs, anchors and counts, then locally replayed the historical generator and 22 tests from materialized Git objects. Hosted Python 3.12/3.13 execution of the new bridge remains separately `NOT_RUN`. |
+| Qualified-IR bounded local implementation sub-gates | PASS | On Linux x86-64/CPython 3.12.13, the final bounded native-wrapper/inspection/CLI selection passed 45/45; the public-IR regression lot passed 86/86 plus the native 20-graph validator; direct bootstrap passed the exact eight-export allowlist; ASan and UBSan passed while LSan remains `NOT_RUN`; and the isolated installed-wheel smoke passed while byte-identical wheel construction remains `NOT_RUN`. These are local sub-gates, not release qualification. |
+| Qualified-IR CMake execution history | FAIL | One non-isolated in-tree CMake attempt first reached CTest with three generated executables empty or non-executable, then a clean-first retry observed an empty shared library and failed to link one test. The retained execution establishes neither a source defect nor a root cause and is not used as qualification evidence. |
+| Qualified-IR isolated CMake repetitions | PASS | Two fresh CMake 3.20.5 build roots under separate temporary directories each passed 10/10 CTests, install, external C consumer 1/1, and the exact eight-export boundary. These later isolated passes do not rewrite the preceding failed attempt. |
+| Qualified-IR prospective evidence profile | PASS | The separate fail-closed local profile generated and checked its 55-artifact inventory, exact three-requirement traceability, 20 reports inspected twice, and four of four mutation/confinement/atomic-publication tests. CycloneDX is inventory only; vulnerability and dependency-license analyses remain `NOT_RUN`. |
+| Qualified-IR final full local gate | PASS | Final `unittest` discovery passed 206/206 in 84.942 seconds on CPython 3.12.13. Post-preseal reruns also passed frozen E0, frozen E1 native, E2 `--check`, the frozen public-IR bridge over 309 blobs and 22 historical tests, the 55-artifact qualified generator `--check`, all 320 exact requirements, REUSE 6.2.0 for 323/323 files, bounded secret scan, Ruff on changed Python, shell syntax, and `git diff --check`. |
+| Qualified unit registry and inspection qualification | NOT_RUN | ADR-021 remains `Proposed`. `MOR-IR-006`, `MOR-API-006`, and `MOR-QA-017` remain `NOT_RUN` until exact-head hosted Python 3.12/3.13 and other required checks, review, and integration execute successfully. General UCUM stays outside the bounded ten-literal profile and remains `NOT_RUN`. |
+| Qualified-IR publication and integration | NOT_RUN | No DCO lot commit, draft PR, exact-head hosted run, or integration into `engine` exists for this prospective checkpoint. No job ID or hosted Python 3.13 result is inferred from local execution. |
 | Public-IR independent audit | PASS | The bounded `e1-public-ir-core-cpu` evidence and truth boundaries received an independent audit GO before PR #8 integration. GitHub review, comment, and thread collections were empty; no approval count or review event is claimed. |
 | Legacy prototype byte preservation | PASS | The five entry hashes in ADR-020 were recomputed and match; those files remain non-authoritative for Engine identity. |
 | Initial hosted-state audit | PASS | No Engine branch/tag/release existed; unrelated draft PR #3 was preserved; one existing report workflow with a green default-branch run was observed. |
@@ -139,11 +150,21 @@ optional backends, greater-than-2-GiB execution, and MVX criteria are not
 promoted. Branch protection remains absent, and no unobserved PR approval count
 is claimed.
 
-The next bounded lot is `qualified-ir-inspection-0.1`, currently `PENDING`.
-It must not begin until this final close checkpoint is published and integrated
-into `engine`. Its entry action is an inspection and finite-plan update from
-the resulting exact `engine` commit; this checkpoint does not claim any
-qualified-IR result.
+The current bounded lot is `qualified-ir-inspection-0.1`, started from the
+verified public-IR close merge `767b88ab`. Its exact scope is a literal
+ten-unit qualification profile, one additive C ABI surface, deterministic
+Python/CLI metadata inspection, and the explicit thread-safety matrix named by
+ADR-021. The bounded implementation sub-gates, two isolated minimum-CMake
+repetitions, ASan/UBSan, installed-wheel smoke, and four-test prospective
+evidence profile pass locally. Final discovery also passed 206/206 on CPython
+3.12.13, followed by successful frozen-profile, 320-requirement, REUSE 323/323,
+secret, Ruff, shell-syntax, and whitespace reruns. One earlier non-isolated
+in-tree CMake attempt failed with empty or non-executable generated artifacts;
+no causal attribution is claimed, and the later isolated passes do not erase
+that history. All exact-head hosted, review, and integration gates remain
+`NOT_RUN`. The lot does not claim general UCUM evaluation,
+conversion, payload resolution, transform application, or any optional
+backend.
 
 The legacy prototype boundary was recomputed at lot entry:
 
@@ -189,11 +210,12 @@ E2 or G1/P0.
 
 ## Next action
 
-Publish this final close checkpoint from `engine-p0-public-ir-close`, validate
-it through the compensating PR workflow, and integrate it only into `engine`.
-After that integration, start `qualified-ir-inspection-0.1` from the exact
-resulting `engine` commit and first freeze its finite scope and acceptance
-commands. Real SALOME 9.16, GPU backends, the real greater-than-2-GiB transfer,
-dependency vulnerability/license analyses, byte-reproducible wheel proof, and
-all MVX-specific criteria remain `NOT_RUN` or `BLOCKED` until their named tests
-and prerequisites exist.
+Create a DCO-signed commit on `engine-p0-ir-inspection`, push it, open a draft
+PR targeting only `engine`, and require exact-head Engine/report checks and
+independent review before any integration. ADR-021 and `MOR-IR-006`,
+`MOR-API-006`, and `MOR-QA-017` remain `Proposed`/`NOT_RUN` despite the green
+local gate. Real SALOME 9.16, GPU backends, the
+real greater-than-2-GiB transfer, dependency vulnerability/license analyses,
+byte-reproducible wheel proof, general UCUM conformance, and all MVX-specific
+criteria remain `NOT_RUN` or `BLOCKED` until their named tests and prerequisites
+exist.

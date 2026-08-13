@@ -95,6 +95,7 @@ if prefix not in module.parents:
 for filename in (
     "morphoia-engine-ir-manifest-0.1.0.schema.json",
     "morphoia-engine-ir-replay-0.1.0.schema.json",
+    "morphoia-engine-ir-inspection-0.1.0.schema.json",
 ):
     schema = _resolve_schema(filename, None).resolve()
     if prefix not in schema.parents:
@@ -107,6 +108,8 @@ PY
   env -u PYTHONHOME -u PYTHONPATH "${work_dir}/venv/bin/python" -m morphoia \
     engine-ir validate manifest.json \
     --library "${library}" --json
+  env -u PYTHONHOME -u PYTHONPATH "${work_dir}/venv/bin/python" -m morphoia \
+    inspect manifest.json --library "${library}" --json
   env -u PYTHONHOME -u PYTHONPATH "${work_dir}/venv/bin/python" -m morphoia \
     engine-ir replay replay.json \
     --manifest manifest.json --workspace workspace --library "${library}" --json

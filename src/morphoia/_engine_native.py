@@ -19,6 +19,7 @@ from typing import Final, Self
 
 ABI_VERSION: Final = 1
 CAPABILITY_ENGINE_IR_MANIFEST: Final = "morphoia.engine.ir-manifest"
+CAPABILITY_ENGINE_IR_CORE_SI: Final = "engine-ir-core-si-0.1"
 FORMAT_IDENTIFIER: Final = "morphoia.engine.ir-manifest"
 FORMAT_VERSION: Final = "0.1.0"
 MEDIA_TYPE: Final = "application/vnd.morphoia.ir-manifest.v0+json"
@@ -134,6 +135,35 @@ class _CanonicalOptions(ctypes.Structure):
     ]
 
 
+class _EngineIrUnit(ctypes.Structure):
+    _fields_ = [
+        ("struct_size", ctypes.c_uint32),
+        ("abi_version", ctypes.c_uint32),
+        ("flags", ctypes.c_uint64),
+        ("code", _StringView),
+        ("dimensions", ctypes.c_int32 * 7),
+        ("si_factor_coefficient", ctypes.c_int64),
+        ("si_factor_scale", ctypes.c_int32),
+        ("reserved", ctypes.c_uint32),
+    ]
+
+
+class _EngineIrUnitValidation(ctypes.Structure):
+    _fields_ = [
+        ("struct_size", ctypes.c_uint32),
+        ("abi_version", ctypes.c_uint32),
+        ("flags", ctypes.c_uint64),
+        ("recognized", ctypes.c_uint32),
+        ("dimensions_match", ctypes.c_uint32),
+        ("si_factor_match", ctypes.c_uint32),
+        ("qualified", ctypes.c_uint32),
+        ("expected_dimensions", ctypes.c_int32 * 7),
+        ("expected_si_factor_coefficient", ctypes.c_int64),
+        ("expected_si_factor_scale", ctypes.c_int32),
+        ("reserved", ctypes.c_uint32),
+    ]
+
+
 @dataclass(frozen=True, slots=True)
 class CanonicalLimits:
     maximum_input_bytes: int = 1_048_576
@@ -184,6 +214,17 @@ class EngineCapability:
 class CanonicalJsonResult:
     canonical: bytes
     sha256: str
+
+
+@dataclass(frozen=True, slots=True)
+class EngineIrUnitValidation:
+    recognized: bool
+    dimensions_match: bool
+    si_factor_match: bool
+    qualified: bool
+    expected_dimensions: tuple[int, int, int, int, int, int, int]
+    expected_si_factor_coefficient: int
+    expected_si_factor_scale: int
 
 
 def _initialized(structure: ctypes.Structure) -> ctypes.Structure:
@@ -387,6 +428,19 @@ class NativeEngine:
             ctypes.POINTER(_Diagnostic),
         ]
         library.morphoia_canonical_json_profile1.restype = ctypes.c_int32
+        unit_validation = getattr(
+            library,
+            "morphoia_context_validate_engine_ir_unit",
+            None,
+        )
+        if unit_validation is not None:
+            unit_validation.argtypes = [
+                ctypes.c_void_p,
+                ctypes.POINTER(_EngineIrUnit),
+                ctypes.POINTER(_EngineIrUnitValidation),
+                ctypes.POINTER(_Diagnostic),
+            ]
+            unit_validation.restype = ctypes.c_int32
         library.morphoia_status_name.argtypes = [ctypes.c_int32]
         library.morphoia_status_name.restype = _StringView
 
@@ -463,16 +517,18 @@ class NativeEngine:
                 )
 
     def __enter__(self) -> Self:
-        if not self._context.value:
-            raise NativeLibraryError("native Engine context is closed")
-        return self
+        with self._lock:
+            if not self._context.value:
+                raise NativeLibraryError("native Engine context is closed")
+            return self
 
     def __exit__(self, _exception_type, _exception, _traceback) -> None:
         self.close()
 
     @property
     def closed(self) -> bool:
-        return not bool(self._context.value)
+        with self._lock:
+            return not bool(self._context.value)
 
     def close(self) -> None:
         with self._lock:
@@ -582,10 +638,77 @@ class NativeEngine:
             )
         return CanonicalJsonResult(bytes(output), measured_digest.hex())
 
+    def validate_engine_ir_unit(
+        self,
+        code: str,
+        *,
+        dimensions: tuple[int, int, int, int, int, int, int],
+        si_factor_coefficient: int,
+        si_factor_scale: int,
+    ) -> EngineIrUnitValidation:
+        """Qualify one literal unit tuple through the optional ABI-v1 function."""
+
+        if not isinstance(code, str):
+            raise TypeError("unit code must be str")
+        if not isinstance(dimensions, tuple) or len(dimensions) != 7:
+            raise TypeError("unit dimensions must be a tuple of exactly seven integers")
+        integer_values = (*dimensions, si_factor_coefficient, si_factor_scale)
+        if any(not isinstance(value, int) or isinstance(value, bool) for value in integer_values):
+            raise TypeError("unit tuple values must be integers")
+        if any(value < -(1 << 31) or value > (1 << 31) - 1 for value in dimensions):
+            raise ValueError("unit dimensions must fit int32")
+        if not -(1 << 63) <= si_factor_coefficient <= (1 << 63) - 1:
+            raise ValueError("unit SI factor coefficient must fit int64")
+        if not -(1 << 31) <= si_factor_scale <= (1 << 31) - 1:
+            raise ValueError("unit SI factor scale must fit int32")
+
+        function = getattr(
+            self._library,
+            "morphoia_context_validate_engine_ir_unit",
+            None,
+        )
+        if function is None:
+            raise NativeLibraryError(
+                "native Engine library does not expose unit-validation ABI-v1"
+            )
+        encoded = code.encode("utf-8", errors="strict")
+        view, storage = self._input_view(encoded)
+        unit = _initialized(_EngineIrUnit())
+        unit.flags = 0
+        unit.code = view
+        unit.dimensions[:] = dimensions
+        unit.si_factor_coefficient = si_factor_coefficient
+        unit.si_factor_scale = si_factor_scale
+        unit.reserved = 0
+        validation = _initialized(_EngineIrUnitValidation())
+        diagnostic = self._diagnostic()
+        with self._lock:
+            if not self._context.value:
+                raise NativeLibraryError("native Engine context is closed")
+            status = function(
+                self._context,
+                ctypes.byref(unit),
+                ctypes.byref(validation),
+                ctypes.byref(diagnostic),
+            )
+        del storage
+        if status != STATUS_OK:
+            self._raise_status(status, diagnostic)
+        return EngineIrUnitValidation(
+            recognized=bool(validation.recognized),
+            dimensions_match=bool(validation.dimensions_match),
+            si_factor_match=bool(validation.si_factor_match),
+            qualified=bool(validation.qualified),
+            expected_dimensions=tuple(validation.expected_dimensions),
+            expected_si_factor_coefficient=validation.expected_si_factor_coefficient,
+            expected_si_factor_scale=validation.expected_si_factor_scale,
+        )
+
 
 __all__ = [
     "ABI_VERSION",
     "CANONICAL_PROFILE",
+    "CAPABILITY_ENGINE_IR_CORE_SI",
     "CAPABILITY_ENGINE_IR_MANIFEST",
     "FORMAT_IDENTIFIER",
     "FORMAT_VERSION",
@@ -594,6 +717,7 @@ __all__ = [
     "CanonicalJsonResult",
     "CanonicalLimits",
     "EngineCapability",
+    "EngineIrUnitValidation",
     "NativeEngine",
     "NativeEngineError",
     "NativeLibraryError",

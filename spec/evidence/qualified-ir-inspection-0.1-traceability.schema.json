@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/qualified-ir-inspection-0.1-traceability-1.0.schema.json",
+  "title": "Morphoia Engine qualified IR inspection 0.1 traceability",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "lot",
+    "profile",
+    "source_base_commit",
+    "execution_environment",
+    "entries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./qualified-ir-inspection-0.1-traceability.schema.json"
+    },
+    "schema_version": {"const": "1.0.0"},
+    "lot": {"const": "qualified-ir-inspection-0.1"},
+    "profile": {"const": "engine-ir-core-si-0.1"},
+    "source_base_commit": {
+      "const": "767b88ab7e89b30ed77f5b30c25372d71fa06402"
+    },
+    "execution_environment": {"$ref": "#/$defs/execution_environment"},
+    "entries": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/entry"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "status": {
+      "enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]
+    },
+    "safe_path": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?(?:/|$))[A-Za-z0-9._/-]+$",
+      "maxLength": 1024
+    },
+    "command_result": {
+      "type": "object",
+      "required": ["id", "command", "status", "result"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "maxLength": 128
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "status": {"$ref": "#/$defs/status"},
+        "result": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "additionalProperties": false
+    },
+    "execution_environment": {
+      "type": "object",
+      "required": ["os", "architecture", "compiler", "python", "commands"],
+      "properties": {
+        "os": {"type": "string", "minLength": 1, "maxLength": 256},
+        "architecture": {"const": "x86_64"},
+        "compiler": {"type": "string", "minLength": 1, "maxLength": 256},
+        "python": {"type": "string", "minLength": 1, "maxLength": 128},
+        "commands": {
+          "type": "array",
+          "minItems": 19,
+          "maxItems": 19,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/command_result"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "entry": {
+      "type": "object",
+      "required": [
+        "requirement_id",
+        "claim",
+        "status",
+        "test_ids",
+        "evidence",
+        "reason",
+        "blocking_scope"
+      ],
+      "properties": {
+        "requirement_id": {
+          "enum": ["MOR-IR-006", "MOR-API-006", "MOR-QA-017"]
+        },
+        "claim": {"type": "string", "minLength": 1, "maxLength": 2048},
+        "status": {"$ref": "#/$defs/status"},
+        "test_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+            "maxLength": 256
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safe_path"}
+        },
+        "reason": {"type": "string", "minLength": 1, "maxLength": 4096},
+        "blocking_scope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {"status": {"enum": ["PASS", "FAIL"]}},
+            "required": ["status"]
+          },
+          "then": {
+            "properties": {
+              "test_ids": {"minItems": 1},
+              "evidence": {"minItems": 1}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

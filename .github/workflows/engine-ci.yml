@@ -80,6 +80,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          fetch-depth: 0
           persist-credentials: false
 
       - name: Set up Python
@@ -138,7 +139,8 @@ jobs:
           python scripts/validate_engine_e0_evidence.py
           python scripts/validate_engine_e1_native_evidence.py
           python scripts/generate_engine_e2_sbom.py --check
-          python scripts/generate_engine_e1_public_ir_sbom.py --check
+          python scripts/validate_engine_e1_public_ir_frozen.py
+          python scripts/generate_engine_qualified_ir_inspection_evidence.py --check
 
   hygiene:
     name: Source hygiene

@@ -13,6 +13,7 @@ from ._engine_native import NativeEngine, NativeLibraryError
 from .compiler import compile_document
 from .engine_ir import read_bounded_file, replay_manifest, validate_manifest
 from .engine_ir_contract import ContractError
+from .engine_ir_inspection import INSPECTION_PROFILE, inspect_engine_ir
 from .validator import validate_file
 
 
@@ -178,6 +179,34 @@ def command_engine_ir_replay(arguments: argparse.Namespace) -> int:
     return 0
 
 
+def command_inspect(arguments: argparse.Namespace) -> int:
+    try:
+        source = read_bounded_file(_absolute_lexical_path(arguments.source, "source"))
+        with NativeEngine(arguments.library) as engine:
+            result = inspect_engine_ir(
+                source,
+                profile=arguments.profile,
+                engine=engine,
+            )
+    except (OSError, ContractError, NativeLibraryError, TypeError, ValueError) as error:
+        _write_engine_ir_error(error, as_json=arguments.json)
+        return 1
+    if arguments.json:
+        sys.stdout.buffer.write(result.canonical_report + b"\n")
+    else:
+        status = "PASS" if result.qualified else "FAIL"
+        print(
+            f"{status} qualified Engine IR inspection {result.document['format_version']} "
+            f"report sha256:{result.report_sha256}"
+        )
+        for diagnostic in result.document["diagnostics"]:
+            print(
+                f"{diagnostic['severity']} {diagnostic['code']} "
+                f"{diagnostic['path']}: {diagnostic['message']}"
+            )
+    return 0 if result.qualified else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="morphoia",
@@ -202,6 +231,16 @@ def build_parser() -> argparse.ArgumentParser:
     compile_parser.add_argument("source")
     compile_parser.add_argument("-o", "--output", required=True)
     compile_parser.set_defaults(function=command_compile)
+
+    inspect_parser = subparsers.add_parser(
+        "inspect",
+        help="qualify Engine IR metadata without resolving payloads or applying transforms",
+    )
+    inspect_parser.add_argument("source")
+    inspect_parser.add_argument("--profile", default=INSPECTION_PROFILE)
+    inspect_parser.add_argument("--library", type=Path)
+    inspect_parser.add_argument("--json", action="store_true")
+    inspect_parser.set_defaults(function=command_inspect)
 
     engine_ir_parser = subparsers.add_parser(
         "engine-ir",

@@ -1,0 +1,209 @@
+{
+  "$schema": "./qualified-ir-inspection-0.1-traceability.schema.json",
+  "schema_version": "1.0.0",
+  "lot": "qualified-ir-inspection-0.1",
+  "profile": "engine-ir-core-si-0.1",
+  "source_base_commit": "767b88ab7e89b30ed77f5b30c25372d71fa06402",
+  "execution_environment": {
+    "os": "Ubuntu 24.04, Linux 6.18.35",
+    "architecture": "x86_64",
+    "compiler": "GCC/G++ 13.3.0; CMake compatibility path 3.20.5",
+    "python": "CPython 3.12.13 local; CPython 3.12 and 3.13 hosted NOT_RUN",
+    "commands": [
+      {
+        "id": "frozen-public-ir-bridge",
+        "command": "python3 scripts/validate_engine_e1_public_ir_frozen.py",
+        "status": "PASS",
+        "result": "The immutable 767b88 snapshot, 309 blobs, pinned replay runtime, historical generator, and 22 historical tests passed; the current bridge mutation suite passed 14/14."
+      },
+      {
+        "id": "direct-native-bootstrap",
+        "command": "MORPHOIA_BOOTSTRAP_FORCE_FALLBACK=1 bash scripts/bootstrap-engine.sh",
+        "status": "PASS",
+        "result": "The direct GCC fallback passed the exact eight-export check, ten unit literals, ABI and alias mutations, and the concurrent 16-thread shared-context plus four-context run (32000 unit and 32000 mixed calls)."
+      },
+      {
+        "id": "two-clean-cmake-builds",
+        "command": "Run two isolated CMake 3.20.5 Debug configure/build/CTest/install/external-consumer executions from the same prospective source tree",
+        "status": "PASS",
+        "result": "Both independent build roots passed 10/10 CTests and their installed external C consumer passed 1/1."
+      },
+      {
+        "id": "sanitizers",
+        "command": "bash scripts/run-engine-sanitizers.sh",
+        "status": "PASS",
+        "result": "The final frozen source tree passed the bounded AddressSanitizer and fail-fast UndefinedBehaviorSanitizer runs; LeakSanitizer remains NOT_RUN."
+      },
+      {
+        "id": "leak-sanitizer",
+        "command": "Execute the bounded native lot under LeakSanitizer on the exact frozen tree",
+        "status": "NOT_RUN",
+        "result": "No LeakSanitizer execution is claimed by the ASan and UBSan gate."
+      },
+      {
+        "id": "inspection-local",
+        "command": "PYTHONPATH=src python3 -m unittest -v tests.test_engine_ir_native tests.test_engine_ir_inspection tests.test_engine_ir_cli",
+        "status": "PASS",
+        "result": "The final bounded native wrapper, inspection, and CLI selection passed 45/45 on CPython 3.12.13; all 20 reports were inspected twice with identical canonical bytes, sizes, and digests bound to direct strict-GCC library SHA-256 37c06b1b93e7202872e4ca0f294f68f336c8c55726e3763ef23fb017660cb8f9."
+      },
+      {
+        "id": "public-ir-regression-lot",
+        "command": "MORPHOIA_ENGINE_LIBRARY=/absolute/path/to/frozen/libmorphoia_engine.so PYTHONPATH=src bash scripts/validate-engine-ir-lot.sh",
+        "status": "PASS",
+        "result": "The final frozen predecessor regression selection passed 86/86 tests and the native corpus validator passed all 20 licensed synthetic graphs."
+      },
+      {
+        "id": "full-python-regression",
+        "command": "PYTHONPATH=src python3 -m unittest discover -s tests -v",
+        "status": "PASS",
+        "result": "The final full Python regression passed 206/206 tests in 84.942 seconds on CPython 3.12.13."
+      },
+      {
+        "id": "installed-wheel",
+        "command": "MORPHOIA_ENGINE_LIBRARY=$PWD/build/ci-gcc/libmorphoia_engine.so.0.0.1 bash scripts/validate-engine-wheel.sh",
+        "status": "PASS",
+        "result": "The final frozen source tree passed the isolated installed-wheel validation and qualified inspection smoke; byte-for-byte wheel reproducibility remains NOT_RUN."
+      },
+      {
+        "id": "evidence-profile",
+        "command": "python3 scripts/generate_engine_qualified_ir_inspection_evidence.py --check && PYTHONPATH=src python3 -m unittest -v tests.test_qualified_ir_inspection_evidence",
+        "status": "PASS",
+        "result": "The final fail-closed manifest, 20-report vector registry, traceability, and CycloneDX inventory regenerated deterministically; four evidence mutation/confinement/atomic-publication tests passed."
+      },
+      {
+        "id": "license-and-hygiene",
+        "command": "python3 -m reuse lint && bash scripts/scan-secrets.sh && git diff --check",
+        "status": "PASS",
+        "result": "The final evidence tree passed REUSE 6.2.0 metadata validation, the bounded credential-signature scan, whitespace validation, Ruff on the evidence implementation/tests, strict extra warnings, and shell syntax checks."
+      },
+      {
+        "id": "hosted-python-3-12",
+        "command": "GitHub Actions Engine requirements matrix on CPython 3.12 for the exact published lot head",
+        "status": "NOT_RUN",
+        "result": "No exact-head hosted execution exists before publication."
+      },
+      {
+        "id": "hosted-python-3-13",
+        "command": "GitHub Actions Engine requirements matrix on CPython 3.13 for the exact published lot head",
+        "status": "NOT_RUN",
+        "result": "No exact-head hosted execution exists before publication."
+      },
+      {
+        "id": "hosted-pr-and-integration",
+        "command": "GitHub Actions branch/PR checks, independent audit, and exact engine merge execution",
+        "status": "NOT_RUN",
+        "result": "The lot has not been pushed, reviewed, or integrated into engine."
+      },
+      {
+        "id": "general-ucum",
+        "command": "Execute a complete UCUM 2.2 grammar, equivalence, offset-unit, compound-unit, and conversion conformance suite",
+        "status": "NOT_RUN",
+        "result": "The profile intentionally implements only ten original exact literals and no general UCUM parser, table, equivalence, or conversion."
+      },
+      {
+        "id": "excluded-profiles",
+        "command": "Execute real SALOME 9.16, GPU/HPC, greater-than-2-GiB, and domain-adapter profiles",
+        "status": "NOT_RUN",
+        "result": "These runtimes and resources are absent or outside this bounded CPU metadata-only lot."
+      },
+      {
+        "id": "validated-mvx-specification",
+        "command": "Receive and validate the owner-approved MVX specification before executing any MVX behavior or scientific claim",
+        "status": "BLOCKED",
+        "result": "No owner-validated MVX specification has been supplied; this blocks only MVX-specific work outside the present lot."
+      },
+      {
+        "id": "vulnerability-analysis",
+        "command": "Run a vulnerability analysis against the exact qualified inspection inventory",
+        "status": "NOT_RUN",
+        "result": "CycloneDX generation is an inventory operation and is not a vulnerability assessment."
+      },
+      {
+        "id": "dependency-license-review",
+        "command": "Review and retain authoritative license evidence for every hash-locked third-party distribution in the qualified inspection profile",
+        "status": "NOT_RUN",
+        "result": "REUSE validates repository licensing metadata; it is not a third-party dependency license audit."
+      }
+    ]
+  },
+  "entries": [
+    {
+      "requirement_id": "MOR-IR-006",
+      "claim": "The engine-ir-core-si-0.1 profile qualifies exactly ten original case-sensitive unit literals by exact dimension and exact decimal factor-to-SI tuple equality without conversion.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "native.unit_registry",
+        "native.unit_validation_c_api",
+        "test_bounded_unit_capability_and_all_literals_are_exact",
+        "test_unit_wrapper_preserves_unknown_and_mismatch_truth",
+        "test_unit_wrapper_rejects_invalid_python_and_native_inputs",
+        "test_all_twenty_reports_are_native_canonical_and_repeatable",
+        "test_unknown_literal_returns_structured_failure_without_conversion",
+        "test_literal_tuple_mismatches_have_exact_ordered_diagnostics",
+        "test_top_level_inspect_json_and_human_output_are_stable",
+        "test_cli_qualifies_all_ten_exact_literals",
+        "test_cli_unit_mutations_fail_with_exact_diagnostics"
+      ],
+      "evidence": [
+        "spec/adr/ADR-021-qualified-ir-inspection.md",
+        "cpp/src/core/unit_registry.cpp",
+        "tests/native/unit_registry_test.cpp",
+        "tests/native/unit_validation_c_api_test.c",
+        "tests/test_engine_ir_native.py",
+        "tests/test_engine_ir_inspection.py",
+        "spec/evidence/qualified-ir-inspection-0.1-report-vectors.json",
+        "tests/test_engine_ir_cli.py"
+      ],
+      "reason": "The local exact-literal, mutation, cross-surface, 20-report, sanitizer, wheel, evidence, license-metadata, hygiene, and full-regression sub-gates passed, but ADR-021 still requires the hosted Python 3.12/3.13 matrices, review, and integration executions before promotion.",
+      "blocking_scope": "hosted-review-and-integration-for-engine-ir-core-si-0.1"
+    },
+    {
+      "requirement_id": "MOR-API-006",
+      "claim": "Every native, Python, Engine IR inspection, and CLI family inside engine-ir-core-si-0.1 has an explicit thread-safety and lifetime contract backed by concurrency tests.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "native.unit_validation_threads",
+        "native.core_smoke",
+        "test_wrapper_serializes_context_lifetime_across_threads",
+        "test_close_waits_for_mixed_calls_then_future_calls_fail_stably",
+        "test_close_blocks_until_an_inflight_native_call_releases_the_lock",
+        "test_distinct_contexts_execute_in_parallel_without_shared_results",
+        "test_concurrent_inspection_is_deterministic_and_close_is_serialized",
+        "test_separate_inspection_processes_are_deterministic",
+        "test_checkpoint_no_clobber_handles_identical_and_different_writers",
+        "test_inspect_argparse_rejection_returns_two"
+      ],
+      "evidence": [
+        "docs/engine/THREAD_SAFETY.md",
+        "tests/native/unit_validation_thread_test.cpp",
+        "tests/native/core_smoke.cpp",
+        "tests/test_engine_ir_native.py",
+        "tests/test_engine_ir_inspection.py",
+        "tests/test_engine_ir_cli.py",
+        "tests/test_engine_ir_replay.py"
+      ],
+      "reason": "The shared-context, distinct-context, allocator, wrapper lifetime, inspection, process, replay, sanitizer, and full-regression sub-gates passed locally, but the hosted Python 3.12/3.13 matrices, review, and integration required by ADR-021 remain unexecuted.",
+      "blocking_scope": "hosted-review-and-integration-thread-safety-for-named-profile"
+    },
+    {
+      "requirement_id": "MOR-QA-017",
+      "claim": "Every MUST claimed by qualified-ir-inspection-0.1 is mapped to an exact executed test, inspection, analysis, or demonstration and hash-addressed evidence.",
+      "status": "NOT_RUN",
+      "test_ids": [
+        "test_committed_profile_matches_generator",
+        "test_manifest_traceability_and_sbom_fail_closed",
+        "test_inventory_unit_exports_reports_and_freeze_are_exact",
+        "test_path_aliases_duplicate_json_and_atomic_publication_fail_closed"
+      ],
+      "evidence": [
+        "spec/evidence/qualified-ir-inspection-0.1-traceability.json",
+        "artifacts/manifests/engine-qualified-ir-inspection-0.1.json",
+        "artifacts/sbom/engine-qualified-ir-inspection-0.1.cdx.json",
+        "docs/engine/evidence/QUALIFIED_IR_INSPECTION_0_1_REPORT.md",
+        "tests/test_qualified_ir_inspection_evidence.py"
+      ],
+      "reason": "The profile-specific mapping, deterministic evidence generation, mutation, confinement, atomic-publication, and full-regression gates passed locally, but the hosted Python 3.12/3.13 matrices, review, and integration evidence remain unexecuted; no project-wide traceability claim is made.",
+      "blocking_scope": "hosted-review-and-integration-for-qualified-ir-inspection-0.1-only"
+    }
+  ]
+}

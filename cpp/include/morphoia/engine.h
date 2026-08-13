@@ -131,6 +131,8 @@ typedef struct morphoia_context_options {
 } morphoia_context_options_t;
 
 #define MORPHOIA_CAPABILITY_ENGINE_IR_MANIFEST "morphoia.engine.ir-manifest"
+#define MORPHOIA_CAPABILITY_ENGINE_IR_CORE_SI "engine-ir-core-si-0.1"
+#define MORPHOIA_ENGINE_IR_CORE_SI_PROFILE MORPHOIA_CAPABILITY_ENGINE_IR_CORE_SI
 #define MORPHOIA_ENGINE_IR_FORMAT_VERSION "0.1.0"
 #define MORPHOIA_ENGINE_IR_MEDIA_TYPE \
   "application/vnd.morphoia.ir-manifest.v0+json"
@@ -181,6 +183,50 @@ typedef struct morphoia_canonical_json_options {
   uint64_t maximum_depth;
 } morphoia_canonical_json_options_t;
 
+#define MORPHOIA_ENGINE_IR_UNIT_FLAG_NONE UINT64_C(0)
+#define MORPHOIA_ENGINE_IR_UNIT_VALIDATION_FLAG_NONE UINT64_C(0)
+#define MORPHOIA_ENGINE_IR_UNIT_DIMENSION_COUNT UINT32_C(7)
+
+/*
+ * One unit declaration from the bounded `engine-ir-core-si-0.1` profile.
+ * `dimensions` is ordered as length, mass, time, electric current,
+ * thermodynamic temperature, amount of substance, and luminous intensity.
+ * The SI factor is the exact decimal `si_factor_coefficient * 10^scale`.
+ * This API recognizes only the profile's published literal registry; it does
+ * not parse expressions, normalize spellings, or convert values. A code must
+ * contain 1 to 32 bytes of shortest-form UTF-8 without an embedded NUL. Any
+ * other well-formed spelling, including non-ASCII text, is an unknown code.
+ */
+typedef struct morphoia_engine_ir_unit {
+  uint32_t struct_size;
+  uint32_t abi_version;
+  uint64_t flags;
+  morphoia_string_view_t code;
+  int32_t dimensions[MORPHOIA_ENGINE_IR_UNIT_DIMENSION_COUNT];
+  int64_t si_factor_coefficient;
+  int32_t si_factor_scale;
+  uint32_t reserved;
+} morphoia_engine_ir_unit_t;
+
+/*
+ * Caller-owned, all-or-nothing qualification verdict. Unknown well-formed
+ * codes are successful calls with every boolean and expected tuple set to
+ * zero. Recognized codes always return the registry's exact expected tuple.
+ */
+typedef struct morphoia_engine_ir_unit_validation {
+  uint32_t struct_size;
+  uint32_t abi_version;
+  uint64_t flags;
+  uint32_t recognized;
+  uint32_t dimensions_match;
+  uint32_t si_factor_match;
+  uint32_t qualified;
+  int32_t expected_dimensions[MORPHOIA_ENGINE_IR_UNIT_DIMENSION_COUNT];
+  int64_t expected_si_factor_coefficient;
+  int32_t expected_si_factor_scale;
+  uint32_t reserved;
+} morphoia_engine_ir_unit_validation_t;
+
 /* Stable ABI-v1 prefixes; keep these formulas unchanged if fields are appended. */
 #define MORPHOIA_DIAGNOSTIC_V1_SIZE \
   ((uint32_t)(offsetof(morphoia_diagnostic_t, recommendation) + \
@@ -200,6 +246,12 @@ typedef struct morphoia_canonical_json_options {
 #define MORPHOIA_CANONICAL_JSON_OPTIONS_V1_SIZE \
   ((uint32_t)(offsetof(morphoia_canonical_json_options_t, maximum_depth) + \
               sizeof(((morphoia_canonical_json_options_t*)0)->maximum_depth)))
+#define MORPHOIA_ENGINE_IR_UNIT_V1_SIZE \
+  ((uint32_t)(offsetof(morphoia_engine_ir_unit_t, reserved) + \
+              sizeof(((morphoia_engine_ir_unit_t*)0)->reserved)))
+#define MORPHOIA_ENGINE_IR_UNIT_VALIDATION_V1_SIZE \
+  ((uint32_t)(offsetof(morphoia_engine_ir_unit_validation_t, reserved) + \
+              sizeof(((morphoia_engine_ir_unit_validation_t*)0)->reserved)))
 
 /* The context layout is private to the implementation. */
 typedef struct morphoia_context morphoia_context_t;
@@ -277,6 +329,25 @@ morphoia_canonical_json_profile1(
     size_t output_capacity,
     size_t* required_size,
     uint8_t sha256[MORPHOIA_SHA256_DIGEST_SIZE],
+    morphoia_diagnostic_t* diagnostic) MORPHOIA_ENGINE_NOEXCEPT;
+
+/*
+ * Validate one unit tuple against the exact, case-sensitive literal registry
+ * of `engine-ir-core-si-0.1`. This is a bounded qualification operation, not a
+ * general UCUM conformance claim. The context is read-only and calls may run
+ * concurrently while its destruction remains serialized by the caller.
+ *
+ * The context storage, input ABI-v1 prefix, input code bytes, output ABI-v1
+ * prefix, and compatible diagnostic ABI-v1 prefix MUST be mutually disjoint.
+ * Technical errors (pointer, alias, UTF-8, ABI, flags, or reserved fields)
+ * leave the output prefix untouched. Larger future structures are accepted
+ * and bytes beyond the ABI-v1 output prefix are preserved.
+ */
+MORPHOIA_ENGINE_API morphoia_status_t MORPHOIA_ENGINE_CALL
+morphoia_context_validate_engine_ir_unit(
+    const morphoia_context_t* context,
+    const morphoia_engine_ir_unit_t* unit,
+    morphoia_engine_ir_unit_validation_t* validation,
     morphoia_diagnostic_t* diagnostic) MORPHOIA_ENGINE_NOEXCEPT;
 
 /* The returned UTF-8 view has static storage duration. */

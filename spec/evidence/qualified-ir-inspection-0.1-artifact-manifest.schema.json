@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/qualified-ir-inspection-0.1-artifact-manifest-1.0.schema.json",
+  "title": "Morphoia Engine qualified IR inspection 0.1 artifact manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "project",
+    "lot",
+    "profile",
+    "generated_at",
+    "manifest_document_license",
+    "hash_algorithm",
+    "source_base_commit",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project": {"const": "Morphoia Engine"},
+    "lot": {"const": "qualified-ir-inspection-0.1"},
+    "profile": {"const": "engine-ir-core-si-0.1"},
+    "generated_at": {"const": "2026-08-12"},
+    "manifest_document_license": {"const": "CC-BY-4.0"},
+    "hash_algorithm": {"const": "sha256"},
+    "source_base_commit": {
+      "const": "767b88ab7e89b30ed77f5b30c25372d71fa06402"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 55,
+      "maxItems": 55,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/artifact"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "status": {
+      "enum": ["PASS", "FAIL", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"]
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "path",
+        "media_type",
+        "size_bytes",
+        "sha256",
+        "license_expression",
+        "source_artifact_id",
+        "provenance",
+        "verification_status",
+        "vulnerability_analysis_status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]*$",
+          "maxLength": 128
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "maxLength": 128
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?(?:/|$))[A-Za-z0-9._/-]+$",
+          "maxLength": 1024
+        },
+        "media_type": {
+          "type": "string",
+          "pattern": "^[a-z0-9.+-]+/[a-z0-9.+-]+$",
+          "maxLength": 128
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "license_expression": {
+          "enum": ["Apache-2.0 OR MIT", "CC-BY-4.0", "MIT"]
+        },
+        "source_artifact_id": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9.-]*$",
+              "maxLength": 128
+            }
+          ]
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "verification_status": {"$ref": "#/$defs/status"},
+        "vulnerability_analysis_status": {"const": "NOT_RUN"},
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -5,9 +5,9 @@
 Last updated: 2026-08-12
 Owner: Dr Olivier Ami
 Current operational phase: E1; E1 native and E2 protocol foundations integrated
-Current lot: final close checkpoint for integrated `public-ir-0.1-and-20-graph-replay`
-Next bounded lot: `qualified-ir-inspection-0.1` (`PENDING` close integration)
-Work branch: `engine-p0-public-ir-close`
+Current lot: `qualified-ir-inspection-0.1` (`IN_PROGRESS`)
+Next bounded lot: not selected; complete the current finite lot first
+Work branch: `engine-p0-ir-inspection`
 Integration branch: `engine`
 Canonical remote: `origin` (`https://github.com/aminoside/morphoia.git`)
 E1 base commit: `cdddaa47ba54742652819d798e1c6f9c0bd9ce6e`
@@ -22,6 +22,8 @@ E1/E2 integration commit and current lot base:
 `12656708ccc3031670c4b3efd43996e46fa27998`
 Public-IR integration commit:
 `9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`
+Public-IR close integration and current lot base:
+`767b88ab7e89b30ed77f5b30c25372d71fa06402`
 
 ## Objective
 
@@ -257,7 +259,7 @@ mapping, and the bounded evidence report. The current validation commands are:
 python3 scripts/validate_engine_e0_evidence.py
 python3 scripts/validate_engine_e1_native_evidence.py
 python3 scripts/generate_engine_e2_sbom.py --check
-python3 scripts/generate_engine_e1_public_ir_sbom.py --check
+python3 scripts/validate_engine_e1_public_ir_frozen.py
 python3 scripts/validate_engine_checkpoint.py
 PYTHONPATH=src <locked-python> -m unittest discover -s tests -v
 ```
@@ -390,14 +392,65 @@ review, comment, and thread collections were empty, so no approval count or
 review event is claimed. E1/G1 plus all
 declared external limitations retain their existing status.
 
-#### Qualified IR inspection 0.1 (PENDING)
+#### Qualified IR inspection 0.1 (IN_PROGRESS)
 
-`qualified-ir-inspection-0.1` is the next bounded E1 lot, but it must not start
-until this final post-merge close checkpoint is published and integrated into
-`engine`. Its first action is to inspect the exact resulting `engine` tree and
-freeze a finite scope, requirement links, acceptance criteria, and validation
-commands before any implementation. This close checkpoint does not claim a
-qualified-IR capability or pre-approve any requirement promotion.
+PR #9 integrated the final public-IR close checkpoint only into `engine` at
+`767b88ab7e89b30ed77f5b30c25372d71fa06402`. Its exact-merge Engine run
+`31618282751` passed Python 3.12/3.13, native, hygiene, and REUSE, while `main`
+remained unchanged. The finite successor lot therefore started from that exact
+commit on `engine-p0-ir-inspection`.
+
+The lot is limited to profile `engine-ir-core-si-0.1`: a ten-literal,
+case-sensitive Morphoia unit registry with exact SI tuples and no conversion;
+one additive, sized C ABI validation surface; reference Python and
+`morphoia inspect MANIFEST --json`; deterministic metadata inspection; and an
+explicit thread-safety matrix for the exposed profile. It may promote only the
+bounded subclaims MOR-IR-006, MOR-API-006, and MOR-QA-017 after their native,
+Python, CLI, concurrency, two-build, sanitizer, complete-regression, evidence,
+license, hosted, review, and integration gates execute. Full UCUM parsing or
+equivalence, payload resolution, transform application, SALOME, GPU/HPC,
+greater-than-2-GiB execution, and MVX remain outside the lot and keep their
+global statuses.
+
+Before changing files owned by the closed public-IR evidence profile, this lot
+adds a fail-closed historical bridge anchored to merge `767b88ab`: all 309 Git
+blobs are verified and materialized from the local object database, then the
+closed generator and its 22 evidence tests are replayed inside that immutable
+snapshot. No fetch, HEAD fallback, regeneration, or modification of the four
+closed outputs is permitted. Shallow clones fail explicitly; relevant CI
+checkouts retain full history.
+
+The bounded tracks are:
+
+1. native exact-unit registry, additive C ABI, export allowlist, concurrency,
+   build/install, and sanitizer evidence;
+2. deterministic Python/CLI inspection without payload access, conversion, or
+   transform application;
+3. ADR-021, profile guide, exhaustive thread-safety matrix, traceability,
+   manifest/SBOM, checkpoint, and hosted integration evidence.
+
+The prospective local checkpoint executed the bounded 45-test native
+wrapper/inspection/CLI selection, the 86-test public-IR regression lot and its
+20-graph native validator, direct bootstrap with exactly eight exports,
+ASan/UBSan, the isolated installed-wheel smoke, and the four-test fail-closed
+evidence profile successfully. LSan and byte-identical wheel construction
+remain `NOT_RUN`. Two fresh CMake 3.20.5 roots each passed 10/10 CTests, install,
+and external C consumer 1/1. A preceding non-isolated in-tree CMake attempt
+first reached CTest with three generated executables empty or non-executable;
+a clean-first retry then observed an empty shared library and failed to link
+one test. The record does not establish or attribute a root cause, and the
+later clean passes do not rewrite the failed attempts.
+
+After the evidence and checkpoint preseal, final `unittest` discovery passed
+206/206 in 84.942 seconds on CPython 3.12.13. Frozen E0, frozen E1 native, E2
+`--check`, the frozen public-IR bridge over 309 blobs and 22 historical tests,
+the 55-artifact qualified evidence generator `--check`, all 320 exact
+requirements, REUSE 6.2.0 for 323/323 files, the bounded secret scan, Ruff on
+changed Python, shell syntax, and `git diff --check` also passed on the final
+local tree. Exact-head hosted Python 3.12/3.13 matrices, PR review, and
+integration have not run. Therefore ADR-021 remains `Proposed` and MOR-IR-006,
+MOR-API-006, and MOR-QA-017 remain `NOT_RUN` despite the complete green local
+gate.
 
 ### E2 — SALOME P0 spike (parallel after minimal protocol)
 
@@ -516,6 +569,9 @@ large-artifact evidence, and the specified MVX micro-corpus.
   manifest/SBOM are not regenerated to absorb later-phase files.
 - E1 and E2 each use a separate manifest and SBOM profile and are regenerated
   only within their own scope. The immutable E0 manifest/SBOM stay byte-exact.
+- ADR-021 remains proposed for the prospective `engine-ir-core-si-0.1`
+  profile. The green local gate does not promote MOR-IR-006, MOR-API-006, or
+  MOR-QA-017 before the hosted, review, and integration gates.
 - Absence of branch protection is recorded, not treated as compliance.
 - Missing build/domain tools are environment facts, not evidence that their
   integrations fail.
@@ -536,14 +592,14 @@ large-artifact evidence, and the specified MVX micro-corpus.
 
 ## Current next action
 
-Publish this final close checkpoint from `engine-p0-public-ir-close`, validate
-it through the compensating PR workflow, and integrate it only into `engine`.
-No recursive post-merge evidence follow-up is required for the close bytes.
-After integration, start `qualified-ir-inspection-0.1` from the exact resulting
-`engine` commit and first freeze its finite scope, requirement links,
-acceptance criteria, and validation commands. Keep real SALOME 9.16, GPU
-backends, the real greater-than-2-GiB transfer, future CAS capabilities,
-dependency vulnerability/license analysis, byte-reproducible wheel proof, and
-MVX criteria `NOT_RUN` or `BLOCKED` until each named test or prerequisite
-exists; never merge `engine` into the default branch without separate owner
-instruction.
+Create a DCO-signed commit, push `engine-p0-ir-inspection`, and open a draft PR
+targeting only `engine`; require
+exact-head Engine/report checks and independent review before integration. Keep
+ADR-021 proposed and MOR-IR-006, MOR-API-006, and MOR-QA-017 `NOT_RUN` until
+the hosted, review, and integration gate completes. Keep real SALOME 9.16, GPU
+backends, the real
+greater-than-2-GiB transfer, future CAS capabilities, dependency
+vulnerability/license analysis, byte-reproducible wheel proof, general UCUM
+conformance, and MVX criteria `NOT_RUN` or `BLOCKED` until each named test or
+prerequisite exists. Never merge `engine` into the default branch without
+separate owner instruction.

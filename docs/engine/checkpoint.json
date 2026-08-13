@@ -4,7 +4,7 @@
   "updated_at": "2026-08-12",
   "project_state": "IN_PROGRESS",
   "phase": "E1",
-  "lot": "public-ir-0.1-and-20-graph-replay-close",
+  "lot": "qualified-ir-inspection-0.1",
   "remote": {
     "canonical_name": "origin",
     "canonical_url": "https://github.com/aminoside/morphoia.git",
@@ -12,17 +12,17 @@
     "visibility": "public",
     "default_branch": "main",
     "integration_branch": "engine",
-    "publication_status": "PASS",
-    "publication_note": "PR #8 integrated evidence head 74b8ddb60ddd8257166b4547c1222a17f47884c6 only into engine at merge 9c845f9ea4586a65f25985a4d1f92ebdf407a2f4, tree ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0, with parents 12656708ccc3031670c4b3efd43996e46fa27998 and 74b8ddb60ddd8257166b4547c1222a17f47884c6. Exact-merge Engine run 31615797169 passed all five jobs; main remained at 66b26f2f6dbccac6a132c8ebc72652e37fcf27b9. The earlier 5ee8cebc Engine runs retain their installed-wheel-only FAIL. This final close checkpoint is local and pending integration; no recursive post-merge evidence loop is required"
+    "publication_status": "NOT_RUN",
+    "publication_note": "PR #9 integrated public-IR close head aa309afcf663d922911ab729be8c70616d25792b only into engine at merge 767b88ab7e89b30ed77f5b30c25372d71fa06402, tree ae5dba00016313a081e3c0e4ca8aefbb5e8834c1, with parents 9c845f9ea4586a65f25985a4d1f92ebdf407a2f4 and aa309afcf663d922911ab729be8c70616d25792b. Exact-merge Engine run 31618282751 passed all five jobs and main remained at 66b26f2f6dbccac6a132c8ebc72652e37fcf27b9. The current qualified-ir-inspection-0.1 bytes are local and unpublished; no DCO lot commit, draft PR, or exact-head hosted run exists for them"
   },
   "git": {
-    "branch": "engine-p0-public-ir-close",
-    "upstream": "origin/engine-p0-public-ir-close",
-    "base_parent": "9c845f9ea4586a65f25985a4d1f92ebdf407a2f4",
+    "branch": "engine-p0-ir-inspection",
+    "upstream": "origin/engine-p0-ir-inspection",
+    "base_parent": "767b88ab7e89b30ed77f5b30c25372d71fa06402",
     "integration_branch_initially_present": false,
     "branch_protection_observed": false,
-    "published_commit_sha": "9c845f9ea4586a65f25985a4d1f92ebdf407a2f4",
-    "note": "This close branch starts from exact public-IR integration merge 9c845f9, tree ad816e3c, whose second parent and byte-identical tree are evidence head 74b8ddb. Exact-merge checks passed. Published implementation 5ee8cebc retains its historical wheel-only FAIL. The close checkpoint itself is prospective and has no published commit SHA"
+    "published_commit_sha": "767b88ab7e89b30ed77f5b30c25372d71fa06402",
+    "note": "The qualified inspection branch and its remote upstream start from published public-IR close merge 767b88ab, tree ae5dba00. The prospective lot bytes have no published commit SHA; published_commit_sha records only the last published base. No current-lot publication, hosted validation, review, or integration is inferred"
   },
   "tasks": {
     "completed": [
@@ -84,13 +84,21 @@
       "e1_public_ir_independent_audit",
       "e1_public_ir_pr8_engine_integration",
       "e1_public_ir_exact_merge_hosted_verification",
-      "adr_020_bounded_profile_acceptance"
+      "adr_020_bounded_profile_acceptance",
+      "e1_public_ir_close_checkpoint_publication_and_integration",
+      "qualified_ir_inspection_0_1_lot_branch_creation_and_entry_smoke",
+      "qualified_ir_inspection_0_1_scope_and_adr_freeze",
+      "qualified_ir_inspection_0_1_frozen_public_ir_bridge",
+      "qualified_ir_inspection_0_1_native_unit_registry_c_abi_and_threads",
+      "qualified_ir_inspection_0_1_python_cli_and_deterministic_reports",
+      "qualified_ir_inspection_0_1_prospective_evidence_profile",
+      "qualified_ir_inspection_0_1_final_full_local_validation"
     ],
     "in_progress": [
-      "e1_public_ir_close_checkpoint_publication_and_integration"
+      "qualified_ir_inspection_0_1_prepublication_checkpoint"
     ],
     "remaining": [
-      "qualified_ir_inspection_0_1_pending_close_integration",
+      "qualified_ir_inspection_0_1_publication_hosted_review_and_engine_integration",
       "e1_remaining_core_foundations",
       "e2_real_salome_execution_when_runtime_available"
     ]
@@ -133,21 +141,21 @@
     "paths": [
       {
         "path": "cpp",
-        "sha256": "ca67e853caf100875e4caa1d6ab3f884a614fb14b08fe79062786804b4eae8d9",
+        "sha256": "c26a60c8a28f39d471d93cf3bd0e343f4a2c8a69e22ef25112d0632c81f0529d",
         "status": "PASS"
       },
       {
         "path": "spec",
-        "sha256": "33bfd6fb5c489ecce4515929e01976061ec27899baba77e47a3e0b99b5d319c0",
+        "sha256": "39022cd5681b19a3a81584f15d287ebb99a259e1dcc2038f6af34165f199d36a",
         "status": "PASS"
       },
       {
         "path": "docs/engine",
-        "sha256": "862769988c043a153f8da1546a22852b82338a96a2cc12341f4bda1d2cba1a3b",
+        "sha256": "c915a02d4937ce58e3f578174953dd1c9b0f07ebaef5515cb4f74960f0aa1b9e",
         "status": "PASS"
       }
     ],
-    "note": "Digests represent the final post-merge public-IR close checkpoint after evidence head 74b8ddb was integrated at 9c845f9 and its exact-merge Engine matrix passed; checkpoint.json itself is excluded to avoid self-reference. Closed E0 and E1 native outputs remain byte-frozen, E2 remains a separate closed profile, and published implementation 5ee8cebc retains its first hosted wheel-only FAIL. Only publication and integration of this close checkpoint remain NOT_RUN."
+    "note": "Digests represent the final local qualified-ir-inspection-0.1 prepublication checkpoint based on published merge 767b88ab; checkpoint.json itself is excluded to avoid self-reference. The frozen public-IR bridge, bounded implementation sub-gates, 206-test full regression, and final 55-artifact evidence profile have local PASS evidence, while current-lot publication, exact-head hosted Python 3.12/3.13, review, integration, ADR-021 acceptance, and three bounded requirement promotions remain NOT_RUN."
   },
   "commands": [
     {
@@ -536,9 +544,104 @@
       "summary": "The bounded evidence audit returned GO. GitHub review, comment, and thread collections were empty; no approval count, reviewer action, or branch-protection compliance is inferred"
     },
     {
-      "command": "Publish and integrate the final engine-p0-public-ir-close checkpoint through a compensating PR into engine",
+      "command": "PR #9 merge 767b88ab7e89b30ed77f5b30c25372d71fa06402 into engine and GitHub Actions exact-merge Engine run 31618282751",
+      "result": "PASS",
+      "summary": "Merge tree ae5dba00016313a081e3c0e4ca8aefbb5e8834c1 has parents 9c845f9ea4586a65f25985a4d1f92ebdf407a2f4 and aa309afcf663d922911ab729be8c70616d25792b. Python 3.12 job 94186424029, hygiene 94186424066, native 94186424122, REUSE 94186424144, and Python 3.13 94186424233 passed; main remained 66b26f2f6dbccac6a132c8ebc72652e37fcf27b9"
+    },
+    {
+      "command": "python3 scripts/validate_engine_e1_public_ir_frozen.py",
+      "result": "PASS",
+      "summary": "The immutable 767b88 snapshot, 309 blobs, pinned replay runtime, historical generator, and 22 historical tests passed; the current bridge mutation suite passed 14 of 14"
+    },
+    {
+      "command": "MORPHOIA_BOOTSTRAP_FORCE_FALLBACK=1 bash scripts/bootstrap-engine.sh for qualified-ir-inspection-0.1",
+      "result": "PASS",
+      "summary": "The direct GCC fallback passed the exact eight-export check, ten unit literals, ABI and alias mutations, and the concurrent 16-thread shared-context plus four-context run with 32000 unit and 32000 mixed calls"
+    },
+    {
+      "command": "Non-isolated in-tree CMake execution while concurrent work used the generated build tree",
+      "result": "FAIL",
+      "summary": "The execution failed after a corrupt generated build artifact was observed. The retained evidence does not establish or attribute root cause, and later clean executions do not rewrite this failure"
+    },
+    {
+      "command": "Two isolated CMake 3.20.5 Debug configure/build/CTest/install/external-consumer executions from the same prospective qualified-IR source tree",
+      "result": "PASS",
+      "summary": "Both independent temporary build roots passed 10 of 10 CTests, installed successfully, and passed their external C consumer 1 of 1 with the exact eight-export boundary"
+    },
+    {
+      "command": "bash scripts/run-engine-sanitizers.sh for qualified-ir-inspection-0.1",
+      "result": "PASS",
+      "summary": "The final frozen source tree passed the bounded AddressSanitizer and fail-fast UndefinedBehaviorSanitizer runs; LeakSanitizer remains NOT_RUN"
+    },
+    {
+      "command": "Execute the bounded qualified-IR native lot under LeakSanitizer on the exact frozen tree",
       "result": "NOT_RUN",
-      "summary": "These final state and profile reseal bytes are local. Their integration is required before qualified-ir-inspection-0.1 starts; no recursive post-merge evidence follow-up is required"
+      "summary": "No LeakSanitizer execution is claimed by the ASan and UBSan gate"
+    },
+    {
+      "command": "PYTHONPATH=src python3 -m unittest -v tests.test_engine_ir_native tests.test_engine_ir_inspection tests.test_engine_ir_cli",
+      "result": "PASS",
+      "summary": "The bounded native wrapper, inspection, and CLI selection passed 45 of 45 on CPython 3.12.13; all 20 reports were inspected twice with identical canonical bytes, sizes, and digests"
+    },
+    {
+      "command": "MORPHOIA_ENGINE_LIBRARY=/absolute/path/to/frozen/libmorphoia_engine.so PYTHONPATH=src bash scripts/validate-engine-ir-lot.sh",
+      "result": "PASS",
+      "summary": "The frozen predecessor regression selection passed 86 of 86 tests and the native corpus validator passed all 20 licensed synthetic graphs"
+    },
+    {
+      "command": "PYTHONPATH=src python3 -m unittest discover -s tests -v after the qualified-IR checkpoint reseal",
+      "result": "PASS",
+      "summary": "Final unittest discovery passed 206 of 206 in 84.942 seconds on CPython 3.12.13. Frozen E0, frozen E1 native, E2, frozen public-IR bridge, qualified evidence, exact 320 requirements, REUSE 323 of 323, bounded secret, Ruff, shell syntax, and whitespace reruns also passed"
+    },
+    {
+      "command": "MORPHOIA_ENGINE_LIBRARY=$PWD/build/ci-gcc/libmorphoia_engine.so.0.0.1 bash scripts/validate-engine-wheel.sh",
+      "result": "PASS",
+      "summary": "The frozen source tree passed isolated installed-wheel validation and qualified inspection smoke; byte-for-byte wheel reproducibility remains NOT_RUN"
+    },
+    {
+      "command": "python3 scripts/generate_engine_qualified_ir_inspection_evidence.py --check and PYTHONPATH=src python3 -m unittest -v tests.test_qualified_ir_inspection_evidence",
+      "result": "PASS",
+      "summary": "The fail-closed manifest, 20-report vector registry, traceability, and CycloneDX inventory regenerated deterministically; four evidence mutation, confinement, and atomic-publication tests passed"
+    },
+    {
+      "command": "PYTHONPATH=src PATH=/tmp/morphoia-report-venv.SpzN23/bin:$PATH make check during the post-evidence preseal state",
+      "result": "FAIL",
+      "summary": "The run observed only test_committed_checkpoint failing because its recorded digest was intentionally stale after evidence regeneration, then was manually interrupted with exit status 130 to avoid continuing the long suite. Later checks did not execute in this attempt, so no result is inferred for them; the separate 206-test full regression PASS remains unchanged"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src PATH=/tmp/morphoia-report-venv.SpzN23/bin:$PATH make check after the final checkpoint seal",
+      "result": "PASS",
+      "summary": "The command exited 0. It rebuilt and validated the 53-page Phase 1 report with 437 links and the 106-page Phase 2 report with 758 links; full unittest discovery passed 206 of 206 in 79.024 seconds, and JSON schema tools, example validation, branding, and embedded-font checks passed. The historical interrupted preseal FAIL remains recorded separately"
+    },
+    {
+      "command": "REUSE 6.2.0 lint, bounded credential-signature scan, git diff --check, Ruff, strict extra warnings, and shell syntax checks on the frozen qualified-IR evidence tree",
+      "result": "PASS",
+      "summary": "The final post-reseal local license-metadata and hygiene selection passed; dependency vulnerability and third-party license analyses remain NOT_RUN"
+    },
+    {
+      "command": "GitHub Actions Engine requirements matrix on CPython 3.12 for the exact published qualified-IR lot head",
+      "result": "NOT_RUN",
+      "summary": "No exact-head hosted execution exists before current-lot publication"
+    },
+    {
+      "command": "GitHub Actions Engine requirements matrix on CPython 3.13 for the exact published qualified-IR lot head",
+      "result": "NOT_RUN",
+      "summary": "No exact-head hosted execution exists before current-lot publication"
+    },
+    {
+      "command": "Publish, review, and integrate qualified-ir-inspection-0.1 through a DCO commit, draft PR, required hosted checks, independent audit, and exact engine merge execution",
+      "result": "NOT_RUN",
+      "summary": "The prospective lot has not been committed, pushed, reviewed, or integrated into engine"
+    },
+    {
+      "command": "Execute complete UCUM 2.2 grammar, equivalence, offset-unit, compound-unit, and conversion conformance",
+      "result": "NOT_RUN",
+      "summary": "The profile intentionally implements only ten original exact literals and no general UCUM parser, table, equivalence, or conversion"
+    },
+    {
+      "command": "Run vulnerability analysis and authoritative third-party dependency license review against the exact qualified inspection inventory",
+      "result": "NOT_RUN",
+      "summary": "CycloneDX inventory and REUSE repository metadata validation do not constitute vulnerability or third-party dependency license analyses"
     }
   ],
   "tests": [
@@ -1136,8 +1239,154 @@
     {
       "id": "E1-PUBLIC-IR-CLOSE-INTEGRATION",
       "profile": "engine-integration",
+      "status": "PASS",
+      "count": 1
+    },
+    {
+      "id": "E1-PUBLIC-IR-CLOSE-POSTMERGE-HOSTED",
+      "profile": "engine-integration-core-cpu",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "id": "E1-QUALIFIED-IR-FROZEN-PUBLIC-IR-BRIDGE",
+      "profile": "e1-public-ir-frozen-replay",
+      "status": "PASS",
+      "count": 36
+    },
+    {
+      "id": "E1-QUALIFIED-IR-NATIVE-DIRECT",
+      "profile": "engine-ir-core-si-0.1-native",
+      "status": "PASS",
+      "count": 10
+    },
+    {
+      "id": "E1-QUALIFIED-IR-CMAKE-IN-TREE-ATTEMPT",
+      "profile": "engine-ir-core-si-0.1-cmake-non-isolated",
+      "status": "FAIL",
+      "reason": "A non-isolated in-tree execution failed after a corrupt generated build artifact was observed while concurrent work used that generated tree; the retained evidence does not establish or attribute root cause"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-CMAKE-3205",
+      "profile": "engine-ir-core-si-0.1-cmake-3.20.5",
+      "status": "PASS",
+      "count": 22
+    },
+    {
+      "id": "E1-QUALIFIED-IR-ASAN-UBSAN",
+      "profile": "engine-ir-core-si-0.1-sanitizers",
+      "status": "PASS",
+      "count": 20
+    },
+    {
+      "id": "E1-QUALIFIED-IR-LSAN",
+      "profile": "engine-ir-core-si-0.1-leak-sanitizer",
       "status": "NOT_RUN",
-      "reason": "The final close checkpoint is local and must be published and integrated into engine before qualified-ir-inspection-0.1 starts; no recursive post-merge evidence loop is required"
+      "reason": "LeakSanitizer did not execute and is not implied by the passing ASan and UBSan runs"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-INSPECTION-LOCAL",
+      "profile": "engine-ir-core-si-0.1-python-3.12",
+      "status": "PASS",
+      "count": 45
+    },
+    {
+      "id": "E1-QUALIFIED-IR-PUBLIC-IR-REGRESSION",
+      "profile": "engine-ir-core-si-0.1-predecessor-regression",
+      "status": "PASS",
+      "count": 86,
+      "reason": "The Python selection passed 86 tests and the separately executed native corpus validator passed all 20 licensed synthetic graphs"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-WHEEL-LOCAL",
+      "profile": "engine-ir-core-si-0.1-installed-wheel",
+      "status": "PASS",
+      "count": 1
+    },
+    {
+      "id": "E1-QUALIFIED-IR-EVIDENCE-LOCAL",
+      "profile": "engine-ir-core-si-0.1-evidence",
+      "status": "PASS",
+      "count": 4
+    },
+    {
+      "id": "E1-QUALIFIED-IR-FULL-PYTHON-312",
+      "profile": "engine-ir-core-si-0.1-python-3.12-full",
+      "status": "PASS",
+      "count": 206
+    },
+    {
+      "id": "E1-QUALIFIED-IR-POSTSEAL-MAKE-CHECK",
+      "profile": "engine-ir-core-si-0.1-full-repository-validation",
+      "status": "PASS",
+      "count": 206,
+      "reason": "Postseal make check exited 0 after rebuilding and validating both reports, 1195 links in total, the 206-test discovery, JSON schemas and examples, branding, and embedded fonts"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-PYTHON-313",
+      "profile": "engine-ir-core-si-0.1-python-3.13",
+      "status": "NOT_RUN",
+      "reason": "No local or hosted exact-head CPython 3.13 qualified-IR execution exists for the current lot bytes"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-HOSTED-PYTHON-312",
+      "profile": "engine-ir-core-si-0.1-hosted-python-3.12",
+      "status": "NOT_RUN",
+      "reason": "The current lot bytes are unpublished and have no exact-head hosted Python 3.12 job"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-HOSTED-PYTHON-313",
+      "profile": "engine-ir-core-si-0.1-hosted-python-3.13",
+      "status": "NOT_RUN",
+      "reason": "The current lot bytes are unpublished and have no exact-head hosted Python 3.13 job"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-PUBLICATION",
+      "profile": "authenticated-publication",
+      "status": "NOT_RUN",
+      "reason": "No DCO commit containing the current qualified-IR checkpoint has been published"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-HOSTED-PR",
+      "profile": "publication-required-checks",
+      "status": "NOT_RUN",
+      "reason": "No draft PR or associated required hosted checks exist for the current qualified-IR lot"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-INDEPENDENT-AUDIT",
+      "profile": "bounded-evidence-audit",
+      "status": "NOT_RUN",
+      "reason": "No final independent audit has executed on a published exact qualified-IR head"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-INTEGRATION",
+      "profile": "engine-integration",
+      "status": "NOT_RUN",
+      "reason": "The current qualified-IR lot has not been integrated into engine"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-ADR-021-ACCEPTANCE",
+      "profile": "engine-ir-core-si-0.1-decision",
+      "status": "NOT_RUN",
+      "reason": "ADR-021 remains Proposed until the hosted Python 3.12 and 3.13, review, and integration gates pass"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-MOR-IR-006",
+      "profile": "engine-ir-core-si-0.1-requirement",
+      "status": "NOT_RUN",
+      "reason": "The local exact-literal, mutation, cross-surface, 20-report, sanitizer, wheel, evidence, license-metadata, hygiene, and full-regression sub-gates passed, but ADR-021 still requires the hosted Python 3.12 and 3.13 matrices, review, and integration executions before promotion; blocking scope is hosted-review-and-integration-for-engine-ir-core-si-0.1"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-MOR-API-006",
+      "profile": "engine-ir-core-si-0.1-requirement",
+      "status": "NOT_RUN",
+      "reason": "The shared-context, distinct-context, allocator, wrapper lifetime, inspection, process, replay, sanitizer, and full-regression sub-gates passed locally, but the hosted Python 3.12 and 3.13 matrices, review, and integration required by ADR-021 remain unexecuted; blocking scope is hosted-review-and-integration-thread-safety-for-named-profile"
+    },
+    {
+      "id": "E1-QUALIFIED-IR-MOR-QA-017",
+      "profile": "engine-ir-core-si-0.1-requirement",
+      "status": "NOT_RUN",
+      "reason": "The profile-specific mapping, deterministic evidence generation, mutation, confinement, atomic-publication, and full-regression gates passed locally, but the hosted Python 3.12 and 3.13 matrices, review, and integration evidence remain unexecuted; no project-wide traceability claim is made; blocking scope is hosted-review-and-integration-for-qualified-ir-inspection-0.1-only"
     },
     {
       "id": "E2-SALOME-REAL",
@@ -1213,6 +1462,10 @@
     {
       "path": "tests/fixtures/engine-ir/0.1.0/index.json",
       "sha256": "39a9e4f2381993f88d8ccbea9d66b402b44ab30cdd4e7b16f486334bd1630ad2"
+    },
+    {
+      "path": "schemas/morphoia-engine-ir-inspection-0.1.0.schema.json",
+      "sha256": "ae49e2b75e89eea52e5a49dde971c32bcd07d89bdd93507964375c5072758ab2"
     }
   ],
   "outputs": [
@@ -1317,6 +1570,78 @@
       "sha256": "c04bfc7b6a672ea6004c804655147daab66ccc009fa54fda1c1907f3887acdb9",
       "status": "PASS",
       "note": "Deterministic 140-component CycloneDX public-IR inventory includes both exact lock files; vulnerability and dependency-license analyses remain NOT_RUN"
+    },
+    {
+      "uri": "repo:spec/evidence/e1-public-ir-freeze.json",
+      "sha256": "fd72827867859abde129612e03adc5c4c6c2fb07ed77a18e845de84dae9dc1be",
+      "status": "PASS",
+      "note": "Machine-readable immutable predecessor declaration pins merge 767b88ab, its topology, 309 blobs, historical anchors, and offline replay contract"
+    },
+    {
+      "uri": "repo:scripts/validate_engine_e1_public_ir_frozen.py",
+      "sha256": "6675d9f433164555fa93c4aecc4c0f79d6b02164dc1b7c74ad91cd695738ff29",
+      "status": "PASS",
+      "note": "Offline fail-closed validator verifies and replays the immutable public-IR predecessor without network fetch or current-tree regeneration"
+    },
+    {
+      "uri": "repo:scripts/generate_engine_qualified_ir_inspection_evidence.py",
+      "sha256": "fc3fa7f0108d682ecb3be755d3df750605f3a5ff489a8bbc1e500858b39d4b56",
+      "status": "PASS",
+      "note": "Fail-closed deterministic qualified-inspection evidence generator with exact inventory, API, report, traceability, and atomic-publication checks"
+    },
+    {
+      "uri": "repo:spec/evidence/qualified-ir-inspection-0.1-artifact-manifest.schema.json",
+      "sha256": "f239586539d86c1bab578211bf305ce06e9bae4ed6441e1c6c489a4b19ea7b85",
+      "status": "PASS",
+      "note": "Draft 2020-12 schema for the prospective qualified-inspection artifact manifest"
+    },
+    {
+      "uri": "repo:spec/evidence/qualified-ir-inspection-0.1-report-vectors.json",
+      "sha256": "bb82c92a26feb6f4c276d18630937a3d170b5b43befbeff6bdccbdb5dad34b73",
+      "status": "PASS",
+      "note": "Exactly 20 synthetic manifests were inspected twice with identical canonical report sizes and SHA-256 values"
+    },
+    {
+      "uri": "repo:spec/evidence/qualified-ir-inspection-0.1-report-vectors.schema.json",
+      "sha256": "7097fe486d31ee6705feb943a5823dc8cb6e61652035510da1988444ea51c76d",
+      "status": "PASS",
+      "note": "Draft 2020-12 schema for the deterministic 20-report vector registry"
+    },
+    {
+      "uri": "repo:spec/evidence/qualified-ir-inspection-0.1-traceability.json",
+      "sha256": "f701162b6864081b206a2c884342dc5112d28bf1e82fef6b4477473d1ce891be",
+      "status": "PASS",
+      "note": "Prospective exact three-requirement mapping preserves MOR-IR-006, MOR-API-006, and MOR-QA-017 as NOT_RUN while recording bounded local sub-gates independently"
+    },
+    {
+      "uri": "repo:spec/evidence/qualified-ir-inspection-0.1-traceability.schema.json",
+      "sha256": "e50c8c6f09038274c2d3c38ed5774ac0ae9764a12d999a016db0cb50f1f9fc7c",
+      "status": "PASS",
+      "note": "Draft 2020-12 schema for the exact prospective qualified-inspection traceability record"
+    },
+    {
+      "uri": "repo:docs/engine/evidence/QUALIFIED_IR_INSPECTION_0_1_REPORT.md",
+      "sha256": "71c316cbf2d2d37f6dbd3f148cdbe6bb66dba2a5e1348779796f53763f25d426",
+      "status": "PASS",
+      "note": "Final local evidence report records the 206-test regression PASS while separating hosted, review, integration, and broader NOT_RUN boundaries"
+    },
+    {
+      "uri": "repo:tests/test_qualified_ir_inspection_evidence.py",
+      "sha256": "b890465c75e0800ddb8179db92fcdf8e3a0de76e2f57800ed97a69941d301823",
+      "status": "PASS",
+      "note": "Four fail-closed evidence mutation, confinement, inventory, and atomic-publication tests passed locally"
+    },
+    {
+      "uri": "repo:artifacts/manifests/engine-qualified-ir-inspection-0.1.json",
+      "sha256": "6f6a9f6f69c71684ebd99bf246a72292ee458161f2812b34c045b7f8d87a2194",
+      "status": "PASS",
+      "note": "Final 55-artifact local inventory is 30858 bytes and verifies exact paths, sizes, hashes, licenses, provenance, and SBOM self-reference; PASS means byte integrity, not ADR-021 acceptance"
+    },
+    {
+      "uri": "repo:artifacts/sbom/engine-qualified-ir-inspection-0.1.cdx.json",
+      "sha256": "7af91b411f128ed74a10518ed23cbc387b2a66d6a9893007f9e6ae8dd58a3ed7",
+      "status": "PASS",
+      "note": "Deterministic 76645-byte CycloneDX 1.5 final local inventory; vulnerability and third-party dependency license analyses remain NOT_RUN"
     }
   ],
   "job_ids": [
@@ -1463,7 +1788,13 @@
     "github-actions:job:94178151884",
     "github-actions:job:94178151890",
     "github-actions:job:94178151961",
-    "github-actions:job:94178151978"
+    "github-actions:job:94178151978",
+    "github-actions:31618282751",
+    "github-actions:job:94186424029",
+    "github-actions:job:94186424066",
+    "github-actions:job:94186424122",
+    "github-actions:job:94186424144",
+    "github-actions:job:94186424233"
   ],
   "decisions": [
     "ADR-001 through ADR-017 retain the statuses recorded in docs/engine/DECISIONS.md",
@@ -1484,7 +1815,11 @@
     "The closed E0 requirements-tracking overlay remains byte-exact; the public-IR lot records 33 bounded PASS and 16 broader NOT_RUN results in its separate fail-closed traceability profile pending explicit overlay change control",
     "Corrective exact-head push and associated PR merge-ref matrices on Python 3.12 and Python 3.13 promote only MOR-DEV-003; reproducible distribution construction, dependency audits, optional backends, and broader requirements retain their prior truth status",
     "PR 8 integrated final evidence head 74b8ddb into engine at exact merge 9c845f9 and post-merge run 31615797169 passed; this accepts ADR-020 for the bounded profile without completing E1 or G1/P0",
-    "The independent public-IR audit returned GO while PR 8 review, comment, and thread collections were empty; no GitHub approval count or review event is claimed"
+    "The independent public-IR audit returned GO while PR 8 review, comment, and thread collections were empty; no GitHub approval count or review event is claimed",
+    "PR 9 integrated the public-IR close checkpoint only into engine at merge 767b88ab and exact-merge run 31618282751 passed all five jobs while main remained unchanged",
+    "ADR-021 remains Proposed for the prospective engine-ir-core-si-0.1 profile; local bounded sub-gates do not promote MOR-IR-006, MOR-API-006, or MOR-QA-017 before the complete local, hosted, review, and integration gate",
+    "The qualified-IR profile recognizes exactly ten original case-sensitive literals by exact SI tuple equality and performs no conversion, equivalence, normalization, or general UCUM parsing",
+    "Qualified Engine IR inspection is metadata-only and does not resolve payload bytes or apply declared transforms"
   ],
   "deviations": [
     "No branch protection or ruleset was observed",
@@ -1501,7 +1836,8 @@
     "The 3 GiB schema vector is metadata only; a real greater-than-2-GiB transfer remains NOT_RUN",
     "Published public-IR implementation 5ee8cebc passed its report workflow and all native, hygiene, REUSE, full Python test, and public-IR lot steps, but both Engine runs failed only at the installed-wheel smoke; this historical FAIL is retained",
     "The wheel-build correction restores the byte-frozen engine-ci.lock and introduces a separate hash-locked wheel-build-e1.lock for packaging 26.3, setuptools 83.0.0, and wheel 0.47.0; local and corrective hosted install, pip check, and wheel smoke passed, but byte-identical wheel comparison and dependency audits remain NOT_RUN",
-    "Dependency vulnerability and license analysis, close-checkpoint integration, byte-reproducible wheel proof, and LeakSanitizer remain NOT_RUN"
+    "One non-isolated in-tree qualified-IR CMake execution failed after a corrupt generated build artifact was observed while concurrent work used that generated tree; no root cause is established or attributed, and two later isolated CMake 3.20.5 executions passed without rewriting the failed history",
+    "Dependency vulnerability and license analysis, qualified-IR hosted validation, review and integration, byte-reproducible wheel proof, and LeakSanitizer remain NOT_RUN"
   ],
   "external_dependencies": [
     {
@@ -1604,9 +1940,19 @@
     },
     {
       "name": "public IR close checkpoint integration",
+      "status": "PASS",
+      "reason": "PR 9 integrated head aa309afcf663d922911ab729be8c70616d25792b only into engine at merge 767b88ab7e89b30ed77f5b30c25372d71fa06402, tree ae5dba00016313a081e3c0e4ca8aefbb5e8834c1; exact-merge Engine run 31618282751 passed all five jobs and main remained unchanged"
+    },
+    {
+      "name": "qualified IR final full local regression",
+      "status": "PASS",
+      "reason": "Final unittest discovery passed 206 of 206 in 84.942 seconds on CPython 3.12.13, followed by passing frozen-profile, exact 320-requirement, REUSE 323 of 323, bounded secret, Ruff, shell-syntax, and whitespace reruns"
+    },
+    {
+      "name": "qualified IR current-lot publication and hosted checks",
       "status": "NOT_RUN",
-      "blocking_scope": "Publication and integration of the final close checkpoint into engine only",
-      "reason": "The close state and final profile reseal are local on engine-p0-public-ir-close. The remote branch currently points to base merge 9c845f9; qualified-ir-inspection-0.1 remains pending until the close checkpoint is integrated"
+      "blocking_scope": "Publication, exact-head Python 3.12 and 3.13, report, review, and engine integration for qualified-ir-inspection-0.1",
+      "reason": "The current lot bytes are local and have no DCO commit, draft PR, exact-head hosted run, independent final audit, or engine integration"
     },
     {
       "name": "SALOME 9.16 runtime",
@@ -1620,5 +1966,5 @@
       "blocking_scope": "E8 and MVX-specific G1/G2 criteria only"
     }
   ],
-  "next_action": "Publish this final close checkpoint on engine-p0-public-ir-close, validate it through the compensating PR workflow, integrate it only into engine, then start qualified-ir-inspection-0.1 from the exact resulting engine commit by first freezing its finite scope and validation commands while real SALOME, GPU, greater-than-2-GiB, dependency audits, byte-reproducible wheel proof, and MVX criteria remain NOT_RUN or BLOCKED"
+  "next_action": "Create a DCO-signed commit on engine-p0-ir-inspection, push it, open a draft PR targeting only engine, require exact-head Engine Python 3.12 and 3.13 plus native, hygiene, REUSE, report, and independent review evidence, and integrate only into engine when green while ADR-021 and MOR-IR-006, MOR-API-006, and MOR-QA-017 remain Proposed or NOT_RUN until the hosted, review, and integration gate executes"
 }

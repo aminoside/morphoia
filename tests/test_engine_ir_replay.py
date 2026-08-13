@@ -63,6 +63,7 @@ class EngineIrReplayTests(unittest.TestCase):
                 os.fspath(cls.repository / "cpp/src/engine.cpp"),
                 os.fspath(cls.repository / "cpp/src/core/canonical_json.cpp"),
                 os.fspath(cls.repository / "cpp/src/core/sha256.cpp"),
+                os.fspath(cls.repository / "cpp/src/core/unit_registry.cpp"),
                 f"-Wl,--version-script,{cls.repository / 'cmake/morphoia_engine.map'}",
                 "-o",
                 os.fspath(cls.library),

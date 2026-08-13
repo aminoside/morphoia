@@ -12,11 +12,25 @@ import shutil
 import subprocess
 import tempfile
 import threading
+import time
 import unittest
 from pathlib import Path
 from unittest import mock
 
 from morphoia import _engine_native as native
+
+UNIT_REGISTRY = {
+    "1": ((0, 0, 0, 0, 0, 0, 0), 1, 0),
+    "m": ((1, 0, 0, 0, 0, 0, 0), 1, 0),
+    "mm": ((1, 0, 0, 0, 0, 0, 0), 1, -3),
+    "s": ((0, 0, 1, 0, 0, 0, 0), 1, 0),
+    "kg": ((0, 1, 0, 0, 0, 0, 0), 1, 0),
+    "g": ((0, 1, 0, 0, 0, 0, 0), 1, -3),
+    "A": ((0, 0, 0, 1, 0, 0, 0), 1, 0),
+    "K": ((0, 0, 0, 0, 1, 0, 0), 1, 0),
+    "mol": ((0, 0, 0, 0, 0, 1, 0), 1, 0),
+    "cd": ((0, 0, 0, 0, 0, 0, 1), 1, 0),
+}
 
 
 class EngineIrNativeTests(unittest.TestCase):
@@ -48,6 +62,7 @@ class EngineIrNativeTests(unittest.TestCase):
                 os.fspath(cls.repository / "cpp/src/engine.cpp"),
                 os.fspath(cls.repository / "cpp/src/core/canonical_json.cpp"),
                 os.fspath(cls.repository / "cpp/src/core/sha256.cpp"),
+                os.fspath(cls.repository / "cpp/src/core/unit_registry.cpp"),
                 f"-Wl,--version-script,{cls.repository / 'cmake/morphoia_engine.map'}",
                 "-o",
                 os.fspath(cls.library),
@@ -80,6 +95,101 @@ class EngineIrNativeTests(unittest.TestCase):
             result.sha256,
             "43258cff783fe7036d8a43033f830adfc60ec037382473548ac742b888292777",
         )
+
+    def test_bounded_unit_capability_and_all_literals_are_exact(self) -> None:
+        with native.NativeEngine(self.library) as engine:
+            capability = engine.query_capability(native.CAPABILITY_ENGINE_IR_CORE_SI)
+            self.assertIsNotNone(capability)
+            assert capability is not None
+            self.assertEqual(capability.capability_name, "engine-ir-core-si-0.1")
+            self.assertEqual(capability.format_identifier, "morphoia.engine.ir-inspection")
+            self.assertEqual(capability.format_version, "0.1.0")
+            self.assertEqual(
+                capability.media_type,
+                "application/vnd.morphoia.ir-inspection.v0+json",
+            )
+            for code, (dimensions, coefficient, scale) in UNIT_REGISTRY.items():
+                with self.subTest(code=code):
+                    result = engine.validate_engine_ir_unit(
+                        code,
+                        dimensions=dimensions,
+                        si_factor_coefficient=coefficient,
+                        si_factor_scale=scale,
+                    )
+                    self.assertTrue(result.recognized)
+                    self.assertTrue(result.dimensions_match)
+                    self.assertTrue(result.si_factor_match)
+                    self.assertTrue(result.qualified)
+                    self.assertEqual(result.expected_dimensions, dimensions)
+                    self.assertEqual(result.expected_si_factor_coefficient, coefficient)
+                    self.assertEqual(result.expected_si_factor_scale, scale)
+
+    def test_unit_wrapper_preserves_unknown_and_mismatch_truth(self) -> None:
+        with native.NativeEngine(self.library) as engine:
+            unknown = engine.validate_engine_ir_unit(
+                "ft",
+                dimensions=(1, 0, 0, 0, 0, 0, 0),
+                si_factor_coefficient=3048,
+                si_factor_scale=-4,
+            )
+            self.assertFalse(unknown.recognized)
+            self.assertFalse(unknown.qualified)
+            self.assertEqual(unknown.expected_dimensions, (0, 0, 0, 0, 0, 0, 0))
+            mismatch = engine.validate_engine_ir_unit(
+                "mm",
+                dimensions=(0, 0, 1, 0, 0, 0, 0),
+                si_factor_coefficient=1,
+                si_factor_scale=-3,
+            )
+            self.assertTrue(mismatch.recognized)
+            self.assertFalse(mismatch.dimensions_match)
+            self.assertTrue(mismatch.si_factor_match)
+            self.assertFalse(mismatch.qualified)
+            self.assertEqual(mismatch.expected_dimensions, (1, 0, 0, 0, 0, 0, 0))
+            self.assertEqual(mismatch.expected_si_factor_scale, -3)
+            coefficient_mismatch = engine.validate_engine_ir_unit(
+                "mm",
+                dimensions=(1, 0, 0, 0, 0, 0, 0),
+                si_factor_coefficient=2,
+                si_factor_scale=-3,
+            )
+            self.assertTrue(coefficient_mismatch.dimensions_match)
+            self.assertFalse(coefficient_mismatch.si_factor_match)
+            self.assertFalse(coefficient_mismatch.qualified)
+            scale_mismatch = engine.validate_engine_ir_unit(
+                "mm",
+                dimensions=(1, 0, 0, 0, 0, 0, 0),
+                si_factor_coefficient=1,
+                si_factor_scale=-2,
+            )
+            self.assertTrue(scale_mismatch.dimensions_match)
+            self.assertFalse(scale_mismatch.si_factor_match)
+            self.assertFalse(scale_mismatch.qualified)
+
+    def test_unit_wrapper_rejects_invalid_python_and_native_inputs(self) -> None:
+        with native.NativeEngine(self.library) as engine:
+            with self.assertRaisesRegex(TypeError, "exactly seven"):
+                engine.validate_engine_ir_unit(
+                    "m",
+                    dimensions=(1, 0),  # type: ignore[arg-type]
+                    si_factor_coefficient=1,
+                    si_factor_scale=0,
+                )
+            with self.assertRaisesRegex(ValueError, "fit int32"):
+                engine.validate_engine_ir_unit(
+                    "m",
+                    dimensions=((1 << 31), 0, 0, 0, 0, 0, 0),
+                    si_factor_coefficient=1,
+                    si_factor_scale=0,
+                )
+            for code in ("", "x" * 33, "m\x00"):
+                with self.subTest(code=code), self.assertRaises(native.NativeEngineError):
+                    engine.validate_engine_ir_unit(
+                        code,
+                        dimensions=(1, 0, 0, 0, 0, 0, 0),
+                        si_factor_coefficient=1,
+                        si_factor_scale=0,
+                    )
 
     def test_context_manager_closes_deterministically(self) -> None:
         engine = native.NativeEngine(self.library)
@@ -167,6 +277,61 @@ class EngineIrNativeTests(unittest.TestCase):
         with self.assertRaisesRegex(native.NativeLibraryError, "ABI-v1 symbols"):
             native.NativeEngine(libc)
 
+    def test_historical_seven_symbol_library_fails_only_on_unit_validation(self) -> None:
+        compiler = shutil.which("g++")
+        assert compiler is not None
+        historical_map = self.work / "historical-seven-symbols.map"
+        historical_map.write_text(
+            "MORPHOIA_ENGINE_0.0 {\n"
+            "  global:\n"
+            "    morphoia_context_create; morphoia_context_destroy;\n"
+            "    morphoia_context_get_abi_version; morphoia_context_query_capability;\n"
+            "    morphoia_canonical_json_profile1; morphoia_engine_get_version;\n"
+            "    morphoia_status_name;\n"
+            "  local: *;\n"
+            "};\n",
+            encoding="utf-8",
+        )
+        historical = self.work / "libmorphoia_engine_historical.so"
+        subprocess.run(
+            [
+                compiler,
+                "-std=c++20",
+                "-Wall",
+                "-Wextra",
+                "-Wpedantic",
+                "-Werror",
+                "-fPIC",
+                "-fvisibility=hidden",
+                "-fvisibility-inlines-hidden",
+                "-shared",
+                "-DMORPHOIA_ENGINE_SHARED",
+                "-DMORPHOIA_ENGINE_EXPORTS",
+                f"-I{self.repository / 'cpp/include'}",
+                f"-I{self.repository / 'cpp/src'}",
+                os.fspath(self.repository / "cpp/src/engine.cpp"),
+                os.fspath(self.repository / "cpp/src/core/canonical_json.cpp"),
+                os.fspath(self.repository / "cpp/src/core/sha256.cpp"),
+                os.fspath(self.repository / "cpp/src/core/unit_registry.cpp"),
+                f"-Wl,--version-script,{historical_map}",
+                "-o",
+                os.fspath(historical),
+            ],
+            cwd=self.repository,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with native.NativeEngine(historical) as engine:
+            self.assertEqual(engine.canonicalize('{"b":2,"a":1}').canonical, b'{"a":1,"b":2}')
+            with self.assertRaisesRegex(native.NativeLibraryError, "unit-validation ABI-v1"):
+                engine.validate_engine_ir_unit(
+                    "m",
+                    dimensions=(1, 0, 0, 0, 0, 0, 0),
+                    si_factor_coefficient=1,
+                    si_factor_scale=0,
+                )
+
     def test_capability_view_survives_gc_pressure(self) -> None:
         with native.NativeEngine(self.library) as engine:
             for index in range(100):
@@ -188,9 +353,127 @@ class EngineIrNativeTests(unittest.TestCase):
             for thread in threads:
                 thread.start()
             for thread in threads:
-                thread.join()
+                thread.join(timeout=5)
+                self.assertFalse(thread.is_alive(), "serialized wrapper call deadlocked")
         self.assertEqual(errors, [])
         self.assertEqual(outputs, [b'{"a":1,"z":0}'] * 8)
+
+    def test_close_waits_for_mixed_calls_then_future_calls_fail_stably(self) -> None:
+        engine = native.NativeEngine(self.library)
+        started = threading.Barrier(9)
+        outcomes: list[str] = []
+        failures: list[BaseException] = []
+
+        def worker(index: int) -> None:
+            try:
+                started.wait(timeout=5)
+                if index % 3 == 0:
+                    engine.canonicalize('{"z":0,"a":1}')
+                elif index % 3 == 1:
+                    engine.query_capability(native.CAPABILITY_ENGINE_IR_CORE_SI)
+                else:
+                    engine.validate_engine_ir_unit(
+                        "mm",
+                        dimensions=(1, 0, 0, 0, 0, 0, 0),
+                        si_factor_coefficient=1,
+                        si_factor_scale=-3,
+                    )
+                outcomes.append("completed")
+            except native.NativeLibraryError as error:
+                if "closed" not in str(error):
+                    failures.append(error)
+                outcomes.append("closed")
+
+        threads = [threading.Thread(target=worker, args=(index,)) for index in range(8)]
+        for thread in threads:
+            thread.start()
+        started.wait(timeout=5)
+        time.sleep(0.001)
+        engine.close()
+        for thread in threads:
+            thread.join(timeout=5)
+            self.assertFalse(thread.is_alive(), "mixed call/close deadlocked")
+        self.assertEqual(failures, [])
+        self.assertEqual(len(outcomes), 8)
+        self.assertTrue(engine.closed)
+        with self.assertRaisesRegex(native.NativeLibraryError, "closed"):
+            engine.query_capability(native.CAPABILITY_ENGINE_IR_CORE_SI)
+
+    def test_close_blocks_until_an_inflight_native_call_releases_the_lock(self) -> None:
+        engine = native.NativeEngine(self.library)
+        entered = threading.Event()
+        release = threading.Event()
+        call_done = threading.Event()
+        close_done = threading.Event()
+        failures: list[BaseException] = []
+        original = engine._library.morphoia_canonical_json_profile1  # type: ignore[attr-defined]
+
+        def blocking_call(*arguments):
+            entered.set()
+            if not release.wait(timeout=5):
+                raise RuntimeError("timed out waiting to release native call")
+            return original(*arguments)
+
+        engine._library.morphoia_canonical_json_profile1 = blocking_call  # type: ignore[attr-defined]
+
+        def call() -> None:
+            try:
+                engine.canonicalize('{"z":0,"a":1}')
+            except (OSError, RuntimeError, ValueError) as error:  # pragma: no cover
+                failures.append(error)
+            finally:
+                call_done.set()
+
+        def close() -> None:
+            try:
+                engine.close()
+            except native.NativeLibraryError as error:  # pragma: no cover
+                failures.append(error)
+            finally:
+                close_done.set()
+
+        call_thread = threading.Thread(target=call)
+        call_thread.start()
+        self.assertTrue(entered.wait(timeout=5), "native call never became active")
+        close_thread = threading.Thread(target=close)
+        close_thread.start()
+        self.assertFalse(close_done.wait(timeout=0.05), "close bypassed an active call")
+        release.set()
+        call_thread.join(timeout=5)
+        close_thread.join(timeout=5)
+        self.assertTrue(call_done.is_set())
+        self.assertTrue(close_done.is_set())
+        self.assertEqual(failures, [])
+        self.assertTrue(engine.closed)
+
+    def test_distinct_contexts_execute_in_parallel_without_shared_results(self) -> None:
+        barrier = threading.Barrier(4)
+        outputs: list[tuple[bytes, bool]] = []
+        failures: list[BaseException] = []
+
+        def worker() -> None:
+            try:
+                with native.NativeEngine(self.library) as engine:
+                    barrier.wait(timeout=5)
+                    canonical = engine.canonicalize('{"z":0,"a":1}').canonical
+                    qualified = engine.validate_engine_ir_unit(
+                        "m",
+                        dimensions=(1, 0, 0, 0, 0, 0, 0),
+                        si_factor_coefficient=1,
+                        si_factor_scale=0,
+                    ).qualified
+                    outputs.append((canonical, qualified))
+            except (OSError, RuntimeError, ValueError) as error:  # pragma: no cover
+                failures.append(error)
+
+        threads = [threading.Thread(target=worker) for _ in range(4)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join(timeout=10)
+            self.assertFalse(thread.is_alive(), "distinct-context execution deadlocked")
+        self.assertEqual(failures, [])
+        self.assertEqual(outputs, [(b'{"a":1,"z":0}', True)] * 4)
 
     def test_explicit_length_diagnostic_decoder_preserves_utf8_and_nul(self) -> None:
         diagnostic = native._Diagnostic()  # type: ignore[attr-defined]
