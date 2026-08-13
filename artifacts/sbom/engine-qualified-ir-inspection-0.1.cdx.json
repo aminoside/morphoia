@@ -1,0 +1,2758 @@
+{
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-aab2fd58522166dc05ea",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e0d5735456e879a807b4a10240d515c938c4b1ae054433fc54795d9bb08f0d38"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": ".github/workflows/build-report.yml",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-aab2fd58522166dc05ea"
+        },
+        {
+          "name": "morphoia:path",
+          "value": ".github/workflows/build-report.yml"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "e0d5735456e8"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-10b063fa8ae0da09e6a6",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "36fc857056478b5595ed194775d7dcc5d93c2701a3073cb4be9040d33c41575a"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": ".github/workflows/engine-ci.yml",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-10b063fa8ae0da09e6a6"
+        },
+        {
+          "name": "morphoia:path",
+          "value": ".github/workflows/engine-ci.yml"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "36fc85705647"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-06572a96a58dc510037d",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1442c58200600956dc3233b81f8fbd38310880bc291ca596af442d5905d759e2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "CHANGELOG.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-06572a96a58dc510037d"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "CHANGELOG.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "1442c5820060"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-1e7de1ae2d059d21e1dd",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f9c59fb01622e874c48bad9d61a0d34c51b2b5c0d49c9940fc9bb9c0dfba3792"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "CMakeLists.txt",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-1e7de1ae2d059d21e1dd"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "CMakeLists.txt"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "f9c59fb01622"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-74bd2d6afd7a1f967679",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1cac46222137eb48452c25ab060f4cacb8c1f9a895304f013509deb1e5ff88eb"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "REUSE.toml",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-74bd2d6afd7a1f967679"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "REUSE.toml"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "1cac46222137"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-db7e63c7dcde7db2f11e",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "545c6524f503de183fa5fd9fc4a7e9b7785c9efcfa0760a27bd0b6b1e5a430d3"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "cmake/morphoia_engine.map",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-db7e63c7dcde7db2f11e"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "cmake/morphoia_engine.map"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "545c6524f503"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-4b0cf76e8cc0f3f1302d",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9675a1dc0d47f7c51b95fa59614e4096b861ef879cb86238a9abdfe59dbd03bb"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "cpp/include/morphoia/engine.h",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-4b0cf76e8cc0f3f1302d"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "cpp/include/morphoia/engine.h"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "9675a1dc0d47"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-7a8fbdc74b149717fb32",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "33ec6b1826a946b12425f9562012a1ac3658378d62a21cbe370937fc3bd7b0f5"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "cpp/src/core/unit_registry.cpp",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-7a8fbdc74b149717fb32"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "cpp/src/core/unit_registry.cpp"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "33ec6b1826a9"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-d8faa990e65529731bed",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fcfa93891da3db9abae19b4339751af35733f4ffe4c2e4a658c71be544dc34dd"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "cpp/src/core/unit_registry.hpp",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-d8faa990e65529731bed"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "cpp/src/core/unit_registry.hpp"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "fcfa93891da3"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-f32937f32985426160d8",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "27da53b7a9393815ef3372ad3957bfbfd3d748e28d3cc59248e8775be2eb2a19"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "cpp/src/engine.cpp",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-f32937f32985426160d8"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "cpp/src/engine.cpp"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "27da53b7a939"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-b32260a6a271e3a7371f",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9ecb333fe1cccd4d036b870db8f1effcbcc181adb61439d9c613e96be90c07a1"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/COMPLIANCE_MATRIX.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-b32260a6a271e3a7371f"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "docs/engine/COMPLIANCE_MATRIX.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "9ecb333fe1cc"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-f0be6ffdfc5069b3f2fb",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d5b022f2e0252f701b7a6811ff756f93d3f9bb5847a1147a998d8982f58c6909"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/DECISIONS.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-f0be6ffdfc5069b3f2fb"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "docs/engine/DECISIONS.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "d5b022f2e025"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-39dbadf410ed03b31064",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "dccc20573bdc38b8bd68b37b930b8d246e5be94a9435f0b6a4eadd89cdc8cb1a"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/EXECUTION_PLAN.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-39dbadf410ed03b31064"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "docs/engine/EXECUTION_PLAN.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "dccc20573bdc"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-ffce8d71fe564a7a7ab2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "547fa215481ff56814b1687b420150b0855f958297a996098be7c7f5b8bdfd9e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/QUALIFIED_IR_INSPECTION_0_1.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-ffce8d71fe564a7a7ab2"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "docs/engine/QUALIFIED_IR_INSPECTION_0_1.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "547fa215481f"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-9e13882bc44dc071676c",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c95d4a6c5b9a0c85f033b67934d8ac53426ccd88e5fc67a657ac9e0cf4cb96ad"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/STATUS.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-9e13882bc44dc071676c"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "docs/engine/STATUS.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "c95d4a6c5b9a"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-06f9c3a089220d93dc04",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "69e7101f82d9d113d1d4282c550004387186e9d9ee995548a12d90ec34b6c5b2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/THREAD_SAFETY.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-06f9c3a089220d93dc04"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "docs/engine/THREAD_SAFETY.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "69e7101f82d9"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-3f1a0908a532581283a3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "71c316cbf2d2d37f6dbd3f148cdbe6bb66dba2a5e1348779796f53763f25d426"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "docs/engine/evidence/QUALIFIED_IR_INSPECTION_0_1_REPORT.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-3f1a0908a532581283a3"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "docs/engine/evidence/QUALIFIED_IR_INSPECTION_0_1_REPORT.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "71c316cbf2d2"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-50c86b7ed8ac2cf95bd4",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c6d629f79ff8dbf7093b4dce7dfc5c8789a4f97f2b06846c09d9b6fa9d50092f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "pyproject.toml",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-50c86b7ed8ac2cf95bd4"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "pyproject.toml"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "c6d629f79ff8"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-82a47f20ea8f0629d606",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ee1e00b79e51678243beb7dedefb043fa675ed9c4d8c458b2fe576aa7082ade5"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "requirements/engine-ci.lock",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-82a47f20ea8f0629d606"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "requirements/engine-ci.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "ee1e00b79e51"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-440c822f1a2f97d0bade",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "956fc7f0da13aa17e1acad4c2e7a4e20c73f0448fa9f49184b9718e417024035"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "requirements/wheel-build-e1.lock",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-440c822f1a2f97d0bade"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "requirements/wheel-build-e1.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "956fc7f0da13"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-ffb82312d1573f253533",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ae49e2b75e89eea52e5a49dde971c32bcd07d89bdd93507964375c5072758ab2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "schemas/morphoia-engine-ir-inspection-0.1.0.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-ffb82312d1573f253533"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "schemas/morphoia-engine-ir-inspection-0.1.0.schema.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "ae49e2b75e89"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-48cfcd7d4cba932f724c",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "95a799ef027ba93cea306f9f5e6a56d5228d33bb04b907ef9adda39d11fb0908"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/bootstrap-engine.sh",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-48cfcd7d4cba932f724c"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "scripts/bootstrap-engine.sh"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "95a799ef027b"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-3b5f33e7b3b59cd62cfb",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fc3fa7f0108d682ecb3be755d3df750605f3a5ff489a8bbc1e500858b39d4b56"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/generate_engine_qualified_ir_inspection_evidence.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-3b5f33e7b3b59cd62cfb"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "scripts/generate_engine_qualified_ir_inspection_evidence.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "fc3fa7f0108d"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-62c8a346c2d500149a23",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "40a385f13aa28d9c08a80662fb90486c5acbcf82b7d7f12dd72d70ce036c3e5c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/run-engine-sanitizers.sh",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-62c8a346c2d500149a23"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "scripts/run-engine-sanitizers.sh"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "40a385f13aa2"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-a7b38badfc5a379ba258",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3faa9f126bec37cb75b4e02d5563c88311a29bd2fb7fa567e4ace974a988cd2d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/validate-engine-ir-lot.sh",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-a7b38badfc5a379ba258"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "scripts/validate-engine-ir-lot.sh"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "3faa9f126bec"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-589a607c9f2f4b107c92",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "cf99bb2604573a29e0e2324ac03fb81c094cc952b5b0aa2f170e373980cc75e0"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/validate-engine-wheel.sh",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-589a607c9f2f4b107c92"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "scripts/validate-engine-wheel.sh"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "cf99bb260457"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-792070f3e31e6a081171",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6675d9f433164555fa93c4aecc4c0f79d6b02164dc1b7c74ad91cd695738ff29"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "scripts/validate_engine_e1_public_ir_frozen.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-792070f3e31e6a081171"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "scripts/validate_engine_e1_public_ir_frozen.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "6675d9f43316"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-9eb973744ed48e6ce59a",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d1a2b06626208d52860bac9776dbd8bf1135a8aa1557db905ae214a4d38c6f9b"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/adr/ADR-021-qualified-ir-inspection.md",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-9eb973744ed48e6ce59a"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "spec/adr/ADR-021-qualified-ir-inspection.md"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "d1a2b0662620"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-7f22d2f1a17e6ade0627",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fd72827867859abde129612e03adc5c4c6c2fb07ed77a18e845de84dae9dc1be"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/evidence/e1-public-ir-freeze.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-7f22d2f1a17e6ade0627"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "spec/evidence/e1-public-ir-freeze.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "fd7282786785"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-e19134a20042fe9870ad",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ff8c49f3b12f52495c07cbfc148e0ca9f383b5063f6d4920a98fdfb3eafdaf65"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "spec/evidence/e1-public-ir-freeze.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-e19134a20042fe9870ad"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "spec/evidence/e1-public-ir-freeze.schema.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "ff8c49f3b12f"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-b889e5e368749f58fc18",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f239586539d86c1bab578211bf305ce06e9bae4ed6441e1c6c489a4b19ea7b85"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "spec/evidence/qualified-ir-inspection-0.1-artifact-manifest.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-b889e5e368749f58fc18"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "spec/evidence/qualified-ir-inspection-0.1-artifact-manifest.schema.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "f239586539d8"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-d6c8e33dabcd05b3e4a6",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "bb82c92a26feb6f4c276d18630937a3d170b5b43befbeff6bdccbdb5dad34b73"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/evidence/qualified-ir-inspection-0.1-report-vectors.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-d6c8e33dabcd05b3e4a6"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "spec/evidence/qualified-ir-inspection-0.1-report-vectors.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "bb82c92a26fe"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-620cf90d67032284a9a8",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7097fe486d31ee6705feb943a5823dc8cb6e61652035510da1988444ea51c76d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "spec/evidence/qualified-ir-inspection-0.1-report-vectors.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-620cf90d67032284a9a8"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "spec/evidence/qualified-ir-inspection-0.1-report-vectors.schema.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "7097fe486d31"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-5d7de24db7bc854b6d20",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f701162b6864081b206a2c884342dc5112d28bf1e82fef6b4477473d1ce891be"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "spec/evidence/qualified-ir-inspection-0.1-traceability.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-5d7de24db7bc854b6d20"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "spec/evidence/qualified-ir-inspection-0.1-traceability.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "f701162b6864"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-3ce71184a5c80e07eb6f",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e50c8c6f09038274c2d3c38ed5774ac0ae9764a12d999a016db0cb50f1f9fc7c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "spec/evidence/qualified-ir-inspection-0.1-traceability.schema.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-3ce71184a5c80e07eb6f"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "spec/evidence/qualified-ir-inspection-0.1-traceability.schema.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "e50c8c6f0903"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-d1e31b448104846b5f17",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "505e158c311946fc618c502b57263348177614abf3649fde6e390aa3a2c2b06e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "src/morphoia/__init__.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-d1e31b448104846b5f17"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "src/morphoia/__init__.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "505e158c3119"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-ce0b8c25284937a2d147",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "62e9bb5f98c21afb639d559beff3214a7feb8880cc16f648c9b52c52982b8359"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/_engine_native.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-ce0b8c25284937a2d147"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "src/morphoia/_engine_native.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "62e9bb5f98c2"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-8741319dbcda69a9a94b",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2c9efdf8a7bb38dcef25b7aeca6b544e4ae86d8e2fb9d72979b16cd715772bc4"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "MIT"
+        }
+      ],
+      "name": "src/morphoia/cli.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-8741319dbcda69a9a94b"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "src/morphoia/cli.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "2c9efdf8a7bb"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-c192508cfae3e68d10e4",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a094aa670615c7e8a0fb5b02cc782368265d1f8bb42bef838108adbd86927fef"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/engine_ir.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-c192508cfae3e68d10e4"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "src/morphoia/engine_ir.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "a094aa670615"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-16b2eec787eeac7ffa25",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5f3eed7386b1c08e0177dbf44662a543806feea051efdcf595c2c092c38ccf2f"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/engine_ir_contract.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-16b2eec787eeac7ffa25"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "src/morphoia/engine_ir_contract.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "5f3eed7386b1"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-d1d189227a3e528a7af2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8ffab65e571e8d97e257b69573228364521c8761d50e7f0e7caee6dae8449bcc"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/engine_ir_inspection.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-d1d189227a3e528a7af2"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "src/morphoia/engine_ir_inspection.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "8ffab65e571e"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-89d2a6151b17ced24a06",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "07eb44f2c457ba97f79441c538b40ddfe2e7e4ec0f215dcbb4ab0c6a186d5eb7"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "src/morphoia/engine_ir_migration.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-89d2a6151b17ced24a06"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "src/morphoia/engine_ir_migration.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "07eb44f2c457"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-752bac9468b581cb43fb",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "39a9e4f2381993f88d8ccbea9d66b402b44ab30cdd4e7b16f486334bd1630ad2"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "CC-BY-4.0"
+        }
+      ],
+      "name": "tests/fixtures/engine-ir/0.1.0/index.json",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-752bac9468b581cb43fb"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/fixtures/engine-ir/0.1.0/index.json"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "39a9e4f23819"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-9dd0c7e4d22392cfd406",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a18e24fe73d21db83482b3d0d5f4544c3745aa037895c9a32b23327f8fc5bee3"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/consumer/main.c",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-9dd0c7e4d22392cfd406"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/native/consumer/main.c"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "a18e24fe73d2"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-f47deb72a76f76514970",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8f4918bdc02286aeedf9cbea4b5f941122c27d5800c36596cb005aebc1afe27d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/core_smoke.cpp",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-f47deb72a76f76514970"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/native/core_smoke.cpp"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "8f4918bdc022"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-1162258c1151e9a873ae",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "44bc6dd5f871cde097f5da514d38c2ea9152362ea99aee4617b40bebfe5bf03b"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/unit_registry_test.cpp",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-1162258c1151e9a873ae"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/native/unit_registry_test.cpp"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "44bc6dd5f871"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-4d83347b5b59b2ee28ef",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4002ccff8097ebbb7f4f0c3657cda1b2e03c992355da79d4f0c12e53ea2ea82e"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/unit_validation_c_api_test.c",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-4d83347b5b59b2ee28ef"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/native/unit_validation_c_api_test.c"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "4002ccff8097"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-57053d4fcb3db30d1af5",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3064734623b02a4b75ceee04909526b6934d47b1e67870d1b6eaf82a3fee1949"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/native/unit_validation_thread_test.cpp",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-57053d4fcb3db30d1af5"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/native/unit_validation_thread_test.cpp"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "3064734623b0"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-52749468d0013396c064",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "283d36bf49c23afafad4f5c0d3ca30422c698fd7042c0f6c8d621b7f6bb02912"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_e1_public_ir_frozen.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-52749468d0013396c064"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/test_e1_public_ir_frozen.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "283d36bf49c2"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-740ee0ad86106375f1c4",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2f82764b283fc608611e1e957994624b9c3a659513b8db98184295bd05d7cb73"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_cli.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-740ee0ad86106375f1c4"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/test_engine_ir_cli.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "2f82764b283f"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-e6f4b95597435c2036ba",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d676220cf9526d7801cdd3014ef29fdb5ae0e8d0b3a4b0d8783de88aa23ea0f7"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_inspection.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-e6f4b95597435c2036ba"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/test_engine_ir_inspection.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "d676220cf952"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-2b99e4429a761a979691",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5e9c6b94b158ac3deb6502a9a58187becbd7b7eba03ec412a629bddc7438e97c"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_native.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-2b99e4429a761a979691"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/test_engine_ir_native.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "5e9c6b94b158"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-5cd44db1acd0ea822fc6",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f719614c55f5b10db32e79a1129bc50c9c85d4c6575abe32df4ac76a4c260382"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_engine_ir_replay.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-5cd44db1acd0ea822fc6"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/test_engine_ir_replay.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "f719614c55f5"
+    },
+    {
+      "bom-ref": "urn:morphoia:qualified-ir:qualified-ir-file-bf0489c55e8675428063",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b890465c75e0800ddb8179db92fcdf8e3a0de76e2f57800ed97a69941d301823"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "tests/test_qualified_ir_inspection_evidence.py",
+      "properties": [
+        {
+          "name": "morphoia:artifact-id",
+          "value": "qualified-ir-file-bf0489c55e8675428063"
+        },
+        {
+          "name": "morphoia:path",
+          "value": "tests/test_qualified_ir_inspection_evidence.py"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "file",
+      "version": "b890465c75e0"
+    },
+    {
+      "bom-ref": "pkg:pypi/attrs@26.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+        }
+      ],
+      "name": "attrs",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/engine-ci.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/attrs@26.1.0",
+      "type": "library",
+      "version": "26.1.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema@4.25.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3fba0169e345c7175110351d456342c364814cfcf3b964ba4587f22915230a63"
+        }
+      ],
+      "name": "jsonschema",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/engine-ci.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema@4.25.1",
+      "type": "library",
+      "version": "4.25.1"
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe"
+        }
+      ],
+      "name": "jsonschema-specifications",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/engine-ci.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "type": "library",
+      "version": "2025.9.1"
+    },
+    {
+      "bom-ref": "pkg:pypi/packaging@26.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+        }
+      ],
+      "name": "packaging",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/wheel-build-e1.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/packaging@26.3",
+      "type": "library",
+      "version": "26.3"
+    },
+    {
+      "bom-ref": "pkg:pypi/referencing@0.37.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231"
+        }
+      ],
+      "name": "referencing",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/engine-ci.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/referencing@0.37.0",
+      "type": "library",
+      "version": "0.37.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/rpds-py@2026.6.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "acac386b453c2516111b50985d60ce46e7fadb5ea71ae7b25f4c946935bf27cf"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ecabd69db66de867690f9797f2f8fa27ba501bbc24540cbdbdc649cd15888ba6"
+        }
+      ],
+      "name": "rpds-py",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/engine-ci.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/rpds-py@2026.6.3",
+      "type": "library",
+      "version": "2026.6.3"
+    },
+    {
+      "bom-ref": "pkg:pypi/setuptools@83.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3"
+        }
+      ],
+      "name": "setuptools",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/wheel-build-e1.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/setuptools@83.0.0",
+      "type": "library",
+      "version": "83.0.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/typing-extensions@4.16.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+        }
+      ],
+      "name": "typing-extensions",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/engine-ci.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/typing-extensions@4.16.0",
+      "type": "library",
+      "version": "4.16.0"
+    },
+    {
+      "bom-ref": "pkg:pypi/wheel@0.47.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "212281cab4dff978f6cedd499cd893e1f620791ca6ff7107cf270781e587eced"
+        }
+      ],
+      "name": "wheel",
+      "properties": [
+        {
+          "name": "morphoia:declared-by-locks",
+          "value": "requirements/wheel-build-e1.lock"
+        },
+        {
+          "name": "morphoia:verification-status",
+          "value": "PASS"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "purl": "pkg:pypi/wheel@0.47.0",
+      "type": "library",
+      "version": "0.47.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": [
+        "urn:morphoia:qualified-ir:qualified-ir-file-aab2fd58522166dc05ea",
+        "urn:morphoia:qualified-ir:qualified-ir-file-10b063fa8ae0da09e6a6",
+        "urn:morphoia:qualified-ir:qualified-ir-file-06572a96a58dc510037d",
+        "urn:morphoia:qualified-ir:qualified-ir-file-1e7de1ae2d059d21e1dd",
+        "urn:morphoia:qualified-ir:qualified-ir-file-74bd2d6afd7a1f967679",
+        "urn:morphoia:qualified-ir:qualified-ir-file-db7e63c7dcde7db2f11e",
+        "urn:morphoia:qualified-ir:qualified-ir-file-4b0cf76e8cc0f3f1302d",
+        "urn:morphoia:qualified-ir:qualified-ir-file-7a8fbdc74b149717fb32",
+        "urn:morphoia:qualified-ir:qualified-ir-file-d8faa990e65529731bed",
+        "urn:morphoia:qualified-ir:qualified-ir-file-f32937f32985426160d8",
+        "urn:morphoia:qualified-ir:qualified-ir-file-b32260a6a271e3a7371f",
+        "urn:morphoia:qualified-ir:qualified-ir-file-f0be6ffdfc5069b3f2fb",
+        "urn:morphoia:qualified-ir:qualified-ir-file-39dbadf410ed03b31064",
+        "urn:morphoia:qualified-ir:qualified-ir-file-ffce8d71fe564a7a7ab2",
+        "urn:morphoia:qualified-ir:qualified-ir-file-9e13882bc44dc071676c",
+        "urn:morphoia:qualified-ir:qualified-ir-file-06f9c3a089220d93dc04",
+        "urn:morphoia:qualified-ir:qualified-ir-file-3f1a0908a532581283a3",
+        "urn:morphoia:qualified-ir:qualified-ir-file-50c86b7ed8ac2cf95bd4",
+        "urn:morphoia:qualified-ir:qualified-ir-file-82a47f20ea8f0629d606",
+        "urn:morphoia:qualified-ir:qualified-ir-file-440c822f1a2f97d0bade",
+        "urn:morphoia:qualified-ir:qualified-ir-file-ffb82312d1573f253533",
+        "urn:morphoia:qualified-ir:qualified-ir-file-48cfcd7d4cba932f724c",
+        "urn:morphoia:qualified-ir:qualified-ir-file-3b5f33e7b3b59cd62cfb",
+        "urn:morphoia:qualified-ir:qualified-ir-file-62c8a346c2d500149a23",
+        "urn:morphoia:qualified-ir:qualified-ir-file-a7b38badfc5a379ba258",
+        "urn:morphoia:qualified-ir:qualified-ir-file-589a607c9f2f4b107c92",
+        "urn:morphoia:qualified-ir:qualified-ir-file-792070f3e31e6a081171",
+        "urn:morphoia:qualified-ir:qualified-ir-file-9eb973744ed48e6ce59a",
+        "urn:morphoia:qualified-ir:qualified-ir-file-7f22d2f1a17e6ade0627",
+        "urn:morphoia:qualified-ir:qualified-ir-file-e19134a20042fe9870ad",
+        "urn:morphoia:qualified-ir:qualified-ir-file-b889e5e368749f58fc18",
+        "urn:morphoia:qualified-ir:qualified-ir-file-d6c8e33dabcd05b3e4a6",
+        "urn:morphoia:qualified-ir:qualified-ir-file-620cf90d67032284a9a8",
+        "urn:morphoia:qualified-ir:qualified-ir-file-5d7de24db7bc854b6d20",
+        "urn:morphoia:qualified-ir:qualified-ir-file-3ce71184a5c80e07eb6f",
+        "urn:morphoia:qualified-ir:qualified-ir-file-d1e31b448104846b5f17",
+        "urn:morphoia:qualified-ir:qualified-ir-file-ce0b8c25284937a2d147",
+        "urn:morphoia:qualified-ir:qualified-ir-file-8741319dbcda69a9a94b",
+        "urn:morphoia:qualified-ir:qualified-ir-file-c192508cfae3e68d10e4",
+        "urn:morphoia:qualified-ir:qualified-ir-file-16b2eec787eeac7ffa25",
+        "urn:morphoia:qualified-ir:qualified-ir-file-d1d189227a3e528a7af2",
+        "urn:morphoia:qualified-ir:qualified-ir-file-89d2a6151b17ced24a06",
+        "urn:morphoia:qualified-ir:qualified-ir-file-752bac9468b581cb43fb",
+        "urn:morphoia:qualified-ir:qualified-ir-file-9dd0c7e4d22392cfd406",
+        "urn:morphoia:qualified-ir:qualified-ir-file-f47deb72a76f76514970",
+        "urn:morphoia:qualified-ir:qualified-ir-file-1162258c1151e9a873ae",
+        "urn:morphoia:qualified-ir:qualified-ir-file-4d83347b5b59b2ee28ef",
+        "urn:morphoia:qualified-ir:qualified-ir-file-57053d4fcb3db30d1af5",
+        "urn:morphoia:qualified-ir:qualified-ir-file-52749468d0013396c064",
+        "urn:morphoia:qualified-ir:qualified-ir-file-740ee0ad86106375f1c4",
+        "urn:morphoia:qualified-ir:qualified-ir-file-e6f4b95597435c2036ba",
+        "urn:morphoia:qualified-ir:qualified-ir-file-2b99e4429a761a979691",
+        "urn:morphoia:qualified-ir:qualified-ir-file-5cd44db1acd0ea822fc6",
+        "urn:morphoia:qualified-ir:qualified-ir-file-bf0489c55e8675428063",
+        "pkg:pypi/attrs@26.1.0",
+        "pkg:pypi/jsonschema@4.25.1",
+        "pkg:pypi/jsonschema-specifications@2025.9.1",
+        "pkg:pypi/packaging@26.3",
+        "pkg:pypi/referencing@0.37.0",
+        "pkg:pypi/rpds-py@2026.6.3",
+        "pkg:pypi/setuptools@83.0.0",
+        "pkg:pypi/typing-extensions@4.16.0",
+        "pkg:pypi/wheel@0.47.0"
+      ],
+      "ref": "pkg:generic/morphoia-engine@0.0.1?profile=engine-ir-core-si-0.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-aab2fd58522166dc05ea"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-10b063fa8ae0da09e6a6"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-06572a96a58dc510037d"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-1e7de1ae2d059d21e1dd"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-74bd2d6afd7a1f967679"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-db7e63c7dcde7db2f11e"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-4b0cf76e8cc0f3f1302d"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-7a8fbdc74b149717fb32"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-d8faa990e65529731bed"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-f32937f32985426160d8"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-b32260a6a271e3a7371f"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-f0be6ffdfc5069b3f2fb"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-39dbadf410ed03b31064"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-ffce8d71fe564a7a7ab2"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-9e13882bc44dc071676c"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-06f9c3a089220d93dc04"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-3f1a0908a532581283a3"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-50c86b7ed8ac2cf95bd4"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-82a47f20ea8f0629d606"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-440c822f1a2f97d0bade"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-ffb82312d1573f253533"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-48cfcd7d4cba932f724c"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-3b5f33e7b3b59cd62cfb"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-62c8a346c2d500149a23"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-a7b38badfc5a379ba258"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-589a607c9f2f4b107c92"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-792070f3e31e6a081171"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-9eb973744ed48e6ce59a"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-7f22d2f1a17e6ade0627"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-e19134a20042fe9870ad"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-b889e5e368749f58fc18"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-d6c8e33dabcd05b3e4a6"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-620cf90d67032284a9a8"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-5d7de24db7bc854b6d20"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-3ce71184a5c80e07eb6f"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-d1e31b448104846b5f17"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-ce0b8c25284937a2d147"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-8741319dbcda69a9a94b"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-c192508cfae3e68d10e4"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-16b2eec787eeac7ffa25"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-d1d189227a3e528a7af2"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-89d2a6151b17ced24a06"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-752bac9468b581cb43fb"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-9dd0c7e4d22392cfd406"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-f47deb72a76f76514970"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-1162258c1151e9a873ae"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-4d83347b5b59b2ee28ef"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-57053d4fcb3db30d1af5"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-52749468d0013396c064"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-740ee0ad86106375f1c4"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-e6f4b95597435c2036ba"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-2b99e4429a761a979691"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-5cd44db1acd0ea822fc6"
+    },
+    {
+      "dependsOn": [],
+      "ref": "urn:morphoia:qualified-ir:qualified-ir-file-bf0489c55e8675428063"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/attrs@26.1.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/jsonschema@4.25.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/jsonschema-specifications@2025.9.1"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/packaging@26.3"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/referencing@0.37.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/rpds-py@2026.6.3"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/setuptools@83.0.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/typing-extensions@4.16.0"
+    },
+    {
+      "dependsOn": [],
+      "ref": "pkg:pypi/wheel@0.47.0"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "pkg:generic/morphoia-engine@0.0.1?profile=engine-ir-core-si-0.1",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR MIT"
+        }
+      ],
+      "name": "morphoia-engine",
+      "properties": [
+        {
+          "name": "morphoia:lot",
+          "value": "qualified-ir-inspection-0.1"
+        },
+        {
+          "name": "morphoia:profile",
+          "value": "engine-ir-core-si-0.1"
+        },
+        {
+          "name": "morphoia:source-base-commit",
+          "value": "767b88ab7e89b30ed77f5b30c25372d71fa06402"
+        },
+        {
+          "name": "morphoia:sbom-content",
+          "value": "closed-source-and-evidence-inventory"
+        },
+        {
+          "name": "morphoia:vulnerability-analysis-status",
+          "value": "NOT_RUN"
+        },
+        {
+          "name": "morphoia:dependency-license-review-status",
+          "value": "NOT_RUN"
+        }
+      ],
+      "type": "application",
+      "version": "0.0.1"
+    }
+  },
+  "serialNumber": "urn:uuid:16cf5a35-2b15-549c-ad0f-610f1edaa29b",
+  "specVersion": "1.5",
+  "version": 1
+}

@@ -24,6 +24,8 @@ target_sources(
     cpp/src/core/canonical_json.hpp
     cpp/src/core/sha256.cpp
     cpp/src/core/sha256.hpp
+    cpp/src/core/unit_registry.cpp
+    cpp/src/core/unit_registry.hpp
 )
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   target_sources(
@@ -102,6 +104,8 @@ if(UNIX AND NOT APPLE)
 endif()
 
 if(BUILD_TESTING)
+  find_package(Threads REQUIRED)
+
   add_executable(morphoia_abi_c_smoke tests/native/abi_c_smoke.c)
   target_link_libraries(morphoia_abi_c_smoke PRIVATE Morphoia::Engine)
   target_compile_features(morphoia_abi_c_smoke PRIVATE c_std_11)
@@ -165,8 +169,60 @@ if(BUILD_TESTING)
   add_test(NAME native.canonical_json COMMAND morphoia_canonical_json_test)
   set_tests_properties(native.canonical_json PROPERTIES LABELS "native;core;json;ir")
 
+  add_executable(morphoia_unit_registry_test tests/native/unit_registry_test.cpp)
+  target_link_libraries(morphoia_unit_registry_test PRIVATE morphoia_core_internal)
+  target_compile_features(morphoia_unit_registry_test PRIVATE cxx_std_20)
+  set_target_properties(morphoia_unit_registry_test PROPERTIES CXX_EXTENSIONS OFF)
+  morphoia_enable_strict_warnings(morphoia_unit_registry_test)
+  add_test(NAME native.unit_registry COMMAND morphoia_unit_registry_test)
+  set_tests_properties(native.unit_registry PROPERTIES LABELS "native;core;unit;ir")
+
+  add_executable(
+    morphoia_unit_validation_c_api_test
+    tests/native/unit_validation_c_api_test.c
+  )
+  target_link_libraries(morphoia_unit_validation_c_api_test PRIVATE Morphoia::Engine)
+  target_compile_features(morphoia_unit_validation_c_api_test PRIVATE c_std_11)
+  set_target_properties(
+    morphoia_unit_validation_c_api_test
+    PROPERTIES
+      C_EXTENSIONS OFF
+      LINKER_LANGUAGE CXX
+  )
+  morphoia_enable_strict_warnings(morphoia_unit_validation_c_api_test)
+  add_test(
+    NAME native.unit_validation_c_api
+    COMMAND morphoia_unit_validation_c_api_test
+  )
+  set_tests_properties(
+    native.unit_validation_c_api
+    PROPERTIES LABELS "native;abi;unit;ir"
+  )
+
+  add_executable(
+    morphoia_unit_validation_thread_test
+    tests/native/unit_validation_thread_test.cpp
+  )
+  target_link_libraries(
+    morphoia_unit_validation_thread_test
+    PRIVATE Morphoia::Engine Threads::Threads
+  )
+  target_compile_features(morphoia_unit_validation_thread_test PRIVATE cxx_std_20)
+  set_target_properties(
+    morphoia_unit_validation_thread_test
+    PROPERTIES CXX_EXTENSIONS OFF
+  )
+  morphoia_enable_strict_warnings(morphoia_unit_validation_thread_test)
+  add_test(
+    NAME native.unit_validation_threads
+    COMMAND morphoia_unit_validation_thread_test
+  )
+  set_tests_properties(
+    native.unit_validation_threads
+    PROPERTIES LABELS "native;abi;unit;thread;ir"
+  )
+
   if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    find_package(Threads REQUIRED)
     add_executable(morphoia_posix_cas_test tests/native/posix_cas_test.cpp)
     target_link_libraries(
       morphoia_posix_cas_test

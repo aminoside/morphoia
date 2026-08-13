@@ -45,6 +45,7 @@ where = ["src"]
 "share/morphoia/schemas" = [
   "schemas/morphoia-engine-ir-manifest-0.1.0.schema.json",
   "schemas/morphoia-engine-ir-replay-0.1.0.schema.json",
+  "schemas/morphoia-engine-ir-inspection-0.1.0.schema.json",
   "schemas/morphoia-ir-0.1.schema.json"
 ]
 

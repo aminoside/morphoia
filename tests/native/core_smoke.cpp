@@ -3,11 +3,15 @@
 
 #include "morphoia/engine.h"
 
+#include <atomic>
+#include <barrier>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <new>
 #include <stdexcept>
+#include <thread>
+#include <vector>
 
 namespace {
 
@@ -19,6 +23,58 @@ struct AllocationProbe {
   bool throw_on_deallocation{false};
   bool misalign_allocation{false};
 };
+
+struct ConcurrentAllocationProbe {
+  std::atomic<unsigned> allocations{0U};
+  std::atomic<unsigned> deallocations{0U};
+  std::atomic<unsigned> allocate_active{0U};
+  std::atomic<unsigned> allocate_max_active{0U};
+  std::atomic<unsigned> deallocate_active{0U};
+  std::atomic<unsigned> deallocate_max_active{0U};
+  std::barrier<>* allocate_ready{nullptr};
+  std::barrier<>* deallocate_ready{nullptr};
+};
+
+void update_max(
+    std::atomic<unsigned>& maximum,
+    const unsigned active) noexcept {
+  auto observed = maximum.load(std::memory_order_relaxed);
+  while (observed < active &&
+         !maximum.compare_exchange_weak(
+             observed, active, std::memory_order_relaxed)) {
+  }
+}
+
+void* MORPHOIA_ENGINE_CALL concurrent_allocate(
+    void* const user_data,
+    const size_t size,
+    const size_t alignment) {
+  auto* const probe = static_cast<ConcurrentAllocationProbe*>(user_data);
+  probe->allocations.fetch_add(1U, std::memory_order_relaxed);
+  const auto active =
+      probe->allocate_active.fetch_add(1U, std::memory_order_acq_rel) + 1U;
+  update_max(probe->allocate_max_active, active);
+  probe->allocate_ready->arrive_and_wait();
+  void* result = nullptr;
+  if (alignment != 0U && (alignment & (alignment - 1U)) == 0U) {
+    result = std::malloc(size);
+  }
+  probe->allocate_active.fetch_sub(1U, std::memory_order_acq_rel);
+  return result;
+}
+
+void MORPHOIA_ENGINE_CALL concurrent_deallocate(
+    void* const user_data,
+    void* const allocation) {
+  auto* const probe = static_cast<ConcurrentAllocationProbe*>(user_data);
+  probe->deallocations.fetch_add(1U, std::memory_order_relaxed);
+  const auto active =
+      probe->deallocate_active.fetch_add(1U, std::memory_order_acq_rel) + 1U;
+  update_max(probe->deallocate_max_active, active);
+  probe->deallocate_ready->arrive_and_wait();
+  std::free(allocation);
+  probe->deallocate_active.fetch_sub(1U, std::memory_order_acq_rel);
+}
 
 void* MORPHOIA_ENGINE_CALL probe_allocate(
     void* const user_data,
@@ -154,6 +210,64 @@ int main() {
       "throwing deallocator left a reusable context handle");
   probe.throw_on_deallocation = false;
 
+  {
+    constexpr std::size_t concurrent_count = 8U;
+    std::barrier allocate_ready(
+        static_cast<std::ptrdiff_t>(concurrent_count));
+    std::barrier deallocate_ready(
+        static_cast<std::ptrdiff_t>(concurrent_count));
+    ConcurrentAllocationProbe concurrent_probe{};
+    concurrent_probe.allocate_ready = &allocate_ready;
+    concurrent_probe.deallocate_ready = &deallocate_ready;
+    std::atomic<unsigned> concurrent_failures{0U};
+    std::vector<std::thread> concurrent_threads;
+    concurrent_threads.reserve(concurrent_count);
+    for (std::size_t index = 0U; index < concurrent_count; ++index) {
+      concurrent_threads.emplace_back([
+                                          &concurrent_probe,
+                                          &concurrent_failures]() {
+        morphoia_context_options_t local_options{};
+        local_options.struct_size = sizeof(local_options);
+        local_options.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
+        local_options.allocator.struct_size = sizeof(local_options.allocator);
+        local_options.allocator.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
+        local_options.allocator.allocate = concurrent_allocate;
+        local_options.allocator.deallocate = concurrent_deallocate;
+        local_options.allocator.user_data = &concurrent_probe;
+        morphoia_diagnostic_t local_diagnostic{};
+        local_diagnostic.struct_size = sizeof(local_diagnostic);
+        local_diagnostic.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
+        morphoia_context_t* local_context = nullptr;
+        if (morphoia_context_create(
+                &local_options, &local_context, &local_diagnostic) !=
+                MORPHOIA_STATUS_OK ||
+            morphoia_context_destroy(
+                &local_context, &local_diagnostic) != MORPHOIA_STATUS_OK ||
+            local_context != nullptr) {
+          concurrent_failures.fetch_add(1U, std::memory_order_relaxed);
+        }
+      });
+    }
+    for (auto& thread : concurrent_threads) {
+      thread.join();
+    }
+    passed &= require_true(
+        concurrent_failures.load(std::memory_order_relaxed) == 0U,
+        "thread-safe shared allocator failed concurrent distinct contexts");
+    passed &= require_true(
+        concurrent_probe.allocations.load(std::memory_order_relaxed) ==
+                concurrent_count &&
+            concurrent_probe.deallocations.load(std::memory_order_relaxed) ==
+                concurrent_count,
+        "shared allocator callback counts are inconsistent");
+    passed &= require_true(
+        concurrent_probe.allocate_max_active.load(std::memory_order_relaxed) >=
+                2U &&
+            concurrent_probe.deallocate_max_active.load(
+                std::memory_order_relaxed) >= 2U,
+        "shared allocator callbacks did not demonstrably overlap");
+  }
+
   options.struct_size = 1U;
   context = nullptr;
   passed &= require_true(
@@ -164,6 +278,7 @@ int main() {
   if (!passed) {
     return EXIT_FAILURE;
   }
-  std::cout << "core_smoke: PASS (ABI guards, diagnostics, allocator exceptions)\n";
+  std::cout << "core_smoke: PASS "
+               "(ABI guards, diagnostics, allocator rules and exceptions)\n";
   return EXIT_SUCCESS;
 }

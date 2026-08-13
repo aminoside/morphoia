@@ -1,0 +1,119 @@
+{
+  "$schema": "./e1-public-ir-freeze.schema.json",
+  "schema_version": "1.0.0",
+  "profile": "e1-public-ir-core-cpu",
+  "status": "FROZEN",
+  "git_snapshot": {
+    "commit": "767b88ab7e89b30ed77f5b30c25372d71fa06402",
+    "commit_object_sha256": "3eaf61c6cde24e2c385e4bc9501c7b56ba27e9f81faef45f881fd7fd604cdaa6",
+    "commit_object_size": 1367,
+    "tree": "ae5dba00016313a081e3c0e4ca8aefbb5e8834c1",
+    "tree_object_sha256": "af7c10c79a90f6471d68c5f8db738a47af2dd03e45ad8e4808fec21ef2d44ae9",
+    "tree_object_size": 1539,
+    "parents": [
+      "9c845f9ea4586a65f25985a4d1f92ebdf407a2f4",
+      "aa309afcf663d922911ab729be8c70616d25792b"
+    ],
+    "entry_count": 309,
+    "ls_tree_z_sha256": "f8eaa8e8e44da762986630401851eb6a56f5d96e11d5baa006e11749f2d08f80",
+    "content_tree_sha256": "130fd978fe19eb6d2b8943d279d10eb02de4aa20c58ec5d92f02061b6f6b56f2"
+  },
+  "anchors": [
+    {
+      "path": "artifacts/manifests/engine-e1-public-ir.json",
+      "mode": "100644",
+      "blob": "e8b6aa13605afa26eebd1b17890a34008c3f532d",
+      "size": 81531,
+      "sha256": "f0596ad5c7d0a6ce6e7c3a1c5989384c4d77933df4b7186ba34b3674155e9020"
+    },
+    {
+      "path": "artifacts/sbom/engine-e1-public-ir.cdx.json",
+      "mode": "100644",
+      "blob": "b5cd3ed09e29ef0d981766a7cfa98837df63a3bc",
+      "size": 138542,
+      "sha256": "c04bfc7b6a672ea6004c804655147daab66ccc009fa54fda1c1907f3887acdb9"
+    },
+    {
+      "path": "docs/engine/checkpoint.json",
+      "mode": "100644",
+      "blob": "29f5635929f4dbf2eda7a6d4864ce69666f0cf5e",
+      "size": 74307,
+      "sha256": "901b5f1e157340a22335325c812449b3aa9bb79a1f6f11be9dd83ae8ae14fe96"
+    },
+    {
+      "path": "docs/engine/evidence/E1_PUBLIC_IR_REPORT.md",
+      "mode": "100644",
+      "blob": "5f754313645600920a0a1c477b14543a0c0cbcd7",
+      "size": 11888,
+      "sha256": "a496718ffe5dad44abd240180596f3d0625de10108c47a79b21f96d192300d36"
+    },
+    {
+      "path": "scripts/generate_engine_e1_public_ir_sbom.py",
+      "mode": "100755",
+      "blob": "5dbc53e842531f1efc32fbb6ea00b8cf85aa776f",
+      "size": 94465,
+      "sha256": "cddb9c16f433bcb95239e2d5be0b4868d9ca9b052b0afcd4263cf18460a2180a"
+    },
+    {
+      "path": "spec/adr/ADR-020-public-engine-ir-v0.1.md",
+      "mode": "100644",
+      "blob": "f11d9f489d1231f8b935d456ce094f2c3e93cb21",
+      "size": 10469,
+      "sha256": "63c52915dd30dedf279d83cd87bf844da5e0d4704180260f0de199f463cd5f77"
+    },
+    {
+      "path": "spec/evidence/e1-public-ir-traceability.json",
+      "mode": "100644",
+      "blob": "9ece73854e59627610763352fc97fdf56251a128",
+      "size": 42338,
+      "sha256": "541726e48625396883ac795fa1b1422b79b1a5be70a3ab9292e0a6a1a9cd20e3"
+    },
+    {
+      "path": "tests/fixtures/engine-ir/0.1.0/index.json",
+      "mode": "100644",
+      "blob": "a73cd105dd43142897618ff9673fab10c75d7ceb",
+      "size": 11699,
+      "sha256": "39a9e4f2381993f88d8ccbea9d66b402b44ab30cdd4e7b16f486334bd1630ad2"
+    },
+    {
+      "path": "tests/test_e1_public_ir_evidence.py",
+      "mode": "100644",
+      "blob": "4313cd3323b29eae45fdda964305e12b2af55cb0",
+      "size": 28477,
+      "sha256": "6507da4071639ed70f2fc9f1fe6316597815679699417d76018bfdab34d45202"
+    }
+  ],
+  "counts": {
+    "manifest_artifacts": 123,
+    "sbom_components": 140,
+    "traceability_entries": 49,
+    "traceability_pass": 33,
+    "traceability_not_run": 16,
+    "historical_evidence_tests": 22
+  },
+  "fixture_tree": {
+    "root": "tests/fixtures/engine-ir/0.1.0",
+    "file_count": 79,
+    "aggregate_sha256": "9647bf7be7c40dd39ea533b0677fc09d42eabcdee59b8b5adc5cbdc23f1e25af"
+  },
+  "replay": {
+    "object_source": "local-git-object-database",
+    "network_access": "forbidden",
+    "commands": [
+      "python scripts/generate_engine_e1_public_ir_sbom.py --check",
+      "python -m unittest -v tests.test_e1_public_ir_evidence"
+    ],
+    "python_versions": [
+      "3.12",
+      "3.13"
+    ],
+    "distributions": {
+      "attrs": "26.1.0",
+      "jsonschema": "4.25.1",
+      "jsonschema-specifications": "2025.9.1",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.6.3",
+      "typing-extensions": "4.16.0"
+    }
+  }
+}

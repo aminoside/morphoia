@@ -17,6 +17,11 @@ from .engine_ir import (
 from .engine_ir import (
     validate_manifest as validate_engine_ir_manifest,
 )
+from .engine_ir_inspection import (
+    EngineIrInspection,
+    InspectionError,
+    inspect_engine_ir,
+)
 from .parser import parse
 from .runtime import RuntimeStore
 from .validator import validate_file, validate_source
@@ -25,6 +30,8 @@ __author__ = "Olivier Ami"
 __version__ = "0.2.0.dev0"
 
 __all__ = [
+    "EngineIrInspection",
+    "InspectionError",
     "ReplayCancelledError",
     "ReplayError",
     "ReplayTimeoutError",
@@ -33,6 +40,7 @@ __all__ = [
     "canonical_json",
     "compile_document",
     "create_replay_recipe",
+    "inspect_engine_ir",
     "migrate_legacy_manifest",
     "parse",
     "replay_manifest",

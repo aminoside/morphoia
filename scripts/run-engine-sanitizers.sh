@@ -40,10 +40,13 @@ internal_include_arg=(-I"${repo_dir}/cpp/src")
   -c "${repo_dir}/cpp/src/core/canonical_json.cpp" -o "${work_dir}/canonical_json.o"
 "${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${internal_include_arg[@]}" \
   -c "${repo_dir}/cpp/src/core/sha256.cpp" -o "${work_dir}/sha256.o"
+"${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${internal_include_arg[@]}" \
+  -c "${repo_dir}/cpp/src/core/unit_registry.cpp" -o "${work_dir}/unit_registry.o"
 "${cc}" -std=c11 "${warnings[@]}" "${sanitizers[@]}" "${include_arg[@]}" \
   -c "${repo_dir}/tests/native/abi_c_smoke.c" -o "${work_dir}/abi_c_smoke.o"
 "${cxx}" "${sanitizers[@]}" "${work_dir}/engine.o" \
   "${work_dir}/canonical_json.o" "${work_dir}/sha256.o" \
+  "${work_dir}/unit_registry.o" \
   "${work_dir}/abi_c_smoke.o" \
   -o "${work_dir}/abi_c_smoke"
 "${cc}" -std=c11 "${warnings[@]}" "${sanitizers[@]}" "${include_arg[@]}" \
@@ -51,14 +54,32 @@ internal_include_arg=(-I"${repo_dir}/cpp/src")
   -o "${work_dir}/canonical_json_c_api_test.o"
 "${cxx}" "${sanitizers[@]}" "${work_dir}/engine.o" \
   "${work_dir}/canonical_json.o" "${work_dir}/sha256.o" \
+  "${work_dir}/unit_registry.o" \
   "${work_dir}/canonical_json_c_api_test.o" \
   -o "${work_dir}/canonical_json_c_api_test"
 "${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${include_arg[@]}" \
   -c "${repo_dir}/tests/native/core_smoke.cpp" -o "${work_dir}/core_smoke.o"
 "${cxx}" "${sanitizers[@]}" "${work_dir}/engine.o" \
   "${work_dir}/canonical_json.o" "${work_dir}/sha256.o" \
+  "${work_dir}/unit_registry.o" \
   "${work_dir}/core_smoke.o" \
   -o "${work_dir}/core_smoke"
+
+"${cc}" -std=c11 "${warnings[@]}" "${sanitizers[@]}" "${include_arg[@]}" \
+  -c "${repo_dir}/tests/native/unit_validation_c_api_test.c" \
+  -o "${work_dir}/unit_validation_c_api_test.o"
+"${cxx}" "${sanitizers[@]}" "${work_dir}/engine.o" \
+  "${work_dir}/canonical_json.o" "${work_dir}/sha256.o" \
+  "${work_dir}/unit_registry.o" "${work_dir}/unit_validation_c_api_test.o" \
+  -o "${work_dir}/unit_validation_c_api_test"
+
+"${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${include_arg[@]}" \
+  -c "${repo_dir}/tests/native/unit_validation_thread_test.cpp" \
+  -o "${work_dir}/unit_validation_thread_test.o"
+"${cxx}" "${sanitizers[@]}" "${work_dir}/engine.o" \
+  "${work_dir}/canonical_json.o" "${work_dir}/sha256.o" \
+  "${work_dir}/unit_registry.o" "${work_dir}/unit_validation_thread_test.o" \
+  -pthread -o "${work_dir}/unit_validation_thread_test"
 
 # This script exercises AddressSanitizer and UndefinedBehaviorSanitizer only.
 # LeakSanitizer is explicitly disabled and must be reported separately.
@@ -68,6 +89,10 @@ ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1"
   "${work_dir}/canonical_json_c_api_test"
 ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
   "${work_dir}/core_smoke"
+ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
+  "${work_dir}/unit_validation_c_api_test"
+ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
+  "${work_dir}/unit_validation_thread_test"
 
 "${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${internal_include_arg[@]}" \
   "${work_dir}/sha256.o" \
@@ -84,6 +109,13 @@ ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1"
   -o "${work_dir}/canonical_json_test"
 ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
   "${work_dir}/canonical_json_test"
+
+"${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${internal_include_arg[@]}" \
+  "${work_dir}/unit_registry.o" \
+  "${repo_dir}/tests/native/unit_registry_test.cpp" \
+  -o "${work_dir}/unit_registry_test"
+ASAN_OPTIONS="detect_leaks=0" UBSAN_OPTIONS="halt_on_error=1:print_stacktrace=1" \
+  "${work_dir}/unit_registry_test"
 
 if [[ "$(uname -s)" == "Linux" ]]; then
   "${cxx}" -std=c++20 "${warnings[@]}" "${sanitizers[@]}" "${internal_include_arg[@]}" \

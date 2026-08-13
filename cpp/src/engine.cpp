@@ -5,6 +5,7 @@
 
 #include "core/canonical_json.hpp"
 #include "core/sha256.hpp"
+#include "core/unit_registry.hpp"
 
 #include <algorithm>
 #include <array>
@@ -238,6 +239,13 @@ bool valid_utf8_identifier(const morphoia_string_view_t value) noexcept {
     offset += width;
   }
   return true;
+}
+
+bool valid_engine_ir_unit_code(const morphoia_string_view_t value) noexcept {
+  if (value.size > 32U) {
+    return false;
+  }
+  return valid_utf8_identifier(value);
 }
 
 struct CanonicalLimits {
@@ -686,31 +694,48 @@ extern "C" morphoia_status_t MORPHOIA_ENGINE_CALL morphoia_context_query_capabil
           });
     }
 
-    static constexpr char capability_name[] = MORPHOIA_CAPABILITY_ENGINE_IR_MANIFEST;
-    static constexpr char format_identifier[] = "morphoia.engine.ir-manifest";
-    static constexpr char format_version[] = MORPHOIA_ENGINE_IR_FORMAT_VERSION;
-    static constexpr char media_type[] = MORPHOIA_ENGINE_IR_MEDIA_TYPE;
-    static constexpr char canonical_profile[] = MORPHOIA_CANONICAL_JSON_PROFILE1;
+    static constexpr char manifest_capability_name[] =
+        MORPHOIA_CAPABILITY_ENGINE_IR_MANIFEST;
+    static constexpr char manifest_format_identifier[] = "morphoia.engine.ir-manifest";
+    static constexpr char manifest_format_version[] = MORPHOIA_ENGINE_IR_FORMAT_VERSION;
+    static constexpr char manifest_media_type[] = MORPHOIA_ENGINE_IR_MEDIA_TYPE;
+    static constexpr char manifest_canonical_profile[] = MORPHOIA_CANONICAL_JSON_PROFILE1;
+    static constexpr char unit_capability_name[] = MORPHOIA_CAPABILITY_ENGINE_IR_CORE_SI;
+    static constexpr char inspection_format_identifier[] =
+        "morphoia.engine.ir-inspection";
+    static constexpr char inspection_format_version[] = "0.1.0";
+    static constexpr char inspection_media_type[] =
+        "application/vnd.morphoia.ir-inspection.v0+json";
     static constexpr char extension_keys[] = "";
 
     morphoia_capability_info_t result{};
     result.struct_size = MORPHOIA_CAPABILITY_INFO_V1_SIZE;
     result.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
-    result.supported = view_equals(
-                           capability, capability_name, sizeof(capability_name) - 1U)
-                           ? 1U
-                           : 0U;
-    if (result.supported != 0U) {
-      result.capability_name = literal_view(capability_name);
-      result.format_identifier = literal_view(format_identifier);
-      result.format_version = literal_view(format_version);
-      result.media_type = literal_view(media_type);
-      result.canonical_profile = literal_view(canonical_profile);
+    const bool manifest_supported = view_equals(
+        capability,
+        manifest_capability_name,
+        sizeof(manifest_capability_name) - 1U);
+    const bool unit_supported = view_equals(
+        capability, unit_capability_name, sizeof(unit_capability_name) - 1U);
+    result.supported = manifest_supported || unit_supported ? 1U : 0U;
+    if (manifest_supported) {
+      result.capability_name = literal_view(manifest_capability_name);
+      result.format_identifier = literal_view(manifest_format_identifier);
+      result.format_version = literal_view(manifest_format_version);
+      result.media_type = literal_view(manifest_media_type);
+      result.canonical_profile = literal_view(manifest_canonical_profile);
       result.extension_keys = literal_view(extension_keys);
       result.maximum_input_bytes = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_INPUT_BYTES;
       result.maximum_string_bytes = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_STRING_BYTES;
       result.maximum_values = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_VALUES;
       result.maximum_depth = MORPHOIA_CANONICAL_JSON_DEFAULT_MAXIMUM_DEPTH;
+    } else if (unit_supported) {
+      result.capability_name = literal_view(unit_capability_name);
+      result.format_identifier = literal_view(inspection_format_identifier);
+      result.format_version = literal_view(inspection_format_version);
+      result.media_type = literal_view(inspection_media_type);
+      result.canonical_profile = literal_view(manifest_canonical_profile);
+      result.extension_keys = literal_view(extension_keys);
     }
     std::memcpy(info, &result, MORPHOIA_CAPABILITY_INFO_V1_SIZE);
     set_diagnostic(diagnostic, MORPHOIA_STATUS_OK, {"", "capability query", "", "", ""});
@@ -851,6 +876,204 @@ extern "C" morphoia_status_t MORPHOIA_ENGINE_CALL morphoia_canonical_json_profil
         });
   } catch (...) {
     return internal_exception(diagnostic, "canonical JSON Profile 1", "input or output");
+  }
+}
+
+extern "C" morphoia_status_t MORPHOIA_ENGINE_CALL
+morphoia_context_validate_engine_ir_unit(
+    const morphoia_context_t* const context,
+    const morphoia_engine_ir_unit_t* const unit,
+    morphoia_engine_ir_unit_validation_t* const validation,
+    morphoia_diagnostic_t* const diagnostic) noexcept {
+  try {
+    const std::array<StorageRange, 3> fixed_storage{{
+        {context, sizeof(morphoia_context)},
+        {unit, MORPHOIA_ENGINE_IR_UNIT_V1_SIZE},
+        {validation, MORPHOIA_ENGINE_IR_UNIT_VALIDATION_V1_SIZE},
+    }};
+    const StorageRange diagnostic_storage{diagnostic, MORPHOIA_DIAGNOSTIC_V1_SIZE};
+    for (const StorageRange storage : fixed_storage) {
+      if (ranges_overlap(
+              diagnostic_storage.data,
+              diagnostic_storage.size,
+              storage.data,
+              storage.size)) {
+        return MORPHOIA_STATUS_INVALID_ARGUMENT;
+      }
+    }
+    if (any_storage_overlap(fixed_storage)) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "unit qualification storage overlaps",
+              "engine-ir-core-si-0.1 unit qualification",
+              "context, unit, and validation ABI-v1 storage must be disjoint",
+              "context, unit, or validation",
+              "provide non-overlapping caller-owned storage",
+          });
+    }
+    if (context == nullptr || unit == nullptr || validation == nullptr) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "context, unit, and validation output are required",
+              "engine-ir-core-si-0.1 unit qualification",
+              "a required pointer is null",
+              "context, unit, or validation",
+              "provide every required pointer",
+          });
+    }
+    if (unit->struct_size < MORPHOIA_ENGINE_IR_UNIT_V1_SIZE) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_STRUCT_TOO_SMALL,
+          {
+              "unit structure is too small",
+              "engine-ir-core-si-0.1 unit qualification",
+              "struct_size is below the required ABI-v1 prefix",
+              "unit.struct_size",
+              "initialize struct_size with sizeof(morphoia_engine_ir_unit_t)",
+          });
+    }
+    if (unit->abi_version != MORPHOIA_ENGINE_ABI_VERSION) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_UNSUPPORTED_ABI,
+          {
+              "unit ABI is unsupported",
+              "engine-ir-core-si-0.1 unit qualification",
+              "abi_version does not match the engine ABI",
+              "unit.abi_version",
+              "use the negotiated engine ABI version",
+          });
+    }
+    const StorageRange code_storage{unit->code.data, unit->code.size};
+    const std::array<StorageRange, 4> all_storage{{
+        fixed_storage[0],
+        fixed_storage[1],
+        code_storage,
+        fixed_storage[2],
+    }};
+    if (ranges_overlap(
+            diagnostic_storage.data,
+            diagnostic_storage.size,
+            code_storage.data,
+            code_storage.size)) {
+      return MORPHOIA_STATUS_INVALID_ARGUMENT;
+    }
+    if (any_storage_overlap(all_storage)) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "unit qualification storage overlaps",
+              "engine-ir-core-si-0.1 unit qualification",
+              "context, unit, code, and validation storage must be disjoint",
+              "context, unit, code, or validation",
+              "provide non-overlapping caller-owned storage",
+          });
+    }
+    if (validation->struct_size < MORPHOIA_ENGINE_IR_UNIT_VALIDATION_V1_SIZE) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_STRUCT_TOO_SMALL,
+          {
+              "unit validation output structure is too small",
+              "engine-ir-core-si-0.1 unit qualification",
+              "struct_size is below the required ABI-v1 prefix",
+              "validation.struct_size",
+              "initialize struct_size with sizeof(morphoia_engine_ir_unit_validation_t)",
+          });
+    }
+    if (validation->abi_version != MORPHOIA_ENGINE_ABI_VERSION) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_UNSUPPORTED_ABI,
+          {
+              "unit validation output ABI is unsupported",
+              "engine-ir-core-si-0.1 unit qualification",
+              "abi_version does not match the engine ABI",
+              "validation.abi_version",
+              "use the negotiated engine ABI version",
+          });
+    }
+    if (unit->flags != MORPHOIA_ENGINE_IR_UNIT_FLAG_NONE ||
+        validation->flags != MORPHOIA_ENGINE_IR_UNIT_VALIDATION_FLAG_NONE) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_UNSUPPORTED_OPTION,
+          {
+              "unit qualification flags are unsupported",
+              "engine-ir-core-si-0.1 unit qualification",
+              "an unknown input or output flag bit is set",
+              "unit.flags or validation.flags",
+              "clear unsupported flag bits",
+          });
+    }
+    if (unit->reserved != 0U || validation->reserved != 0U) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "unit qualification reserved fields must be zero",
+              "engine-ir-core-si-0.1 unit qualification",
+              "a reserved ABI-v1 field is nonzero",
+              "unit.reserved or validation.reserved",
+              "zero every reserved field before calling",
+          });
+    }
+
+    if (!valid_engine_ir_unit_code(unit->code)) {
+      return fail(
+          diagnostic,
+          MORPHOIA_STATUS_INVALID_ARGUMENT,
+          {
+              "unit code is not a valid UTF-8 identifier",
+              "engine-ir-core-si-0.1 unit qualification",
+              "the code is empty, exceeds 32 bytes, is malformed UTF-8, or contains NUL",
+              "unit.code",
+              "provide 1 to 32 bytes of shortest-form UTF-8 without embedded NUL",
+          });
+    }
+
+    morphoia_engine_ir_unit_validation_t result{};
+    result.struct_size = MORPHOIA_ENGINE_IR_UNIT_VALIDATION_V1_SIZE;
+    result.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
+    const auto definition = morphoia::core::find_engine_ir_unit(
+        std::string_view(unit->code.data, unit->code.size));
+    if (definition.has_value()) {
+      result.recognized = 1U;
+      bool dimensions_match = true;
+      for (std::size_t index = 0U; index < definition->dimensions.size(); ++index) {
+        result.expected_dimensions[index] = definition->dimensions[index];
+        dimensions_match = dimensions_match &&
+                           unit->dimensions[index] == definition->dimensions[index];
+      }
+      result.dimensions_match = dimensions_match ? 1U : 0U;
+      result.expected_si_factor_coefficient = definition->si_factor_coefficient;
+      result.expected_si_factor_scale = definition->si_factor_scale;
+      result.si_factor_match =
+          unit->si_factor_coefficient == definition->si_factor_coefficient &&
+                  unit->si_factor_scale == definition->si_factor_scale
+              ? 1U
+              : 0U;
+      result.qualified = result.dimensions_match != 0U && result.si_factor_match != 0U
+                             ? 1U
+                             : 0U;
+    }
+    std::memcpy(validation, &result, MORPHOIA_ENGINE_IR_UNIT_VALIDATION_V1_SIZE);
+    set_diagnostic(
+        diagnostic,
+        MORPHOIA_STATUS_OK,
+        {"", "engine-ir-core-si-0.1 unit qualification", "", "", ""});
+    return MORPHOIA_STATUS_OK;
+  } catch (...) {
+    return internal_exception(
+        diagnostic,
+        "engine-ir-core-si-0.1 unit qualification",
+        "unit or validation");
   }
 }
 

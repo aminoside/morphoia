@@ -30,6 +30,7 @@ technical specification.
 | [ADR-018](../../spec/adr/ADR-018-canonical-json-profile-posix-cas.md) | Constrained canonical JSON and atomic Linux/POSIX CAS | Bounded E1 lot | Accepted |
 | [ADR-019](../../spec/adr/ADR-019-salome-control-protocol-v0.1.md) | Versioned bounded SALOME control protocol; explicitly fake agent is contract evidence only | N/A | Accepted for E2 contract profile |
 | [ADR-020](../../spec/adr/ADR-020-public-engine-ir-v0.1.md) | Distinct public Engine IR manifest 0.1 identity domain; preserve the legacy prototype | Bounded E1 public-IR lot | Accepted |
+| [ADR-021](../../spec/adr/ADR-021-qualified-ir-inspection.md) | Bounded exact-literal unit qualification, deterministic metadata inspection, and explicit thread-safety contract | Bounded E1 qualified-inspection lot | Proposed |
 
 ## E0 operational decisions
 
@@ -89,3 +90,23 @@ technical specification.
   integrated evidence head `74b8ddb` into `engine` at `9c845f9`, whose exact
   tree passed post-merge Engine run `31615797169`. This acceptance does not
   promote E1, G1/P0, optional backends, dependency audits, or MVX criteria.
+
+## Qualified IR inspection 0.1 operational decisions
+
+- Start the finite lot from public-IR close merge
+  `767b88ab7e89b30ed77f5b30c25372d71fa06402` on
+  `engine-p0-ir-inspection`; never use it to advance `main`.
+- Limit unit qualification to the exact case-sensitive literals `1`, `m`,
+  `mm`, `s`, `kg`, `g`, `A`, `K`, `mol`, and `cd`, with literal tuple equality
+  and no conversion, equivalence, normalization, or general UCUM parser.
+- Keep inspection metadata-only: do not resolve payloads, apply transforms, or
+  convert units. Use the additive sized C ABI and preserve the exact
+  eight-export Linux boundary.
+- Treat the local 45-test selection, 86-test regression lot plus 20 graphs, two
+  clean CMake repetitions, ASan/UBSan, installed-wheel smoke, and four evidence
+  tests as bounded sub-gates only. Preserve the failed non-isolated in-tree
+  CMake attempt separately and do not attribute its corrupt generated artifact
+  to a cause that the retained evidence does not establish.
+- Keep ADR-021 `Proposed` and MOR-IR-006, MOR-API-006, and MOR-QA-017
+  `NOT_RUN` until the final local reseal, exact-head hosted Python 3.12/3.13 and
+  required checks, review, and integration into `engine` all pass.

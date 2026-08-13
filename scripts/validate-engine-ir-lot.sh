@@ -23,7 +23,9 @@ MORPHOIA_ENGINE_LIBRARY="${library}" PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
     tests.test_engine_ir_contract \
     tests.test_engine_ir_migration \
     tests.test_engine_ir_native \
+    tests.test_engine_ir_inspection \
     tests.test_engine_ir_replay \
     tests.test_engine_ir_cli -v
 
-echo "validate-engine-ir-lot: PASS (20 graphs, native/Python agreement, replay)"
+echo "validate-engine-ir-lot: PASS (20 graphs, native/Python agreement, "\
+"qualified inspection, replay)"

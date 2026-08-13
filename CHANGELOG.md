@@ -4,6 +4,30 @@ All notable changes to MORPHOIA are documented in this file.
 
 ## [Unreleased]
 
+### Morphoia Engine qualified IR inspection 0.1 (prospective)
+
+- added a bounded, case-sensitive ten-literal unit qualification profile with
+  exact SI tuples, one additive sized C ABI operation, and an exact eight-symbol
+  Linux export boundary without implementing general UCUM or unit conversion;
+- added deterministic metadata-only Engine IR inspection through Python and
+  CLI surfaces, explicit no-payload/no-transform behavior, and a documented
+  thread-safety and lifetime matrix;
+- added a frozen public-IR historical replay bridge plus a separate
+  fail-closed traceability, artifact-manifest, 20-report-vector, and CycloneDX
+  evidence profile;
+- recorded successful bounded local sub-gates, including 45/45 targeted tests,
+  86/86 predecessor regressions plus 20 native graph validations, two isolated
+  CMake 3.20.5 runs with 10/10 CTests and consumer 1/1 each, ASan/UBSan, an
+  installed-wheel smoke, 4/4 evidence tests, and the final 206/206 Python
+  regression;
+- retained one failed non-isolated in-tree CMake attempt without unsupported
+  causal attribution, and kept LSan, byte-reproducible wheel proof, hosted
+  Python 3.12/3.13, review, integration, vulnerability, and dependency-license
+  analyses `NOT_RUN`;
+- kept ADR-021 `Proposed` and MOR-IR-006, MOR-API-006, and MOR-QA-017
+  `NOT_RUN` until the hosted, review, and integration gate is executed
+  successfully.
+
 ### Morphoia Engine public IR 0.1
 
 - added a distinct, versioned Engine IR manifest and replay identity domain

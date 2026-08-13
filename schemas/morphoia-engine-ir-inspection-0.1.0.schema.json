@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/ir-inspection/0.1.0",
+  "title": "Morphoia qualified Engine IR inspection 0.1.0",
+  "description": "Deterministic metadata-only inspection report. It does not resolve payloads, convert units, or apply transformations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "format_version",
+    "media_type",
+    "profile",
+    "status",
+    "qualified",
+    "manifest_sha256",
+    "content_sha256",
+    "identity_and_revision",
+    "effective_capabilities",
+    "units",
+    "frames",
+    "transforms",
+    "tolerances",
+    "authority_and_derivation",
+    "provenance",
+    "fidelity_events",
+    "repairs",
+    "losses",
+    "payload_reference_metadata",
+    "security",
+    "limitations",
+    "diagnostics"
+  ],
+  "properties": {
+    "format": { "const": "morphoia.engine.ir-inspection" },
+    "format_version": { "const": "0.1.0" },
+    "media_type": { "const": "application/vnd.morphoia.ir-inspection.v0+json" },
+    "profile": { "const": "engine-ir-core-si-0.1" },
+    "status": { "enum": ["PASS", "FAIL"] },
+    "qualified": { "type": "boolean" },
+    "manifest_sha256": { "$ref": "#/$defs/sha256" },
+    "content_sha256": { "$ref": "#/$defs/sha256" },
+    "identity_and_revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["logical_id", "revision", "parents", "identity"],
+      "properties": {
+        "logical_id": { "$ref": "#/$defs/uuid" },
+        "revision": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+        "parents": { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/jsonObject" } },
+        "identity": { "$ref": "#/$defs/jsonObject" }
+      }
+    },
+    "effective_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engine_version",
+        "engine_abi_version",
+        "library_sha256",
+        "manifest_contract",
+        "inspection"
+      ],
+      "properties": {
+        "engine_version": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "engine_abi_version": { "const": 1 },
+        "library_sha256": { "$ref": "#/$defs/sha256" },
+        "manifest_contract": { "$ref": "#/$defs/capability" },
+        "inspection": { "$ref": "#/$defs/capability" }
+      }
+    },
+    "units": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "ucum_code", "dimension", "si_factor", "qualification"],
+        "properties": {
+          "id": { "$ref": "#/$defs/uuid" },
+          "ucum_code": { "type": "string", "minLength": 1, "maxLength": 32 },
+          "dimension": { "$ref": "#/$defs/dimension" },
+          "si_factor": { "$ref": "#/$defs/decimal" },
+          "qualification": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "recognized",
+              "dimensions_match",
+              "si_factor_match",
+              "qualified",
+              "expected_dimension",
+              "expected_si_factor"
+            ],
+            "properties": {
+              "recognized": { "type": "boolean" },
+              "dimensions_match": { "type": "boolean" },
+              "si_factor_match": { "type": "boolean" },
+              "qualified": { "type": "boolean" },
+              "expected_dimension": { "$ref": "#/$defs/dimension" },
+              "expected_si_factor": { "$ref": "#/$defs/decimal" }
+            }
+          }
+        }
+      }
+    },
+    "frames": { "$ref": "#/$defs/jsonObjectArray" },
+    "transforms": { "$ref": "#/$defs/jsonObjectArray" },
+    "tolerances": { "$ref": "#/$defs/jsonObjectArray" },
+    "authority_and_derivation": { "$ref": "#/$defs/jsonObjectArray" },
+    "provenance": { "$ref": "#/$defs/jsonObjectArray" },
+    "fidelity_events": { "$ref": "#/$defs/jsonObjectArray" },
+    "repairs": { "$ref": "#/$defs/jsonObjectArray" },
+    "losses": { "$ref": "#/$defs/jsonObjectArray" },
+    "payload_reference_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_artifact", "representations", "resolution_performed"],
+      "properties": {
+        "source_artifact": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/jsonObject" }] },
+        "representations": { "$ref": "#/$defs/jsonObjectArray" },
+        "resolution_performed": { "const": false }
+      }
+    },
+    "security": { "$ref": "#/$defs/jsonObject" },
+    "limitations": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        { "const": "literal-unit-registry-only" },
+        { "const": "no-unit-conversion" },
+        { "const": "no-payload-resolution" },
+        { "const": "no-transform-application" },
+        { "const": "no-cryptographic-signature-verification" },
+        { "const": "no-scientific-fidelity-acceptance" }
+      ],
+      "items": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "$ref": "#/$defs/diagnostic" }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "qualified": { "const": true } }, "required": ["qualified"] },
+      "then": {
+        "properties": {
+          "status": { "const": "PASS" },
+          "diagnostics": { "maxItems": 0 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "qualified": { "const": false } }, "required": ["qualified"] },
+      "then": {
+        "properties": {
+          "status": { "const": "FAIL" },
+          "diagnostics": { "minItems": 1 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "uuid": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+    "decimal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coefficient", "scale"],
+      "properties": {
+        "coefficient": { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 },
+        "scale": { "type": "integer", "minimum": -18, "maximum": 18 }
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["length", "mass", "time", "current", "temperature", "amount", "luminous_intensity"],
+      "properties": {
+        "length": { "type": "integer", "minimum": -16, "maximum": 16 },
+        "mass": { "type": "integer", "minimum": -16, "maximum": 16 },
+        "time": { "type": "integer", "minimum": -16, "maximum": 16 },
+        "current": { "type": "integer", "minimum": -16, "maximum": 16 },
+        "temperature": { "type": "integer", "minimum": -16, "maximum": 16 },
+        "amount": { "type": "integer", "minimum": -16, "maximum": 16 },
+        "luminous_intensity": { "type": "integer", "minimum": -16, "maximum": 16 }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability_name", "format_identifier", "format_version", "media_type", "canonical_profile"],
+      "properties": {
+        "capability_name": { "type": "string", "minLength": 1, "maxLength": 127 },
+        "format_identifier": { "type": "string", "minLength": 1, "maxLength": 127 },
+        "format_version": { "type": "string", "minLength": 1, "maxLength": 32 },
+        "media_type": { "type": "string", "minLength": 1, "maxLength": 127 },
+        "canonical_profile": { "type": "string", "minLength": 1, "maxLength": 127 }
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family", "code", "severity", "path", "message", "affected_elements", "recommendation"],
+      "properties": {
+        "family": { "enum": ["MOR-I/O", "MOR-GEOM", "MOR-UNIT/FRAME", "MOR-CAS", "MOR-DEVICE", "MOR-SEC", "MOR-EXT"] },
+        "code": { "type": "string", "pattern": "^MOR-[A-Z]+-[A-Z-]+$", "maxLength": 64 },
+        "severity": { "enum": ["info", "warning", "error"] },
+        "path": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "message": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "affected_elements": { "type": "array", "maxItems": 32, "items": { "type": "string", "minLength": 1, "maxLength": 128 } },
+        "recommendation": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "jsonObjectArray": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": { "$ref": "#/$defs/jsonObject" }
+    },
+    "jsonObject": {
+      "type": "object",
+      "maxProperties": 128,
+      "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+    },
+    "jsonValue": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "boolean" },
+        { "type": "string", "maxLength": 8192 },
+        { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 },
+        { "type": "array", "maxItems": 4096, "items": { "$ref": "#/$defs/jsonValue" } },
+        { "$ref": "#/$defs/jsonObject" }
+      ]
+    }
+  }
+}

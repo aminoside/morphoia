@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/engine/qualified-ir-inspection-0.1-report-vectors-1.0.schema.json",
+  "title": "Morphoia Engine qualified IR inspection 0.1 report vectors",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "lot",
+    "native_library_sha256",
+    "profile",
+    "format",
+    "format_version",
+    "canonical_profile",
+    "source_base_commit",
+    "corpus_index_sha256",
+    "pass_count",
+    "passes_identical",
+    "vectors"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./qualified-ir-inspection-0.1-report-vectors.schema.json"
+    },
+    "schema_version": {"const": "1.0.0"},
+    "lot": {"const": "qualified-ir-inspection-0.1"},
+    "native_library_sha256": {"$ref": "#/$defs/sha256"},
+    "profile": {"const": "engine-ir-core-si-0.1"},
+    "format": {"const": "morphoia.engine.ir-inspection"},
+    "format_version": {"const": "0.1.0"},
+    "canonical_profile": {"const": "morphoia.canonical-json.profile1"},
+    "source_base_commit": {
+      "const": "767b88ab7e89b30ed77f5b30c25372d71fa06402"
+    },
+    "corpus_index_sha256": {
+      "const": "39a9e4f2381993f88d8ccbea9d66b402b44ab30cdd4e7b16f486334bd1630ad2"
+    },
+    "pass_count": {"const": 2},
+    "passes_identical": {"const": true},
+    "vectors": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/vector"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "vector": {
+      "type": "object",
+      "required": [
+        "id",
+        "input_sha256",
+        "report_size_bytes",
+        "report_sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^graph-(?:0[1-9]|1[0-9]|20)-[a-z0-9-]+$",
+          "maxLength": 128
+        },
+        "input_sha256": {"$ref": "#/$defs/sha256"},
+        "report_size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "report_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

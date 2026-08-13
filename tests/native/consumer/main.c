@@ -17,6 +17,8 @@ int main(void) {
   morphoia_version_info_t version = {0};
   morphoia_diagnostic_t diagnostic = {0};
   morphoia_capability_info_t capability = {0};
+  morphoia_engine_ir_unit_t unit = {0};
+  morphoia_engine_ir_unit_validation_t unit_validation = {0};
   morphoia_context_t* context = NULL;
   uint8_t digest[MORPHOIA_SHA256_DIGEST_SIZE] = {0};
   char canonical[16] = {0};
@@ -27,6 +29,14 @@ int main(void) {
   diagnostic.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
   capability.struct_size = (uint32_t)sizeof(capability);
   capability.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
+  unit.struct_size = (uint32_t)sizeof(unit);
+  unit.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
+  unit.code = view_of("mm");
+  unit.dimensions[0] = 1;
+  unit.si_factor_coefficient = 1;
+  unit.si_factor_scale = -3;
+  unit_validation.struct_size = (uint32_t)sizeof(unit_validation);
+  unit_validation.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
   if (morphoia_engine_get_version(&version, &diagnostic) != MORPHOIA_STATUS_OK) {
     return 1;
   }
@@ -39,6 +49,21 @@ int main(void) {
           &capability,
           &diagnostic) != MORPHOIA_STATUS_OK ||
       capability.supported != 1U) {
+    return 1;
+  }
+  capability.struct_size = (uint32_t)sizeof(capability);
+  capability.abi_version = MORPHOIA_ENGINE_ABI_VERSION;
+  if (morphoia_context_query_capability(
+          context,
+          view_of(MORPHOIA_CAPABILITY_ENGINE_IR_CORE_SI),
+          &capability,
+          &diagnostic) != MORPHOIA_STATUS_OK ||
+      capability.supported != 1U) {
+    return 1;
+  }
+  if (morphoia_context_validate_engine_ir_unit(
+          context, &unit, &unit_validation, &diagnostic) != MORPHOIA_STATUS_OK ||
+      unit_validation.qualified != 1U) {
     return 1;
   }
   if (morphoia_canonical_json_profile1(

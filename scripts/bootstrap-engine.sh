@@ -46,6 +46,7 @@ echo "bootstrap-engine: using direct compiler fallback"
   "${repo_dir}/cpp/src/engine.cpp" \
   "${repo_dir}/cpp/src/core/canonical_json.cpp" \
   "${repo_dir}/cpp/src/core/sha256.cpp" \
+  "${repo_dir}/cpp/src/core/unit_registry.cpp" \
   -Wl,--version-script,"${repo_dir}/cmake/morphoia_engine.map" \
   -o "${fallback_dir}/libmorphoia_engine.so"
 
@@ -58,11 +59,33 @@ echo "bootstrap-engine: using direct compiler fallback"
 
 "${cc}" -std=c11 "${common_warnings[@]}" "${include_arg[@]}" \
   -DMORPHOIA_ENGINE_SHARED \
+  -c "${repo_dir}/tests/native/consumer/main.c" \
+  -o "${fallback_dir}/installed_consumer.o"
+"${cxx}" "${fallback_dir}/installed_consumer.o" \
+  -L"${fallback_dir}" -lmorphoia_engine -Wl,-rpath,"${fallback_dir}" \
+  -o "${fallback_dir}/installed_consumer"
+
+"${cc}" -std=c11 "${common_warnings[@]}" "${include_arg[@]}" \
+  -DMORPHOIA_ENGINE_SHARED \
   -c "${repo_dir}/tests/native/canonical_json_c_api_test.c" \
   -o "${fallback_dir}/canonical_json_c_api_test.o"
 "${cxx}" "${fallback_dir}/canonical_json_c_api_test.o" \
   -L"${fallback_dir}" -lmorphoia_engine -Wl,-rpath,"${fallback_dir}" \
   -o "${fallback_dir}/canonical_json_c_api_test"
+
+"${cc}" -std=c11 "${common_warnings[@]}" "${include_arg[@]}" \
+  -DMORPHOIA_ENGINE_SHARED \
+  -c "${repo_dir}/tests/native/unit_validation_c_api_test.c" \
+  -o "${fallback_dir}/unit_validation_c_api_test.o"
+"${cxx}" "${fallback_dir}/unit_validation_c_api_test.o" \
+  -L"${fallback_dir}" -lmorphoia_engine -Wl,-rpath,"${fallback_dir}" \
+  -o "${fallback_dir}/unit_validation_c_api_test"
+
+"${cxx}" -std=c++20 "${common_warnings[@]}" "${include_arg[@]}" \
+  -DMORPHOIA_ENGINE_SHARED \
+  "${repo_dir}/tests/native/unit_validation_thread_test.cpp" \
+  -L"${fallback_dir}" -lmorphoia_engine -Wl,-rpath,"${fallback_dir}" -pthread \
+  -o "${fallback_dir}/unit_validation_thread_test"
 
 "${cxx}" -std=c++20 "${common_warnings[@]}" "${include_arg[@]}" \
   -DMORPHOIA_ENGINE_SHARED \
@@ -77,6 +100,7 @@ expected_exports=(
   morphoia_context_destroy
   morphoia_context_get_abi_version
   morphoia_context_query_capability
+  morphoia_context_validate_engine_ir_unit
   morphoia_engine_get_version
   morphoia_status_name
 )
@@ -94,8 +118,11 @@ if [[ "${actual_exports[*]}" != "${expected_exports[*]}" ]]; then
 fi
 
 "${fallback_dir}/abi_c_smoke"
+"${fallback_dir}/installed_consumer"
 "${fallback_dir}/canonical_json_c_api_test"
 "${fallback_dir}/core_smoke"
+"${fallback_dir}/unit_validation_c_api_test"
+"${fallback_dir}/unit_validation_thread_test"
 
 "${cxx}" -std=c++20 "${common_warnings[@]}" "${internal_include_arg[@]}" \
   "${repo_dir}/cpp/src/core/sha256.cpp" \
@@ -110,6 +137,12 @@ fi
   "${repo_dir}/tests/native/canonical_json_test.cpp" \
   -o "${fallback_dir}/canonical_json_test"
 "${fallback_dir}/canonical_json_test"
+
+"${cxx}" -std=c++20 "${common_warnings[@]}" "${internal_include_arg[@]}" \
+  "${repo_dir}/cpp/src/core/unit_registry.cpp" \
+  "${repo_dir}/tests/native/unit_registry_test.cpp" \
+  -o "${fallback_dir}/unit_registry_test"
+"${fallback_dir}/unit_registry_test"
 
 if [[ "$(uname -s)" == "Linux" ]]; then
   "${cxx}" -std=c++20 "${common_warnings[@]}" "${internal_include_arg[@]}" \

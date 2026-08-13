@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://morphoia.org/schemas/e1-public-ir-freeze-1.0.schema.json",
+  "title": "Morphoia Engine E1 public IR frozen evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "profile",
+    "status",
+    "git_snapshot",
+    "anchors",
+    "counts",
+    "fixture_tree",
+    "replay"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./e1-public-ir-freeze.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "profile": {
+      "const": "e1-public-ir-core-cpu"
+    },
+    "status": {
+      "const": "FROZEN"
+    },
+    "git_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "commit_object_sha256",
+        "commit_object_size",
+        "tree",
+        "tree_object_sha256",
+        "tree_object_size",
+        "parents",
+        "entry_count",
+        "ls_tree_z_sha256",
+        "content_tree_sha256"
+      ],
+      "properties": {
+        "commit": { "$ref": "#/$defs/git_object_id" },
+        "commit_object_sha256": { "$ref": "#/$defs/sha256" },
+        "commit_object_size": { "const": 1367 },
+        "tree": { "$ref": "#/$defs/git_object_id" },
+        "tree_object_sha256": { "$ref": "#/$defs/sha256" },
+        "tree_object_size": { "const": 1539 },
+        "parents": {
+          "type": "array",
+          "prefixItems": [
+            { "$ref": "#/$defs/git_object_id" },
+            { "$ref": "#/$defs/git_object_id" }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "entry_count": { "const": 309 },
+        "ls_tree_z_sha256": { "$ref": "#/$defs/sha256" },
+        "content_tree_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "mode", "blob", "size", "sha256"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240,
+            "pattern": "^[A-Za-z0-9._/-]+$"
+          },
+          "mode": { "enum": ["100644", "100755"] },
+          "blob": { "$ref": "#/$defs/git_object_id" },
+          "size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "sha256": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_artifacts",
+        "sbom_components",
+        "traceability_entries",
+        "traceability_pass",
+        "traceability_not_run",
+        "historical_evidence_tests"
+      ],
+      "properties": {
+        "manifest_artifacts": { "const": 123 },
+        "sbom_components": { "const": 140 },
+        "traceability_entries": { "const": 49 },
+        "traceability_pass": { "const": 33 },
+        "traceability_not_run": { "const": 16 },
+        "historical_evidence_tests": { "const": 22 }
+      }
+    },
+    "fixture_tree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root", "file_count", "aggregate_sha256"],
+      "properties": {
+        "root": { "const": "tests/fixtures/engine-ir/0.1.0" },
+        "file_count": { "const": 79 },
+        "aggregate_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "replay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_source",
+        "network_access",
+        "commands",
+        "python_versions",
+        "distributions"
+      ],
+      "properties": {
+        "object_source": { "const": "local-git-object-database" },
+        "network_access": { "const": "forbidden" },
+        "commands": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "python scripts/generate_engine_e1_public_ir_sbom.py --check" },
+            { "const": "python -m unittest -v tests.test_e1_public_ir_evidence" }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "python_versions": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "3.12" },
+            { "const": "3.13" }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "distributions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "attrs",
+            "jsonschema",
+            "jsonschema-specifications",
+            "referencing",
+            "rpds-py",
+            "typing-extensions"
+          ],
+          "properties": {
+            "attrs": { "const": "26.1.0" },
+            "jsonschema": { "const": "4.25.1" },
+            "jsonschema-specifications": { "const": "2025.9.1" },
+            "referencing": { "const": "0.37.0" },
+            "rpds-py": { "const": "2026.6.3" },
+            "typing-extensions": { "const": "4.16.0" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "git_object_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

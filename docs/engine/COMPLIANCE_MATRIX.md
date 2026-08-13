@@ -1,11 +1,11 @@
-# E0, E1 native/public-IR, and E2 protocol compliance matrix
+# E0, E1 native/public-IR/qualified-inspection, and E2 protocol compliance matrix
 
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 Snapshot: 2026-08-12
 Declared profiles: E0 audit/bootstrap, integrated bounded E1 native core,
-integrated E1 public IR 0.1 replay, and E2 SALOME protocol contract on Linux
-x86-64 CPU
+integrated E1 public IR 0.1 replay, prospective qualified IR inspection 0.1,
+and E2 SALOME protocol contract on Linux x86-64 CPU
 
 The complete 320-item catalogue is machine-readable in
 `spec/requirements/requirements.yaml`. This view records E0 gate evidence plus
@@ -53,8 +53,17 @@ completion.
 | Public-IR corrective hosted checks | Publication | push exact-head `c7e21acd` plus PR merge-ref associated with that head | push Engine `31613015834`, PR Engine `31613019683`, and PR report `31613019691` passed; both Python 3.12/3.13 paths included full tests, IR lot, hash-locked wheel and pip check | PASS |
 | Public-IR evidence-head integration | Publication | PR #8 merge inspection | merge `9c845f9ea4586a65f25985a4d1f92ebdf407a2f4`, tree `ad816e3c1fbeb9959d82bc47e27c2fc68af49fe0`, parents `12656708…` + `74b8ddb…`; merge tree equals evidence-head tree | PASS |
 | Public-IR exact-merge hosted checks | Publication | Engine run `31615797169` | hygiene `94178151865`, REUSE `94178151884`, Python 3.13 `94178151890`, Python 3.12 `94178151961`, and native `94178151978` passed; `main` remained `66b26f2…` | PASS |
-| Public-IR close checkpoint integration | Publication | final state reseal and compensating PR workflow | close checkpoint is local and not yet integrated into `engine`; no recursive evidence loop is required | NOT_RUN |
+| Public-IR close checkpoint integration | Publication | PR #9 merge plus exact-merge Engine workflow | head `aa309afc` integrated only into `engine` at merge `767b88ab`, tree `ae5dba00`; exact-merge run `31618282751` passed all five jobs and `main` remained unchanged | PASS |
 | Public-IR independent audit | Governance | independent bounded evidence audit plus GitHub review-state inspection | `e1-public-ir-core-cpu` received an audit GO; PR #8 review, comment, and thread collections were empty, so no approval count is claimed | PASS |
+| Qualified-IR historical replay bridge | E1 qualified inspection | offline Git-object verification and frozen generator/test replay | exact merge `767b88ab`, tree/topology, 309 blobs, anchors, historical generator, and 22 tests passed locally; hosted 3.12/3.13 replay remains NOT_RUN | PASS |
+| Qualified-IR bounded native/Python/CLI sub-gates | E1 qualified inspection | direct bootstrap, targeted tests, regression lot, and installed-wheel smoke | exact eight exports; 45/45 targeted tests; 86/86 public-IR regression tests plus 20-graph native validator; installed wheel passed | PASS |
+| Qualified-IR non-isolated CMake attempt | E1 qualified inspection | in-tree generated build execution | CTest saw three empty or non-executable generated tests; a clean-first retry then saw an empty shared library and failed to link one test; no root cause is claimed | FAIL |
+| Qualified-IR isolated minimum-CMake repetitions | E1 qualified inspection | two fresh CMake 3.20.5 configure/build/CTest/install/consumer runs | each temporary build root passed 10/10 CTests, install, external C consumer 1/1, and exact eight-export inspection | PASS |
+| Qualified-IR sanitizers | E1 qualified inspection | fail-fast ASan and UBSan executions | bounded native lot passed ASan and UBSan; LSan remains NOT_RUN | PASS |
+| Qualified-IR prospective evidence profile | E1 qualified inspection | deterministic generator/check plus mutation, confinement, and atomic-publication tests | 55 artifacts, three requirement records, 20 report vectors reproduced twice, and 4/4 evidence tests passed locally | PASS |
+| Qualified-IR final full local gate | E1 qualified inspection | whole Python discovery plus final frozen-profile, requirements, REUSE, secret, Ruff, shell-syntax, and whitespace reruns | 206/206 tests passed in 84.942 s on CPython 3.12.13; frozen E0/E1 native/E2/public-IR/qualified profiles, 320 requirements, REUSE 323/323, and bounded hygiene checks passed | PASS |
+| Qualified-IR bounded requirements | MOR-IR-006, MOR-API-006, MOR-QA-017 | complete ADR-021 promotion gate | the final local gate passed, but exact-head hosted Python 3.12/3.13, review, and integration evidence is incomplete; ADR-021 remains Proposed | NOT_RUN |
+| Qualified-IR publication and integration | Publication | DCO commit, draft PR to `engine`, exact-head workflows, review, and merge inspection | no lot commit, PR, exact-head run, job ID, or integration exists at this checkpoint | NOT_RUN |
 | Legacy prototype bytes at public-IR entry | E1 public IR | SHA-256 inspection of five declared files | exact hashes recorded in ADR-020 and `STATUS.md`; files are non-authoritative for Engine identity | PASS |
 | Immutable normative PDFs excluded from report branding | Baselines/reporting | tracked-report manifest test plus full `make check` | two Engine baseline PDFs remain hash-identical and outside generated-report policy | PASS |
 | Second clean bootstrap | Reproducibility | two isolated direct GCC/G++ builds/tests | both executions passed | PASS |
