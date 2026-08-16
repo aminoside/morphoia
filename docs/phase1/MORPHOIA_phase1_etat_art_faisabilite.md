@@ -7,7 +7,7 @@
 # Résumé exécutif
 
 **Projet : MORPHOIA**
-**Auteur : Olivier Ami**
+**Auteurs : Louis Manhès et Olivier Ami**
 
 > **Verdict.** Au 3 août 2026, aucune solution existante - norme, noyau, logiciel CAO, langage de script, SDK ou modèle d’IA - ne satisfait seule l’objectif complet de MORPHOIA : reconstruire sans ambiguïté une pièce mécanique en un modèle exact, paramétrique, éditable, porteur de l’intention de conception, du PMI/GD&T, des variantes et des assemblages, puis le reproduire de façon déterministe dans plusieurs systèmes CAO. En revanche, une grande majorité des briques de bas niveau existe déjà et serait réutilisable. Le projet est donc techniquement faisable par paliers, mais un périmètre « universel » dès la première version serait à très haut risque.
 

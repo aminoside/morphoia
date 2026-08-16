@@ -10,12 +10,13 @@ vectoriel du logo, les métadonnées, la couverture, l'en-tête et le pied de pa
 2. Utiliser `draw_cover_base()` sur la couverture et `draw_page_chrome()` sur les autres pages.
 3. Utiliser `BrandedCanvas`, Aldrich pour les titres et Barlow pour tout autre texte.
 4. Conserver les marges `PORTRAIT_MARGIN` ou `LANDSCAPE_MARGIN`.
-5. Renseigner le titre et le sujet ; l'auteur reste `Olivier Ami`.
+5. Renseigner le titre et le sujet ; les auteurs restent `Louis Manhès et Olivier Ami`.
 6. Déclarer le PDF, son générateur et son validateur dans `reports.json`.
 7. Reconstruire le document puis exécuter `make check`.
 
-La CI refuse tout PDF suivi par Git qui n'est pas déclaré, qui utilise une autre identité visuelle,
-qui n'incorpore pas les polices officielles ou dont l'auteur diffère de `Olivier Ami`.
+La CI refuse tout PDF généré suivi par Git qui n'est pas déclaré, qui utilise une autre identité
+visuelle, qui n'incorpore pas les polices officielles ou dont la métadonnée d'auteur diffère de
+`Louis Manhès; Olivier Ami`. Les documents de référence immuables sont validés séparément.
 
 ## Contraintes visuelles
 

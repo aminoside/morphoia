@@ -9,8 +9,10 @@ from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parents[1]
 PDF = ROOT / "docs" / "phase2" / "MORPHOIA_phase2_standard_candidate_v0.1.pdf"
+EXPECTED_AUTHOR = "Louis Manhès; Olivier Ami"
 REQUIRED_TERMS = {
     "MORPHOIA",
+    "Louis Manhès",
     "Olivier Ami",
     "candidat expérimental",
     "STEP AP242",
@@ -37,7 +39,7 @@ def main() -> None:
 
     if "MORPHOIA" not in title or "Phase 2" not in title or "0.1" not in title:
         raise SystemExit(f"Unexpected PDF title: {title!r}")
-    if author != "Olivier Ami":
+    if author != EXPECTED_AUTHOR:
         raise SystemExit(f"Unexpected PDF author: {author!r}")
     if len(reader.pages) < 45:
         raise SystemExit(f"Unexpectedly short Phase 2 report: {len(reader.pages)} pages")

@@ -9,12 +9,16 @@ Toutes les modifications notables de MORPHOIA seront documentées ici.
 - publication de la charte graphique MORPHOIA version 1.0, du kit vectoriel complet et des
   déclinaisons SVG/PNG officielles dans `assets/brand/` ;
 - contrôle d'intégrité dédié aux documents graphiques de référence suivis par Git.
+- publication de l'architecture générale simplifiée et du format natif `.oia` v0.4.2,
+  identifiant `MORPHOIA-ARCH-BASELINE-0004.2`, avec son empreinte SHA-256 ;
 
 ### Modifié
 
 - application de l'identité visuelle officielle MORPHOIA aux rapports PDF des phases 1 et 2 ;
 - utilisation du logo vectoriel officiel, de la palette MORPHOIA et des polices Aldrich/Barlow ;
-- attribution visible et métadonnées PDF normalisées au nom d'Olivier Ami ;
+- attribution visible et métadonnées du projet normalisées au nom de Louis Manhès et Olivier Ami ;
+- index d'accueil, citation, métadonnées du paquet, contribution et licence harmonisés avec les
+  deux auteurs ;
 - ajout d'un thème de rapport réutilisable et d'un manifeste imposant ces règles à tout futur
   PDF suivi par Git.
 

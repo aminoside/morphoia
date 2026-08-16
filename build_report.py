@@ -30,6 +30,7 @@ from reporting.morphoia_brand import (
     AMBRE,
     ARDOISE,
     AUTHOR,
+    AUTHOR_DISPLAY,
     AZUR,
     BRUME,
     CORAIL,
@@ -450,7 +451,7 @@ def make_doc(path: Path) -> ReportDoc:
         author=AUTHOR,
         subject="CAO parametrique, standards, IA et acceleration GPU",
         creator=CREATOR,
-        keywords="MORPHOIA; Olivier Ami; brand-1.0; sRGB",
+        keywords=f"MORPHOIA; {AUTHOR}; brand-1.0; sRGB",
         initialFontName=FONT_TEXT,
         initialFontSize=9.4,
         initialLeading=13.6,
@@ -485,7 +486,7 @@ def cover_story():
         Rule(INDIGO, 2, 8),
         Spacer(1, 8 * mm),
         Paragraph(
-            "<b>Auteur</b> : Olivier Ami<br/>"
+            f"<b>Auteurs</b> : {AUTHOR_DISPLAY}<br/>"
             "<b>Date d’arrêté des recherches</b> : 3 août 2026<br/>"
             "<b>Nature du document</b> : étude de faisabilité, non-spécification<br/>"
             "<b>Statut</b> : décision de cadrage - aucune proposition de nouveau langage",

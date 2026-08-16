@@ -1,7 +1,7 @@
 # Contribuer à MORPHOIA
 
-MORPHOIA est un dépôt public dirigé par Olivier Ami et distribué sous la licence MIT publiée
-dans `LICENSE`.
+MORPHOIA est un dépôt public coécrit et codirigé par Louis Manhès et Olivier Ami, et distribué
+sous la licence MIT publiée dans `LICENSE`.
 
 ## Règles de contribution
 
@@ -19,8 +19,10 @@ dans `LICENSE`.
 ## Documents PDF et identité MORPHOIA
 
 Tout PDF ajouté au dépôt doit respecter la charte graphique MORPHOIA version 1.0 et conserver
-`Olivier Ami` comme auteur du document. Les contributeurs restent crédités par leurs commits et,
-si nécessaire, dans une section de contributions.
+`Louis Manhès; Olivier Ami` comme métadonnée d'auteur par défaut, avec la forme visible
+`Louis Manhès et Olivier Ami`. Les documents de référence historiques ou provenant d'une source
+immuable conservent leur attribution versionnée. Les contributeurs restent crédités par leurs
+commits et, si nécessaire, dans une section de contributions.
 
 Les nouveaux PDF doivent :
 
@@ -32,9 +34,12 @@ Les nouveaux PDF doivent :
 
 La CI refuse automatiquement un PDF suivi par Git qui n'est pas déclaré ou conforme.
 
-## Convention d'auteur
+## Convention d'auteurs
 
-Olivier Ami reste l'auteur et l'initiateur du projet MORPHOIA. Les contributeurs conservent l'attribution de leurs commits et contributions spécifiques.
+Louis Manhès et Olivier Ami sont les coauteurs et copropriétaires du projet MORPHOIA. Les
+contributeurs conservent l'attribution de leurs commits et contributions spécifiques. Toute
+modification du statut d'une baseline candidate soumise à ratification conjointe doit être
+documentée explicitement.
 
 ## Phase 1 et candidat Phase 2
 
