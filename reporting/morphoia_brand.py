@@ -29,7 +29,9 @@ WORDMARK_SVG = BRAND_DIR / "morphoia-typographie.svg"
 
 BRAND_NAME = "MORPHOIA"
 BRAND_VERSION = "1.0"
-AUTHOR = "Olivier Ami"
+AUTHORS = ("Louis Manhès", "Olivier Ami")
+AUTHOR = "; ".join(AUTHORS)
+AUTHOR_DISPLAY = " et ".join(AUTHORS)
 BASELINE = "DESIGN INTENT. PARAMETRIC REALITY."
 CREATOR = "MORPHOIA document pipeline 1.0"
 
@@ -306,7 +308,7 @@ def set_pdf_metadata(canvas, *, title: str, subject: str) -> None:
     canvas.setAuthor(AUTHOR)
     canvas.setSubject(subject)
     canvas.setCreator(CREATOR)
-    canvas.setKeywords(f"MORPHOIA; Olivier Ami; brand-{BRAND_VERSION}; sRGB")
+    canvas.setKeywords(f"MORPHOIA; {AUTHOR}; brand-{BRAND_VERSION}; sRGB")
 
 
 def _draw_construction_motif(canvas, page_width: float, page_height: float) -> None:
@@ -409,7 +411,7 @@ def draw_page_chrome(
     canvas.line(margin, 13 * mm, width - margin, 13 * mm)
     canvas.setFont(FONT_TEXT, 7)
     canvas.setFillColor(ARDOISE)
-    canvas.drawString(margin, 8 * mm, f"{AUTHOR}  ·  {footer}")
+    canvas.drawString(margin, 8 * mm, f"{AUTHOR_DISPLAY}  ·  {footer}")
 
     page_number = max(1, canvas.getPageNumber() - 1)
     page_x = width - margin

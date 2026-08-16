@@ -94,7 +94,7 @@ def validate_report(path: Path, brand: dict) -> tuple[int, set[str]]:
             raise SystemExit(f"{path}: page {number} is not A4: {size}")
 
     cover_text = reader.pages[0].extract_text() or ""
-    for required in (brand["author"], brand["baseline"]):
+    for required in (brand.get("author_display", brand["author"]), brand["baseline"]):
         if required not in cover_text:
             raise SystemExit(f"{path}: cover is missing visible {required!r}")
 
@@ -128,10 +128,7 @@ def validate_brand_document(entry: dict, brand: dict) -> int:
     metadata = reader.metadata or {}
     if str(metadata.get("/Title", "")) != entry["title"]:
         raise SystemExit(f"{path}: unexpected /Title")
-    if (
-        str(metadata.get("/Author", "")) != entry["author"]
-        or entry["author"] != brand["author"]
-    ):
+    if str(metadata.get("/Author", "")) != entry["author"]:
         raise SystemExit(f"{path}: unexpected /Author")
     if f"brand-{brand['version']}" not in str(metadata.get("/Keywords", "")):
         raise SystemExit(f"{path}: missing brand version in /Keywords")
@@ -149,6 +146,33 @@ def validate_brand_document(entry: dict, brand: dict) -> int:
     cover_resources = reader.pages[0].get("/Resources") or {}
     if not (cover_resources.get("/XObject") or {}):
         raise SystemExit(f"{path}: cover lacks the MORPHOIA visual identity")
+    return len(reader.pages)
+
+
+def validate_reference_document(entry: dict) -> int:
+    """Validate an immutable reference without rewriting its versioned metadata."""
+
+    path = ROOT / entry["path"]
+    if not path.is_file():
+        raise SystemExit(f"Missing reference document: {path}")
+    actual = sha256(path)
+    if actual != entry["sha256"]:
+        raise SystemExit(f"Reference document changed: {path} ({actual})")
+
+    reader = PdfReader(str(path))
+    if reader.is_encrypted:
+        raise SystemExit(f"{path}: encrypted reference document")
+    metadata = reader.metadata or {}
+    if str(metadata.get("/Title", "")) != entry["title"]:
+        raise SystemExit(f"{path}: unexpected /Title")
+    if str(metadata.get("/Author", "")) != entry["author"]:
+        raise SystemExit(f"{path}: unexpected /Author")
+    if len(reader.pages) != entry["pages"]:
+        raise SystemExit(f"{path}: unexpected page count")
+    for number, page in enumerate(reader.pages, start=1):
+        size = (float(page.mediabox.width), float(page.mediabox.height))
+        if not close_size(size, A4_PORTRAIT):
+            raise SystemExit(f"{path}: page {number} is not portrait A4: {size}")
     return len(reader.pages)
 
 
@@ -170,8 +194,10 @@ def main() -> None:
             raise SystemExit(f"Official brand asset changed: {asset} ({actual})")
 
     brand_documents = data.get("brand_documents", [])
+    reference_documents = data.get("reference_documents", [])
     declared = [entry["path"] for entry in data["reports"]]
     declared.extend(entry["path"] for entry in brand_documents)
+    declared.extend(entry["path"] for entry in reference_documents)
     if len(declared) != len(set(declared)):
         raise SystemExit("Duplicate PDF path in reports.json")
     tracked = tracked_pdfs()
@@ -194,6 +220,13 @@ def main() -> None:
 
     for entry in brand_documents:
         pages = validate_brand_document(entry, brand)
+        print(
+            f"Reference {entry['path']}: {pages} pages, author={entry['author']!r}, "
+            f"sha256={entry['sha256']}"
+        )
+
+    for entry in reference_documents:
+        pages = validate_reference_document(entry)
         print(
             f"Reference {entry['path']}: {pages} pages, author={entry['author']!r}, "
             f"sha256={entry['sha256']}"

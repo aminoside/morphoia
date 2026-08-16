@@ -2,7 +2,7 @@
 
 - Statut : accepté sous condition
 - Date : 2026-08-03
-- Auteur du projet : Olivier Ami
+- Auteurs du projet : Louis Manhès et Olivier Ami
 
 ## Contexte
 

@@ -135,7 +135,7 @@ des métriques et de la reproductibilité des modèles.
 
 ## Références propres à MORPHOIA
 
-53. Olivier Ami, *MORPHOIA - Phase 1 : État de l'art et étude de faisabilité*, 2026.
+53. Louis Manhès et Olivier Ami, *MORPHOIA - Phase 1 : État de l'art et étude de faisabilité*, 2026.
 54. MORPHOIA, `docs/phase2/requirements.md`, exigences héritées et critères de preuve.
 55. MORPHOIA, `docs/phase2/decisions/`, ADR et modèle CJR.
 56. MORPHOIA, `schemas/`, encodages expérimentaux de l'IR, des backends et des pertes.

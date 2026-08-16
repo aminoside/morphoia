@@ -4,13 +4,14 @@ MORPHOIA est un projet de recherche et d'ingénierie consacré à la reconstruct
 modification, la validation et la génération de modèles CAO paramétriques par l'Homme comme
 par l'IA.
 
-**Auteur et initiateur : Olivier Ami**
+**Auteurs et copropriétaires : Louis Manhès et Olivier Ami**
 
 *Experimental STEP AP242-centred construction graph, Python SDK and validation framework
 for trustworthy AI-assisted parametric CAD reconstruction and interoperability.*
 
 | Composant | Version | Statut |
 |---|---:|---|
+| Architecture générale simplifiée et format natif `.oia` | 0.4.2 | baseline normative candidate, en attente de ratification conjointe |
 | Façade `.morph` et IR canonique | 0.1 | expérimental, non normatif |
 | SDK Python | 0.2.0.dev0 | pré-alpha |
 | Python | ≥ 3.12 | version minimale prise en charge |
@@ -35,6 +36,15 @@ L'hypothèse étudiée est une couche de confiance STEP-centrique, et non un rem
 STEP, d'Open CASCADE ou des noyaux industriels.
 
 ## Livrables
+
+### Architecture générale
+
+- [Architecture générale simplifiée et format natif v0.4.2](docs/architecture/MORPHOIA_Architecture_generale_simplifiee_v0.4.2.pdf)
+- [Statut, provenance et empreinte du document](docs/architecture/README.md)
+
+La v0.4.2 (`MORPHOIA-ARCH-BASELINE-0004.2`) est le document d'architecture candidat le
+plus récent publié dans le dépôt. Conformément à son propre statut, elle ne remplace la
+baseline v0.3.1 qu'après ratification conjointe par Louis Manhès et Olivier Ami.
 
 ### Phase 1
 
@@ -151,6 +161,7 @@ valide l'exemple.
 
 ```text
 MORPHOIA/
+├── docs/architecture/    architecture générale candidate v0.4.2
 ├── docs/phase1/          étude scientifique et industrielle
 ├── docs/phase2/          cahier des charges, spécification et guides
 ├── examples/             sources MORPHOIA expérimentales
@@ -173,13 +184,13 @@ MORPHOIA/
 ## Citation
 
 Le fichier [CITATION.cff](CITATION.cff) contient les métadonnées de citation de référence :
-**MORPHOIA**, Olivier Ami, version 0.2.0-dev, 3 août 2026. Aucun DOI n'est attribué à ce
+**MORPHOIA**, Louis Manhès et Olivier Ami, version 0.2.0-dev, 3 août 2026. Aucun DOI n'est attribué à ce
 stade.
 
 ## Licence
 
 Le dépôt est public sous licence [MIT](LICENSE), conformément à la licence choisie lors de sa
-création sur GitHub. Copyright 2026 Olivier Ami.
+création sur GitHub. Copyright 2026 Louis Manhès et Olivier Ami.
 
 Une séparation future entre licence du code, licence documentaire, licences de données et
 politique de marque pourra être étudiée avant une version normative. Elle devra faire l'objet

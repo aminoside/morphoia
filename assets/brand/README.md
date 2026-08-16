@@ -55,12 +55,12 @@ Tout rapport PDF généré par le projet doit :
 
 1. être déclaré dans `reports.json` ;
 2. utiliser `reporting/morphoia_brand.py` ;
-3. afficher le logo officiel et `Olivier Ami` sur la couverture ;
-4. déclarer `Olivier Ami` dans la métadonnée `/Author` ;
+3. afficher le logo officiel et `Louis Manhès et Olivier Ami` sur la couverture ;
+4. déclarer `Louis Manhès; Olivier Ami` dans la métadonnée `/Author` ;
 5. embarquer Aldrich et Barlow ;
 6. réussir `python scripts/check_pdf_branding.py`.
 
-Les documents graphiques de référence fournis comme sources de marque sont déclarés séparément
-dans `brand_documents` avec une empreinte SHA-256 immuable. Leur intégrité, leur format A4, leur
-langue et leur attribution à Olivier Ami sont contrôlés sans leur appliquer les règles propres aux
-rapports générés.
+Les documents graphiques et architecturaux de référence fournis comme sources immuables sont
+déclarés séparément dans `brand_documents` ou `reference_documents`, avec une empreinte SHA-256.
+Leur attribution versionnée est contrôlée sans être réécrite et sans leur appliquer les règles
+propres aux rapports générés.

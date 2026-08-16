@@ -1,8 +1,10 @@
 cff-version: 1.2.0
-message: "If you use or discuss MORPHOIA, please cite the project and its author."
+message: "If you use or discuss MORPHOIA, please cite the project and its authors."
 title: "MORPHOIA"
 type: software
 authors:
+  - family-names: "Manhès"
+    given-names: "Louis"
   - family-names: "Ami"
     given-names: "Olivier"
 version: 0.2.0-dev

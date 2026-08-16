@@ -3,7 +3,9 @@
   "brand": {
     "name": "MORPHOIA",
     "version": "1.0",
-    "author": "Olivier Ami",
+    "authors": ["Louis Manhès", "Olivier Ami"],
+    "author": "Louis Manhès; Olivier Ami",
+    "author_display": "Louis Manhès et Olivier Ami",
     "creator": "MORPHOIA document pipeline 1.0",
     "baseline": "DESIGN INTENT. PARAMETRIC REALITY.",
     "logo": "assets/brand/morphoia-logo.svg",
@@ -17,6 +19,17 @@
       "sha256": "23a67711bcb03ebe025dc7c0401de4e6d3abd22d149652704b48b52499dd8f18",
       "title": "MORPHOIA — Charte graphique, version 1.0",
       "author": "Olivier Ami"
+    }
+  ],
+  "reference_documents": [
+    {
+      "path": "docs/architecture/MORPHOIA_Architecture_generale_simplifiee_v0.4.2.pdf",
+      "sha256": "f01afbccd71de47b89e75fb0ca5d7d8b5ed3e1e1da56f98126d18c454fdb950e",
+      "title": "MORPHOIA - Architecture generale simplifiee et format natif v0.4.2",
+      "author": "Louis Manhes; Olivier Ami",
+      "identifier": "MORPHOIA-ARCH-BASELINE-0004.2",
+      "status": "Baseline normative candidate pour ratification conjointe",
+      "pages": 25
     }
   ],
   "reports": [

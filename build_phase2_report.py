@@ -25,6 +25,7 @@ from build_report import (
 )
 from reporting.morphoia_brand import (
     AUTHOR,
+    AUTHOR_DISPLAY,
     CREATOR,
     FONT_TEXT,
     INDIGO,
@@ -134,7 +135,7 @@ def make_doc(path: Path) -> ReportDoc:
         author=AUTHOR,
         subject=("Graphe de construction paramétrique, IA, interopérabilité CAO et conformité"),
         creator=CREATOR,
-        keywords="MORPHOIA; Olivier Ami; brand-1.0; sRGB",
+        keywords=f"MORPHOIA; {AUTHOR}; brand-1.0; sRGB",
         initialFontName=FONT_TEXT,
         initialFontSize=9.4,
         initialLeading=13.6,
@@ -169,7 +170,7 @@ def cover_story():
         Rule(INDIGO, 2, 8),
         Spacer(1, 8 * mm),
         Paragraph(
-            "<b>Auteur</b> : Olivier Ami<br/>"
+            f"<b>Auteurs</b> : {AUTHOR_DISPLAY}<br/>"
             "<b>Version du document</b> : 0.1 expérimentale<br/>"
             "<b>Date</b> : 3 août 2026<br/>"
             "<b>Autorité d'échange visée</b> : STEP AP242 et ressources ISO 10303<br/>"

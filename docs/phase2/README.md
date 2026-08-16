@@ -48,6 +48,6 @@ PYTHONPATH=src python -m morphoia compile examples/mounting_plate.morph \
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
-## Auteur
+## Auteurs
 
-MORPHOIA a été initié par **Olivier Ami**.
+MORPHOIA est porté et coécrit par **Louis Manhès** et **Olivier Ami**.

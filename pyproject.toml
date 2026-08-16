@@ -9,6 +9,7 @@ description = "Experimental STEP-centred construction graph, validator and SDK f
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [
+  { name = "Louis Manhès" },
   { name = "Olivier Ami" }
 ]
 license = "MIT"
